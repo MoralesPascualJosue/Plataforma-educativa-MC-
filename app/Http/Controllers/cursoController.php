@@ -338,13 +338,14 @@ class cursoController extends AppBaseController
         $perfil['perfil'] = Auth::user()->roles()->pluck('name')['0'];
 
         if(!($perfil['perfil'] == "Asesor")){
-            $curso = $this->cursoRepository->findwhere("password","=",$request->title)['0'];
-
-
-            if (empty($curso)) {
+            $curso = $this->cursoRepository->findwhere("password","=",$request->title);
+            
+            if (count($curso) == 0) {
                 Flash::error('Curso no encontrado');
                 return redirect(route('inicio'));  
             }
+
+            $curso = $curso['0'];
             
             if(!$curso->hasMatriculado(Auth::user()->estudiante()->get()['0']->id)){
                                
