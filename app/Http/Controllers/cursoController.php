@@ -339,6 +339,12 @@ class cursoController extends AppBaseController
 
         if(!($perfil['perfil'] == "Asesor")){
             $curso = $this->cursoRepository->findwhere("password","=",$request->title)['0'];
+
+
+            if (empty($curso)) {
+                Flash::error('Curso no encontrado');
+                return redirect(route('inicio'));  
+            }
             
             if(!$curso->hasMatriculado(Auth::user()->estudiante()->get()['0']->id)){
                                

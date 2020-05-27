@@ -62,7 +62,7 @@ $.fn.ajaxPostt = function(url, sectionToRender, data, method) {
                     alert(errors[i]);
                 });
             }
-            //location.reload();
+            location.reload();
         });
 };
 
