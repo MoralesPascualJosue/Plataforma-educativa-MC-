@@ -37,11 +37,11 @@
 
             <a class="nav-link" href="{{ url('/') }}">VER WEB </a>
 
-            <!-- Sidebar Menu -->
+            {{-- <!-- Sidebar Menu -->
             <ul class="nav" data-widget="tree">
                 @include('layouts.menu')
             </ul>
-            <!-- /.sidebar-menu -->
+            <!-- /.sidebar-menu --> --}}
 
             <div class="grey-rule w-hidden-small w-hidden-tiny"></div>
 

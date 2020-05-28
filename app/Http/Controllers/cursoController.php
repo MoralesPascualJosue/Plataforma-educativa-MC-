@@ -17,6 +17,7 @@ use App\Models\Estudiante;
 use App\Models\Curso;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\MatriculadoRepository;
+use App\Repositories\ActivitieRepository;
 
 
 class cursoController extends AppBaseController
@@ -26,11 +27,13 @@ class cursoController extends AppBaseController
      */
     private $cursoRepository;
     private $matriculadoRepository;
+    private $activitieRepository;
 
-    public function __construct(cursoRepository $cursoRepo,MatriculadoRepository $matriculadoRepo)
+    public function __construct(cursoRepository $cursoRepo,MatriculadoRepository $matriculadoRepo,ActivitieRepository $activitieRepo)
     {
         $this->cursoRepository = $cursoRepo;
         $this->matriculadoRepository = $matriculadoRepo;
+        $this->activitieRepository = $activitieRepo;
         $this->middleware('auth');
     }
 
@@ -187,17 +190,14 @@ class cursoController extends AppBaseController
 
 
     public function inicio(Request $request)
-    {
-        $perfil['perfil'] = Auth::user()->roles()->pluck('name')['0'];        
+    {     
         $cursos;
 
-        if($perfil['perfil'] == "Asesor"){
+        if(Auth::user()->hasPermissionTo('edit cursos')){
             $cursos = $this->cursoRepository->findWherePaginate("asesor_id","=",Auth::user()->asesor()->get()['0']->id,12);
         }else{
             $cursos = Auth::user()->estudiante()->get()['0']->cursos()->orderBy("pivot_updated_at","DESC")->paginate(12);            
-        }
-
-        //Flash::success('No tienes cursos registrados.');       
+        }    
 
         $view = \View::make('cursos.inicioc')->with('cursos',$cursos);
 
@@ -209,9 +209,8 @@ class cursoController extends AppBaseController
         return $view;
     }
 
-     public function showCurso($id)
+     public function showCurso($id,Request $request)
     {        
-        $perfil['perfil'] = Auth::user()->roles()->pluck('name')['0'];
         $curso = Curso::find($id);
 
         if (empty($curso)) {
@@ -219,7 +218,7 @@ class cursoController extends AppBaseController
            return redirect()->route('inicio');
         }
 
-        if($perfil['perfil'] == "Asesor"){
+        if(Auth::user()->hasPermissionTo('edit cursos')){
             if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
                 Flash::success('Curso no registrado.');
                 return redirect()->route('inicio');
@@ -231,14 +230,26 @@ class cursoController extends AppBaseController
             }   
         }
 
-         return view('scurso')->with('curso',$curso);
+        //$dateSrc = "2020-05-11 00:00:00";
+        //$time  = date('Y-m-d', strtotime('2020-05-11 00:00:00'));
+
+        $actividades = $this->activitieRepository->findWherePaginate("visible","=",1,10);
+
+        $view = \View::make('scurso')->with(compact('curso','actividades'));
+
+        if($request->ajax()){
+            $sections = $view->renderSections();
+            return Response::json($sections['content']);
+        }
+        
+        return $view;
+
     }
 
      public function storea(Request $request)
     {
-        $perfil['perfil'] = Auth::user()->roles()->pluck('name')['0'];
 
-        if(!$perfil['perfil'] == "Asesor"){
+        if(!Auth::user()->hasPermissionTo('edit cursos')){
             return redirect(route('inicio'));
         }
 
@@ -278,10 +289,12 @@ class cursoController extends AppBaseController
 
         Flash::success('Curso actualizado.');
 
-        $view = \View::make('scurso')->with('curso',$curso);
+        $actividades = $this->activitieRepository->findWherePaginate("visible","=",1,10);
+        
+        $view = \View::make('scurso')->with(compact('curso','actividades'));
 
         $sections = $view->renderSections();
-            
+
         return Response::json($sections['content']);
     }
 
@@ -307,10 +320,12 @@ class cursoController extends AppBaseController
 
         Flash::success('Imagen actualizada.');
 
-        $view = \View::make('scurso')->with('curso',$curso);
+        $actividades = $this->activitieRepository->findWherePaginate("visible","=",1,10);
+        
+        $view = \View::make('scurso')->with(compact('curso','actividades'));
 
         $sections = $view->renderSections();
-            
+        
         return Response::json($sections['content']);
     }
 
@@ -335,9 +350,7 @@ class cursoController extends AppBaseController
 
     public function matricular(Request $request){
 
-        $perfil['perfil'] = Auth::user()->roles()->pluck('name')['0'];
-
-        if(!($perfil['perfil'] == "Asesor")){
+        if(!Auth::user()->hasPermissionTo('edit cursos')){
             $curso = $this->cursoRepository->findwhere("password","=",$request->title);
             
             if (count($curso) == 0) {

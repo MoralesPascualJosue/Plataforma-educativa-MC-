@@ -1,0 +1,251 @@
+/*//////////////////////////////////////////////////////////////////
+[ Base ]*/
+
+@font-face {
+    font-family: Poppins-Regular;
+    src: url("../fonts/poppins/Poppins-Regular.ttf");
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100%;
+    font-family: Poppins-Regular, sans-serif;
+}
+
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container100 {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: inline-block;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 15px;
+    background: #f0f0f0;
+}
+
+.wrap100 {
+    margin-top: 1rem;
+    height: auto;
+    background: #f9f9f9;
+    width: 100%;
+}
+
+/*/ /////////////////////////////////////////////////////////////////
+[Panel header]*/
+.panel-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 0 1.875rem;
+    height: 2.4rem;
+}
+
+.bb-close {
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font: inherit;
+    overflow: visible;
+    text-transform: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    background: transparent;
+    position: absolute;
+    text-decoration: none;
+    margin: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    box-shadow: none;
+    border-radius: 0;
+    transition: transform 300ms, background-color 250ms, color 250ms;
+    transform-origin: 0.75rem 0;
+    right: auto;
+    top: 1.875rem;
+    z-index: 910;
+    font-size: 2rem;
+    padding: 0;
+    background-color: orange !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff;
+    -webkit-text-stroke-width: 1px;
+    font-weight: 600 !important;
+    text-align: center;
+}
+
+.bb-close:hover {
+    border: orangered solid 2px;
+}
+
+.panel-titles-container {
+    display: block;
+    padding: 0;
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+}
+
+.course-nav {
+    color: #262626;
+}
+
+.tools-course {
+    display: inline-flex;
+    font-size: initial;
+}
+
+.course-tools {
+    width: auto;
+    float: right;
+}
+
+.course-tools img {
+    width: 15px;
+}
+
+.course-tools li.active,
+li:hover {
+    box-shadow: 0 -0.25rem 0 orange inset;
+    transition: box-shadow 0.25s linear;
+}
+
+.course-tool-tab {
+    line-height: 1.6;
+    display: inline-block;
+    margin: 0 -0.125rem;
+    width: auto;
+}
+
+.course-tab-content {
+    float: none;
+    display: block;
+    text-align: center;
+    margin: 0;
+    border-radius: 0;
+    padding: 0.5rem 0.5rem;
+    width: auto;
+}
+
+.icono-normal img {
+    width: 25px;
+}
+
+.course-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.activitie-name {
+    font-style: italic;
+    font-size: 11px;
+}
+
+.course-tab-content {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media (max-width: 1050px) {
+    .panel-header {
+        height: 2.6875rem;
+    }
+
+    .bb-close {
+        position: inherit;
+    }
+}
+
+@media (max-width: 800px) {
+    .activitie-name {
+        display: none;
+    }
+
+    .panel-header {
+        padding: 0 0.875rem;
+        height: 1.6875rem;
+    }
+
+    .button-text {
+        display: none;
+    }
+}
+
+/*tool tip */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 80%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* edit */
+.canedit {
+    visibility: hidden;
+}
+
+.panel-title:hover .canedit {
+    visibility: visible;
+}
+
+.curso-message:hover .canedit {
+    visibility: visible;
+}
+
+.float-ru img {
+    width: 100%;
+    background-color: white;
+    padding: 6px;
+}
+
+@media (max-width: 800px) {
+    .canedit {
+        visibility: visible;
+    }
+}

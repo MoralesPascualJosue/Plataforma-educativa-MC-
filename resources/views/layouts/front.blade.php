@@ -26,6 +26,7 @@
         @yield('content')
 
       </div>
+
     </div>
     <!-- Down side. Main Footer
     @include('layouts.footer')-->

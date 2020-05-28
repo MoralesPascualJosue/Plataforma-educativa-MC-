@@ -18,3 +18,7 @@
     <a href="{{ route('matriculados.index') }}"><i class="fa fa-edit"></i><span>Matriculados</span></a>
 </li>
 
+<li class="{{ Request::is('activities*') ? 'active' : '' }}">
+    <a href="{{ route('activities.index') }}"><i class="fa fa-edit"></i><span>Activities</span></a>
+</li>
+

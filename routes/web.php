@@ -72,6 +72,9 @@ Route::post('/matricular','cursoController@matricular')->name('matricular');
 //________[END Asesor routes]__________
 
 
+
+
+
 //________[Test routes]__________
 
 
@@ -103,3 +106,5 @@ Route::resource('anuncios', 'AnuncioController');
 Route::resource('estudiantes', 'EstudianteController');
 
 Route::resource('matriculados', 'MatriculadoController');
+
+Route::resource('activities', 'ActivitieController');

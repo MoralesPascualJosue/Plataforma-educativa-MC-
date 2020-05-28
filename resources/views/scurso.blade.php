@@ -121,36 +121,17 @@
 
     <div class="column-content">
       <div class="aside-header">Contenido</div>
+      <div>nueva actividad</div>
       <div class="course-actidades">
 
-        <div class="course-actividad">
-          <a href="javascript:void(0);">
-            <div class="course-link-icon">
-              <img src="{{ asset("resources/icons/home-work-c.svg") }}" alt="grupos">
-            </div>
-            <div class="course-link-details">
-              <div class="course-link-name">Actividad 1 9/4/20</div>
-              <div class="course-link-content">Fecha de vencimiento: 10/4/20</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="course-actividad">
-          <a href="javascript:void(0);">
-            <div class="course-link-icon">
-              <img src="{{ asset("resources/icons/home-work-c.svg") }}" alt="grupos">
-            </div>
-            <div class="course-link-details">
-              <div class="course-link-name">Actividad 2 1/5/20</div>
-              <div class="course-link-content">fecha de vencimiento: 4/5/20</div>
-            </div>
-          </a>
-        </div>
+        @include('activities.showactivities')
 
       </div>
 
+      {{ $actividades->links() }}
 
     </div>
+
 
   </div>
 

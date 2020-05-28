@@ -212,3 +212,11 @@ $(document).on("click", ".delete", function(event) {
             }
         });
 });
+
+$(document).on("click", ".page-link", function(event) {
+    //paginate
+    $url = this.name;
+    $(this).ajaxPost($url, "get", $url);
+
+    history.pushState(null, "", $url);
+});
