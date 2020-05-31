@@ -66,10 +66,14 @@ class Asesor extends Model
 
     public function cursos(){
         return $this->hasMany('App\Models\curso');
-    }
+    }    
 
     public function activities(){
         return $this->hasMany('App\Models\Activitie');
+    }
+
+    public function tasks(){
+        return $this->hasMany('App\Models\Task');
     }
     
 }

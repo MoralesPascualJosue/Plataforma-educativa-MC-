@@ -4,6 +4,7 @@
  */
 
 var config = {};
+$id = 222;
 
 // Set your configuration options below.
 
@@ -11,4 +12,4 @@ var config = {};
 // config.language = 'pl';
 // config.skin = 'jquery-mobile';
 
-CKFinder.define( config );
+CKFinder.define(config, $id);

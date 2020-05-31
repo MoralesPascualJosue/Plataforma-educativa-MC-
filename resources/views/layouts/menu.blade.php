@@ -22,3 +22,11 @@
     <a href="{{ route('activities.index') }}"><i class="fa fa-edit"></i><span>Activities</span></a>
 </li>
 
+<li class="{{ Request::is('contenidos*') ? 'active' : '' }}">
+    <a href="{{ route('contenidos.index') }}"><i class="fa fa-edit"></i><span>Contenidos</span></a>
+</li>
+
+<li class="{{ Request::is('tasks*') ? 'active' : '' }}">
+    <a href="{{ route('tasks.index') }}"><i class="fa fa-edit"></i><span>Tasks</span></a>
+</li>
+

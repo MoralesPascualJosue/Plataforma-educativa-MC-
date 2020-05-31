@@ -1,28 +1,22 @@
 <header class="panel-header">
 
-    <a class="bb-close" href="{{ route("inicio") }}">×</a>
+    <a class="bb-close" href="{{ route("scursoc",$curso->id) }}">×</a>
 
     <div class="panel-titles-container" id="global-title">
         <div class="title-container">
             <h1 class="panel-title">
-                <span class="course-name"><span class="activitie-name">Curso name largo </span> Actividad name
-                    largo</span>
+                <span class="course-name"><span class="activitie-name">{{ $curso->title }} </span>
+                    <span class="activitie-namec">{{ $activitie->title }}</span>
+                </span>
                 @can('edit cursos')
 
                 <div class="tools-course canedit">
                     <ul class="course-tools">
-                        <li class="course-tool-tab tooltip edit" id="1">
+                        <li class="course-tool-tab tooltip edit" id="{{ $activitie->id }}">
                             <a class="course-tab-content" href="javascript:void(0);">
                                 <img src="{{ asset("resources/icons/edit-a.svg") }}" alt="editar">
                             </a>
                             <span class="tooltiptext">Editar</span>
-                        </li>
-
-                        <li class="course-tool-tab tooltip delete" id="1">
-                            <a class="course-tab-content" href="javascript:void(0)">
-                                <img src="{{ asset("resources/icons/delete-a.svg") }}" alt="eliminar">
-                            </a>
-                            <span class="tooltiptext">Eliminar</span>
                         </li>
 
                     </ul>

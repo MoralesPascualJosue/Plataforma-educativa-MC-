@@ -8,6 +8,7 @@
 
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('css/stylesa.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/deditor.css') }}">
     @yield('css')
 
     <script src="{{asset('js/jquery/jquery-3.5.1.min.js')}}"> </script>
@@ -20,16 +21,17 @@
             <!-- Left side column. contains the logo and sidebar -->
             @include('activities.topbar')
 
+            <!-- Down side. Main Footer-->
+            @can('edit cursos')
+            @include('activities.toolsidebar')
+            @endcan
+
             <div id="wrap100" class="wrap100">
                 <!-- Contains page content -->
                 @yield('content')
             </div>
 
         </div>
-        <!-- Down side. Main Footer-->
-        @can('edit cursos')
-        @include('activities.toolsidebar')
-        @endcan
 
         @else
         <div>Invitado</div>
@@ -39,6 +41,28 @@
     </div>
 
     <script src="{{ asset('js/activitiemanager.js') }}"> </script>
+
+    {{-- <script src="{{ asset('editor/embed-block.js') }}"> </script>
+    <script src="{{ asset('editor/header-block.js') }}"> </script>
+    <script src="{{ asset('editor/marker-inline.js') }}"> </script>
+    <script src="{{ asset('editor/raw-block.js') }}"> </script>
+    <script src="{{ asset('editor/table-block.js') }}"> </script>
+    <script src="{{ asset('editor/code-inline.js') }}"> </script>
+    <script src="{{ asset('editor/paragraph-block.js') }}"> </script>
+    <script src="{{ asset('editor/simple-image-block.js') }}"> </script>
+    <script src="{{ asset('editor/attaches-block.js') }}"> </script>
+    <script src="{{ asset('editor/personality-block.js') }}"> </script>
+    <script src="{{ asset('editor/quote-block.js') }}"> </script>
+    <script src="{{ asset('editor/list-block.js') }}"> </script>
+    <script src="{{ asset('editor/warning-block.js') }}"> </script>
+    <script src="{{ asset('editor/code-block.js') }}"> </script>
+    <script src="{{ asset('editor/checklist-block.js') }}"> </script>
+    <script src="{{ asset('editor/delimiter-block.js') }}"> </script>
+
+    <script src="{{ asset('editor/image-block.js') }}"> </script>
+    <script src="{{ asset('editor/editor.js') }}"> </script>
+    <script src="{{ asset('editor/editorup.js') }}"> </script> --}}
+
     @stack('scripts')
 </body>
 

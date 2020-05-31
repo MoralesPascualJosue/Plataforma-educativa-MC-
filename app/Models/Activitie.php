@@ -46,8 +46,6 @@ class Activitie extends Model
         'title' => 'string',
         'visible' => 'integer',
         'intentos' => 'integer',
-        'fecha_inicio' => 'date',
-        'fecha_final' => 'date',
         'asesor_id' => 'integer'
     ];
 
@@ -67,5 +65,19 @@ class Activitie extends Model
     public function asesor(){
         return $this->belongsTo('App\Models\Asesor','asesor_id');
     }
-    
+
+    public function cursos(){
+        return $this->belongsToMany('App\Models\Curso','contenidos','activitie_id','curso_id');
+    }
+
+     public function task() {
+        return $this->hasOne('App\Models\Task','activitie_id');
+    }
+
+    public function hasPropiedad($propietario){
+        if ($this->asesor->id == $propietario) {
+            return true;
+        }
+        return false;
+    }
 }

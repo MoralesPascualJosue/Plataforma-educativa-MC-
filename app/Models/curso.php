@@ -70,8 +70,12 @@ class curso extends Model
         return $this->belongsTo('App\Models\Asesor','asesor_id');
     }
 
-     public function estudiantes(){
+    public function estudiantes(){
         return $this->belongsToMany('App\Models\Estudiante','matriculados','curso_id','estudiante_id');
+    }
+
+    public function activities(){
+        return $this->belongsToMany('App\Models\Activitie','contenidos','curso_id','activitie_id')->withPivot('updated_at');
     }
 
     public function hasPropiedad($propietario){

@@ -9,7 +9,7 @@
 
 <div class="content-tb">
     @cannot('edit cursos')
-    <div class="card education">
+    <div class="card credentialing">
         {!! Form::open(['route' => ['matricular'], 'method' => 'post'])!!}
         <!-- Title Field -->
         <div class="form-group col-sm-6">
@@ -19,7 +19,7 @@
 
         <!-- Submit Field -->
         <div class="form-group col-sm-12">
-            {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+            {!! Form::submit('Registrar curso', ['class' => 'btn btn-primary']) !!}
         </div>
 
         {!! Form::close() !!}

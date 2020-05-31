@@ -120,8 +120,13 @@
     </div>
 
     <div class="column-content">
-      <div class="aside-header">Contenido</div>
-      <div>nueva actividad</div>
+      <div class="aside-header">
+        <div class="der">Contenido</div>
+        @can('edit cursos')
+        <div class="newactivitie izq" id="{{ $curso->id }}">Nueva actividad</div>
+        @endcan
+      </div>
+
       <div class="course-actidades">
 
         @include('activities.showactivities')

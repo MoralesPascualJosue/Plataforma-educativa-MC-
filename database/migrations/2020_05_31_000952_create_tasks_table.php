@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class CreateTasksTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -14,10 +14,14 @@ class CreateTasksTable extends Migration
     public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('details');
+            $table->increments('id');
+            $table->text('contenido');
+            $table->integer('asesor_id')->unsigned();
+            $table->integer('activitie_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('asesor_id')->references('id')->on('asesors');
+            $table->foreign('activitie_id')->references('id')->on('activities');
         });
     }
 
@@ -28,6 +32,6 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::drop('tasks');
     }
 }

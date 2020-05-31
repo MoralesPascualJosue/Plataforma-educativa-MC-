@@ -220,3 +220,15 @@ $(document).on("click", ".page-link", function(event) {
 
     history.pushState(null, "", $url);
 });
+
+/* [Activities resources]  */
+
+$(document).on("click", ".newactivitie", function(event) {
+    $curso = $(this);
+
+    $anuncio = $("#anuncio").val();
+
+    $data = { anuncio: $anuncio };
+    $(this).ajaxPostt("../storeaa/" + $curso[0].id, "#wrap100", $data, "POST");
+    $("#anuncio").val("");
+});

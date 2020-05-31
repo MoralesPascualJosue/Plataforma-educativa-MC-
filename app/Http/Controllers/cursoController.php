@@ -211,30 +211,28 @@ class cursoController extends AppBaseController
 
      public function showCurso($id,Request $request)
     {        
-        $curso = Curso::find($id);
-
+        $curso = $this->cursoRepository->find($id);
         if (empty($curso)) {
             Flash::success('Curso no registrado.');
            return redirect()->route('inicio');
         }
+
+        $actividades;
 
         if(Auth::user()->hasPermissionTo('edit cursos')){
             if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
                 Flash::success('Curso no registrado.');
                 return redirect()->route('inicio');
             }    
+            $actividades = $curso->activities()->orderBy("activities.updated_at","DESC")->paginate(10);
         }else{
             if(!$curso->hasMatriculado(Auth::user()->estudiante()->get()['0']->id)){
                 Flash::success('Curso no registrado.');
                 return redirect()->route('inicio');
             }   
+            $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_final","ASC")->paginate(10);
         }
-
-        //$dateSrc = "2020-05-11 00:00:00";
-        //$time  = date('Y-m-d', strtotime('2020-05-11 00:00:00'));
-
-        $actividades = $this->activitieRepository->findWherePaginate("visible","=",1,10);
-
+        
         $view = \View::make('scurso')->with(compact('curso','actividades'));
 
         if($request->ajax()){
@@ -243,7 +241,6 @@ class cursoController extends AppBaseController
         }
         
         return $view;
-
     }
 
      public function storea(Request $request)
@@ -289,7 +286,7 @@ class cursoController extends AppBaseController
 
         Flash::success('Curso actualizado.');
 
-        $actividades = $this->activitieRepository->findWherePaginate("visible","=",1,10);
+        $actividades = $curso->activities()->orderBy("activities.updated_at","DESC")->paginate(10);
         
         $view = \View::make('scurso')->with(compact('curso','actividades'));
 
@@ -320,7 +317,7 @@ class cursoController extends AppBaseController
 
         Flash::success('Imagen actualizada.');
 
-        $actividades = $this->activitieRepository->findWherePaginate("visible","=",1,10);
+        $actividades = $curso->activities()->orderBy("activities.updated_at","DESC")->paginate(10);
         
         $view = \View::make('scurso')->with(compact('curso','actividades'));
 
@@ -339,11 +336,16 @@ class cursoController extends AppBaseController
             abort(404,'Anuncio no disponible');
         }
 
+        if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
+                Flash::success('Curso no registrado.');
+                return redirect()->route('inicio');
+            } 
+
         $this->cursoRepository->delete($id);
 
         Flash::success('Curso eliminado.');
 
-       return Response()->json([ 'Curso' => 'Eliminado']);
+       return Response()->json([ 'Curso' => 'curso']);
     }
 
     /**/

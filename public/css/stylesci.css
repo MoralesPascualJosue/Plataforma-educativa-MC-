@@ -581,3 +581,26 @@ li:hover {
 }
 
 /*-------------------------------------------------------------------*/
+
+.newactivitie {
+    padding: 2px;
+    border-bottom: 1px solid orange;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.newactivitie:hover {
+    padding: 4px;
+    background-color: orange;
+}
+
+.der {
+    float: right;
+}
+.izq {
+    float: left;
+}
+
+.delete:hover {
+    background-color: red;
+}

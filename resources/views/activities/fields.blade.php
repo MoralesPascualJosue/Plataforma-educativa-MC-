@@ -29,29 +29,11 @@
     {!! Form::date('fecha_inicio', null, ['class' => 'form-control','id'=>'fecha_inicio']) !!}
 </div>
 
-@push('scripts')
-    <script type="text/javascript">
-        $('#fecha_inicio').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: false
-        })
-    </script>
-@endpush
-
 <!-- Fecha Final Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('fecha_final', 'Fecha Final:') !!}
     {!! Form::date('fecha_final', null, ['class' => 'form-control','id'=>'fecha_final']) !!}
 </div>
-
-@push('scripts')
-    <script type="text/javascript">
-        $('#fecha_final').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: false
-        })
-    </script>
-@endpush
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

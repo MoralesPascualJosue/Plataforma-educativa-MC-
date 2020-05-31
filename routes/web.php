@@ -69,14 +69,31 @@ Route::delete('/destroyac/{id}','cursoController@destroya')->name('destroyac');
 
 Route::post('/matricular','cursoController@matricular')->name('matricular');
 
-//________[END Asesor routes]__________
+//________[END curses routes]__________
 
 
+//________[Activities routes]__________
 
+Route::post('/storeaa/{id}','ActivitieController@storea')->name('storeaa');
+
+Route::get('/sactivitiec/{id}', 'ActivitieController@showActivitie')->name('sactivitiec');
+
+Route::delete('/destroyaa/{id}','ActivitieController@destroya')->name('destroyaa');
+
+Route::put('/updateaa/{id}','ActivitieController@updatea')->name('updateaa');
+//________[END activities routes]__________
+
+//________[Tasks routes]__________
+
+Route::put('/updateat/{id}','TaskController@updatea')->name('updateat');
+//________[END tasks routes]__________
 
 
 //________[Test routes]__________
 
+Route::post('/activitiepost/{id}', 'ActivitieController@postatc');
+Route::get('/uploads/{file}', 'ActivitieController@file');
+Route::post('/uploadfile/{id}',"ActivitieController@uploadFilePost");
 
 Route::post('/test', function () { return 'Hello World Post'; }); 
  Route::Get('/test', function () { return 'Hello World Get'; }); 
@@ -108,3 +125,7 @@ Route::resource('estudiantes', 'EstudianteController');
 Route::resource('matriculados', 'MatriculadoController');
 
 Route::resource('activities', 'ActivitieController');
+
+Route::resource('contenidos', 'ContenidoController');
+
+Route::resource('tasks', 'TaskController');

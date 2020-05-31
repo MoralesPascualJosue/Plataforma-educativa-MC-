@@ -13,7 +13,7 @@
     @foreach($actividades as $actividad)
 
     <div class="course-actividad">
-        <a href="{{ route('activities.show', [$actividad->id]) }}">
+        <a href="{{ route('sactivitiec', [$actividad->id]) }}">
             <div class="course-link-icon">
                 <img src="{{ asset("resources/icons/home-work-c.svg") }}" alt="grupos">
             </div>
