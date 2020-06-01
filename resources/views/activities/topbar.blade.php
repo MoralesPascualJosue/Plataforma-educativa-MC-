@@ -33,19 +33,22 @@
     <div class="panel-titles-container" id="global-title">
         <div class="title-container">
             <h1 class="panel-title">
-                <h3>Contenido y ajustes</h3>
+
+                <h3>Contenido @can("edit cursos") <span>y ajustes</span>@endcan</h3>
+
             </h1>
         </div>
     </div>
-
+    @can("edit cursos")
     <div class="course-nav">
         <ul class="course-tools">
             <li class="course-tool-tab">
-                <a class="course-tab-content icono-normal" href="javascript:void(0)">
+                <a class="course-tab-content icono-normal" href="{{route("trabajos",$activitie->id)}}">
                     <span class="button-text">ver Tareas </span>
                     <img src="{{ asset("resources/icons/contenido-c.svg") }}" alt="Tareas">
                 </a>
             </li>
         </ul>
     </div>
+    @endcan
 </header>

@@ -4,7 +4,6 @@ ClassicEditor.create(document.querySelector("#editor"), {
     autosave: {
         waitingTime: 4000, // in ms
         save(editor) {
-            console.log("update");
             $update = $(".edit")["0"].id;
             $.ajax({
                 type: "put",
@@ -113,11 +112,3 @@ ClassicEditor.create(document.querySelector("#editor"), {
     .catch(err => {
         console.error(err);
     });
-
-// $(document).on("click", "#contenidosave", function(event) {
-//     console.log("save");
-
-//     const editorData = editor.getData();
-
-//     console.log(editorData);
-// });

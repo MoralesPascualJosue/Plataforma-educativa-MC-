@@ -65,6 +65,25 @@ $.fn.ajaxPostt = function(url, sectionToRender, data, method) {
         });
 };
 
+$.fn.ajaxPosttalert = function(url, sectionToRender, data, method) {
+    $.ajax({
+        method: method,
+        url: url,
+        data: data
+    })
+        .done(function(data) {
+            alert(data);
+        })
+        .fail(function(data) {
+            var errors = data.responseJSON["errors"];
+            if (errors) {
+                $.each(errors, function(i) {
+                    alert(errors[i]);
+                });
+            }
+        });
+};
+
 $.fn.ajaxDelete = function(url, sectionToRender) {
     $.ajax({
         type: "DELETE",
@@ -118,7 +137,7 @@ $(".activitie-namec")
             .css("border", "none")
             .attr("contenteditable", "false");
 
-        $(this).ajaxPostt(
+        $(this).ajaxPosttalert(
             "../updateaa/" + $activitie[0].id,
             "#wrap100",
             $data,
@@ -156,12 +175,7 @@ $(document).on("click", ".save", function(event) {
         .css("border", "none")
         .attr("contenteditable", "false");
 
-    $(this).ajaxPostt(
-        "../updateaa/" + $activitie[0].id,
-        "#wrap100",
-        $data,
-        "PUT"
-    );
+    $(this).ajaxPosttalert("../updateaa/" + $activitie[0].id, "", $data, "PUT");
 });
 
 function handler(e) {

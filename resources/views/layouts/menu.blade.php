@@ -28,5 +28,7 @@
 
 <li class="{{ Request::is('tasks*') ? 'active' : '' }}">
     <a href="{{ route('tasks.index') }}"><i class="fa fa-edit"></i><span>Tasks</span></a>
+</li><li class="{{ Request::is('works*') ? 'active' : '' }}">
+    <a href="{{ route('works.index') }}"><i class="fa fa-edit"></i><span>Works</span></a>
 </li>
 

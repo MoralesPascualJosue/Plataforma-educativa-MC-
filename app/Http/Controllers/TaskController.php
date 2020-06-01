@@ -185,4 +185,26 @@ class TaskController extends AppBaseController
 
         return Response::json(array('Estado' => 'guardado'));
     }
+
+    public function trabajos($id)
+    {
+        $activitie = $this->activitieRepository->find($id);
+
+        if(empty($activitie)){
+                return redirect()->route('inicio');
+        }
+
+        if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
+                Flash::success('Actividad no registrado.');
+                return redirect()->route('inicio');
+        } 
+
+        $curso = $activitie->cursos()->first();
+        $estudiantes = $curso->estudiantes()->get();
+        $works = [];
+        return view('works.show_trabajos')
+            ->with(compact('activitie','estudiantes','curso','works'));
+    }
+
+
 }

@@ -1,7 +1,53 @@
 let editorck;
 
-ClassicEditor.create(document.querySelector("#editor"), {}).then(editor1 => {
+ClassicEditor.create(document.querySelector("#editor"), {
+    language: "es",
+    color: "red",
+    image: {
+        styles: [
+            "full", // This option is equal to a situation where no style is applied.
+            "alignLeft", // This represents an image aligned to the left.
+            "alignRight", // This represents an image aligned to the right.
+            "side"
+        ]
+    },
+    table: {
+        contentToolbar: [
+            "tableColumn",
+            "tableRow",
+            "mergeTableCells",
+            "tableCellProperties",
+            "tableProperties"
+        ]
+    },
+    licenseKey: ""
+}).then(editor1 => {
     editor1.isReadOnly = true;
+});
+
+ClassicEditor.create(document.querySelector("#editorworkv"), {
+    language: "es",
+    color: "red",
+    image: {
+        styles: [
+            "full", // This option is equal to a situation where no style is applied.
+            "alignLeft", // This represents an image aligned to the left.
+            "alignRight", // This represents an image aligned to the right.
+            "side"
+        ]
+    },
+    table: {
+        contentToolbar: [
+            "tableColumn",
+            "tableRow",
+            "mergeTableCells",
+            "tableCellProperties",
+            "tableProperties"
+        ]
+    },
+    licenseKey: ""
+}).then(editor2 => {
+    editor2.isReadOnly = true;
 });
 
 ClassicEditor.create(document.querySelector("#editorwork"), {
@@ -71,7 +117,7 @@ ClassicEditor.create(document.querySelector("#editorwork"), {
 })
     .then(editor => {
         editor.model.document.on("change:data", (evt, data) => {
-            console.log(editor.getData());
+            //console.log(editor.getData());
         });
 
         editorck = editor;
@@ -80,3 +126,24 @@ ClassicEditor.create(document.querySelector("#editorwork"), {
     .catch(err => {
         console.error(err);
     });
+
+$(document).on("click", ".savebutton", function(event) {
+    $activitie = $(this);
+
+    $.ajax({
+        method: "post",
+        url: "/storeaw/" + $activitie[0].id,
+        data: { contenido: editorck.getData() }
+    })
+        .done(function(data) {
+            alert(data);
+        })
+        .fail(function(data) {
+            var errors = data.responseJSON["errors"];
+            if (errors) {
+                $.each(errors, function(i) {
+                    alert(errors[i]);
+                });
+            }
+        });
+});

@@ -361,8 +361,9 @@ li:hover {
 /*-------------[ contenido ]------------*/
 
 .content {
-    margin-left: 26%;
+    margin-left: 10%;
     padding: 10px;
+    background-color: white;
 }
 
 @media (max-width: 1050px) {
@@ -459,4 +460,83 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
 
 .work {
     border: 1px solid orange;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* toggle */
+.wrap {
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.seccionToggle {
+    display: none;
+    /* height: calc(100vh - 150px); */
+    background: #fff;
+    color: #001f3f;
+    padding: 50px 0;
+    text-align: center;
+}
+/*.seccionToggle h2 {
+    font-size: 60px;
+    margin-top: 50px;
+}*/
+.subtitle p {
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+.seccionToggle button {
+    background: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 20px 40px;
+    display: inline-block;
+    border: 5px solid #001f3f;
+    transition: 0.3s all ease;
+}
+.seccionToggle button:hover {
+    border: 5px solid #0074d9;
+    color: #0074d9;
+}
+
+.btn-toggle {
+    height: 50px;
+    line-height: 50px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+    display: block;
+    background: orange;
+    text-align: center;
+}
+.btn-toggle:hover {
+    text-decoration: none;
+}
+
+@media screen and (max-width: 500px) {
+    .seccionToggle h2 {
+        margin-top: 0;
+    }
+}
+@media screen and (max-height: 550px) {
+    .seccionToggle h2 {
+        font-size: 40px;
+        margin-top: 0;
+    }
 }

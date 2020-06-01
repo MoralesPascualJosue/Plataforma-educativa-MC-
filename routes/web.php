@@ -86,8 +86,16 @@ Route::put('/updateaa/{id}','ActivitieController@updatea')->name('updateaa');
 //________[Tasks routes]__________
 
 Route::put('/updateat/{id}','TaskController@updatea')->name('updateat');
+
+Route::get('/trabajos/{id}','TaskController@trabajos')->name('trabajos');
 //________[END tasks routes]__________
 
+//________[works routes]__________
+
+Route::post('/storeaw/{id}','WorkController@storea')->name('storeaw');
+
+Route::get('/showworks/{act}/{est}','WorkController@showworks')->name('works');
+//________[END works routes]__________
 
 //________[Test routes]__________
 
@@ -129,3 +137,5 @@ Route::resource('activities', 'ActivitieController');
 Route::resource('contenidos', 'ContenidoController');
 
 Route::resource('tasks', 'TaskController');
+
+Route::resource('works', 'WorkController');

@@ -70,5 +70,9 @@ class Estudiante extends Model
     public function user() {
         return $this->belongsTo('App\User','user_id');
     }     
+
+    public function works(){
+        return $this->hasMany('App\Models\Work');
+    }    
     
 }

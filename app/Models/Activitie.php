@@ -74,6 +74,10 @@ class Activitie extends Model
         return $this->hasOne('App\Models\Task','activitie_id');
     }
 
+    public function works(){
+        return $this->hasMany('App\Models\Work');
+    }    
+
     public function hasPropiedad($propietario){
         if ($this->asesor->id == $propietario) {
             return true;

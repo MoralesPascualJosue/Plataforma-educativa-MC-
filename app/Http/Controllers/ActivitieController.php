@@ -6,6 +6,7 @@ use App\Http\Requests\CreateActivitieRequest;
 use App\Http\Requests\UpdateActivitieRequest;
 use App\Repositories\ActivitieRepository;
 use App\Repositories\ContenidoRepository;
+use App\Repositories\WorkRepository;
 use App\Repositories\TaskRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -23,12 +24,14 @@ class ActivitieController extends AppBaseController
     private $activitieRepository;
     private $contenidoRepository;
     private $taskRepository;
+    private $workRepository;
 
-    public function __construct(ActivitieRepository $activitieRepo, ContenidoRepository $contenidoRepo,TaskRepository $taskRepo)
+    public function __construct(ActivitieRepository $activitieRepo, ContenidoRepository $contenidoRepo,TaskRepository $taskRepo,WorkRepository $workRepo)
     {
         $this->activitieRepository = $activitieRepo;
         $this->contenidoRepository = $contenidoRepo;
         $this->taskRepository = $taskRepo;
+        $this->workRepository = $workRepo;
         $this->middleware('auth');
     }
 
@@ -221,6 +224,9 @@ class ActivitieController extends AppBaseController
            return redirect()->route('inicio');
         }
 
+        $task = $activitie->task()->get()['0']->contenido;
+        $works= [];
+        
         if(Auth::user()->hasPermissionTo('edit cursos')){
             if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
                 Flash::success('Actividad no registrado.');
@@ -230,17 +236,15 @@ class ActivitieController extends AppBaseController
             if(!$curso->hasMatriculado(Auth::user()->estudiante()->get()['0']->id) or !($activitie->visible == 1)){                
                 return redirect()->route('inicio');
             }               
+            $works = $activitie->works()->get()->where("estudiante_id","=",Auth::user()->estudiante()->get()['0']->id);
         }
 
-        $task = $activitie->task()->get()['0']->contenido;
+        $view = \View::make('activities.show')->with(compact('activitie','curso','task','works'));
 
-
-        $view = \View::make('activities.show')->with(compact('activitie','curso','task'));
-
-        if($request->ajax()){
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
-        }
+        // if($request->ajax()){
+        //     $sections = $view->renderSections();
+        //     return Response::json($sections['content']);
+        // }
         
         return $view;
     }
@@ -255,9 +259,8 @@ class ActivitieController extends AppBaseController
         } 
 
         if (empty($activitie)) {
-            Flash::error('Actividad no encontrada');
 
-            abort(404,'Anuncio no disponible');
+            return 'Actividad no encontrada';
         }
 
         $this->activitieRepository->delete($id);
@@ -275,7 +278,6 @@ class ActivitieController extends AppBaseController
                 abort(403,"fechas no validas");
         } 
         
-
         if (empty($activitie)) {
            abort(404,'Actividad no disponible');
         }
@@ -287,16 +289,18 @@ class ActivitieController extends AppBaseController
 
         $activitie = $this->activitieRepository->update($request->all(), $id);
 
-        Flash::success('Actividad actualizada.');
+        // Flash::success('Actividad actualizada.');
         
-        $curso = $activitie->cursos()->first();
-        $task = $activitie->task()->get()["0"]->contenido;
+        // $curso = $activitie->cursos()->first();
+        // $task = $activitie->task()->get()["0"]->contenido;
         
-         $view = \View::make('activities.show')->with(compact('activitie','curso','task'));
+        //  $view = \View::make('activities.show')->with(compact('activitie','curso','task'));
          
-        $sections = $view->renderSections();
+        // $sections = $view->renderSections();
 
-        return Response::json($sections['content']);
+        // return Response::json($sections['content']);
+
+         return "Actualizado";
     }
 //////////////////////////////////////////exmapels
 

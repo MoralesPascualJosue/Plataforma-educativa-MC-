@@ -24,6 +24,8 @@
             <!-- Down side. Main Footer-->
             @can('edit cursos')
             @include('activities.toolsidebar')
+            @else
+            @include('activities.statussidebar')
             @endcan
 
             <div id="wrap100" class="wrap100">
@@ -62,6 +64,18 @@
     <script src="{{ asset('editor/image-block.js') }}"> </script>
     <script src="{{ asset('editor/editor.js') }}"> </script>
     <script src="{{ asset('editor/editorup.js') }}"> </script> --}}
+
+    <script src="{{ asset('ckeditor/ckfinder/ckfinder.js') }}"> </script>
+    <script>
+        CKFinder.config( { connectorPath: '/ckfinder/connector' } );
+    </script>
+    <script src="{{ asset('ckeditor/ckeditor5 1/build/ckeditor.js') }}"> </script>
+
+    @can('edit cursos')
+    <script src="{{ asset('js/ck.js') }}"> </script>
+    @else
+    <script src="{{ asset('js/cke.js') }}"> </script>
+    @endcan
 
     @stack('scripts')
 </body>

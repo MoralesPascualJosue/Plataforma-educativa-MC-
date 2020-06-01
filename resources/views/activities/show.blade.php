@@ -17,12 +17,33 @@
     <div>
         <textarea id="editor" name="contenido">{{ $task }}</textarea>
     </div>
-
+    <br>
     @cannot('edit cursos')
-    <div>
+
+    <div class="work">
+        <h3>--- <span>Entrega</span> ---</h3>
+
         <textarea id="editorwork" name="contenidowork"></textarea>
     </div>
+
+    <button class="ce-example__button savebutton" id="{{$activitie->id}}">
+        Entregar
+    </button>
+
+    <textarea class="vista" name="" id="editorworkv">
+            Entregas realizadas
+            
+            @foreach($works as $work)
+            <hr><hr>
+            <br>
+            <h1>Entrega {{ $work->entregas }}</h1>                        
+            <br>
+            {{$work->contenido}}
+            @endforeach
+        </textarea>
     @endcan
+
+
     {{-- <div class="contenido" id="editorjs">
         <p>contenido</p>
     </div> --}}
@@ -57,18 +78,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('ckeditor/ckfinder/ckfinder.js') }}"> </script>
-<script>
-    CKFinder.config( { connectorPath: '/ckfinder/connector' } );
-</script>
-<script src="{{ asset('ckeditor/ckeditor5 1/build/ckeditor.js') }}"> </script>
-
-@can('edit cursos')
-<script src="{{ asset('js/ck.js') }}"> </script>
-@else
-<script src="{{ asset('js/cke.js') }}"> </script>
-@endcan
-
-
 
 @endpush
