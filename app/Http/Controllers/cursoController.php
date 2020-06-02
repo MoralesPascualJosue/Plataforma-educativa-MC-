@@ -381,4 +381,40 @@ class cursoController extends AppBaseController
         
         return redirect(route('inicio'));            
     }
+
+
+    public function trabajos($id)
+    {
+        $curso = $this->cursoRepository->find($id);
+
+        if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
+                Flash::success('Curso no registrado.');
+                return redirect()->route('inicio');
+        } 
+        $estudiantes = $curso->estudiantes()->orderBy("name")->get();
+
+        //return $estudiantes;
+
+        if(empty($estudiantes)){
+            return redirect()->back()->withErrors("Sin estudiantes registrado");
+        }
+        
+        foreach($estudiantes as $estudiante){
+            $qua = $estudiante->qualifications()->get();
+
+            if(empty($qua['0'])){
+                $estudiante["qualificationestado"] = "0";
+                $estudiante["qualificationqualification"] = "Sin entregas";
+            }else{
+                $estudiante["qualificationestado"] =$qua['0']->estado;
+                $estudiante["qualificationqualification"] = $qua['0']->qualification;
+            }
+        }
+
+        return $estudiantes;
+
+        $works = [];                
+        return view('cursos.show_activities')
+            ->with(compact('activitie','estudiantes','curso','works'));
+    }
 }

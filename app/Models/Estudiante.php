@@ -75,4 +75,7 @@ class Estudiante extends Model
         return $this->hasMany('App\Models\Work');
     }    
     
+    public function qualifications(){
+        return $this->hasMany('App\Models\Qualification');
+    }
 }

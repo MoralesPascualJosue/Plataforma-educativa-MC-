@@ -43,4 +43,11 @@ class EstudianteRepository extends BaseRepository
     {
         return Estudiante::class;
     }
+
+     public function findestudiantescalificacion( $estudiante,$activiad,$columns = ['*'])
+    {
+        $query = $this->model->newQuery();
+
+        return $query->select($columns)->where("id","=", $estudiante);
+    }
 }

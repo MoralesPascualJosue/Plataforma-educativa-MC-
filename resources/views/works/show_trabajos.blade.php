@@ -7,6 +7,12 @@
 <section class="seccionToggle">
     <div class="wrap">
         <p class="subtitle">Entregas realizadas</p>
+        <p> <span>Calificación</span> <span id="{{ $activitie->id }}" class="calificacion">Pendiente</span>
+            <button id="saves" class="btn"> Guardar </button>
+        </p>
+
+        <textarea name="observaciones" class="observaciones" id="{{ $activitie->id }}" rows="10"></textarea>
+
         <textarea class="vista" name="" id="editorworkv">
                 @foreach($works as $work)
                     <hr><hr>
@@ -33,7 +39,8 @@
             <th>{{$estudiante->name}}</th>
             <th><button class="btn entregarev" href="javascript:void(0);" id="{{ $estudiante->id }}">Entrega</button>
             </th>
-            <th>pendiente</th>
+            <th>{{ ($estudiante->qualificationestado == 1) ? 'Para revision' : $estudiante->qualificationqualification }}
+            </th>
         </tr>
         @endforeach
 

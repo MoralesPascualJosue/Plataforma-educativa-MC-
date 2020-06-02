@@ -32,3 +32,7 @@
     <a href="{{ route('works.index') }}"><i class="fa fa-edit"></i><span>Works</span></a>
 </li>
 
+<li class="{{ Request::is('qualifications*') ? 'active' : '' }}">
+    <a href="{{ route('qualifications.index') }}"><i class="fa fa-edit"></i><span>Qualifications</span></a>
+</li>
+

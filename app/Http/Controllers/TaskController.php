@@ -13,6 +13,7 @@ use Response;
 
 use Illuminate\Support\Facades\Auth;
 
+
 class TaskController extends AppBaseController
 {
     /** @var  TaskRepository */
@@ -200,8 +201,21 @@ class TaskController extends AppBaseController
         } 
 
         $curso = $activitie->cursos()->first();
-        $estudiantes = $curso->estudiantes()->get();
-        $works = [];
+        
+        $estudiantes = $curso->estudiantes()->orderBy("name")->get();
+
+        foreach($estudiantes as $estudiante){
+            $qua = $estudiante->qualifications()->where("activitie_id","=",$id)->get();
+            if(empty($qua['0'])){
+                $estudiante["qualificationestado"] = "0";
+                $estudiante["qualificationqualification"] = "Sin entregas";
+            }else{
+                $estudiante["qualificationestado"] =$qua['0']->estado;
+                $estudiante["qualificationqualification"] = $qua['0']->qualification;
+            }
+        }
+
+        $works = [];                
         return view('works.show_trabajos')
             ->with(compact('activitie','estudiantes','curso','works'));
     }

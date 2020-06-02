@@ -8,7 +8,7 @@
             </div>
             <div class="aside-link-details">
                 <!-- Visible Field -->
-                <div class="aside-link-name">Entregas</div>
+                <div class="aside-link-name">Entregas permitidas</div>
                 <div class="aside-link-content">
                     {{$activitie->intentos}}
                 </div>
@@ -38,7 +38,9 @@
             </div>
             <div class="aside-link-details">
                 <div class="aside-link-name">Calificacion</div>
-                <div class="aside-link-content">80</div>
+                <div class="aside-link-content">
+                    {{ ($qualification['estado'] == 1) ? 'En revision' : $qualification['qualification'] }}
+                </div>
             </div>
         </a>
     </div>
@@ -50,9 +52,7 @@
             </div>
             <div class="aside-link-details">
                 <div class="aside-link-name">Observaciones</div>
-                <div class="aside-link-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. A id iste eaque
-                    explicabo aliquid porro ipsum ullam dolorem! Eaque architecto deserunt mollitia enim quis nemo neque
-                    quam omnis voluptas rerum?</div>
+                <div class="aside-link-content">{{ $qualification['observaciones'] }}</div>
             </div>
         </a>
     </div>

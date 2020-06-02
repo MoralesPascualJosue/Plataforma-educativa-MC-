@@ -78,6 +78,10 @@ class Activitie extends Model
         return $this->hasMany('App\Models\Work');
     }    
 
+     public function qualifications() {
+        return $this->hasMany('App\Models\Qualification');
+    }
+
     public function hasPropiedad($propietario){
         if ($this->asesor->id == $propietario) {
             return true;

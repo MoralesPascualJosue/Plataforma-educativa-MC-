@@ -6,6 +6,7 @@ use App\Http\Requests\CreateWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
 use App\Repositories\WorkRepository;
 use App\Repositories\ActivitieRepository;
+use App\Repositories\QualificationRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
@@ -18,11 +19,13 @@ class WorkController extends AppBaseController
     /** @var  WorkRepository */
     private $workRepository;
     private $activitieRepository;
+    private $qualificationRepository;
 
-    public function __construct(WorkRepository $workRepo, ActivitieRepository $activitieRepo)
+    public function __construct(WorkRepository $workRepo, ActivitieRepository $activitieRepo,QualificationRepository $qualificationRepo)
     {
         $this->workRepository = $workRepo;
         $this->activitieRepository = $activitieRepo;
+        $this->qualificationRepository = $qualificationRepo;
         $this->middleware('auth');
     }
 
@@ -165,14 +168,14 @@ class WorkController extends AppBaseController
     public function storea($id,Request $request)    
     {        
         if($request->contenido == ""){
-            return "contenido vacio";
+            abort(404,"contenido vacio");
         }
 
         $activitie = $this->activitieRepository->find($id);
         $works = $activitie->works()->get()->where("estudiante_id","=",Auth::user()->estudiante()->get()["0"]->id)->count();
 
         if($activitie->intentos < $works+1){
-            return "intentos alcanzados";
+            abort(404,"Intentos alcanzados");
         }
 
         $input = $request->all();
@@ -182,8 +185,25 @@ class WorkController extends AppBaseController
         $input['estudiante_id'] = Auth::user()->estudiante()->get()["0"]->id;
 
         $work = $this->workRepository->create($input);
+        $inputq;
+        if($works+1 == 1){            
+            $inputq['qualification'] = 0;
+            $inputq['observaciones'] = "";
+            $inputq['estado'] = 1;
+            $inputq['activitie_id'] = $input['activitie_id'];
+            $inputq['estudiante_id'] = $input['estudiante_id'];
 
-        return "entrega guardada";
+            $this->qualificationRepository->create($inputq);
+        }
+
+        $qualification = $activitie->qualifications()->where("estudiante_id","=",Auth::user()->estudiante()->get()['0']->id)->get()['0'];
+
+        $inputq['estado'] = 1;
+        $qualification->update($inputq);
+
+        Flash::success('Entrega guardada');
+
+        return $id;
     }
 
     public function showworks($activitie,$estudiante)
@@ -193,8 +213,30 @@ class WorkController extends AppBaseController
         }
 
         $activitie = $this->activitieRepository->find($activitie);
-        $myworks = $activitie->works()->where("estudiante_id","=",$estudiante)->get();
+        $qualification = $activitie->qualifications()->where("estudiante_id","=",$estudiante)->get();        
+        $myworks["contenidos"] = $activitie->works()->where("estudiante_id","=",$estudiante)->get();
+
+        if (empty($qualification['0'])) {
+            $myworks2["qualification"] = "Sin asignar" ;
+            $myworks2["estado"] = 0;
+            $myworks2["observaciones"] = "Sin entregas";
+            $myworks["detalles"] = $myworks2;
+        }else{
+            if ($qualification['0']->estado == 1) {
+                $myworks2["estado"] = "Para revision";    
+                $myworks2["qualification"] = "Para revision" ;
+            }else{
+                $myworks2["estado"] = $qualification['0']->estado;
+                $myworks2["qualification"] = $qualification['0']->qualification ;
+            }       
+
+            $myworks2["observaciones"] = $qualification['0']->observaciones;
+            $myworks["detalles"] = $myworks2;
+        }
+        
+        $myworks["estudiante"] = $estudiante;
         
         return $myworks;
     }
+    
 }

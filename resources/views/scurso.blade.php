@@ -81,7 +81,7 @@
       <div class="aside-header">Detalles y acciones</div>
 
       <div class="aside-link">
-        <a href="">
+        <a href="{{route("actividadescurso", $curso->id )}}">
           <div class="aside-link-icon">
             <img src="{{ asset("resources/icons/list-c.svg") }}" alt="lista">
           </div>

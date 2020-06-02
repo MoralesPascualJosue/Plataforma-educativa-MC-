@@ -20,11 +20,6 @@
 //________[END ALL routes]__________
 
 
-
-//Route::get('register', 'Auth\LoginController@showLoginForm')->name('register'); redirigir registro a login
-//Route::get('/home', 'HomeController@index')->middleware('verified');
-
-
 //________[Asesor routes]__________
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -69,6 +64,8 @@ Route::delete('/destroyac/{id}','cursoController@destroya')->name('destroyac');
 
 Route::post('/matricular','cursoController@matricular')->name('matricular');
 
+Route::get('/actividadescurso/{id}','cursoController@trabajos')->name('actividadescurso');
+
 //________[END curses routes]__________
 
 
@@ -95,6 +92,9 @@ Route::get('/trabajos/{id}','TaskController@trabajos')->name('trabajos');
 Route::post('/storeaw/{id}','WorkController@storea')->name('storeaw');
 
 Route::get('/showworks/{act}/{est}','WorkController@showworks')->name('works');
+
+Route::post('/updateaw/{id}','QualificationController@updatea')->name('updateaw');
+
 //________[END works routes]__________
 
 //________[Test routes]__________
@@ -122,20 +122,22 @@ Route::group(['middleware' => ['role:Coordinador']], function () {
 
 });
 
-Route::resource('asesors', 'AsesorController');
+// Route::resource('asesors', 'AsesorController');
 
-Route::resource('cursos', 'cursoController');
+// Route::resource('cursos', 'cursoController');
 
-Route::resource('anuncios', 'AnuncioController');
+// Route::resource('anuncios', 'AnuncioController');
 
-Route::resource('estudiantes', 'EstudianteController');
+// Route::resource('estudiantes', 'EstudianteController');
 
-Route::resource('matriculados', 'MatriculadoController');
+// Route::resource('matriculados', 'MatriculadoController');
 
-Route::resource('activities', 'ActivitieController');
+// Route::resource('activities', 'ActivitieController');
 
-Route::resource('contenidos', 'ContenidoController');
+// Route::resource('contenidos', 'ContenidoController');
 
-Route::resource('tasks', 'TaskController');
+// Route::resource('tasks', 'TaskController');
 
-Route::resource('works', 'WorkController');
+// Route::resource('works', 'WorkController');
+
+//Route::resource('qualifications', 'QualificationController');

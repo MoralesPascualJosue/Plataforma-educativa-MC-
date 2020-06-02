@@ -1,3 +1,28 @@
+$.ajaxSetup({
+    headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    }
+});
+
+$.fn.ajaxPosttReload = function(url, location, data, method) {
+    $.ajax({
+        method: method,
+        url: url,
+        data: data
+    })
+        .done(function(data) {
+            window.location.replace(location + data);
+        })
+        .fail(function(data) {
+            var errors = data.responseJSON["errors"];
+            if (errors) {
+                $.each(errors, function(i) {
+                    alert(errors[i]);
+                });
+            }
+        });
+};
+
 let editorck;
 
 ClassicEditor.create(document.querySelector("#editorworkv"), {
@@ -46,7 +71,16 @@ $(".entregarev").on("click", function() {
         .done(function(data) {
             $contenido = "";
 
-            data.forEach(element => {
+            $(".observaciones")
+                .empty()
+                .append(data["detalles"].observaciones)
+                .prop("id", data["estudiante"]);
+
+            $(".calificacion")
+                .empty()
+                .append(data["detalles"].qualification);
+
+            data["contenidos"].forEach(element => {
                 $contenido =
                     $contenido +
                     "<hr><hr><br><h1>Entrega " +
@@ -74,4 +108,30 @@ $("#btn-toggle").on("click", function() {
     $(".content").css({
         visibility: "visible"
     });
+});
+
+$("#saves").on("click", function() {
+    $data = {
+        calificacion: $(".calificacion")[0].textContent,
+        estudiante: $(".observaciones")[0].id,
+        observaciones: $(".observaciones")[0].value
+    };
+
+    $(this).ajaxPosttReload(
+        "../updateaw/" + $activitie,
+        "../trabajos/",
+        $data,
+        "post"
+    );
+});
+
+$(".calificacion").on("click", function() {
+    $activitie = $(this)[0].id;
+
+    $(".calificacion")
+        .attr("contenteditable", "true")
+        .focusin(function() {
+            $(this).css("border", "1px solid blue");
+        })
+        .focus();
 });

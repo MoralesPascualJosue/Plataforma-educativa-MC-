@@ -8,6 +8,7 @@ use App\Repositories\ActivitieRepository;
 use App\Repositories\ContenidoRepository;
 use App\Repositories\WorkRepository;
 use App\Repositories\TaskRepository;
+use App\Repositories\QualificationRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
@@ -25,13 +26,15 @@ class ActivitieController extends AppBaseController
     private $contenidoRepository;
     private $taskRepository;
     private $workRepository;
+    private $qualificationRepository;
 
-    public function __construct(ActivitieRepository $activitieRepo, ContenidoRepository $contenidoRepo,TaskRepository $taskRepo,WorkRepository $workRepo)
+    public function __construct(ActivitieRepository $activitieRepo, ContenidoRepository $contenidoRepo,TaskRepository $taskRepo,WorkRepository $workRepo,QualificationRepository $qualificationRepo)
     {
         $this->activitieRepository = $activitieRepo;
         $this->contenidoRepository = $contenidoRepo;
         $this->taskRepository = $taskRepo;
         $this->workRepository = $workRepo;
+        $this->qualificationRepository = $qualificationRepo;
         $this->middleware('auth');
     }
 
@@ -226,6 +229,7 @@ class ActivitieController extends AppBaseController
 
         $task = $activitie->task()->get()['0']->contenido;
         $works= [];
+        $qualification=[];
         
         if(Auth::user()->hasPermissionTo('edit cursos')){
             if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
@@ -237,9 +241,19 @@ class ActivitieController extends AppBaseController
                 return redirect()->route('inicio');
             }               
             $works = $activitie->works()->get()->where("estudiante_id","=",Auth::user()->estudiante()->get()['0']->id);
+
+            $calificacione = $activitie->qualifications()->where("estudiante_id","=",Auth::user()->estudiante()->get()['0']->id);
+            if(!$calificacione->count() == 0){
+                $qualification = $calificacione->get()['0'];
+            }else{
+                $qualification['estado'] = 0;
+                $qualification['qualification'] = "sin asignar";
+                $qualification['observaciones'] = "sin entregas";
+            }
+
         }
 
-        $view = \View::make('activities.show')->with(compact('activitie','curso','task','works'));
+        $view = \View::make('activities.show')->with(compact('activitie','curso','task','works','qualification'));
 
         // if($request->ajax()){
         //     $sections = $view->renderSections();

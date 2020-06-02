@@ -502,16 +502,16 @@ tr:hover {
     margin-bottom: 50px;
 }
 .seccionToggle button {
-    background: none;
-    font-size: 20px;
+    padding-left: 15px;
+    background: orange;
+    font-size: 15px;
     font-weight: bold;
-    padding: 20px 40px;
+    padding: 10px 20px;
     display: inline-block;
-    border: 5px solid #001f3f;
     transition: 0.3s all ease;
 }
 .seccionToggle button:hover {
-    border: 5px solid #0074d9;
+    border: 2px solid #0074d9;
     color: #0074d9;
 }
 
@@ -539,4 +539,19 @@ tr:hover {
         font-size: 40px;
         margin-top: 0;
     }
+}
+
+.calificacion {
+    background-color: orange;
+    padding: 15px;
+    text-align: center;
+    display: inline-block;
+    margin: 15px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.observaciones {
+    width: 100%;
+    padding-bottom: 20px;
 }

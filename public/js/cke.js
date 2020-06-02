@@ -136,7 +136,7 @@ $(document).on("click", ".savebutton", function(event) {
         data: { contenido: editorck.getData() }
     })
         .done(function(data) {
-            alert(data);
+            window.location.replace("../sactivitiec/" + data);
         })
         .fail(function(data) {
             var errors = data.responseJSON["errors"];
