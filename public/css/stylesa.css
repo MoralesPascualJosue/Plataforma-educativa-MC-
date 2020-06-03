@@ -70,7 +70,7 @@ html {
     margin: 0;
     width: 1.5rem;
     height: 1.5rem;
-    line-height: 1.5rem;
+    line-height: 1rem;
     box-shadow: none;
     border-radius: 0;
     transition: transform 300ms, background-color 250ms, color 250ms;

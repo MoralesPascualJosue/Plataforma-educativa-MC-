@@ -184,7 +184,7 @@ class TaskController extends AppBaseController
 
         Flash::success('Guardado.');
 
-        return Response::json(array('Estado' => 'guardado'));
+        return "guardado";
     }
 
     public function trabajos($id)

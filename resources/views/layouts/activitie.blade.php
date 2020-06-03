@@ -65,7 +65,7 @@
     <script src="{{ asset('editor/editor.js') }}"> </script>
     <script src="{{ asset('editor/editorup.js') }}"> </script> --}}
 
-    <script src="{{ asset('ckeditor/ckfinder/ckfinder.js') }}"> </script>
+    <script src="{{ asset('js/ckfinder/ckfinder.js') }}"> </script>
     <script>
         CKFinder.config( { connectorPath: '/ckfinder/connector' } );
     </script>

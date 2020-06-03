@@ -164,7 +164,7 @@ class QualificationController extends AppBaseController
 
         $input = $request->all();
 
-        if(empty($input['calificacion'])){
+        if(empty($input['calificacion'])  or  !is_numeric($input['calificacion']) or $input['calificacion'] < 0 or $input['calificacion']>100){
             Flash::success('calificacion no registrado.');
             return $id;
         }
@@ -174,7 +174,7 @@ class QualificationController extends AppBaseController
         if(empty($activitie)){
             Flash::success('calificacion no registrado.');
             return $id;
-        }
+        }        
 
         if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
             Flash::success('Actividad no registrada.');
@@ -182,6 +182,7 @@ class QualificationController extends AppBaseController
         } 
 
         $qualification = $activitie->qualifications()->where("estudiante_id","=",$input["estudiante"])->get();
+        $curso = $activitie->cursos()->first()->id;
         
         if($qualification->count() == 0){
             $data["qualification"] = 0;
@@ -189,6 +190,7 @@ class QualificationController extends AppBaseController
             $data["estado"] = 1;
             $data["activitie_id"] = $id;
             $data["estudiante_id"] = $input["estudiante"];
+            $data['curso_id'] = $curso;
             $qualification = $this->qualificationRepository->create($data);
         }else{
             $qualification = $qualification['0'];

@@ -18,6 +18,13 @@
         <textarea id="editor" name="contenido">{{ $task }}</textarea>
     </div>
     <br>
+
+    @can("edit cursos")
+    <button class="ce-example__button savebutton" id="{{$activitie->id}}">
+        Guardar
+    </button>
+    @endcan
+
     @cannot('edit cursos')
 
     <div class="work">
@@ -50,7 +57,7 @@
 
     {{-- <video width="640" height="360" controls>
         <source
-            src="http://localhost:8000/userfiles/files/Entregas%20seminario%201/pruebaAnalogiPorts%20-%20Proteus%208%20Professional.mp4"
+            src="http://192.168.1.70:8000/userfiles/users/files/pruebaAnalogiPorts%20-%20Proteus%208%20Professional.mp4"
             type="video/mp4">
         Tu navegador no soporta HTML5 video.
     </video>

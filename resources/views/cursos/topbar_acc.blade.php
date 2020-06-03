@@ -6,7 +6,7 @@
         <div class="title-container">
             <h1 class="panel-title">
                 <span class="course-name"><span class="activitie-name">{{ $curso->title }} </span>
-                    <span class="activitie-namec">{{ $activitie->title }}</span>
+                    <span class="activitie-namec">{{ $curso->participantes }} Participantes en el curso</span>
                 </span>
             </h1>
         </div>

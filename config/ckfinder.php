@@ -28,8 +28,8 @@ $config['authentication'] = '\App\Http\Middleware\CustomCKFinderAuth';
 /*============================ License Key ============================================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_licenseKey
 
-$config['licenseName'] = '';
-$config['licenseKey']  = '';
+$config['licenseName'] = 'comodoro';
+$config['licenseKey']  = '*Y?1-*1**-6**D-*6**-*P**-1*E*-2**9';
 
 /*============================ CKFinder Internal Directory ============================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_privateDir
@@ -76,13 +76,11 @@ $config['backends']['laravel_logs'] = array(
     'root'         => storage_path('logs')
 );
 
-// Backends
-$usuario = "users";
 $config['backends']['default'] = array(
     'name'         => 'default',
     'adapter'      => 'local',
-    'baseUrl'      => env('APP_URL').'/userfiles/'.$usuario,
-    'root'         => public_path('/userfiles/'.$usuario),
+    'baseUrl'      => env('APP_URL').'/userfiles/',
+    'root'         => public_path('/userfiles/'),
     'chmodFiles'   => 0777,
     'chmodFolders' => 0755,
     'filesystemEncoding' => 'UTF-8'
@@ -96,16 +94,16 @@ $config['defaultResourceTypes'] = '';
 $config['resourceTypes'][] = array(
     'name'              => 'Files', // Single quotes not allowed.
     'directory'         => 'files',
-    'maxSize'           => 0,
+    'maxSize'           => '50M',
     'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip',
-    'deniedExtensions'  => '',
+    'deniedExtensions'  => 'exe',
     'backend'           => 'default'
 );
 
 $config['resourceTypes'][] = array(
     'name'              => 'Images',
     'directory'         => 'images',
-    'maxSize'           => 0,
+    'maxSize'           => '8M',
     'allowedExtensions' => 'bmp,gif,jpeg,jpg,png',
     'deniedExtensions'  => '',
     'backend'           => 'default'
@@ -123,9 +121,9 @@ $config['accessControl'][] = array(
     'folder'              => '/',
 
     'FOLDER_VIEW'         => true,
-    'FOLDER_CREATE'       => true,
-    'FOLDER_RENAME'       => true,
-    'FOLDER_DELETE'       => true,
+    'FOLDER_CREATE'       => false,
+    'FOLDER_RENAME'       => false,
+    'FOLDER_DELETE'       => false,
 
     'FILE_VIEW'           => true,
     'FILE_UPLOAD'         => true,
@@ -158,6 +156,7 @@ $config['debug'] = false;
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_plugins
 
 $config['plugins'] = array();
+
 
 /*================================ Cache settings =====================================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_cache

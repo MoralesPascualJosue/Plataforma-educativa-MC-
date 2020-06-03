@@ -172,6 +172,10 @@ class WorkController extends AppBaseController
         }
 
         $activitie = $this->activitieRepository->find($id);
+        if(empty($activitie)){
+            abort(404,"Actividad no registrada");
+        }
+
         $works = $activitie->works()->get()->where("estudiante_id","=",Auth::user()->estudiante()->get()["0"]->id)->count();
 
         if($activitie->intentos < $works+1){
@@ -185,15 +189,17 @@ class WorkController extends AppBaseController
         $input['estudiante_id'] = Auth::user()->estudiante()->get()["0"]->id;
 
         $work = $this->workRepository->create($input);
-        $inputq;
-        if($works+1 == 1){            
-            $inputq['qualification'] = 0;
-            $inputq['observaciones'] = "";
-            $inputq['estado'] = 1;
-            $inputq['activitie_id'] = $input['activitie_id'];
-            $inputq['estudiante_id'] = $input['estudiante_id'];
 
-            $this->qualificationRepository->create($inputq);
+        $curso = $activitie->cursos()->first()->id;
+        if($works+1 == 1){            
+
+            $data["qualification"] = 0;
+            $data["observaciones"] = ".";
+            $data["estado"] = 1;
+            $data["activitie_id"] = $input['activitie_id'];
+            $data["estudiante_id"] = $input['estudiante_id'];
+            $data['curso_id'] = $curso;
+            $qualification = $this->qualificationRepository->create($data);
         }
 
         $qualification = $activitie->qualifications()->where("estudiante_id","=",Auth::user()->estudiante()->get()['0']->id)->get()['0'];

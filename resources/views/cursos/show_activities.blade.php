@@ -10,16 +10,23 @@
                 <th>Calificaciones</th>
                 <th>Promedio</th>
             </tr>
+            <tr>
+                <td></td>
+                @foreach ($actividades as $actividad)
+                <td>{{$actividad->title}}</td>
+                @endforeach
+                <td>Promedio</td>
+            </tr>
             @foreach ($estudiantes as $estudiante)
             <tr>
                 <th>{{$estudiante->name}}</th>
-                <th><button class="btn entregarev" href="javascript:void(0);"
-                        id="{{ $estudiante->id }}">Entrega</button>
-                </th>
+                @foreach ($estudiante["calificaciones"] as $item)
+                <th>{{ ($item['estado'] == 1) ? 'Para revision' : $item['qualification'] }} </th>
+                @endforeach
                 <th>{{ ($estudiante->qualificationestado == 1) ? 'Para revision' : $estudiante->qualificationqualification }}
                 </th>
-            </tr>
-            @endforeach
+                </>
+                @endforeach
 
         </table>
     </div>

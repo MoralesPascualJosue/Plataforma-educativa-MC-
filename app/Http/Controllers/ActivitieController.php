@@ -254,11 +254,6 @@ class ActivitieController extends AppBaseController
         }
 
         $view = \View::make('activities.show')->with(compact('activitie','curso','task','works','qualification'));
-
-        // if($request->ajax()){
-        //     $sections = $view->renderSections();
-        //     return Response::json($sections['content']);
-        // }
         
         return $view;
     }
@@ -303,17 +298,6 @@ class ActivitieController extends AppBaseController
 
         $activitie = $this->activitieRepository->update($request->all(), $id);
 
-        // Flash::success('Actividad actualizada.');
-        
-        // $curso = $activitie->cursos()->first();
-        // $task = $activitie->task()->get()["0"]->contenido;
-        
-        //  $view = \View::make('activities.show')->with(compact('activitie','curso','task'));
-         
-        // $sections = $view->renderSections();
-
-        // return Response::json($sections['content']);
-
          return "Actualizado";
     }
 //////////////////////////////////////////exmapels
@@ -338,3 +322,4 @@ class ActivitieController extends AppBaseController
 
     }
 }
+

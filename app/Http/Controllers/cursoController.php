@@ -391,30 +391,41 @@ class cursoController extends AppBaseController
                 Flash::success('Curso no registrado.');
                 return redirect()->route('inicio');
         } 
+
         $estudiantes = $curso->estudiantes()->orderBy("name")->get();
+        $actividades = $curso->activities()->where("visible","=",1)->get();
 
-        //return $estudiantes;
+        $curso['participantes'] = $estudiantes->count();
 
-        if(empty($estudiantes)){
-            return redirect()->back()->withErrors("Sin estudiantes registrado");
-        }
-        
-        foreach($estudiantes as $estudiante){
-            $qua = $estudiante->qualifications()->get();
+        foreach ($estudiantes as $estudi) {   
+            $calificacionescontenedor = [];      
+            $suma = 0;      
+            foreach($actividades as $acti){
+                
+                $calificacion = $acti->qualifications()->where("estudiante_id","=", $estudi->id )->get();
 
-            if(empty($qua['0'])){
-                $estudiante["qualificationestado"] = "0";
-                $estudiante["qualificationqualification"] = "Sin entregas";
-            }else{
-                $estudiante["qualificationestado"] =$qua['0']->estado;
-                $estudiante["qualificationqualification"] = $qua['0']->qualification;
+                if (empty($calificacion['0'])) {
+                    $contenidocal["id"] = $acti->id;
+                    $contenidocal['qualification'] = 'NA';
+                    $contenidocal['estado'] = "NA";
+                    $calificacion['0'] = $contenidocal;
+                }                                    
+                
+                $calificacionescontenedor[$acti->id] = $calificacion['0'];
+
+                if(is_numeric( $calificacion['0']['qualification'] )){
+                    $suma = $suma + $calificacion['0']['qualification'];
+                }
+
             }
-        }
+            
+            $promedio['qualification'] = round($suma/$actividades->count());
+            $promedio['estado'] = "Proemdio";
+            $calificacionescontenedor["promedio"] = $promedio;
 
-        return $estudiantes;
+            $estudi["calificaciones"] = $calificacionescontenedor;  
+        }        
 
-        $works = [];                
-        return view('cursos.show_activities')
-            ->with(compact('activitie','estudiantes','curso','works'));
+        return view('cursos.show_activities')->with(compact('estudiantes','curso','actividades'));
     }
 }

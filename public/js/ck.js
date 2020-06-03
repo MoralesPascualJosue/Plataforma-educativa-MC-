@@ -1,38 +1,6 @@
 let editorck;
 
 ClassicEditor.create(document.querySelector("#editor"), {
-    autosave: {
-        waitingTime: 4000, // in ms
-        save(editor) {
-            $update = $(".edit")["0"].id;
-            $.ajax({
-                type: "put",
-                url: "../updateat/" + $update,
-                data: {
-                    contenido: editorck.getData()
-                }
-            })
-                .done(function(data) {
-                    $("#contenidosave")
-                        .prop("style", "background-color:green")
-                        .empty()
-                        .append("Disponible");
-                })
-                .fail(function(data) {
-                    var errors = data.responseJSON["errors"];
-                    if (errors) {
-                        $.each(errors, function(i) {
-                            alert(errors[i]);
-                        });
-                    }
-
-                    $("#contenidosave")
-                        .prop("style", "background-color:red")
-                        .empty()
-                        .append("Error intenta mas tarde");
-                });
-        }
-    },
     toolbar: {
         items: [
             "heading",
@@ -98,17 +66,35 @@ ClassicEditor.create(document.querySelector("#editor"), {
     licenseKey: ""
 })
     .then(editor => {
-        editor.model.document.on("change:data", (evt, data) => {
-            //console.log(editor.getData());
-            $("#contenidosave")
-                .prop("style", "background-color:blue")
-                .empty()
-                .append("Guardando");
-        });
-
         editorck = editor;
-        //editor.isReadOnly = true;
     })
     .catch(err => {
         console.error(err);
     });
+
+$(document).on("click", ".savebutton", function(event) {
+    $update = $(".edit")["0"].id;
+    $.ajax({
+        type: "put",
+        url: "../updateat/" + $update,
+        data: {
+            contenido: editorck.getData()
+        }
+    })
+        .done(function(data) {
+            alert(data);
+        })
+        .fail(function(data) {
+            var errors = data.responseJSON["errors"];
+            if (errors) {
+                $.each(errors, function(i) {
+                    alert(errors[i]);
+                });
+            }
+
+            $("#contenidosave")
+                .prop("style", "background-color:red")
+                .empty()
+                .append("Error intenta mas tarde");
+        });
+});

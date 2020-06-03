@@ -82,10 +82,4 @@
         </a>
     </div>
     @endcan
-
-    {{-- <div class="ce-example__button" id="saveButton">
-        Guardar contenido
-    </div> --}}
-
-    <div id="contenidosave"> Cargando </div>
 </div>

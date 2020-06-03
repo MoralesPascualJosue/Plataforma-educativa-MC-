@@ -93,9 +93,13 @@ Route::post('/storeaw/{id}','WorkController@storea')->name('storeaw');
 
 Route::get('/showworks/{act}/{est}','WorkController@showworks')->name('works');
 
+//________[END works routes]__________
+
+//________[Qualifications routes]__________
+
 Route::post('/updateaw/{id}','QualificationController@updatea')->name('updateaw');
 
-//________[END works routes]__________
+//________[END qualifications routes]__________
 
 //________[Test routes]__________
 

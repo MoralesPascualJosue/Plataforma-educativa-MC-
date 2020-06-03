@@ -78,6 +78,10 @@ class curso extends Model
         return $this->belongsToMany('App\Models\Activitie','contenidos','curso_id','activitie_id')->withPivot('updated_at');
     }
 
+     public function qualifications() {
+        return $this->hasMany('App\Models\Qualification');
+    }
+
     public function hasPropiedad($propietario){
 
         if ($this->asesor->id == $propietario) {

@@ -20,7 +20,8 @@ class QualificationRepository extends BaseRepository
         'qualification',
         'observaciones',
         'estado',
-        'activitie_id'
+        'activitie_id',
+        'curso_id'
     ];
 
     /**

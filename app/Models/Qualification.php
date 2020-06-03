@@ -30,8 +30,9 @@ class Qualification extends Model
         'qualification',
         'observaciones',
         'estado',
+        'curso_id',
         'activitie_id',
-        'estudiante_id'
+        'estudiante_id',        
     ];
 
     /**
@@ -44,6 +45,7 @@ class Qualification extends Model
         'qualification' => 'integer',
         'observaciones' => 'string',
         'estado' => 'integer',
+        'curso_id' => 'integer',
         'activitie_id' => 'integer',
         'estudiante_id' => 'integer'
     ];
@@ -58,6 +60,10 @@ class Qualification extends Model
         'estado' => 'required'
     ];
 
+    public function curso() {
+        return $this->belongsTo('App\Models\Curso','curso_id');
+    }
+
     public function activitie(){
         return $this->belongsTo('App\Models\Activitie','activitie_id');
     }
@@ -65,4 +71,6 @@ class Qualification extends Model
     public function estudiante() {
         return $this->belongsTo('App\Models\Estudiante','estudiante_id');
     }
+
+
 }
