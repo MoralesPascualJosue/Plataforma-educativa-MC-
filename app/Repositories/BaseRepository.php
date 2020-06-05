@@ -171,6 +171,14 @@ abstract class BaseRepository
     }
 
 
+    public function findjoin( $tablename,$columnselect,$condicion,$columnjoin,$columns = ['*'])
+    {
+        $query = $this->model->newQuery();
+
+        return $query->join($tablename,$columnselect,$condicion,$columnjoin)->select($columns);
+    }
+
+
     /**
      * Findwhere model record for given id
      *

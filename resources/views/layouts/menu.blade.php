@@ -36,3 +36,19 @@
     <a href="{{ route('qualifications.index') }}"><i class="fa fa-edit"></i><span>Qualifications</span></a>
 </li>
 
+<li class="{{ Request::is('fcategorias*') ? 'active' : '' }}">
+    <a href="{{ route('fcategorias.index') }}"><i class="fa fa-edit"></i><span>Fcategorias</span></a>
+</li>
+
+<li class="{{ Request::is('fdiscusions*') ? 'active' : '' }}">
+    <a href="{{ route('fdiscusions.index') }}"><i class="fa fa-edit"></i><span>Fdiscusions</span></a>
+</li>
+
+<li class="{{ Request::is('fposts*') ? 'active' : '' }}">
+    <a href="{{ route('fposts.index') }}"><i class="fa fa-edit"></i><span>Fposts</span></a>
+</li>
+
+<li class="{{ Request::is('userFdiscusions*') ? 'active' : '' }}">
+    <a href="{{ route('userFdiscusions.index') }}"><i class="fa fa-edit"></i><span>User Fdiscusions</span></a>
+</li>
+

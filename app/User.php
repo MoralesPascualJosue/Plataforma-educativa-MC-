@@ -49,4 +49,16 @@ class User extends Authenticatable implements MustVerifyEmail
      public function anuncios(){
         return $this->hasMany('App\Models\Anuncio');
     }
+
+     public function posts(){
+        return $this->hasMany('App\Models\fpost');
+    }
+
+     public function fdiscusions(){
+        return $this->hasMany('App\Models\fdiscusion');
+    }
+
+    public function fdiscusiones(){
+        return $this->belongsToMany('App\Models\fdiscusion', 'user_fdiscusions', 'user_id', 'fdiscusion_id');
+    }
 }

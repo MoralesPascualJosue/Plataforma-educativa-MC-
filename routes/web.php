@@ -101,6 +101,13 @@ Route::post('/updateaw/{id}','QualificationController@updatea')->name('updateaw'
 
 //________[END qualifications routes]__________
 
+//________[Forum routes]__________
+
+Route::get('/foro/{curso}/','ForumController@foro')->name('foro');
+
+//________[END forum routes]__________
+
+
 //________[Test routes]__________
 
 Route::post('/activitiepost/{id}', 'ActivitieController@postatc');
@@ -115,16 +122,16 @@ Route::post('/test', function () { return 'Hello World Post'; });
 
 
 
-Route::group(['middleware' => ['role:Asesor']], function () {      
-});
+// Route::group(['middleware' => ['role:Asesor']], function () {      
+// });
 
-Route::group(['middleware' => ['role:Estudiante']], function () {   
-});
+// Route::group(['middleware' => ['role:Estudiante']], function () {   
+// });
 
 
-Route::group(['middleware' => ['role:Coordinador']], function () {   
+// Route::group(['middleware' => ['role:Coordinador']], function () {   
 
-});
+// });
 
 // Route::resource('asesors', 'AsesorController');
 
@@ -145,3 +152,11 @@ Route::group(['middleware' => ['role:Coordinador']], function () {
 // Route::resource('works', 'WorkController');
 
 //Route::resource('qualifications', 'QualificationController');
+
+// Route::resource('fcategorias', 'fcategoriaController');
+
+// Route::resource('fdiscusions', 'fdiscusionController');
+
+// Route::resource('fposts', 'fpostController');
+
+// Route::resource('userFdiscusions', 'user_fdiscusionController');

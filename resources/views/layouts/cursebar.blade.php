@@ -43,8 +43,8 @@
                 </a>
             </li>
             <li class="course-tool-tab">
-                <a class="course-tab-content" href="">
-                    <img src="{{ asset("resources/icons/debate-c.svg") }}" alt="Debates">
+                <a class="course-tab-content" href="{{ route("foro",$curso->id) }}">
+                    <img src="{{ asset("resources/icons/debate-c.svg") }}" alt="Foro">
                 </a>
             </li>
             <li class="course-tool-tab">

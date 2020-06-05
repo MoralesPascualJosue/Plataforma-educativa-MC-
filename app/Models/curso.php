@@ -82,6 +82,10 @@ class curso extends Model
         return $this->hasMany('App\Models\Qualification');
     }
 
+     public function discusiones() {
+        return $this->hasMany('App\Models\fdiscusion');
+    }
+
     public function hasPropiedad($propietario){
 
         if ($this->asesor->id == $propietario) {
