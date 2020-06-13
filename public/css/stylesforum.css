@@ -106,9 +106,95 @@
 
 .box {
     background-color: #444;
-    color: #fff;
+    color: #000000;
     border-radius: 5px;
     padding: 20px;
+}
+
+.discusstitle {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.dicsuddbody {
+    font-size: 17px;
+}
+
+.discussname {
+    color: whitesmoke;
+    font-size: 13px;
+}
+
+.discussitem {
+    display: inline;
+    text-align: right;
+    padding: 5px;
+    background-color: #f9f9f9;
+}
+
+.discussitemcon {
+    margin-top: 5px;
+    text-align: end;
+}
+
+.cursoreview {
+    text-align: center;
+}
+
+.nuevotema {
+    background-color: orange;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.nuevotema:hover {
+    background-color: #262626;
+    color: white;
+}
+
+.discussbody {
+    overflow: hidden;
+}
+
+.discussbody img {
+    width: 100%;
+}
+.discuss {
+    cursor: pointer;
+}
+
+.discuss:hover {
+    border-radius: 0px;
+    padding: 15px;
+    box-shadow: 0 -0.25rem 0 #262626 inset;
+    transition: box-shadow 0.25s linear;
+    transition: padding 0.25s linear;
+}
+.name-d {
+    font-size: 20px;
+}
+
+.contenidod {
+    padding: 10px;
+    font-size: 21px;
+    font-weight: initial;
+}
+
+.contenidod img {
+    width: 500px;
+}
+
+.discussli {
+    border-radius: 15px;
+    display: block;
+    background-color: white;
+    padding: 10px;
+    border-bottom: 1px solid orange;
+    margin-top: 10px;
+}
+.discussli:hover {
+    background-color: #f0f0f0;
 }
 
 @media (max-width: 992px) {
@@ -123,4 +209,133 @@
     .aside {
         width: unset;
     }
+
+    .contenidod img {
+        width: 250px;
+    }
+}
+
+#new_discussion,
+#new_comentario,
+#edit_comentario {
+    display: none;
+    border: 2px solid orange;
+    border-bottom: 0px;
+    position: fixed;
+    bottom: 0px;
+    width: minmax(300px, 750px);
+    margin-left: -375px;
+    left: 50%;
+    height: auto;
+    background: #fff;
+    z-index: 9999;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    overflow: hidden;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+@media (max-width: 1250px) {
+    #new_discussion,
+    #new_comentario,
+    #edit_comentario {
+        width: 80%;
+        left: 0px;
+        margin-left: 10%;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 992px) {
+    #new_discussion,
+    #new_comentario,
+    #edit_comentario {
+        width: 100%;
+        left: 0px;
+        margin-left: 0px;
+        padding: 10px;
+    }
+}
+
+.containerfs {
+    background-color: #f9f9f9;
+    display: flex;
+    padding: 5px;
+    min-height: 84vh;
+}
+.comentar,
+.nuevocomentario,
+.btn {
+    margin-top: 10px;
+    background-color: #ffa500;
+    padding: 10px;
+}
+
+.comentar:hover,
+.nuevocomentario:hover,
+.btn:hover {
+    background-color: #262626;
+    color: white;
+}
+
+.curse-headerfs {
+    text-align: center;
+    position: fixed;
+}
+
+.curse-headerfs,
+.curse-containerfs {
+    width: 50%;
+}
+
+.curse-containerfs {
+    margin-left: 50%;
+}
+
+@media (max-width: 992px) {
+    .containerfs {
+        display: block;
+    }
+    .contenidod {
+        font-size: 16px;
+        font-weight: initial;
+    }
+
+    .curse-headerfs,
+    .curse-containerfs {
+        width: 100%;
+    }
+
+    .curse-containerfs {
+        margin-left: 0px;
+    }
+
+    .curse-headerfs {
+        position: initial;
+    }
+}
+
+.regresar {
+    background-color: orange;
+    padding: 5px;
+}
+
+.regresar:hover {
+    color: white;
+    background-color: #262626;
+}
+
+.canedit {
+    visibility: visible;
+    z-index: 1;
+}
+
+.userpost {
+    font-size: 15px;
+    color: orange;
+}
+
+.pull-right {
+    float: right;
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\User;
 
 /**
  * Class fpost
@@ -57,12 +58,31 @@ class fpost extends Model
 
 
     public function user() {
-        return $this->belongsTo('App\Models\User','user_id');
+        return $this->belongsTo('App\User','user_id');
     }
 
     public function discusion() {
         return $this->belongsTo('App\Models\fdiscusion','fdiscusion_id');
     }
 
+     public function scopeWithDiscuss($query,$discuss)
+    {
+        return $query->where('fdiscusion_id','=', $discuss);
+    }
+
+    public function scopeWithUser( $query){
+         $subquery = User::select('users.name') 
+         ->whereColumn('users.id', 'fposts.user_id');
+ 
+        $query->addSelect(['usuarioName' => $subquery]);
+    }
+
+    public function hasPropiedad($propietario){
+
+        if ($this->user->id == $propietario) {
+            return 1;
+        }
+        return 0;
+    }
     
 }

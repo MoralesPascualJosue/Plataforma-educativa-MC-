@@ -84,6 +84,14 @@ class fdiscusion extends Model
         return $this->belongsToMany('App\User','user_fdiscusions', 'fdiscusion_id',"user_id");
     }   
 
+    public function hasPropiedad($propietario){
+
+        if ($this->user->id == $propietario) {
+            return 1;
+        }
+        return 0;
+    }
+
     public function scopeWithCategoria( $query){
          $subquery = fcategoria::select('fcategorias.name') 
          ->whereColumn('fcategorias.id', 'fdiscusions.fcategoria');//->first();
@@ -112,5 +120,12 @@ class fdiscusion extends Model
      public function scopeWithCurso($query,$curso)
     {
         return $query->where('curso_id','=', $curso);
+    }
+
+    public function scopeWithPropietario( $query){
+         $subquery = User::select('users.id') 
+         ->whereColumn('users.id', 'fdiscusions.user_id');
+ 
+        $query->addSelect(['propietario' => $subquery]);
     }
 }

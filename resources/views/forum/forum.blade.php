@@ -21,8 +21,6 @@
         <div class="container100">
             @include('forum.topbar')
 
-            @include('forum.sidebar')
-
             <div id="wrap100" class="wrap100">
                 <!-- Contains page content -->
                 @yield('content')
@@ -36,7 +34,8 @@
         @endif
     </div>
 
-    <script src=""> </script>
+    <script src="{{ asset('ckeditor/ckeditor5 1/build/ckeditor.js') }}"> </script>
+    <script src="{{ asset("js/forummanager.js") }}"> </script>
 
     @stack('scripts')
 </body>

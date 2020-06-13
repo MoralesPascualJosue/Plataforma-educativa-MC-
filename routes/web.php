@@ -105,6 +105,20 @@ Route::post('/updateaw/{id}','QualificationController@updatea')->name('updateaw'
 
 Route::get('/foro/{curso}/','ForumController@foro')->name('foro');
 
+Route::post('/foro/{curso}/creartema/','ForumController@store')->name('creartema');
+
+Route::post('/foro/comentar/{id}/','ForumController@comentar')->name('comentar');
+
+Route::get('/foro/{curso}/{disc}/','ForumController@show')->name('showtema');
+
+Route::get('/foro/{curso}/discusion/{id}','ForumController@discusion')->name('discusion');
+
+Route::post('/foro/update/{id}/','ForumController@updated')->name('updatead');
+
+Route::post('/foro/modificarco/{id}/','ForumController@updateco')->name('modificarco');
+
+Route::get('/foro/{curso}/comentario/{id}','ForumController@comentario')->name('comentario');
+
 //________[END forum routes]__________
 
 
