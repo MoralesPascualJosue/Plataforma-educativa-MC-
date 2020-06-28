@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li class="course-tool-tab">
-                <a class="course-tab-content" href="">
+                <a class="course-tab-content" href="{{ route("chats",$curso->id) }}">
                     <img src="{{ asset("resources/icons/messages-c.svg") }}" alt="Mensajes">
                 </a>
             </li>

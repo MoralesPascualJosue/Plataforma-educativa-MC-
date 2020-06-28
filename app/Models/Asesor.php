@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\User;
 
 /**
  * Class Asesor
@@ -74,6 +75,13 @@ class Asesor extends Model
 
     public function tasks(){
         return $this->hasMany('App\Models\Task');
+    }
+
+    public function scopeWithUser( $query){
+        $subquery = User::select('users.id') 
+        ->whereColumn('users.id', 'asesors.user_id');
+ 
+        $query->with(['usuario_id' => $subquery]);
     }
     
 }

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasRoles;
@@ -61,4 +62,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function fdiscusiones(){
         return $this->belongsToMany('App\Models\fdiscusion', 'user_fdiscusions', 'user_id', 'fdiscusion_id');
     }
+
+    public function chats(){
+        return $this->belongsToMany('App\Models\Chat', 'user_chat', 'user_id', 'chat_id')->withPivot('news');
+    }
+
+    public function messages(){
+        return $this->hasMany('App\Models\Message');
+    }   
+
 }

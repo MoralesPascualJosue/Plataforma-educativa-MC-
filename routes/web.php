@@ -121,6 +121,18 @@ Route::get('/foro/{curso}/comentario/{id}','ForumController@comentario')->name('
 
 //________[END forum routes]__________
 
+//________[Chat routes]__________
+Route::get('/chats/{id}','ChatController@chats')->name('chats');
+
+Route::get('/chat/{id}/{u}','ChatController@chat')->name('chat');
+
+Route::get('/chatC/{id}/{c}','ChatController@chatC')->name('chatC');
+
+Route::post('/chats/chat/message/{id}','ChatController@message')->name('message');
+
+Route::delete('/chats/destroycs/{id}','ChatController@destroyc')->name('destroycs');
+//________[END Chat routes]__________
+
 
 //________[Test routes]__________
 
@@ -146,31 +158,3 @@ Route::post('/test', function () { return 'Hello World Post'; });
 // Route::group(['middleware' => ['role:Coordinador']], function () {   
 
 // });
-
-// Route::resource('asesors', 'AsesorController');
-
-// Route::resource('cursos', 'cursoController');
-
-// Route::resource('anuncios', 'AnuncioController');
-
-// Route::resource('estudiantes', 'EstudianteController');
-
-// Route::resource('matriculados', 'MatriculadoController');
-
-// Route::resource('activities', 'ActivitieController');
-
-// Route::resource('contenidos', 'ContenidoController');
-
-// Route::resource('tasks', 'TaskController');
-
-// Route::resource('works', 'WorkController');
-
-//Route::resource('qualifications', 'QualificationController');
-
-// Route::resource('fcategorias', 'fcategoriaController');
-
-// Route::resource('fdiscusions', 'fdiscusionController');
-
-// Route::resource('fposts', 'fpostController');
-
-// Route::resource('userFdiscusions', 'user_fdiscusionController');

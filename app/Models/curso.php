@@ -86,6 +86,10 @@ class curso extends Model
         return $this->hasMany('App\Models\fdiscusion');
     }
 
+    public function chats() {
+        return $this->hasMany('App\Models\Chat');
+    }
+
     public function hasPropiedad($propietario){
 
         if ($this->asesor->id == $propietario) {

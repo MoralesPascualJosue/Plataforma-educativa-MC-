@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\User;
 
 /**
  * Class Estudiante
@@ -77,5 +78,12 @@ class Estudiante extends Model
     
     public function qualifications(){
         return $this->hasMany('App\Models\Qualification');
+    }
+
+   public function scopeWithUser( $query){
+        $subquery = User::select('users.id') 
+        ->whereColumn('users.id', 'estudiantes.user_id');
+ 
+        $query->addSelect(['usuario_id' => $subquery]);
     }
 }
