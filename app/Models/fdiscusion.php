@@ -94,7 +94,8 @@ class fdiscusion extends Model
 
     public function scopeWithCategoria( $query){
          $subquery = fcategoria::select('fcategorias.name') 
-         ->whereColumn('fcategorias.id', 'fdiscusions.fcategoria');//->first();
+         ->whereColumn('fcategorias.id', 'fdiscusions.fcategoria')
+         ;//->first();
         //->latest() 
         //->limit(1); 
  

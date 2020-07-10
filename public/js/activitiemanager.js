@@ -1,3 +1,6 @@
+let old;
+let object;
+
 $.ajaxSetup({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -72,15 +75,17 @@ $.fn.ajaxPosttalert = function(url, sectionToRender, data, method) {
         data: data
     })
         .done(function(data) {
-            alert(data);
+            $(sectionToRender).css("background-color", "#60e85e");
+            setTimeout(function heythere() {
+                $(sectionToRender).css("background-color", "inherit");
+            }, 1000);
         })
         .fail(function(data) {
-            var errors = data.responseJSON["errors"];
-            if (errors) {
-                $.each(errors, function(i) {
-                    alert(errors[i]);
-                });
-            }
+            $(sectionToRender).css("background-color", "red");
+            $(sectionToRender)[0].textContent = old;
+            setTimeout(function heythere() {
+                $(sectionToRender).css("background-color", "inherit");
+            }, 1000);
         });
 };
 
@@ -107,7 +112,19 @@ $.fn.ajaxDelete = function(url, sectionToRender) {
 /* Activities options */
 
 $(document).on("click", ".delete", function(event) {
-    $actividad = $(this);
+    object = $(this);
+    object.css("visibility", "hidden");
+    $(".menud").css("visibility", "visible");
+    $(".menud-option-confirmar").attr("id", $(this)[0]["id"]);
+});
+
+$(document).on("click", ".menud-option-cancel", function(event) {
+    $(".menud").css("visibility", "hidden");
+    object.css("visibility", "visible");
+});
+
+$(document).on("click", ".menud-option-confirmar", function(event) {
+    $actividad = object;
 
     $.ajax({
         type: "DELETE",
@@ -139,7 +156,7 @@ $(".activitie-namec")
 
         $(this).ajaxPosttalert(
             "../updateaa/" + $activitie[0].id,
-            "#wrap100",
+            ".activitie-namec",
             $data,
             "PUT"
         );
@@ -147,10 +164,10 @@ $(".activitie-namec")
 
 $(document).on("click", ".edit", function(event) {
     $activitie = $(this);
-
+    old = $(".activitie-namec")[0].textContent;
     $data = {
-        visible: $("#visible").val(),
-        intentos: $("#intentos").val(),
+        visible: $("#mostrar").prop("checked"),
+        intentos: $(".ctrl__counter-num").text(),
         fecha_inicio: $("#fecha_inicio").val(),
         fecha_final: $("#fecha_final").val()
     };
@@ -162,11 +179,11 @@ $(document).on("click", ".edit", function(event) {
 
 $(document).on("click", ".save", function(event) {
     $activitie = $(this);
-
+    old = $activitie[0].textContent;
     $data = {
         title: $(".activitie-namec")[0].textContent,
-        visible: $("#visible").val(),
-        intentos: $("#intentos").val(),
+        visible: $("#mostrar").prop("checked"),
+        intentos: $(".ctrl__counter-num").text(),
         fecha_inicio: $("#fecha_inicio").val(),
         fecha_final: $("#fecha_final").val()
     };
@@ -175,7 +192,12 @@ $(document).on("click", ".save", function(event) {
         .css("border", "none")
         .attr("contenteditable", "false");
 
-    $(this).ajaxPosttalert("../updateaa/" + $activitie[0].id, "", $data, "PUT");
+    $(this).ajaxPosttalert(
+        "../updateaa/" + $activitie[0].id,
+        ".save",
+        $data,
+        "PUT"
+    );
 });
 
 function handler(e) {

@@ -38,141 +38,6 @@ class ActivitieController extends AppBaseController
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the Activitie.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function index(Request $request)
-    {
-        $activities = $this->activitieRepository->all();
-
-        return view('activities.index')
-            ->with('activities', $activities);
-    }
-
-    /**
-     * Show the form for creating a new Activitie.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('activities.create');
-    }
-
-    /**
-     * Store a newly created Activitie in storage.
-     *
-     * @param CreateActivitieRequest $request
-     *
-     * @return Response
-     */
-    public function store(CreateActivitieRequest $request)
-    {
-        $input = $request->all();
-
-        $input['asesor_id'] = Auth::user()->asesor()->get()['0']->id;
-
-        $activitie = $this->activitieRepository->create($input);
-
-        Flash::success('Activitie saved successfully.');
-
-        return redirect(route('activities.index'));
-    }
-
-    /**
-     * Display the specified Activitie.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $activitie = $this->activitieRepository->find($id);
-        if (empty($activitie)) {
-            Flash::error('Activitie not found');
-
-            return redirect(route('activities.index'));
-        }
-
-        return view('activities.show')->with(compact('activitie'));
-    }
-
-    /**
-     * Show the form for editing the specified Activitie.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $activitie = $this->activitieRepository->find($id);
-
-        if (empty($activitie)) {
-            Flash::error('Activitie not found');
-
-            return redirect(route('activities.index'));
-        }
-
-        return view('activities.edit')->with('activitie', $activitie);
-    }
-
-    /**
-     * Update the specified Activitie in storage.
-     *
-     * @param int $id
-     * @param UpdateActivitieRequest $request
-     *
-     * @return Response
-     */
-    public function update($id, UpdateActivitieRequest $request)
-    {
-        $activitie = $this->activitieRepository->find($id);
-
-        if (empty($activitie)) {
-            Flash::error('Activitie not found');
-
-            return redirect(route('activities.index'));
-        }
-
-        $activitie = $this->activitieRepository->update($request->all(), $id);
-
-        Flash::success('Activitie updated successfully.');
-
-        return redirect(route('activities.index'));
-    }
-
-    /**
-     * Remove the specified Activitie from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        $activitie = $this->activitieRepository->find($id);
-
-        if (empty($activitie)) {
-            Flash::error('Activitie not found');
-
-            return redirect(route('activities.index'));
-        }
-
-        $this->activitieRepository->delete($id);
-
-        Flash::success('Activitie deleted successfully.');
-
-        return redirect(route('activities.index'));
-    }
-
     /* ajax display */
 
      public function storea($id,Request $request)
@@ -281,9 +146,18 @@ class ActivitieController extends AppBaseController
 
     public function updatea($id, UpdateactivitieRequest $request)
     {        
+
+        $input = $request->all();
+
+        $input["visible"] = 0;
+
+        if($request["visible"] == "true"){
+            $input["visible"] = 1;
+        }
+
         $activitie = $this->activitieRepository->find($id);       
         
-        if($request->fecha_inicio > $request->fecha_final){
+        if($input["fecha_inicio"] > $input["fecha_final"]){
                 abort(403,"fechas no validas");
         } 
         
@@ -296,29 +170,54 @@ class ActivitieController extends AppBaseController
                 return redirect()->route('inicio');
         } 
 
-        $activitie = $this->activitieRepository->update($request->all(), $id);
+        $activitie = $this->activitieRepository->update($input, $id);
 
          return "Actualizado";
     }
-//////////////////////////////////////////exmapels
+//////////////////////////////////////////uploads
 
-    public function postatc($id,Request $request){
-        request()->validate(['file' => 'image']);
-        return request()->file->storeAs('uploads/'.$id, request()->file->getClientOriginalName());
+    public function uploadFileimage(Request $request){
+        if ($files = $request->file('fileToUpload')) {
+             $id = Auth::user()->id;
+            request()->validate([
+                'fileToUpload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
+            $ruta = request()->fileToUpload->storeAs('images/'.$id,$fileName,'public');
+            return asset($ruta);
+        }
+
+        abort(402,"Archivo no seleccionado");
+
     }
 
-    public function file($file){
-       return Storage::response("uploads/12/$file");
+    public function uploadFilevideo(Request $request){
+        if ($files = $request->file('fileToUpload')) {
+             $id = Auth::user()->id;
+            request()->validate([
+                'fileToUpload' => 'required|mimes:mpeg,mp4,webm,mov,flv,avi,wmv|max:307200'
+            ]);
+            $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
+            $ruta = request()->fileToUpload->storeAs('media/'.$id,$fileName,'public');
+            return asset($ruta);
+        }
+
+        abort(402,"Archivo no seleccionado");
+
     }
 
-    public function uploadFilePost($id,Request $request){
-        request()->validate([
-            'fileToUpload' => 'required|file|max:1024',
-        ]);
+    public function uploadFiledoc(Request $request){
+        if ($files = $request->file('fileToUpload')) {
+             $id = Auth::user()->id;
+            request()->validate([
+                'fileToUpload' => 'required|mimes:pdf|max:30720'
+            ]);
+            $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
+            $ruta = request()->fileToUpload->storeAs('archivos/'.$id,$fileName,'public');
+            return asset($ruta);
+        }
 
-        $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
-
-        return request()->fileToUpload->storeAs('documents/'.$id,$fileName);
+        abort(402,"Archivo no seleccionado");
 
     }
 }

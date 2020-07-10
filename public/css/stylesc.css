@@ -101,38 +101,18 @@ li.active a {
 }
 
 /*-------------------------------------------------------------------*/
-.education {
-    --bg-color: #ffd861;
-    --bg-color-light: #ffeeba;
-    --text-color-hover: #4c5656;
-    --box-shadow-color: rgba(255, 215, 97, 0.48);
-}
 
 .credentialing {
     --bg-color: #b8f9d3;
     --bg-color-light: #e2fced;
-    --text-color-hover: #4c5656;
-    --box-shadow-color: rgba(184, 249, 211, 0.48);
+    --text-color-hover: black;
+    --box-shadow-color: rgba(230, 167, 72, 0.911);
     padding: 2rem;
 }
 
 .credentialing input {
     padding: 1px;
     border-bottom: 1px solid orange;
-}
-
-.wallet {
-    --bg-color: #ceb2fc;
-    --bg-color-light: #f0e7ff;
-    --text-color-hover: #fff;
-    --box-shadow-color: rgba(206, 178, 252, 0.48);
-}
-
-.human-resources {
-    --bg-color: #dce9ff;
-    --bg-color-light: #f1f7ff;
-    --text-color-hover: #4c5656;
-    --box-shadow-color: rgba(220, 233, 255, 0.48);
 }
 
 .clases-content {
@@ -143,7 +123,7 @@ li.active a {
     margin: 10px;
     width: 88%;
     height: 260px;
-    background: #fff;
+    background: #f9f9f9;
     border-top-right-radius: 10px;
     overflow: hidden;
     display: flex;
@@ -159,9 +139,7 @@ li.active a {
 
 .card:hover {
     transform: translateY(-5px) scale(1.005) translateZ(0);
-    box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11),
-        0 24px 46px var(--box-shadow-color);
-    border-bottom: orange solid 3px;
+    box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px var(orange);
 }
 
 .card:hover .overlay {
@@ -178,7 +156,7 @@ li.active a {
 }
 
 .card:hover p {
-    color: var(--text-color-hover);
+    color: orange;
 }
 
 .card:active {
@@ -198,9 +176,8 @@ li.active a {
 }
 
 .circle {
-    /*height: 60%;*/
-    width: 100%;
-    /*border-radius: 10px;*/
+    height: 50%;
+    width: 60%;
     background: #fff;
     display: flex;
     justify-content: center;
@@ -209,27 +186,9 @@ li.active a {
     z-index: 1;
     transition: all 0.3s ease-out;
     overflow: hidden;
-    /*top: -15%;*/
 }
 
-.card:hover .circle {
-    border-bottom: solid 1px orange;
-}
-
-.circle:after {
-    content: "";
-    width: 118px;
-    height: 118px;
-    display: block;
-    position: absolute;
-    background: var(--bg-color);
-    border-radius: 50%;
-    top: 7px;
-    left: 7px;
-    transition: opacity 0.3s ease-out;
-}
-
-.circle svg {
+.circle img {
     z-index: 10000;
     transform: translateZ(0);
 }
@@ -238,7 +197,6 @@ li.active a {
     width: 100%;
     position: absolute;
     height: 80px;
-    /*border-radius: 10%;*/
     background: var(--bg-color);
     z-index: 0;
     transition: transform 0.3s ease-out;
@@ -361,6 +319,3 @@ li.active a {
     width: 100%;
     height: 100%;
 }
-
-/*------------------------------------------------------------------
-[ Responsive img content]*/

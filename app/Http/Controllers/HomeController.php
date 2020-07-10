@@ -9,8 +9,7 @@ use App\Models\Anuncio;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
+    /**we
      *
      * @return void
      */
@@ -37,12 +36,5 @@ class HomeController extends Controller
 
         return $view;
     }
-
-    /*public function index(Request $request)
-    {
-        $anuncios = Anuncio::where('user_id',8)->get();
-
-        return $anuncios;
-    }*/
     
 }

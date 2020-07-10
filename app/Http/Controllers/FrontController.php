@@ -81,6 +81,10 @@ class FrontController extends Controller
         }else{
             $user = $this->estudianteRepository->update($request->all(), $user->id);  
         }
+
+        $input["name"] = $request["name"];
+
+        Auth::user()->update($input);
         
         if($request->file('image')){
             $path = Storage::disk('public')->put('photos',$request->file('image'));

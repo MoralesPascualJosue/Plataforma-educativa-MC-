@@ -11,19 +11,15 @@
 
 @include('flash::message')
 
+@can("edit cursos")
+<button class="btn-save" id="{{$activitie->id}}">
+    Guardar contenido
+</button>
+@endcan
+
 <div class="content">
 
-    <!-- Contenido Field -->
-    <div>
-        <textarea id="editor" name="contenido">{{ $task }}</textarea>
-    </div>
-    <br>
-
-    @can("edit cursos")
-    <button class="ce-example__button savebutton" id="{{$activitie->id}}">
-        Guardar
-    </button>
-    @endcan
+    {!! $task !!}
 
     @cannot('edit cursos')
 
@@ -54,36 +50,7 @@
     {{-- <div class="contenido" id="editorjs">
         <p>contenido</p>
     </div> --}}
-
-    {{-- <video width="640" height="360" controls>
-        <source
-            src="http://192.168.1.70:8000/userfiles/users/files/pruebaAnalogiPorts%20-%20Proteus%208%20Professional.mp4"
-            type="video/mp4">
-        Tu navegador no soporta HTML5 video.
-    </video>
-    <Button class="btn" id="add"> add</Button>
-
-    <form action="/activitiepost/12" enctype="multipart/form-data" method="post">
-        {{ csrf_field() }}
-    <input type="file" name="file">
-    <button type="submit">Upload</button>
-    </form>
-
-    <form action="/uploadfile/12" method="post" enctype="multipart/form-data">
-        @csrf
-        <div class="form-group">
-            <input type="file" class="form-control-file" name="fileToUpload" id="exampleInputFile"
-                aria-describedby="fileHelp">
-            <small id="fileHelp" class="form-text text-muted">Please upload a valid image file. Size of image should not
-                be
-                more than 2MB.</small>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form> --}}
 </div>
 
+<div class="newblock">New Block</div>
 @endsection
-
-@push('scripts')
-
-@endpush

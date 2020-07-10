@@ -18,7 +18,7 @@
             </a>
             <ul class="navcate">
                 @foreach($categorias as $category)
-                <a href="/foro/{{ $curso->id }}/{{ $category->name }}">
+                <a href="/foro/{{ $curso->id }}?en={{ $category->name }}">
                     <div class="box-cate" style="background-color:{{ $category->color }}">
                         {{ $category->name }}
                     </div>

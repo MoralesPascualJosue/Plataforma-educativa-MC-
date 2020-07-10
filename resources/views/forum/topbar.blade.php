@@ -19,7 +19,7 @@
                 </a>
             </li>
             <li class="course-tool-tab  {{ Route::is('foro') ? 'active' : '' }}">
-                <a class="course-tab-content" href="{{ route("foro",$curso->id) }}">
+                <a class="course-tab-content" href="{{ route("foro",[$curso->id]) }}">
                     <img src="{{ asset("resources/icons/debate-c.svg") }}" alt="Foro">
                 </a>
             </li>

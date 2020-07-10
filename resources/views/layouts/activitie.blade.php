@@ -5,10 +5,19 @@
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="http://localhost:8000/resources/logo/Logo minmin white.svg" type="image/svg+xml">
 
     <title>@yield('title')</title>
+    @can('edit cursos')
     <link rel="stylesheet" href="{{ asset('css/stylesa.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/deditor.css') }}">
+    @else
+    <link rel="stylesheet" href="{{ asset('css/stylesae.css') }}">
+    @endcan
+
+    {{-- <link rel="stylesheet" href="{{ asset('css/deditor.css') }}"> --}}
+    {{-- <link rel="stylesheet" href="{{asset('js/dropzone/dropzone.min.css')}}"> --}}
+
+    <link rel="stylesheet" href="{{ asset('videojs/video-js.min.css') }}">
     @yield('css')
 
     <script src="{{asset('js/jquery/jquery-3.5.1.min.js')}}"> </script>
@@ -20,19 +29,25 @@
         <div class="container100">
             <!-- Left side column. contains the logo and sidebar -->
             @include('activities.topbar')
-
             <!-- Down side. Main Footer-->
-            @can('edit cursos')
-            @include('activities.toolsidebar')
-            @else
-            @include('activities.statussidebar')
-            @endcan
-
-            <div id="wrap100" class="wrap100">
-                <!-- Contains page content -->
-                @yield('content')
+            <div class="container">
+                <div class="menud">
+                    <div>Eliminar</div>
+                    <div class="menud-option menud-option-confirmar" id="">Si</div>
+                    <div class="menud-option menud-option-cancel">No</div>
+                </div>
+                <div class="item1">
+                    @can('edit cursos')
+                    @include('activities.toolsidebar')
+                    @else
+                    @include('activities.statussidebar')
+                    @endcan
+                </div>
+                <div id="wrap100" class="wrap100 item2">
+                    <!-- Contains page content -->
+                    @yield('content')
+                </div>
             </div>
-
         </div>
 
         @else
@@ -65,11 +80,13 @@
     <script src="{{ asset('editor/editor.js') }}"> </script>
     <script src="{{ asset('editor/editorup.js') }}"> </script> --}}
 
-    <script src="{{ asset('js/ckfinder/ckfinder.js') }}"> </script>
+    {{-- <script src="{{ asset('js/dropzone/dropzone.min.js') }}"> </script> --}}
+    <script src="{{ asset('videojs/video.min.js') }}"> </script>
+    {{-- <script src="{{ asset('js/ckfinder/ckfinder.js') }}"> </script>
     <script>
         CKFinder.config( { connectorPath: '/ckfinder/connector' } );
     </script>
-    <script src="{{ asset('ckeditor/ckeditor5 1/build/ckeditor.js') }}"> </script>
+    <script src="{{ asset('ckeditor/ckeditor5 1/build/ckeditor.js') }}"> </script> --}}
 
     @can('edit cursos')
     <script src="{{ asset('js/ck.js') }}"> </script>

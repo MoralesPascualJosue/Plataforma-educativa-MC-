@@ -12,9 +12,11 @@
         @endif
 
         <div class="box item1">
-            <div class="name-user">{{ $user['perfil']->name }} </div>
-            <div class="img-user"><img id="usr-img" src="{{ asset($user['perfil']->image) }}" alt=""></div>
+            <div class="participantes">
+
+            </div>
         </div>
+
         <div class=" box item2">
             <div class="conversaciones">
                 <div class="aside-header">Conversaciones</div>
@@ -25,9 +27,11 @@
                 </div>
                 @endforeach
             </div>
+        </div>
 
+        <div class="box item22">
             <div class="messages">
-                <section class="msger">
+                <section class="msger" id="0">
                     <header class="msger-header">
                         <div class="msger-header-title">
                             SimpleChat
@@ -51,6 +55,11 @@
 
 
         <div class="curse-container box item3">
+            <div>
+                <div class="name-user">{{ $user['perfil']->name }} </div>
+                <div class="img-user"><img id="usr-img" src="{{ asset($user['perfil']->image) }}" alt=""></div>
+            </div>
+
             <div class="aside-header">Contactos</div>
 
             @foreach($contacts as $contac)

@@ -36,7 +36,7 @@ class ForumController extends Controller
     }
 
     public function foro($cur,Request $request)
-    {
+    {        
         $curso = $this->cursoRepository->find($cur,['id','title','cover']);
         $categorias = $this->fcategoriaRepository->all([],null,null,['id','name','color']);
 
@@ -48,6 +48,10 @@ class ForumController extends Controller
         ->orderBy('updated_at','DESC')
         ->get()
         ;
+
+        if (!$request["en"] == "") {
+            $discuss = $discuss->where("nameCategoria",$request["en"]);
+        }
 
         $view = \View::make('forum.content')->with(compact('curso','categorias','discuss'));
 

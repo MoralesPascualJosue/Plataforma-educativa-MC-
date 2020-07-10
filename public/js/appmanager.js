@@ -162,12 +162,6 @@ $(document).on("click", ".edit", function(event) {
         });
 });
 
-$(document).on("click", ".create-cl", function(event) {
-    $anuncio = $(this);
-
-    $(this).ajaxPostt("storeac", "#wrap100", { top: "top" }, "POST");
-});
-
 $(document).on("click", ".editar-perfil", function(event) {
     $(this).attr("style", "visibility: hidden");
     $(".guardar-perfil").attr("style", "visibility: visible");

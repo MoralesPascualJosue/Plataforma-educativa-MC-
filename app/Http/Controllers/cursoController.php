@@ -193,11 +193,19 @@ class cursoController extends AppBaseController
     {     
         $cursos;
 
-        if(Auth::user()->hasPermissionTo('edit cursos')){
-            $cursos = $this->cursoRepository->findWherePaginate("asesor_id","=",Auth::user()->asesor()->get()['0']->id,12);
+        if (!$request["ele"] == "") {
+            $elementos = $request["ele"];
         }else{
-            $cursos = Auth::user()->estudiante()->get()['0']->cursos()->orderBy("pivot_updated_at","DESC")->paginate(12);            
-        }    
+            $elementos = 12;
+        }
+
+        if(Auth::user()->hasPermissionTo('edit cursos')){
+            $cursos = $this->cursoRepository->findWherePaginate("asesor_id","=",Auth::user()->asesor()->get()['0']->id,$elementos);
+        }else{
+            $cursos = Auth::user()->estudiante()->get()['0']->cursos()->orderBy("pivot_updated_at","DESC")->paginate($elementos);            
+        } 
+
+        $cursos->appends(['ele' => $elementos]);
 
         $view = \View::make('cursos.inicioc')->with('cursos',$cursos);
 
@@ -245,7 +253,6 @@ class cursoController extends AppBaseController
 
      public function storea(Request $request)
     {
-
         if(!Auth::user()->hasPermissionTo('edit cursos')){
             return redirect(route('inicio'));
         }
@@ -261,7 +268,7 @@ class cursoController extends AppBaseController
 
         Flash::success('Curso creado.');
 
-        return redirect(route('inicio'));
+        return redirect(route('scursoc',$curso->id));
     }
 
     public function updatea($id, UpdatecursoRequest $request)

@@ -14,69 +14,69 @@
 
 <div class="container">
 
-  {!! Form::model($curso, ['route' => ['updatecover', $curso->id], 'method' => 'post', 'files' =>
-  true,'id'=>'avatarForm','style'=>'display: none']) !!}
+  <div class="item1">
+    {!! Form::model($curso, ['route' => ['updatecover', $curso->id], 'method' => 'post', 'files' =>
+    true,'id'=>'avatarForm','style'=>'display: none']) !!}
 
-  <input type="file" id="avatarInput" name="cover">
-  {!! Form::close() !!}
+    <input type="file" id="avatarInput" name="cover">
+    {!! Form::close() !!}
 
-  @if ($curso->cover==null)
-  <div class="curse-img-header"
-    style="background: url('../resources/welcome1.jpg')  no-repeat; background-size: cover; background-position:0;">
-    @can('edit cursos')
-    <button id="avatarImage" class="float-ru bb-close">E</button>
-    @endcan
-  </div>
-  @else
-  <div class="curse-img-header" style="background: url({{ asset($curso->cover)}}) ; background-size: contain;">
-    @can('edit cursos')
-    <button id="avatarImage" class="float-ru bb-close">
-      <img src="{{ asset("resources/icons/edit-a.svg") }}" alt="editar" width="14px">
-    </button>
-    @endcan
-  </div>
-  @endif
+    @if ($curso->cover==null)
+    <div class="curse-img-header"
+      style="background: url('../resources/welcome1.jpg')  no-repeat; background-size: cover; background-position:0;">
+      @can('edit cursos')
+      <button id="avatarImage" class="float-ru bb-close">E</button>
+      @endcan
+    </div>
+    @else
+    <div class="curse-img-header" style="background: url({{ asset($curso->cover)}}) ; background-size: contain;">
+      @can('edit cursos')
+      <button id="avatarImage" class="float-ru bb-close btned">
+        <img src="{{ asset("resources/icons/edit-a.svg") }}" alt="editar" width="14px">
+      </button>
+      @endcan
+    </div>
+    @endif
 
-  <div class="curse-header">
-    <div class="avatar-container">
-      <div class="user-img-header">
-        @if($curso->asesor->image == null)
-        <img src="{{ asset('resources/users/user-default.svg') }}" width="142px" />
-        @else
-        <img src="{{ asset( $curso->asesor->image ) }}" width="142px" />
-        @endif
+    <div class="curse-header">
+      <div class="avatar-container">
+        <div class="user-img-header">
+          @if($curso->asesor->image == null)
+          <img src="{{ asset('resources/users/user-default.svg') }}" width="142px" />
+          @else
+          <img src="{{ asset( $curso->asesor->image ) }}" width="142px" />
+          @endif
+        </div>
       </div>
-    </div>
-    <div class="user-name-header">
-      <span id="name-u">{!! $curso->asesor->name !!}</span>
-    </div>
-    <div class="username-header">
-      <span>Asesor</span>
-    </div>
+      <div class="user-name-header">
+        <span id="name-u">{!! $curso->asesor->name !!}</span>
+      </div>
+      <div class="username-header">
+        <span>Asesor</span>
+      </div>
 
-  </div>
-
-  <div class="curso-message">
-    <p class="cursoreview">{!! $curso->review!!}</p>
-
-    @can('edit cursos')
-
-    <div class=" tools-course canedit">
-      <ul class="course-tools">
-        <li class="course-tool-tab tooltip editm" id="{{ $curso->id }}">
-          <a class="course-tab-content" href="javascript:void(0);">
-            <img src="{{ asset("resources/icons/edit-a.svg") }}" alt="editar">
-          </a>
-          <span class="tooltiptext">Editar</span>
-        </li>
-
-      </ul>
     </div>
 
-    @endcan
-  </div>
+    <div class="curso-message">
+      <p class="cursoreview">{!! $curso->review!!}</p>
 
-  <div class="curse-container">
+      @can('edit cursos')
+
+      <div class=" tools-course canedit">
+        <ul class="course-tools">
+          <li class="course-tool-tab tooltip editm" id="{{ $curso->id }}">
+            <a class="course-tab-content" href="javascript:void(0);">
+              <img src="{{ asset("resources/icons/edit-a.svg") }}" alt="editar">
+            </a>
+            <span class="tooltiptext">Editar</span>
+          </li>
+
+        </ul>
+      </div>
+
+      @endcan
+    </div>
+
     <div class="aside">
       <div class="aside-header">Detalles y acciones</div>
 
@@ -116,9 +116,11 @@
         </a>
       </div>
       @endcan
-
     </div>
 
+  </div>
+
+  <div class="curse-container item2">
     <div class="column-content">
       <div class="aside-header">
         <div class="der">Contenido</div>
@@ -138,6 +140,12 @@
     </div>
 
 
+  </div>
+
+  <div class="menud">
+    <div>Eliminar</div>
+    <div class="menud-option menud-option-confirmar" id="">Si</div>
+    <div class="menud-option menud-option-cancel">No</div>
   </div>
 
 </div>

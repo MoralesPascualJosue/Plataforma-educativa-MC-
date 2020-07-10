@@ -1,17 +1,10 @@
 const msgerForm = get(".msger-inputarea");
 const msgerInput = get(".msger-input");
 const msgerChat = get(".msger-chat");
+const msgerPart = get(".participantes");
 
-const BOT_MSGS = [
-    "Hi, how are you?",
-    "Ohh... I can't understand what you trying to say. Sorry!",
-    "I like to play games... But I don't know how to play!",
-    "Sorry if my answers are not relevant. :))",
-    "I feel sleepy! :("
-];
+let object;
 
-// Icons made by Freepik from www.flaticon.com
-const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
 const PERSON_IMG = $("#usr-img").attr("src");
 const BOT_NAME = "BOT";
 const PERSON_NAME = $(".name-user").text();
@@ -127,6 +120,8 @@ $(document).on("click", ".cerrarchat", function(event) {
     $(".messages").css("visibility", "hidden");
     $(".msger-chat").empty();
     $(".msger-header-title").text("Conversaciones");
+    $(".participantes").empty();
+    $(".msger").attr("id", "0");
 });
 
 $(document).on("click", ".newmessage", function(event) {
@@ -142,6 +137,7 @@ $(document).on("click", ".newmessage", function(event) {
     })
         .done(function(data) {
             msgerForm.action = "/chats/chat/message/" + data["chat"].id;
+            $(".msger").attr("id", data["chat"].id);
             data["messages"].forEach(element => {
                 let position = "left";
                 if (data["i"] == element["send"]) {
@@ -156,6 +152,17 @@ $(document).on("click", ".newmessage", function(event) {
                     element["created_at"]
                 );
             });
+
+            if (data["state"] == "new") {
+                const seccion = `
+                <div class="chat" id="${data["chat"]["id"]}">
+                    <div class="chat-name" id="${data["chat"]["curso_id"]}/${data["chat"]["id"]}">${data["chat"]["name"]}</div>
+                    <div class="eliminarc" id="${data["chat"]["id"]}">X</div>
+                </div>
+                `;
+
+                $(".conversaciones").append(seccion);
+            }
         })
         .fail(function(data) {
             var errors = data.responseJSON["errors"];
@@ -180,6 +187,7 @@ $(document).on("click", ".chat-name", function(event) {
     })
         .done(function(data) {
             msgerForm.action = "/chats/chat/message/" + data["chat"].id;
+            $(".msger").attr("id", data["chat"].id);
             data["messages"].forEach(element => {
                 let position = "left";
                 if (data["i"] == element["send"]) {
@@ -194,6 +202,15 @@ $(document).on("click", ".chat-name", function(event) {
                     element["created_at"]
                 );
             });
+            data["participantes"].forEach(element => {
+                const msgHTML = `
+                    <div class="participante">
+                        <div class="msg-info-name">${element["name"]}</div>
+                    </div>
+                `;
+
+                msgerPart.insertAdjacentHTML("beforeend", msgHTML);
+            });
         })
         .fail(function(data) {
             var errors = data.responseJSON["errors"];
@@ -204,8 +221,6 @@ $(document).on("click", ".chat-name", function(event) {
             }
         });
 });
-
-let object;
 
 $(document).on("click", ".eliminarc", function(event) {
     object = $(this).parent();
@@ -242,7 +257,56 @@ $(document).on("click", ".menud-option-confirmar", function(event) {
 });
 
 $(document).on("click", ".addchat", function(event) {
-    console.log($(this));
+    console.log($(this)[0]["id"]);
+    console.log($(".msger")[0]["id"]);
+
+    $url = "chat/agregate/" + $(this)[0]["id"];
+    $.ajax({
+        type: "post",
+        url: $url,
+        data: {
+            participante: $(this)[0]["id"],
+            chat: $(".msger")[0]["id"]
+        }
+    })
+        .done(function(data) {
+            if (data["event"] == "agregadoc") {
+                $(".conversaciones").css("display", "inherit");
+                $(".messages").css("visibility", "hidden");
+                $(".msger-chat").empty();
+                $(".msger-header-title").text("Conversaciones");
+                $(".participantes").empty();
+                $(".msger").attr("id", "0");
+
+                alert("agregadodo");
+                const seccion = `
+                <div class="chat" id="${data["chat"]["id"]}">
+                    <div class="chat-name" id="${data["chat"]["curso_id"]}/${data["chat"]["id"]}">${data["chat"]["name"]}</div>
+                    <div class="eliminarc" id="${data["chat"]["id"]}">X</div>
+                </div>
+                `;
+
+                $(".conversaciones").append(seccion);
+            }
+
+            if (data["event"] == "agregado") {
+                const msgHTML = `
+                    <div class="participante">
+                        <div class="msg-info-name">${data["participante"]["name"]}</div>
+                    </div>
+                `;
+
+                msgerPart.insertAdjacentHTML("beforeend", msgHTML);
+            }
+        })
+        .fail(function(data) {
+            var errors = data.responseJSON["errors"];
+            if (errors) {
+                $.each(errors, function(i) {
+                    alert(errors[i]);
+                });
+            }
+        });
 });
 
 msgerForm.addEventListener("submit", event => {
@@ -270,8 +334,6 @@ msgerForm.addEventListener("submit", event => {
                 });
             }
         });
-
-    //botResponse();
 });
 
 function chargingMessage(name, img, side, text, date) {
@@ -296,7 +358,6 @@ function chargingMessage(name, img, side, text, date) {
 }
 
 function appendMessage(name, img, side, text) {
-    //   Simple solution for small apps
     const msgHTML = `
     <div class="msg ${side}-msg">
       <div class="msg-img" style="background-image: url(${img})"></div>
@@ -316,16 +377,6 @@ function appendMessage(name, img, side, text) {
     msgerChat.scrollTop += 500;
 }
 
-function botResponse() {
-    const r = random(0, BOT_MSGS.length - 1);
-    const msgText = BOT_MSGS[r];
-    const delay = msgText.split(" ").length * 1000;
-
-    setTimeout(() => {
-        appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
-    }, delay);
-}
-
 // Utils
 function get(selector, root = document) {
     return root.querySelector(selector);
@@ -336,8 +387,4 @@ function formatDate(date) {
     const m = "0" + date.getMinutes();
 
     return `${h.slice(-2)}:${m.slice(-2)}`;
-}
-
-function random(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
 }

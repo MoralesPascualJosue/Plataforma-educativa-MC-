@@ -16,22 +16,11 @@
                             </a>
                             <span class="tooltiptext">Editar</span>
                         </li>
-
-                        <li class="course-tool-tab tooltip delete" id="{{ $curso->id }}">
-                            <a class="course-tab-content" href="javascript:void(0)">
-                                <img src="{{ asset("resources/icons/delete-a.svg") }}" alt="eliminar">
-                            </a>
-                            <span class="tooltiptext">Eliminar</span>
-                        </li>
-
                     </ul>
                 </div>
 
                 @endcan
-
             </h1>
-
-
         </div>
     </div>
 
@@ -43,7 +32,7 @@
                 </a>
             </li>
             <li class="course-tool-tab">
-                <a class="course-tab-content" href="{{ route("foro",$curso->id) }}">
+                <a class="course-tab-content" href="{{ route("foro",[$curso->id]) }}">
                     <img src="{{ asset("resources/icons/debate-c.svg") }}" alt="Foro">
                 </a>
             </li>

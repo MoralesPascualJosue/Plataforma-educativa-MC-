@@ -1,3 +1,5 @@
+let obj;
+
 $.ajaxSetup({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -88,19 +90,6 @@ $.fn.ajaxDelete = function(url, sectionToRender) {
 /* Side Panel  */
 
 /* Cursos resources */
-
-$(document).on("click", ".create", function(event) {
-    $anuncio = $("#anuncio").val();
-
-    $data = { anuncio: $anuncio };
-    $(this).ajaxPostt("storea", "#anuncios", $data, "POST");
-    $("#anuncio").val("");
-});
-
-$(document).on("click", ".delete", function(event) {
-    $anuncio = $(this);
-    $(this).ajaxDelete("destroya/" + $anuncio[0].id, "#anuncios");
-});
 
 $(".course-name")
     .focusin(function() {
@@ -195,22 +184,13 @@ $(document).on("click", "#avatarImage", function(event) {
 
 $(document).on("click", ".delete", function(event) {
     $curso = $(this);
+    obj = $(this);
 
-    $.ajax({
-        type: "DELETE",
-        url: "../destroyac/" + $curso[0].id
-    })
-        .done(function(data) {
-            window.location.replace("../inicio");
-        })
-        .fail(function(data) {
-            var errors = data.responseJSON["errors"];
-            if (errors) {
-                $.each(errors, function(i) {
-                    alert(errors[i]);
-                });
-            }
-        });
+    obj = $(this);
+    obj.css("visibility", "hidden");
+    $(".menud").css("visibility", "visible");
+    $(".menud-option-confirmar").attr("id", $(this)[0]["id"]);
+    $(".box").css("opacity", "0.4");
 });
 
 $(document).on("click", ".page-link", function(event) {
@@ -231,4 +211,31 @@ $(document).on("click", ".newactivitie", function(event) {
     $data = { anuncio: $anuncio };
     $(this).ajaxPostt("../storeaa/" + $curso[0].id, "#wrap100", $data, "POST");
     $("#anuncio").val("");
+});
+
+$(document).on("click", ".menud-option-cancel", function(event) {
+    $(".menud").css("visibility", "hidden");
+    $(".box").css("opacity", "1");
+    obj.css("visibility", "visible");
+});
+
+$(document).on("click", ".menud-option-confirmar", function(event) {
+    $(".menud").css("visibility", "hidden");
+    $(".box").css("opacity", "1");
+
+    $.ajax({
+        type: "DELETE",
+        url: "../destroyac/" + obj[0].id
+    })
+        .done(function(data) {
+            window.location.replace("../inicio");
+        })
+        .fail(function(data) {
+            var errors = data.responseJSON["errors"];
+            if (errors) {
+                $.each(errors, function(i) {
+                    alert(errors[i]);
+                });
+            }
+        });
 });

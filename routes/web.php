@@ -60,7 +60,8 @@ Route::put('/updateac/{id}','cursoController@updatea')->name('updateac');
 
 Route::post('/updateCover/{id}','cursoController@updateCover')->name('updatecover');
 
-Route::delete('/destroyac/{id}','cursoController@destroya')->name('destroyac');
+Route::delete('/destroyac/{id}','cursoController@
+')->name('destroyac');
 
 Route::post('/matricular','cursoController@matricular')->name('matricular');
 
@@ -103,7 +104,7 @@ Route::post('/updateaw/{id}','QualificationController@updatea')->name('updateaw'
 
 //________[Forum routes]__________
 
-Route::get('/foro/{curso}/','ForumController@foro')->name('foro');
+Route::get('/foro/{curso}','ForumController@foro')->name('foro');
 
 Route::post('/foro/{curso}/creartema/','ForumController@store')->name('creartema');
 
@@ -131,14 +132,21 @@ Route::get('/chatC/{id}/{c}','ChatController@chatC')->name('chatC');
 Route::post('/chats/chat/message/{id}','ChatController@message')->name('message');
 
 Route::delete('/chats/destroycs/{id}','ChatController@destroyc')->name('destroycs');
+
+Route::post('/chats/chat/agregate/{id}','ChatController@agregate')->name('agregate');
 //________[END Chat routes]__________
+
+//________[Resources routes]__________
+
+Route::post('/uploadfilei',"ActivitieController@uploadFileimage");
+Route::post('/uploadfilev',"ActivitieController@uploadFilevideo");
+Route::post('/uploadfiled',"ActivitieController@uploadFiledoc");
+
+//________[END redources routes]__________
 
 
 //________[Test routes]__________
 
-Route::post('/activitiepost/{id}', 'ActivitieController@postatc');
-Route::get('/uploads/{file}', 'ActivitieController@file');
-Route::post('/uploadfile/{id}',"ActivitieController@uploadFilePost");
 
 Route::post('/test', function () { return 'Hello World Post'; }); 
  Route::Get('/test', function () { return 'Hello World Get'; }); 
