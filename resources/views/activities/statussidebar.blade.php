@@ -47,9 +47,6 @@
 
     <div class="aside-link">
         <a href="javascript:void(0);">
-            <div class="aside-link-icon">
-                <img src="{{ asset("resources/icons/group-c.svg") }}" alt="grupos">
-            </div>
             <div class="aside-link-details">
                 <div class="aside-link-name">Observaciones</div>
                 <div class="aside-link-content">{{ $qualification['observaciones'] }}</div>

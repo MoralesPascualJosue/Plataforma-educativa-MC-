@@ -97,8 +97,6 @@ let obj;
 })();
 
 $(document).on("click", ".savebutton", function(event) {
-    console.log($(".content"));
-
     $update = $(".edit")["0"].id;
     $.ajax({
         type: "put",

@@ -220,5 +220,26 @@ class ActivitieController extends AppBaseController
         abort(402,"Archivo no seleccionado");
 
     }
+
+    public function uploadFile(Request $request){
+        if ($files = $request->file('fileToUpload')) {
+            $data;            
+             $id = Auth::user()->id;
+            request()->validate([
+                'fileToUpload' => 'required|max:51200',
+            ]);
+            $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
+            $ruta = request()->fileToUpload->storeAs('archivos/'.$id,$fileName,'public');            
+
+            $data['url'] = asset($ruta);
+            $data['type'] = request()->fileToUpload->getClientOriginalExtension();
+            $data['name'] = request()->fileToUpload->getClientOriginalName();
+            $data['icon'] = "http://localhost:8000/resources/icons/work.svg";
+            return $data;
+        }
+
+        abort(402,"Archivo no seleccionado");
+
+    }
 }
 

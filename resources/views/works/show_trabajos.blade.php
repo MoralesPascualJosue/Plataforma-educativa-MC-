@@ -7,21 +7,22 @@
 <section class="seccionToggle">
     <div class="wrap">
         <p class="subtitle">Entregas realizadas</p>
-        <p> <span>Calificación</span> <span id="{{ $activitie->id }}" class="calificacion">Pendiente</span>
+        <p class="po">
+            <textarea name="observaciones" class="observaciones" id="{{ $activitie->id }}" rows="10"></textarea>
+            <span>Calificación</span> <span id="{{ $activitie->id }}" class="calificacion">Pendiente</span>
             <button id="saves" class="btn"> Guardar </button>
         </p>
 
-        <textarea name="observaciones" class="observaciones" id="{{ $activitie->id }}" rows="10"></textarea>
-
-        <textarea class="vista" name="" id="editorworkv">
-                @foreach($works as $work)
-                    <hr><hr>
-                    <br>
-                    <h1>Entrega {{ $work->entregas }}</h1>                        
-                    <br>
-                    {{$work->contenido}}
-                @endforeach
-        </textarea>
+        <div class="vista">
+            @foreach($works as $work)
+            <hr>
+            <hr>
+            <br>
+            <h1>Entrega {{ $work->entregas }}</h1>
+            <br>
+            {!! $work->contenido !!}
+            @endforeach
+        </div>
     </div>
 </section>
 

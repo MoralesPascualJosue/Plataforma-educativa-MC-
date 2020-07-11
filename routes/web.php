@@ -141,6 +141,7 @@ Route::post('/chats/chat/agregate/{id}','ChatController@agregate')->name('agrega
 Route::post('/uploadfilei',"ActivitieController@uploadFileimage");
 Route::post('/uploadfilev',"ActivitieController@uploadFilevideo");
 Route::post('/uploadfiled',"ActivitieController@uploadFiledoc");
+Route::post('/uploadfile',"ActivitieController@uploadFile");
 
 //________[END redources routes]__________
 
