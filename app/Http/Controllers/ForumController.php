@@ -39,8 +39,11 @@ class ForumController extends Controller
     {        
         $curso = $this->cursoRepository->find($cur,['id','title','cover']);
         $categorias = $this->fcategoriaRepository->all([],null,null,['id','name','color']);
-
-        $discuss = fdiscusion::query()
+        $discuss;    
+        if (!$request["en"] == "") {
+            $discuss = $discuss->where("nameCategoria",$request["en"]);
+        }else{
+             $discuss = fdiscusion::query()
         ->withCategoria()
         ->withCategoriaColor()
         ->withUSer()
@@ -48,9 +51,6 @@ class ForumController extends Controller
         ->orderBy('updated_at','DESC')
         ->get()
         ;
-
-        if (!$request["en"] == "") {
-            $discuss = $discuss->where("nameCategoria",$request["en"]);
         }
 
         $view = \View::make('forum.content')->with(compact('curso','categorias','discuss'));
@@ -94,18 +94,17 @@ class ForumController extends Controller
 
         $discuss['propiedad'] = $discuss->hasPropiedad($user);        
 
-        //return $discuss;
-
         $fposts = fpost::query()
         ->withDiscuss($id)
         ->withUser()
+        ->withImage()
         ->get();
 
         foreach($fposts as $post){
             $post["propiedad"] =  $post->hasPropiedad($user);
+
         }
 
-//        return $fposts;
         $categorias= $this->fcategoriaRepository->all();
         $view = \View::make('forum.show')->with(compact('curso','discuss','fposts','categorias'));
 

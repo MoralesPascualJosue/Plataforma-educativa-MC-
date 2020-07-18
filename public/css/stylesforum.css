@@ -1,7 +1,3 @@
-.aside {
-    width: 15%;
-}
-
 /*------------------------------------------------------------------
 [ Button ]*/
 .btn-new {
@@ -57,11 +53,12 @@
     border-radius: 5px;
     margin: 10px;
     padding: 5px;
-    font-size: 20px;
+    font-size: 12px;
+    opacity: 0.5;
 }
 
 .box-cate:hover {
-    color: orange;
+    opacity: 1;
 }
 
 .bubble {
@@ -80,15 +77,9 @@
 
 /*------------------------------------------------------------------
 [ Responsive alert]*/
-@media (max-width: 992px) {
-    .box-cate {
-        font-size: 12px;
-        opacity: 0.5;
-    }
-}
 
 .curse-container {
-    margin-left: 15%;
+    background-color: white;
 }
 
 .column-content {
@@ -99,7 +90,7 @@
 .column-content {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     background-color: #fff;
     color: #444;
 }
@@ -116,8 +107,11 @@
     font-weight: bold;
 }
 
-.dicsuddbody {
-    font-size: 17px;
+.discussbody {
+    padding: 10px;
+    width: 85%;
+    display: inline-block;
+    font-size: 15px;
 }
 
 .discussname {
@@ -130,6 +124,11 @@
     text-align: right;
     padding: 5px;
     background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.discussitem:hover {
+    background-color: orange;
 }
 
 .discussitemcon {
@@ -142,19 +141,15 @@
 }
 
 .nuevotema {
-    background-color: orange;
+    position: absolute;
     padding: 10px;
     font-size: 18px;
     border-radius: 5px;
 }
 
 .nuevotema:hover {
-    background-color: #262626;
+    background-color: #8292a2;
     color: white;
-}
-
-.discussbody {
-    overflow: hidden;
 }
 
 .discussbody img {
@@ -188,13 +183,12 @@
 .discussli {
     border-radius: 15px;
     display: block;
-    background-color: white;
-    padding: 10px;
+    background-color: #f0f0f0;
     border-bottom: 1px solid orange;
     margin-top: 10px;
 }
 .discussli:hover {
-    background-color: #f0f0f0;
+    background-color: #8292a2;
 }
 
 @media (max-width: 992px) {
@@ -212,6 +206,10 @@
 
     .contenidod img {
         width: 250px;
+    }
+
+    .discussbody {
+        width: 100%;
     }
 }
 
@@ -259,8 +257,8 @@
 }
 
 .containerfs {
-    background-color: #f9f9f9;
-    display: flex;
+    background-color: white;
+    display: inline;
     padding: 5px;
     min-height: 84vh;
 }
@@ -281,16 +279,14 @@
 
 .curse-headerfs {
     text-align: center;
-    position: fixed;
 }
 
-.curse-headerfs,
-.curse-containerfs {
-    width: 50%;
+.curse-headerfs {
+    width: 100%;
 }
 
 .curse-containerfs {
-    margin-left: 50%;
+    width: 100%;
 }
 
 @media (max-width: 992px) {
@@ -319,6 +315,7 @@
 .regresar {
     background-color: orange;
     padding: 5px;
+    position: absolute;
 }
 
 .regresar:hover {
@@ -329,13 +326,51 @@
 .canedit {
     visibility: visible;
     z-index: 1;
+    position: absolute;
+    margin-left: 80px;
 }
 
 .userpost {
     font-size: 15px;
+    display: inline;
     color: orange;
 }
 
 .pull-right {
     float: right;
+}
+
+.container {
+    display: unset;
+}
+
+.imagep {
+    width: 100px;
+    border-radius: 100%;
+    border: 1px solid;
+    overflow: hidden;
+    height: 100px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.posts-content {
+    padding: 10px;
+}
+
+.user-name-header {
+    padding-left: inherit;
+    margin-top: inherit;
+    margin-left: inherit;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .imagep {
+        display: none;
+    }
+
+    .containerfs {
+        display: inline;
+    }
 }

@@ -35,10 +35,7 @@ class Message extends Model
     }
 
     public function scopeWithUser( $query){
-        $subquery = User::select('users.name')
-        ->whereColumn('users.id', 'messages.send');
-
-        $query->addSelect(['usuarioName' => $subquery]);
+        $query->with('user'); //todo el objeto
     }
 
     public function scopeWithImage( $query){

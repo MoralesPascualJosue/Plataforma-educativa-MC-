@@ -18,7 +18,7 @@
                 <form action="storeac" method="POST">
                     @csrf
                     {!! Form::hidden("top", "top") !!}
-                    <button type="submit"><img src="{{ asset('resources/icons/apilar-ci.svg') }}" alt="gv"></button>
+                    <button type="submit"><img src="{{ asset('resources/icons/apilar-ci1.svg') }}" alt="gv"></button>
                 </form>
             </div>
             <div class="icon">

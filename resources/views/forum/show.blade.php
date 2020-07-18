@@ -46,13 +46,12 @@
         <div class="posts-content">
             @foreach ($fposts as $item)
             <div id="{{$item->id }}" class="discussli">
-                <span class="discussname">{{ $item->usuarioName }}</span>
+                <div class="imagep"><img src="{{ asset($item->image) }}" alt="Asesor"></div>
                 <div class=" discussbody">
                     {!! $item->body !!}
                 </div>
                 <div class="discussitemcon">
                     <p class="userpost">-{{ $item->usuarioName}}-</p>
-
                     @if($item->propiedad == 1)
                     <p class="discussitem  eliminarcomentario" id="{{$item->id }}">Eliminar</>
                         <p class="discussitem editarcomentario" id="{{$item->id }}">Editar</p>

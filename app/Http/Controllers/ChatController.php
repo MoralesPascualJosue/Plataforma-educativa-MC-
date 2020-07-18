@@ -33,9 +33,13 @@ class ChatController extends Controller
             $user['perfil'] = $user->estudiante()->get()[0];
         }
 
-        $curso = $this->cursoRepository->find($cur,['id','title','cover']);        
+        $curso = $this->cursoRepository->find($cur,['id','title','cover']);     
 
         $chats = Auth::user()->chats()->where('curso_id',$cur)->get();
+
+        foreach($chats as $ca){
+            $ca->last = $ca->messages()->orderBy("id","DESC")->first();
+        }
 
         $contacts = $this->cursoRepository
         ->find($cur)
@@ -43,7 +47,7 @@ class ChatController extends Controller
         ->withUser()
         ->get();        
 
-        $view = \View::make('chat.content')->with(compact('curso','chats','contacts','user'));
+        $view = \View::make('chat.show')->with(compact('curso','chats','contacts','user'));
 
         if($request->ajax()){
             $sections = $view->renderSections();
@@ -55,12 +59,14 @@ class ChatController extends Controller
 
      public function chat($cur,$u,Request $request)
     {
-        /*
-            $cur usuairo_id
-         */
 
         $chats = Auth::user()->chats()->where('curso_id',$cur)
-        ->get();
+        ->get();        
+
+        $inputm['send'] =  Auth::user()->id;
+        $inputm['reader'] = 0;
+        $inputm['body'] = $request['body'];
+        $llave = false;
         
         foreach($chats as $ca){
             if($ca->participante($u) == 1 and $ca->users()->count() < 3){
@@ -68,9 +74,22 @@ class ChatController extends Controller
                  $data['i'] = Auth::user()->id;
                  $data['messages'] = $ca->messages()->withUser()->withImage()->get();
                  $data["state"] = "return";
-                return $data;   
+
+                $inputm['chat'] = $ca->id;
+                
+                $message = Message::create($inputm);
+                $llave = true;
+            break;
             }         
         }
+
+        if ($llave) {
+            $mischats = Auth::user()->chats()->where('curso_id',$cur)->get();
+            foreach($mischats as $ca){
+                $ca->last = $ca->messages()->orderBy("id","DESC")->first();
+            }     
+            return $mischats;
+        }                 
         
 
         $input['name'] = User::find($u)->name;
@@ -90,7 +109,15 @@ class ChatController extends Controller
 
         user_chat::create($in);
         $data["state"] = "new";
-        return $data;
+        
+        $inputm['chat'] = $data['chat']->id;;        
+        $message = Message::create($inputm);
+
+        $mischats = Auth::user()->chats()->where('curso_id',$cur)->get();
+        foreach($mischats as $ca){
+            $ca->last = $ca->messages()->orderBy("id","DESC")->first();
+        }     
+        return $mischats;
     }
 
      public function chatC($cur,$u,Request $request)
@@ -102,7 +129,7 @@ class ChatController extends Controller
         }
         $data['i'] = Auth::user()->id;
         $data['participantes'] = $data['chat']->users()->get(["user_id","name"]);
-        $data['messages'] = $data['chat']->messages()->withUser()->withImage()->get();
+        $data['messages'] = $data['chat']->messages()->withUser()->withImage()->orderby("id","DESC")->get();
 
         return $data;
     }
@@ -150,6 +177,19 @@ class ChatController extends Controller
 
        return Response()->json([ 'Chat' => 'chat']);
     }
+
+    public function mischats(Request $request){
+
+        $input = $request->all();
+        $mischats=[];
+        if (!$request["en"] == "") {
+            $mischats = Auth::user()->chats()->where('curso_id',$input["en"])->get();
+        }         
+        foreach($mischats as $ca){
+            $ca->last = $ca->messages()->orderBy("id","DESC")->first();
+        }     
+        return $mischats;
+    }    
 
     public function agregate($c,Request $request)
     {

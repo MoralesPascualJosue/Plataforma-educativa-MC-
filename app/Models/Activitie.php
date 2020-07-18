@@ -46,7 +46,8 @@ class Activitie extends Model
         'title' => 'string',
         'visible' => 'integer',
         'intentos' => 'integer',
-        'asesor_id' => 'integer'
+        'asesor_id' => 'integer',
+        'created_at' => 'date:Y-m-d'
     ];
 
     /**
@@ -59,7 +60,7 @@ class Activitie extends Model
         'visible' => 'required',
         'intentos' => 'required',
         'fecha_inicio' => 'required',
-        'fecha_final' => 'required'
+        'fecha_final' => 'required'        
     ];
 
     public function asesor(){

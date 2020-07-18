@@ -12,7 +12,7 @@
 @include('flash::message')
 
 @can("edit cursos")
-<button class="btn-save" id="{{$activitie->id}}">
+<button class="btn-save savebutton" id="{{$activitie->id}}">
     Guardar contenido
 </button>
 @endcan

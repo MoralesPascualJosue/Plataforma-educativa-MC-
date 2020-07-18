@@ -77,6 +77,13 @@ class fpost extends Model
         $query->addSelect(['usuarioName' => $subquery]);
     }
 
+    public function scopeWithImage( $query){
+         $subquery = Estudiante::select('estudiantes.image') 
+         ->whereColumn('fposts.user_id','estudiantes.user_id');
+ 
+        $query->addSelect(['image' => $subquery]);
+    }
+
     public function hasPropiedad($propietario){
 
         if ($this->user->id == $propietario) {

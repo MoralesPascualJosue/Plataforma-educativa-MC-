@@ -67,6 +67,8 @@ Route::post('/matricular','cursoController@matricular')->name('matricular');
 
 Route::get('/actividadescurso/{id}','cursoController@trabajos')->name('actividadescurso');
 
+Route::get('/entregash/{id}','cursoController@historiale')->name('entregash');
+
 //________[END curses routes]__________
 
 
@@ -123,9 +125,11 @@ Route::get('/foro/{curso}/comentario/{id}','ForumController@comentario')->name('
 //________[END forum routes]__________
 
 //________[Chat routes]__________
+Route::get('/chats','ChatController@mischats');
+
 Route::get('/chats/{id}','ChatController@chats')->name('chats');
 
-Route::get('/chat/{id}/{u}','ChatController@chat')->name('chat');
+Route::post('/chat/{id}/{u}','ChatController@chat')->name('chat');
 
 Route::get('/chatC/{id}/{c}','ChatController@chatC')->name('chatC');
 
@@ -144,6 +148,16 @@ Route::post('/uploadfiled',"ActivitieController@uploadFiledoc");
 Route::post('/uploadfile',"ActivitieController@uploadFile");
 
 //________[END redources routes]__________
+
+
+//________[Informacion routes]__________
+
+Route::get('/informacion/{cur}','informacionController@informacion')->name("informacion");
+
+Route::get('/informacionActividades/{cur}','informacionController@informacionActividades')->name("informacionActividades");
+
+Route::get('/informacionCursop/{cur}','informacionController@informacionCursop')->name("informacionCursop");
+//________[END Informacion routes]__________
 
 
 //________[Test routes]__________

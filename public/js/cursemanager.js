@@ -239,3 +239,61 @@ $(document).on("click", ".menud-option-confirmar", function(event) {
             }
         });
 });
+
+$(document).on("click", ".historiale", function(event) {
+    $(".v1").css("display", "none");
+    $(".v2").css("display", "inherit");
+    $(".historiale").css("display", "none");
+
+    $.ajax({
+        type: "GET",
+        url: "../entregash/" + this.id,
+        dataType: "json",
+        success: function(data) {
+            data.forEach(element => {
+                let seccion = `
+                <div id="time_line_5cf90ca818fa82" class="time_line-item  item_show">
+                          <div class="time_line-date_wrap">                          
+                            <h4 class="time_line-date"><p>limite</p> ${element["fecha_final"]}</h4>                            
+                          </div>
+                          <div class="time_line-content">
+                            <h5 class="time_line-title">${element["title"]}</h5>
+                            <div class="time_line-descr">
+                `;
+
+                if (element["works"] != "Sin entregas") {
+                    element["works"].forEach(entrega => {
+                        seccion =
+                            seccion +
+                            `Entrega ${entrega["entregas"]} : ${entrega["created_at"]} <br>`;
+                    });
+                } else {
+                    seccion = seccion + `Sin entregas`;
+                }
+
+                seccion =
+                    seccion +
+                    `</div>
+                          </div>
+                        </div>`;
+
+                $("#item-content-h").append(seccion);
+            });
+        },
+        error: function(data) {
+            var errors = data.responseJSON;
+            if (errors) {
+                $.each(errors, function(i) {
+                    console.log(errors[i]);
+                });
+            }
+        }
+    });
+});
+
+$(document).on("click", ".v2-regresar", function(event) {
+    $(".historiale").css("display", "inherit");
+    $(".v1").css("display", "inherit");
+    $(".v2").css("display", "none");
+    $("#item-content-h").empty();
+});

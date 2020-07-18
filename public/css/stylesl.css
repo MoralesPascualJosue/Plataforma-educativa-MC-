@@ -361,9 +361,9 @@ li:hover {
 /*-------------[ contenido ]------------*/
 
 .content {
-    margin-left: 10%;
     padding: 10px;
     background-color: white;
+    overflow-x: scroll;
 }
 
 @media (max-width: 1050px) {

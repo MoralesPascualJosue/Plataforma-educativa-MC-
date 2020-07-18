@@ -80,6 +80,7 @@
     <div class="aside">
       <div class="aside-header">Detalles y acciones</div>
 
+      @can('edit cursos')
       <div class="aside-link">
         <a href="{{route("actividadescurso", $curso->id )}}">
           <div class="aside-link-icon">
@@ -91,18 +92,66 @@
           </div>
         </a>
       </div>
+      @endcan
 
-      <div class="aside-link">
+      @cannot('edit cursos')
+      <div class="aside-link historiale" id="{{$curso->id}}">
         <a href="javascript:void(0);">
           <div class="aside-link-icon">
             <img src="{{ asset("resources/icons/group-c.svg") }}" alt="grupos">
           </div>
           <div class="aside-link-details">
-            <div class="aside-link-name">Grupos del curso</div>
-            <div class="aside-link-content">2 grupos</div>
+            <div class="aside-link-name">Historial de entregas</div>
+            <div class="aside-link-content">ver</div>
           </div>
         </a>
       </div>
+
+      <div class="aside-header">Actividades hoy</div>
+
+      @if (count($actividadeshoy))
+      @foreach($actividadeshoy as $actividad)
+
+      <div class="course-actividad">
+        <a href="{{ route('sactivitiec', [$actividad->id]) }}">
+          <div class="course-link-icon">
+            <img src="{{ asset("resources/icons/home-work-c.svg") }}" alt="grupos">
+          </div>
+          <div class="course-link-details">
+            <div class="course-link-name">{{ $actividad->title }} {{ $actividad->fecha_inicio }}</div>
+            <div class="course-link-content">Fecha de vencimiento: {{ $actividad->fecha_final }}</div>
+          </div>
+        </a>
+      </div>
+
+      @endforeach
+      @else
+      <div>No tienes actividades para hoy</div>
+      @endif
+
+      <div class="aside-header">Actividades de la semana</div>
+
+      @if (count($actividadessemana))
+      @foreach($actividadessemana as $actividad)
+
+      <div class="course-actividad">
+        <a href="{{ route('sactivitiec', [$actividad->id]) }}">
+          <div class="course-link-icon">
+            <img src="{{ asset("resources/icons/home-work-c.svg") }}" alt="grupos">
+          </div>
+          <div class="course-link-details">
+            <div class="course-link-name">{{ $actividad->title }} {{ $actividad->fecha_inicio }}</div>
+            <div class="course-link-content">Fecha de vencimiento: {{ $actividad->fecha_final }}</div>
+          </div>
+        </a>
+      </div>
+
+      @endforeach
+      @else
+      <div>No tienes actividades para la semana</div>
+      @endif
+      @endcannot
+
       @can('edit cursos')
       <div class="aside-link delete" id="{{ $curso->id }}">
         <a href="javascript:void(0);">
@@ -121,7 +170,7 @@
   </div>
 
   <div class="curse-container item2">
-    <div class="column-content">
+    <div class="column-content v1">
       <div class="aside-header">
         <div class="der">Contenido</div>
         @can('edit cursos')
@@ -137,6 +186,53 @@
 
       {{ $actividades->links() }}
 
+    </div>
+
+    <div class="column-content v2">
+      <div class="v2-regresar">Regresar</div>
+      <div class="v2-content">
+
+        <div class="finbyz-timeline">
+          <div class="container  wgl-row-animation">
+            <div class="row">
+              <div class="vc_row wpb_row vc_row-fluid vc_custom_1542873226451 vc_row-has-fill wgl-row-animation"
+                style=" box-sizing: border-box; width: 757px; position: relative;">
+                <div
+                  class="wpb_column vc_column_container vc_col-sm-12 vc_col-lg-offset-3 vc_col-lg-6 vc_col-md-offset-2 vc_col-md-8">
+                  <div class="vc_column-inner ">
+                    <div class="wpb_wrapper">
+                      <div id="seofy_dbl_5cf90ca818809" class="seofy_module_double_headings acenter ">
+                        <div class="heading_title" style="font-size:36px; line-height:1.333; font-weight:800; "><span
+                            class="heading_divider"></span>
+                          <div class="heading_title_mobile" style="font-size:32px; line-height: 1.333;">Historial de
+                            entregas</div>
+                        </div>
+                      </div>
+                      <div class="seofy_module_spacing">
+                        <div class="spacing_size spacing_size-initial" style="height:5px;"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="wpb_column vc_column_container vc_col-sm-12">
+                  <div class="vc_column-inner ">
+                    <div class="wpb_wrapper">
+                      <div class="seofy_module_spacing">
+                        <div class="spacing_size spacing_size-initial" style="height:30px;"></div>
+                      </div>
+                      <div id="item-content-h" class="seofy_module_time_line_vertical appear_anim">
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
 

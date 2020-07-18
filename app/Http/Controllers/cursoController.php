@@ -13,8 +13,10 @@ use Response;
 
 use Illuminate\Support\Facades\Storage;
 use App\Models\Asesor;
+use App\Models\Activitie;
 use App\Models\Estudiante;
 use App\Models\Curso;
+use App\Models\Work;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\MatriculadoRepository;
 use App\Repositories\ActivitieRepository;
@@ -220,12 +222,16 @@ class cursoController extends AppBaseController
      public function showCurso($id,Request $request)
     {        
         $curso = $this->cursoRepository->find($id);
+        $actividades = [];
+        $actividadeshoy= [];
+        $actividadessemana= [];
+
+        $hoy =  now()->toDateString();
+
         if (empty($curso)) {
             Flash::success('Curso no registrado.');
            return redirect()->route('inicio');
-        }
-
-        $actividades;
+        }        
 
         if(Auth::user()->hasPermissionTo('edit cursos')){
             if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
@@ -239,9 +245,12 @@ class cursoController extends AppBaseController
                 return redirect()->route('inicio');
             }   
             $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_final","ASC")->paginate(10);
+            $actividadeshoy = $curso->activities()->where("visible","=",1)->where("fecha_final","=",$hoy)->get();
+            $actividadessemana = $curso->activities()->where("visible","=",1)
+             ->whereRaw("WEEKOFYEAR(fecha_final)=WEEKOFYEAR(NOW())")->get();            
         }
         
-        $view = \View::make('scurso')->with(compact('curso','actividades'));
+        $view = \View::make('scurso')->with(compact('curso','actividades','actividadeshoy','actividadessemana'));
 
         if($request->ajax()){
             $sections = $view->renderSections();
@@ -434,5 +443,30 @@ class cursoController extends AppBaseController
         }        
 
         return view('cursos.show_activities')->with(compact('estudiantes','curso','actividades'));
+    }
+
+    public function historiale($id)
+    {
+        $curso = $this->cursoRepository->find($id);
+        $estudiante = Auth::user()->estudiante()->get()[0];
+
+        if(!$curso->hasMatriculado($estudiante->id)){
+                Flash::success('Curso no registrado.');
+                return redirect()->route('inicio');
+        } 
+
+        $actividades = $curso->activities()->where("visible",1)->get();
+    
+        foreach ($actividades as $actividad) {
+            $entregas = $actividad->works()->where("estudiante_id",$estudiante->id)->get();
+
+            if(empty($entregas[0])){
+                $actividad["works"] = "Sin entregas";
+            }else{
+                $actividad["works"] = $entregas;
+            }
+        }
+
+        return $actividades;
     }
 }

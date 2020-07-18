@@ -1,0 +1,143 @@
+/*/ /////////////////////////////////////////////////////////////////
+[Panel header]*/
+.panel-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 0 1.875rem;
+    border-bottom: 1px solid #cdcdcd;
+    height: 6.6875rem;
+}
+
+.bb-close {
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font: inherit;
+    overflow: visible;
+    text-transform: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    background: transparent;
+    position: absolute;
+    text-decoration: none;
+    margin: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.2rem;
+    box-shadow: none;
+    border-radius: 0;
+    transition: transform 300ms, background-color 250ms, color 250ms;
+    transform-origin: 0.75rem 0;
+    right: auto;
+    top: 1.875rem;
+    z-index: 910;
+    font-size: 2.25rem;
+    padding: 0;
+    background-color: orange !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff;
+    -webkit-text-stroke-width: 1px;
+    font-weight: 600 !important;
+    text-align: center;
+}
+
+.btned {
+    border-radius: 100%;
+}
+
+.btned img {
+    border-radius: 100%;
+}
+
+.bb-close:hover {
+    border: orangered solid 2px;
+}
+
+.panel-titles-container {
+    display: block;
+    margin-left: 5rem;
+    padding: 0;
+    flex: 1;
+    min-width: 0;
+    max-width: calc(100% - 24.375rem);
+}
+
+.course-nav {
+    position: absolute;
+    right: 1rem;
+}
+
+.tools-course {
+    display: inline-flex;
+    font-size: initial;
+}
+
+.course-tools {
+    width: auto;
+    float: right;
+}
+
+.course-tools img {
+    width: 20px;
+}
+
+.course-tools li.active,
+li:hover {
+    box-shadow: 0 -0.25rem 0 orange inset;
+    transition: box-shadow 0.25s linear;
+}
+
+.course-tool-tab {
+    line-height: 1.6;
+    display: inline-block;
+    margin: 0 -0.125rem;
+    width: auto;
+}
+
+.course-tab-content {
+    float: none;
+    display: block;
+    text-align: center;
+    margin: 0;
+    border-radius: 0;
+    padding: 1.1rem 1rem;
+    width: auto;
+}
+
+.course-name {
+    padding: 5px;
+}
+
+@media (max-width: 1050px) {
+    .course-name {
+        font-size: 25px;
+    }
+
+    .course-tools img {
+        width: 25px;
+    }
+
+    .panel-header {
+        height: 5.6875rem;
+    }
+
+    .bb-close {
+        position: inherit;
+    }
+
+    .panel-titles-container {
+        padding-left: 1rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .panel-header {
+        padding: 0 0.875rem;
+        height: 3.6875rem;
+    }
+    .panel-titles-container {
+        display: none;
+    }
+}
