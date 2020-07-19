@@ -12,21 +12,30 @@
             </tr>
             <tr>
                 <td></td>
-                @foreach ($actividades as $actividad)
+                <td>
+                    @foreach ($actividades as $actividad)
                 <td>{{$actividad->title}}</td>
                 @endforeach
+                </td>
                 <td>Promedio</td>
             </tr>
             @foreach ($estudiantes as $estudiante)
             <tr>
-                <th>{{$estudiante->name}}</th>
-                @foreach ($estudiante["calificaciones"] as $item)
-                <th>{{ ($item['estado'] == 1) ? 'Para revision' : $item['qualification'] }} </th>
+                <td>{{$estudiante->name}}</td>
+                <td>
+                    @foreach ($estudiante["calificaciones"] as $item)
+
+                    @if ($item['estado'] == 1)
+                <td>revision</td>
+                @else
+                <td>{{$item["qualification"]}}</td>
+                @endif
                 @endforeach
-                <th>{{ ($estudiante->qualificationestado == 1) ? 'Para revision' : $estudiante->qualificationqualification }}
-                </th>
-                </>
+                </td>
+                <td>{{ ($estudiante->qualificationestado == 1) ? 'Para revision' : $estudiante->qualificationqualification }}
+                </td>
                 @endforeach
+            </tr>
 
         </table>
     </div>

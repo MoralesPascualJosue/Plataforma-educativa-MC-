@@ -3,7 +3,7 @@
     align-items: center;
     transition: left 0.5s cubic-bezier(0.55, 0, 0.1, 1),
         right 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-    background-color: #fff;
+    background-color: white;
     position: relative;
     width: auto;
     height: 6.6875rem;
@@ -120,21 +120,16 @@ li.active a {
 }
 
 .card {
-    margin: 10px;
-    width: 88%;
-    height: 260px;
+    margin: 5px;
+    width: 100%;
+    height: 200px;
     background: #f9f9f9;
-    border-top-right-radius: 10px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     position: relative;
-    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-out;
     text-decoration: none;
-    /* border: 2px solid #cdcdcd; */
 }
 
 .card:hover {
@@ -157,6 +152,7 @@ li.active a {
 
 .card:hover p {
     color: orange;
+    border-bottom: orange 1px solid;
 }
 
 .card:active {
@@ -166,26 +162,28 @@ li.active a {
 }
 
 .card p {
-    font-size: 17px;
-    color: #4c5656;
+    font-size: 20px;
+    color: black;
     z-index: 1000;
     transition: color 0.3s ease-out;
-
-    text-align: center;
-    padding: 10px 20px;
+    margin-left: 15px;
+    margin-top: 85px;
 }
 
 .circle {
-    height: 50%;
-    width: 60%;
     background: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
     z-index: 1;
     transition: all 0.3s ease-out;
     overflow: hidden;
+    position: absolute;
+    border-radius: 8px;
+    height: 80px;
+    width: 80px;
+    top: -5%;
+    left: 5%;
 }
 
 .circle img {
@@ -217,8 +215,12 @@ li.active a {
 .content-tb {
     width: 100%;
     display: grid;
-    grid-gap: 5px;
-    grid-template-columns: repeat(4, 25%);
+    grid-gap: 20px;
+    grid-template-columns: repeat(4, 23.5%);
+}
+
+.clase-tittle {
+    margin-left: 50px;
 }
 
 /*------------------------------------------------------------------
@@ -236,9 +238,7 @@ li.active a {
     }
 
     .clase-tittle {
-        background-color: #ffa500;
         padding: 5px;
-        color: white;
     }
 
     .card {
@@ -246,7 +246,7 @@ li.active a {
     }
 
     .card p {
-        color: white;
+        color: black;
         width: 100%;
     }
     .small-text {
@@ -262,8 +262,6 @@ li.active a {
 
     .circle {
         position: absolute;
-        width: 357px;
-        height: 237px;
     }
 
     .content-tb {

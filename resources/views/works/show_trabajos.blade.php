@@ -4,47 +4,51 @@
 <section class="content-header">
 
 </section>
-<section class="seccionToggle">
-    <div class="wrap">
-        <p class="subtitle">Entregas realizadas</p>
-        <p class="po">
-            <textarea name="observaciones" class="observaciones" id="{{ $activitie->id }}" rows="10"></textarea>
-            <span>Calificación</span> <span id="{{ $activitie->id }}" class="calificacion">Pendiente</span>
-            <button id="saves" class="btn"> Guardar </button>
-        </p>
-
-        <div class="vista">
-            @foreach($works as $work)
-            <hr>
-            <hr>
-            <br>
-            <h1>Entrega {{ $work->entregas }}</h1>
-            <br>
-            {!! $work->contenido !!}
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<a href="#" id="btn-toggle" class="btn-toggle" style="visibility: hidden"></a>
 
 <div class="content">
-    <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Entrega</th>
-            <th>Calificacion</th>
-        </tr>
-        @foreach ($estudiantes as $estudiante)
-        <tr>
-            <th>{{$estudiante->name}}</th>
-            <th><button class="btn entregarev" href="javascript:void(0);" id="{{ $estudiante->id }}">Entrega</button>
-            </th>
-            <th>{{ ($estudiante->qualificationestado == 1) ? 'Para revision' : $estudiante->qualificationqualification }}
-            </th>
-        </tr>
-        @endforeach
+    <section class="list-wrap">
 
-    </table>
+        <label for="search-text">Buscar en la lista</label>
+        <input type="text" id="search-text" placeholder="Buscar" class="search-box">
+        <span class="list-count"></span>
+
+
+        <ul id="list">
+            @foreach ($estudiantes as $estudiante)
+            <li class="in">
+                <p>{{$estudiante->name}}</p>
+                <th><button class="btn entregarev" href="javascript:void(0);"
+                        id="{{ $estudiante->id }}">Revisar</button>
+                </th>
+                <th>{{ ($estudiante->qualificationestado == 1) ? 'Para revision' : $estudiante->qualificationqualification }}
+                </th>
+            </li>
+            @endforeach
+            <span class="empty-item">no results</span>
+        </ul>
+    </section>
+
+    <section class="seccionToggle">
+        <div class="wrap">
+            <p class="subtitle">Entregas realizadas</p>
+            <p class="po">
+                <textarea name="observaciones" class="observaciones" id="{{ $activitie->id }}" rows="10"></textarea>
+                <span>Calificación</span> <span id="{{ $activitie->id }}" class="calificacion">Pendiente</span>
+                <button id="saves" class="btn"> Guardar </button>
+            </p>
+
+            <div class="vista">
+                @foreach($works as $work)
+                <hr>
+                <hr>
+                <br>
+                <h1>Entrega {{ $work->entregas }}</h1>
+                <br>
+                {!! $work->contenido !!}
+                @endforeach
+            </div>
+        </div>
+    </section>
 </div>
+
 @endsection

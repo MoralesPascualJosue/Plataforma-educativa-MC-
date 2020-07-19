@@ -10,6 +10,7 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('css/stylesl.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styleslw.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/jquery/jquery-ui.min.css') }}">
     @yield('css')
 
     <script src="{{asset('js/jquery/jquery-3.5.1.min.js')}}"> </script>
@@ -42,9 +43,8 @@
         @endif
     </div>
 
-    <script src="{{ asset('ckeditor/ckeditor5 1/build/ckeditor.js') }}"> </script>
     <script src="{{ asset('js/listamanager.js') }}"> </script>
-
+    <script src="{{asset('js/jquery/jquery-ui.min.js')}}"> </script>
     @stack('scripts')
 </body>
 
