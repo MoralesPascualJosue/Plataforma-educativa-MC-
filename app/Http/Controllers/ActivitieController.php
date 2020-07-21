@@ -66,7 +66,7 @@ class ActivitieController extends AppBaseController
         $this->contenidoRepository->create($contenido);
 
         
-        $task["contenido"] = "Escribe tu contenido aqui...";
+        $task["contenido"] =     "---";
         $task['asesor_id'] =  Auth::user()->asesor()->get()['0']->id;
         $task['activitie_id'] = $activitie->id;
 

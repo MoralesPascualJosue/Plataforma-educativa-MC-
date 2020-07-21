@@ -98,6 +98,10 @@ li.active a {
     .clases-header {
         display: none;
     }
+
+    .icon {
+        vertical-align: inherit;
+    }
 }
 
 /*-------------------------------------------------------------------*/
@@ -270,7 +274,6 @@ li.active a {
 
     .icon {
         height: 1.75rem;
-        width: 2rem;
     }
     .credentialing .btn {
         background-color: orange;

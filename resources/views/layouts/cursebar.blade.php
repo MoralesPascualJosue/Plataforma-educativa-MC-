@@ -26,18 +26,18 @@
 
     <div class="course-nav">
         <ul class="course-tools">
-            <li class="course-tool-tab active">
-                <a class="course-tab-content" href="">
+            <li class="course-tool-tab {{ Route::is('scursoc') ? 'active' : '' }}">
+                <a class=" course-tab-content" href="">
                     <img src="{{ asset("resources/icons/contenido-c.svg") }}" alt="Contenido">
                 </a>
             </li>
-            <li class="course-tool-tab">
-                <a class="course-tab-content" href="{{ route("foro",[$curso->id]) }}">
+            <li class="course-tool-tab {{ Route::is('foro') ? 'active' : '' }}">
+                <a class=" course-tab-content" href="{{ route("foro",[$curso->id]) }}">
                     <img src="{{ asset("resources/icons/debate-c.svg") }}" alt="Foro">
                 </a>
             </li>
-            <li class="course-tool-tab">
-                <a class="course-tab-content" href="{{ route("chats",$curso->id) }}">
+            <li class="course-tool-tab {{ Route::is('chats') ? 'active' : '' }}">
+                <a class=" course-tab-content" href="{{ route("chats",$curso->id) }}">
                     <img src="{{ asset("resources/icons/messages-c.svg") }}" alt="Mensajes">
                 </a>
             </li>

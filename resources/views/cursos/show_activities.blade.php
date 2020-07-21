@@ -4,39 +4,59 @@
 <section class="content-header">
 
     <div class="content">
-        <table>
-            <tr>
-                <th>Nombre</th>
-                <th>Calificaciones</th>
-                <th>Promedio</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    @foreach ($actividades as $actividad)
-                <td>{{$actividad->title}}</td>
-                @endforeach
-                </td>
-                <td>Promedio</td>
-            </tr>
-            @foreach ($estudiantes as $estudiante)
-            <tr>
-                <td>{{$estudiante->name}}</td>
-                <td>
-                    @foreach ($estudiante["calificaciones"] as $item)
+        <section id="pakete">
+            <h1>Lista de participantes del curso</h1>
+            <p class="section-text">Aqui se concentran las calificaciones asignadas.
+                <em>Tambien se ofrece un resumen de las entregas realizadas!</em></p>
 
-                    @if ($item['estado'] == 1)
-                <td>revision</td>
-                @else
-                <td>{{$item["qualification"]}}</td>
-                @endif
-                @endforeach
-                </td>
-                <td>{{ ($estudiante->qualificationestado == 1) ? 'Para revision' : $estudiante->qualificationqualification }}
-                </td>
-                @endforeach
-            </tr>
+            <div class="box">
+                <!-- The surrounding box -->
 
-        </table>
+                <!-- The front container -->
+                <div class="front">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="orange">Estudiante</th>
+                                @foreach ($actividades as $actividad)
+                                <th>{{$actividad->title}}</th>
+                                @endforeach
+                                <th>Promedio</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="selectable">
+                            @foreach ($estudiantes as $estudiante)
+                            <tr>
+                                <td><button class="show-me_1"
+                                        id="{{$curso->id}}/{{$estudiante->id}}">{{$estudiante->name}}
+                                    </button></td>
+                                @foreach ($estudiante["calificaciones"] as $item)
+                                @if ($item['estado'] == 1)
+                                <td class="blue">revision</td>
+                                @else
+                                @if ($item['qualification'] != "NA")
+                                <td class="entypo-check">{{$item["qualification"]}}</td>
+                                @else
+                                <td class="entypo-cancel">{{$item["qualification"]}}</td>
+                                @endif
+                                @endif
+                                @endforeach
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- The backside containers -->
+                <div class="back first">
+                    <button class="hide-me_1"></button>
+                    <h3 id="name-est" class="center">Estudiante</h3>
+                    <div id="hitoriale"></div>
+                </div>
+            </div><!-- The end of the box -->
+
+        </section><!-- END of section-wrap -->
+
     </div>
     @endsection

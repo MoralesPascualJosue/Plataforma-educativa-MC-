@@ -469,4 +469,29 @@ class cursoController extends AppBaseController
 
         return $actividades;
     }
+
+    public function historialu($cur,$est)
+    {
+        $curso = $this->cursoRepository->find($cur);
+        $estudiante = Estudiante::find($est);
+
+        if(!$curso->hasMatriculado($estudiante->id)){
+                Flash::success('Curso no registrado.');
+                return redirect()->route('inicio');
+        } 
+
+        $actividades = $curso->activities()->where("visible",1)->get();
+    
+        foreach ($actividades as $actividad) {
+            $entregas = $actividad->works()->where("estudiante_id",$estudiante->id)->get();
+
+            if(empty($entregas[0])){
+                $actividad["works"] = "Sin entregas";
+            }else{
+                $actividad["works"] = $entregas;
+            }
+        }
+
+        return $actividades;
+    }
 }

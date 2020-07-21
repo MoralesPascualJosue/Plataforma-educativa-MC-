@@ -9,9 +9,12 @@
 
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('css/stylesl.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleslc.css') }}">
+    <link rel="stylesheet" href="{{asset('js/jquery/jquery-ui.min.css')}}">
     @yield('css')
 
     <script src="{{asset('js/jquery/jquery-3.5.1.min.js')}}"> </script>
+    <script src="{{asset('js/jquery/jquery-ui.min.js')}}"> </script>
 </head>
 
 <body>

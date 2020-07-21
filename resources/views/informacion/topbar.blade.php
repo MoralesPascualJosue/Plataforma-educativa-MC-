@@ -24,13 +24,13 @@
                 </a>
             </li>
             <li class="course-tool-tab  {{ Route::is('chats') ? 'active' : '' }}">
-                <a class="course-tab-content" href="">
+                <a class="course-tab-content" href="{{ route("chats",$curso->id) }}">
                     <img src="{{ asset("resources/icons/messages-c.svg") }}" alt="Mensajes">
                 </a>
             </li>
             @can('edit cursos')
             <li class="course-tool-tab  {{ Route::is('informacion') ? 'active' : '' }}">
-                <a class="course-tab-content" href="">
+                <a class="course-tab-content" href="{{ route("informacion",$curso->id) }}">
                     <img src="{{ asset("resources/icons/libro-calificaciones-c.svg") }}" alt="Informacion">
                 </a>
             </li>

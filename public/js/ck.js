@@ -97,6 +97,8 @@ let obj;
 })();
 
 $(document).on("click", ".savebutton", function(event) {
+    let saveb = this;
+
     $update = $(".edit")["0"].id;
     $.ajax({
         type: "put",
@@ -106,7 +108,10 @@ $(document).on("click", ".savebutton", function(event) {
         }
     })
         .done(function(data) {
-            alert(data);
+            saveb.classList.add("green-b");
+            setTimeout(function heythere() {
+                saveb.classList.remove("green-b");
+            }, 1000);
         })
         .fail(function(data) {
             var errors = data.responseJSON["errors"];
@@ -116,10 +121,7 @@ $(document).on("click", ".savebutton", function(event) {
                 });
             }
 
-            $("#contenidosave")
-                .prop("style", "background-color:red")
-                .empty()
-                .append("Error intenta mas tarde");
+            saveb.classList.add("red-b");
         });
 });
 
@@ -642,7 +644,7 @@ $(".newblock").on("click", function(e) {
     $block =
         "<div class='toggle'><div class='x'></div><div class='y'></div></div>" +
         "<div class='menu'><ul><li class='lock'><a href='javascript:void(0);'>Eliminar</a></li><li class='imageblock'><a href='javascript:void(0);'>Imagen</a></li><li class='videoblock'><a href='javascript:void(0);'>Video</a></li><li class='docblock'><a href='javascript:void(0);'>Doc</a></li><li class='textblock'><a href='javascript:void(0);'>Text</a></li></ul>" +
-        "</div><div class='contentblock'><video id='preview-player_html5_api' preload='auto' controls class='vjs-tech wm-100' playsinline='playsinline' tabindex='-1' poster='' src='{{ asset('/userfiles/files/Entregas%20seminario%201/pruebaAnalogiPorts%20-%20Proteus%208%20Professional.mp4') }}'></video></div>";
+        "</div><div class='contentblock'><div class='textb' contenteditable></div></div>";
     $div = document.createElement("div");
     $div.classList.add("block-s");
     $div.innerHTML = $block;

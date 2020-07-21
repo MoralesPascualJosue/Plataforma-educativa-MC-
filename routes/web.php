@@ -60,14 +60,15 @@ Route::put('/updateac/{id}','cursoController@updatea')->name('updateac');
 
 Route::post('/updateCover/{id}','cursoController@updateCover')->name('updatecover');
 
-Route::delete('/destroyac/{id}','cursoController@
-')->name('destroyac');
+Route::delete('/destroyac/{id}','cursoController@destroya')->name('destroyac');
 
 Route::post('/matricular','cursoController@matricular')->name('matricular');
 
 Route::get('/actividadescurso/{id}','cursoController@trabajos')->name('actividadescurso');
 
 Route::get('/entregash/{id}','cursoController@historiale')->name('entregash');
+
+Route::get('/entregase/{cur}/{id}','cursoController@historialu')->name('entregase');
 
 //________[END curses routes]__________
 
@@ -119,6 +120,10 @@ Route::get('/foro/{curso}/discusion/{id}','ForumController@discusion')->name('di
 Route::post('/foro/update/{id}/','ForumController@updated')->name('updatead');
 
 Route::post('/foro/modificarco/{id}/','ForumController@updateco')->name('modificarco');
+
+Route::delete('/foro/{curso}/eliminarco/{id}/','ForumController@deleteco')->name('eliminarco');
+
+Route::post('/foro/{curso}/eliminardis/{id}/','ForumController@deletedis')->name('eliminardis');
 
 Route::get('/foro/{curso}/comentario/{id}','ForumController@comentario')->name('comentario');
 

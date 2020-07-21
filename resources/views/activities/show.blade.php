@@ -55,7 +55,7 @@
         {!! $work->contenido !!}
     </div>
     @endforeach
-    @endcan
+    @endcannot
 
 
     {{-- <div class="contenido" id="editorjs">

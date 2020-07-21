@@ -39,9 +39,22 @@ class ForumController extends Controller
     {        
         $curso = $this->cursoRepository->find($cur,['id','title','cover']);
         $categorias = $this->fcategoriaRepository->all([],null,null,['id','name','color']);
-        $discuss;    
+        $discusst = [];    
+        $discuss = [];
+
         if (!$request["en"] == "") {
-            $discuss = $discuss->where("nameCategoria",$request["en"]);
+
+             $discusst = fdiscusion::query()
+        ->withCategoria()
+        ->withCategoriaColor()
+        ->withUSer()
+        ->withCurso($cur)
+        ->orderBy('updated_at','DESC')        
+        ->get()
+        ;
+
+        $discuss = $discusst->where("nameCategoria",$request["en"]);
+        
         }else{
              $discuss = fdiscusion::query()
         ->withCategoria()
@@ -84,6 +97,11 @@ class ForumController extends Controller
          $curso['back'] = "foro/";
 
          $user = Auth::user()->id;
+
+         $discuss = fdiscusion::find($id);
+         if (empty($discuss)) {
+             return redirect()->back();
+         }
 
           $discuss = fdiscusion::query()
         ->withCategoria()
@@ -136,7 +154,7 @@ class ForumController extends Controller
     public function discusion($id,$discusion)
     {
         
-        $data = $this->fdiscusionRepository->find($discusion);
+        $data = $this->fdiscusionRepository->find($discusion);        
 
         if($data->hasPropiedad(Auth::user()->id) == 1 ){
             return $data;
@@ -197,6 +215,44 @@ class ForumController extends Controller
         return redirect()->back();
     }
 
+     public function deleteco($curso,$id)
+    {
+        
+        $fpost = $this->fpostRepository->find($id);
+
+        if (empty($fpost)) {
+            aborr(404,"Contenido no dispinible");
+        }
+
+        if($fpost->hasPropiedad(Auth::user()->id )  == 1){
+            Flash::success('Eliminado.');
+            $this->fpostRepository->delete($id);
+            
+            return "Eliminado";
+        }                
+
+        return "Contenido no disponible";
+    }
+
+     public function deletedis($curso,$id)
+    {
+        
+        $fdiscusion = $this->fdiscusionRepository->find($id);
+
+        if (empty($fdiscusion)) {
+              Flash::success('Contenido no disponible.');
+           return redirect()->route('foro',$curso);
+        }
+
+        if($fdiscusion->hasPropiedad(Auth::user()->id )  == 1){;
+            $this->fdiscusionRepository->delete($id);
+            
+            Flash::success('Contenido eliminado.');
+           return redirect()->route('foro',$curso);
+        }                
+
+        return "Contenido no disponible";
+    }
 
 }
 

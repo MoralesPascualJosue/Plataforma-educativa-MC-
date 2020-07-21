@@ -163,7 +163,6 @@ $(document).on("click", ".edit", function(event) {
 
 $(document).on("click", ".editarcomentario", function(event) {
     $disc = $(this)["0"].id;
-    console.log($disc);
 
     $("#edit_comentario")
         .css("display", "inherit")
@@ -199,4 +198,43 @@ $(document).on("click", ".nuevocomentario", function(event) {
 
         editorD("#bodycomentario");
     }
+});
+
+$(document).on("click", ".eliminarcomentario", function(event) {
+    let el = this.parentElement.parentElement;
+    $.ajax({
+        method: "delete",
+        url: "eliminarco/" + this.id
+    })
+        .done(function(data) {
+            el.remove();
+        })
+        .fail(function(data) {
+            var errors = data.responseJSON["errors"];
+            if (errors) {
+                $.each(errors, function(i) {
+                    alert(errors[i]);
+                });
+            }
+        });
+});
+
+$(document).on("click", ".delete", function(event) {
+    $.ajax({
+        method: "post",
+        url: "eliminardis/" + this.id
+    })
+        .done(function(data) {
+            $("#wrap100")
+                .empty()
+                .append($(data));
+        })
+        .fail(function(data) {
+            var errors = data.responseJSON["errors"];
+            if (errors) {
+                $.each(errors, function(i) {
+                    alert(errors[i]);
+                });
+            }
+        });
 });
