@@ -15,13 +15,14 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('chat')->unsigned();
+            $table->integer('curso_id')->unsigned();
             $table->bigInteger('send')->unsigned();
             $table->integer('reader');
+            $table->string('asunto');
             $table->text('body');
             $table->timestamps();
             $table->foreign('send')->references('id')->on('users');
-            $table->foreign('chat')->references('id')->on('chats');
+            $table->foreign('curso_id')->references('id')->on('cursos');
         });
     }
 

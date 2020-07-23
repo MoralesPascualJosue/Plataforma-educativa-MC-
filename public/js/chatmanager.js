@@ -1,14 +1,6 @@
-// const msgerForm = get(".msger-inputarea");
-// const msgerInput = get(".msger-input");
-// const msgerChat = get(".msger-chat");
-const msgerChat = get(".out");
-// const msgerPart = get(".participantes");
-
 let object;
-
+const msgerChat = get(".out");
 const PERSON_IMG = $(".avatar").attr("src");
-const BOT_NAME = "BOT";
-// const PERSON_NAME = $(".name-user").text();
 
 $.ajaxSetup({
     headers: {
@@ -125,102 +117,38 @@ $(document).on("click", ".cerrarchat", function(event) {
     $(".msger").attr("id", "0");
 });
 
-$(document).on("click", ".newmessage", function(event) {
-    $(".conversaciones").css("display", "none");
-    $(".messages").css("visibility", "visible");
-    $(".msger-chat").empty();
-    $(".msger-header-title").text("contenido");
-
-    $url = "/chat/" + $(this)[0]["id"];
-    $.ajax({
-        type: "get",
-        url: $url
-    })
-        .done(function(data) {
-            msgerForm.action = "/chats/chat/message/" + data["chat"].id;
-            $(".msger").attr("id", data["chat"].id);
-            data["messages"].forEach(element => {
-                let position = "left";
-                if (data["i"] == element["send"]) {
-                    position = "right";
-                }
-
-                chargingMessage(
-                    element["usuarioName"],
-                    element["usuarioImage"],
-                    position,
-                    element["body"],
-                    element["created_at"]
-                );
-            });
-
-            if (data["state"] == "new") {
-                const seccion = `
-                <div class="chat" id="${data["chat"]["id"]}">
-                    <div class="chat-name" id="${data["chat"]["curso_id"]}/${data["chat"]["id"]}">${data["chat"]["name"]}</div>
-                    <div class="eliminarc" id="${data["chat"]["id"]}">X</div>
-                </div>
-                `;
-
-                $(".conversaciones").append(seccion);
-            }
-        })
-        .fail(function(data) {
-            var errors = data.responseJSON["errors"];
-            if (errors) {
-                $.each(errors, function(i) {
-                    alert(errors[i]);
-                });
-            }
-        });
-});
-
 $(document).on("click", ".chat-name", function(event) {
-    $(".active").removeClass("active");
-    this.classList.add("active");
+    $(".active-ms").removeClass("active-ms");
+    this.classList.add("active-ms");
     $(".out").empty();
     $(".out").css("display", "block");
     $(".email-list").animate({ flex: "0%" });
     $(".cerrarms").css("display", "inherit");
+    $curso = $("#curso").val();
 
-    $url = "/chatC/" + $(this)[0]["id"];
+    $url = "/chatC/" + $curso + "/" + $(this)[0]["id"];
     $.ajax({
         type: "get",
         url: $url
     })
         .done(function(data) {
-            if (data["messages"].length == 0) {
+            if (data.length == 0) {
                 const msgHTML = `<div class="no-messages">
                             <i class="fa fa-file-o"> No tienes mensages.</i>
                         </div>`;
 
                 msgerChat.insertAdjacentHTML("beforeend", msgHTML);
             } else {
-                data["messages"].forEach(element => {
-                    let position = 0;
-
-                    if (data["participantes"][0].user_id == element["send"]) {
-                        position = 1;
-                    }
-                    chargingMessage(
-                        element["user"],
-                        element["usuarioImage"],
-                        position,
-                        data["participantes"][position],
-                        element["body"],
-                        element["created_at"]
-                    );
-                });
+                chargingMessage(
+                    data["id"],
+                    data["user"],
+                    data["asunto"],
+                    data["destino"],
+                    data["body"],
+                    data["created_at"],
+                    data["cursoName"]
+                );
             }
-            data["participantes"].forEach(element => {
-                const msgHTML = `
-                    <div class="participante">
-                        <div class="msg-info-name">${element["name"]}</div>
-                    </div>
-                `;
-
-                // msgerPart.insertAdjacentHTML("beforeend", msgHTML);
-            });
         })
         .fail(function(data) {
             var errors = data.responseJSON["errors"];
@@ -232,9 +160,14 @@ $(document).on("click", ".chat-name", function(event) {
         });
 });
 
-$(document).on("click", ".eliminarc", function(event) {
-    object = $(this).parent();
+$(document).on("click", ".deletems", function(event) {
+    object = $(this)
+        .parent()
+        .parent()
+        .parent()
+        .parent();
     object.css("visibility", "hidden");
+
     $(".menud").css("visibility", "visible");
     $(".menud-option-confirmar").attr("id", $(this)[0]["id"]);
     $(".box").css("opacity", "0.4");
@@ -249,65 +182,17 @@ $(document).on("click", ".menud-option-cancel", function(event) {
 $(document).on("click", ".menud-option-confirmar", function(event) {
     $(".menud").css("visibility", "hidden");
     $(".box").css("opacity", "1");
-    object.remove();
 
     $.ajax({
         type: "DELETE",
-        url: "destroycs/" + object[0].id
-    })
-        .done(function(data) {})
-        .fail(function(data) {
-            var errors = data.responseJSON["errors"];
-            if (errors) {
-                $.each(errors, function(i) {
-                    alert(errors[i]);
-                });
-            }
-        });
-});
-
-$(document).on("click", ".addchat", function(event) {
-    console.log($(this)[0]["id"]);
-    console.log($(".msger")[0]["id"]);
-
-    $url = "chat/agregate/" + $(this)[0]["id"];
-    $.ajax({
-        type: "post",
-        url: $url,
-        data: {
-            participante: $(this)[0]["id"],
-            chat: $(".msger")[0]["id"]
-        }
+        url: "destroyms/" + object[0].id
     })
         .done(function(data) {
-            if (data["event"] == "agregadoc") {
-                $(".conversaciones").css("display", "inherit");
-                $(".messages").css("visibility", "hidden");
-                $(".msger-chat").empty();
-                $(".msger-header-title").text("Conversaciones");
-                $(".participantes").empty();
-                $(".msger").attr("id", "0");
-
-                alert("agregadodo");
-                const seccion = `
-                <div class="chat" id="${data["chat"]["id"]}">
-                    <div class="chat-name" id="${data["chat"]["curso_id"]}/${data["chat"]["id"]}">${data["chat"]["name"]}</div>
-                    <div class="eliminarc" id="${data["chat"]["id"]}">X</div>
-                </div>
-                `;
-
-                $(".conversaciones").append(seccion);
-            }
-
-            if (data["event"] == "agregado") {
-                const msgHTML = `
-                    <div class="participante">
-                        <div class="msg-info-name">${data["participante"]["name"]}</div>
-                    </div>
-                `;
-
-                msgerPart.insertAdjacentHTML("beforeend", msgHTML);
-            }
+            object.remove();
+            $(".email-list li[id='" + object[0].id + "']").remove();
+            $(".out").fadeOut();
+            $(".email-list").animate({ flex: "100%" });
+            $(".active-ms").removeClass("active-ms");
         })
         .fail(function(data) {
             var errors = data.responseJSON["errors"];
@@ -319,52 +204,37 @@ $(document).on("click", ".addchat", function(event) {
         });
 });
 
-// msgerForm.addEventListener("submit", event => {
-//     event.preventDefault();
-
-//     const msgText = msgerInput.value;
-//     if (!msgText) return;
-
-//     appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
-//     msgerInput.value = "";
-
-//     $.ajax({
-//         type: "post",
-//         url: msgerForm.action,
-//         data: {
-//             body: msgText
-//         }
-//     })
-//         .done(function(data) {})
-//         .fail(function(data) {
-//             var errors = data.responseJSON["errors"];
-//             if (errors) {
-//                 $.each(errors, function(i) {
-//                     alert(errors[i]);
-//                 });
-//             }
-//         });
-// });
-
-function chargingMessage(user, img, side, to, text, date) {
+function chargingMessage(id, user, asunto, to, text, date, curso) {
     //   Simple solution for small apps
     $asset = "../";
     const msgHTML = `
-    <div class='message'>
+    <div class='message' id='${id}'>
         <div>
         <ul class='message-actions'>
-        <li><a class='button' href='' title='Reply'><i class='fa fa-reply fa-fw'></i></a></li >
-        <li><a class='button' href='' title='Forward'><i class='fa fa-share fa-fw'></i></a></li>
-        <li><a class='button' href='' title='Delete'><i class='fa fa-trash fa-fw'></i></a></li>
+        <li><a class='button' href='' title='Reply'></a></li >
+        <li><p class='button deletems'>x</p></li>
+        <li><a class='button' href='' title='Delete'></i></a></li>
         </ul><span class='date'>${date}</span>
         <img class='avatar' src='${$asset +
-            img}' alt='avatar'/><h3 class='from'>${
+            user["image"]}' alt='avatar'/><h3 class='from'>${
         user["name"]
-    }</h3><p><span class='address'>${to.name}</span></p>
-        <h2 class='subject'>active email subject</h2><p class='ng-binding'></p><p class='ng-binding'>${text}</p></div></div>
+    }</h3><p id="for"></p>
+        <h2 class='subject'>${asunto}</h2><p class='ng-binding'></p><p class='ng-binding'>${text}</p></div>
+        <div class="subject" style="width: 50%;border-top-style: dashed;font-size: smaller;opacity: 0.5;">${
+            curso.title
+        }</div>
+        </div>                
   `;
 
     msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+
+    to.forEach(element => {
+        const fromhtml = `
+        <span class="address" id="${element.email}">
+            ${element.name}
+        </span>`;
+        $("#for").append(fromhtml);
+    });
     msgerChat.scrollTop -= 500;
 }
 
@@ -411,17 +281,21 @@ $(document).on("click", ".sumitmsc", function(event) {
 $(document).on("click", ".cerrarms", function(event) {
     $(".out").fadeOut();
     $(".email-list").animate({ flex: "100%" });
-    $(".active").removeClass("active");
+    $(".active-ms").removeClass("active-ms");
 });
 
 $(document).on("click", ".addadress", function(event) {
-    $("#panel").slideToggle("slow");
+    $("#panel-contacts").slideToggle("slow");
 });
 
 $(document).on("click", ".sumitmse", function(event) {
     event.preventDefault();
 
     const msgText = $(".contentms")[0].innerHTML;
+    const mssubject = $(".subjectms")[0].textContent;
+    const curso = $("#curso").val();
+    const destino = [];
+
     const to = $(".para")
         .children()
         .toArray();
@@ -432,44 +306,46 @@ $(document).on("click", ".sumitmse", function(event) {
     $(".nuevoms").fadeOut();
 
     to.forEach(element => {
-        $url = "/chat/" + element.id;
+        destino.push(element.id);
+    });
 
-        $.ajax({
-            type: "post",
-            url: $url,
-            data: {
-                body: msgText
-            }
-        })
-            .done(function(data) {
-                $(".email-list").empty();
-                data.forEach(element => {
-                    const msgHTML = `
-                    <li class="chat-name" id="${element.curso_id}/${element.id}">
-                <span class="date">${element["last"].created_at}</span>
-                <h3 class="from m-b-5"></h3>
-                <h2 class="subject">email subject</h2>
-                <p class="message-snippet">${element["last"].body}</p>
+    $url = "/sendmensaje/" + curso;
+
+    $.ajax({
+        type: "post",
+        url: $url,
+        data: {
+            body: msgText,
+            asunto: mssubject,
+            destino: destino
+        }
+    })
+        .done(function(element) {
+            const msgHTML = `
+                    <li class="chat-name" id="${element.id}">
+                <span class="date">${element.created_at}</span>
+                <h3 class="from m-b-5"><img src="../${element["user"].image}" class="avatar-min"
+                        alt="">${element["user"].name}</h3>
+                <h2 class="subject">${element.asunto}</h2>
                 </li>
                 `;
-                    $(".email-list").append(msgHTML);
+            $(".email-list").prepend(msgHTML);
+        })
+        .fail(function(data) {
+            var errors = data.responseJSON["errors"];
+            if (errors) {
+                $.each(errors, function(i) {
+                    alert(errors[i]);
                 });
-            })
-            .fail(function(data) {
-                var errors = data.responseJSON["errors"];
-                if (errors) {
-                    $.each(errors, function(i) {
-                        alert(errors[i]);
-                    });
-                }
-            });
-    });
+            }
+        });
 });
 
 $(document).on("click", ".updatems", function(event) {
     event.preventDefault();
-
-    $url = "/chats?en=" + this.id;
+    $(".orange-b").removeClass("orange-b");
+    $url = this.id;
+    this.classList.add("orange-b");
 
     $.ajax({
         type: "get",
@@ -479,11 +355,11 @@ $(document).on("click", ".updatems", function(event) {
             $(".email-list").empty();
             data.forEach(element => {
                 const msgHTML = `
-                    <li class="chat-name" id="${element.curso_id}/${element.id}">
-                <span class="date">${element["last"].created_at}</span>
-                <h3 class="from m-b-5"></h3>
-                <h2 class="subject">email subject</h2>
-                <p class="message-snippet">${element["last"].body}</p>
+                    <li class="chat-name" id="${element.id}">
+                <span class="date">${element.created_at}</span>
+                <h3 class="from m-b-5"><img src="../${element["user"].image}" class="avatar-min"
+                        alt="">${element["user"].name}</h3>
+                <h2 class="subject">${element.asunto}</h2>
                 </li>
                 `;
                 $(".email-list").append(msgHTML);
@@ -499,19 +375,16 @@ $(document).on("click", ".updatems", function(event) {
         });
 });
 
-function allowDrop(ev) {
-    ev.preventDefault();
-}
+$("#grupo").change(function() {
+    let contact = $("#panel-contacts").children();
+    let destino = $("#panel-contacts-destino").children();
 
-function drag(ev) {
-    ev.dataTransfer.setData("Text", ev.target.id);
-}
-
-function drop(ev) {
-    var data = ev.dataTransfer.getData("Text");
-    ev.target.appendChild(document.getElementById(data));
-    ev.preventDefault();
-}
+    if (this.checked) {
+        $("#panel-contacts-destino").append(contact);
+    } else {
+        $("#panel-contacts").append(destino);
+    }
+});
 
 $(document).ready(function() {
     var busqueda = $("#busqueda"),
@@ -562,4 +435,46 @@ $(document).ready(function() {
             }
         });
     });
+});
+
+$(function() {
+    var $contacts = $("#panel-contacts"),
+        $destino = $("#panel-contacts-destino");
+
+    $("span", $contacts).draggable({
+        cancel: "a.ui-icon",
+        revert: "invalid",
+        containment: "document",
+        helper: "clone",
+        cursor: "move"
+    });
+
+    $destino.droppable({
+        accept: "#panel-contacts > span",
+        activeClass: "ui-state-highlight",
+        drop: function(event, ui) {
+            restorecontact(ui.draggable);
+        }
+    });
+
+    $contacts.droppable({
+        accept: "#panel-contacts-destino span",
+        activeClass: "custom-state-active",
+        drop: function(event, ui) {
+            movecontac(ui.draggable);
+        }
+    });
+
+    function restorecontact($item) {
+        $item.fadeOut(function() {
+            var $list = $($destino).appendTo($destino);
+            $item.appendTo($list).fadeIn();
+        });
+    }
+
+    function movecontac($item) {
+        $item.fadeOut(function() {
+            $item.appendTo($contacts).fadeIn();
+        });
+    }
 });

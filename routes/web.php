@@ -130,19 +130,18 @@ Route::get('/foro/{curso}/comentario/{id}','ForumController@comentario')->name('
 //________[END forum routes]__________
 
 //________[Chat routes]__________
-Route::get('/chats','ChatController@mischats');
 
-Route::get('/chats/{id}','ChatController@chats')->name('chats');
+Route::get('/mensajes/{id}','ChatController@mensajes')->name('mensajes');
 
-Route::post('/chat/{id}/{u}','ChatController@chat')->name('chat');
+Route::post('/sendmensaje/{id}','ChatController@send')->name('sendmensaje');
 
 Route::get('/chatC/{id}/{c}','ChatController@chatC')->name('chatC');
 
-Route::post('/chats/chat/message/{id}','ChatController@message')->name('message');
+Route::delete('/mensajes/destroyms/{id}','ChatController@destroyc')->name('destroyms');
 
-Route::delete('/chats/destroycs/{id}','ChatController@destroyc')->name('destroycs');
+Route::get('/mensajes/updatems/{id}','ChatController@updatems')->name('updatems');
 
-Route::post('/chats/chat/agregate/{id}','ChatController@agregate')->name('agregate');
+Route::get('/mensajes/enviadosms/{id}','ChatController@enviadosms')->name('enviadosms');
 //________[END Chat routes]__________
 
 //________[Resources routes]__________

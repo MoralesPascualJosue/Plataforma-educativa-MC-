@@ -6,6 +6,7 @@
 @include('flash::message')
 
 <div class="container">
+    <input type="hidden" id="curso" name="curso" value="{{$curso->id}}">
 
     <div class="first">
         <div class="info-content">

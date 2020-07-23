@@ -43,7 +43,7 @@ class informacionController extends Controller
     { 
          
         $user = Auth::user();
-        $curso = Curso::find($cur); 
+        $curso = Curso::find($cur);
 
         if($user->cannot("edit cursos")){
                abort(404,"Permisos no suficientes");
@@ -62,7 +62,7 @@ class informacionController extends Controller
      public function informacionCursop($cur)
     { 
          
-        $curso = Curso::find($cur);/***/
+        $curso = Curso::find($cur);
         $aprovechamiento = [];
 
         if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){

@@ -16,7 +16,7 @@ class AsesorsSeeder extends Seeder
         Factory(App\Models\Asesor::class)->create([
               'user_id'=> 1,
             'name' => Str::random(10),
-            'image' => 'http://localhost:8000/photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
+            'image' => 'photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
             'bio' => Str::random(10).'--bio',
             'institute' => 'Instituto Tecnologico de Oaxaca',
             'department' => 'Maestria en construccion',
@@ -26,7 +26,7 @@ class AsesorsSeeder extends Seeder
         Factory(App\Models\Asesor::class)->create([
                         'user_id'=> 2,
             'name' => Str::random(10),
-            'image' => 'http://localhost:8000/photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
+            'image' => '/photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
             'bio' => Str::random(10).'--bio',
             'institute' => 'Instituto Tecnologico de Oaxaca',
             'department' => 'Maestria en construccion',
@@ -36,7 +36,7 @@ class AsesorsSeeder extends Seeder
         Factory(App\Models\Estudiante::class)->create([
            'user_id'=> 3,
             'name' => Str::random(10),
-            'image' => 'http://localhost:8000/photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
+            'image' => 'photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
             'bio' => Str::random(10).'--bio',
             'institute' => 'Instituto Tecnologico de Oaxaca',
             'department' => 'Maestria en construccion',
@@ -46,7 +46,7 @@ class AsesorsSeeder extends Seeder
         Factory(App\Models\Estudiante::class)->create([
             'user_id'=> 4,
             'name' => Str::random(10),
-            'image' => 'http://localhost:8000/photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
+            'image' => 'photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
             'bio' => Str::random(10).'--bio',
             'institute' => 'Instituto Tecnologico de Oaxaca',
             'department' => 'Maestria en construccion',
@@ -56,7 +56,7 @@ class AsesorsSeeder extends Seeder
         Factory(App\Models\Asesor::class)->create([
            'user_id'=> 5,
             'name' => Str::random(10),
-            'image' => 'http://localhost:8000/photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
+            'image' => 'photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
             'bio' => Str::random(10).'--bio',
             'institute' => 'Instituto Tecnologico de Oaxaca',
             'department' => 'Maestria en Diseño',
@@ -66,7 +66,7 @@ class AsesorsSeeder extends Seeder
         Factory(App\Models\Asesor::class)->create([
             'user_id'=> 6,
             'name' => Str::random(10),
-            'image' => 'http://localhost:8000/photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
+            'image' => 'photos/wFU44hEDR9jc5l7ynUOH3VQOlYD0jrjVtObpiI2R.png',
             'bio' => Str::random(10).'--bio',
             'institute' => 'Instituto Tecnologico de Oaxaca',
             'department' => 'Maestria en diseño',

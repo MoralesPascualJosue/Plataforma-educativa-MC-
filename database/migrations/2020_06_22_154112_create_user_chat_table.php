@@ -13,12 +13,12 @@ class CreateUserChatTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_chat', function (Blueprint $table) {
+        Schema::create('user_message', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->integer('chat_id')->unsigned();
+            $table->integer('message_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('chat_id')->references('id')->on('chats');
+            $table->foreign('message_id')->references('id')->on('messages');
             $table->integer('news');
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateUserChatTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_chat');
+        Schema::dropIfExists('user_message');
     }
 }

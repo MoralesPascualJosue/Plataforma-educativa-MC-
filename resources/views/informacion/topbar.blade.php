@@ -23,8 +23,8 @@
                     <img src="{{ asset("resources/icons/debate-c.svg") }}" alt="Foro">
                 </a>
             </li>
-            <li class="course-tool-tab  {{ Route::is('chats') ? 'active' : '' }}">
-                <a class="course-tab-content" href="{{ route("chats",$curso->id) }}">
+            <li class="course-tool-tab  {{ Route::is('mensajes') ? 'active' : '' }}">
+                <a class="course-tab-content" href="{{ route("mensajes",$curso->id) }}">
                     <img src="{{ asset("resources/icons/messages-c.svg") }}" alt="Mensajes">
                 </a>
             </li>

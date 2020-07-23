@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\cursoRepository;
-use App\Models\Chat;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use App\Models\Message;
-use App\Models\user_chat;
 use Flash;
 use Response;
+
+use App\Repositories\cursoRepository;
+use App\User;
+use App\Models\Curso;
+use App\Models\Message;
+use App\Models\user_message;
 
 
 class ChatController extends Controller
@@ -24,28 +25,31 @@ class ChatController extends Controller
         $this->middleware('auth');
     }
 
-     public function chats($cur,Request $request)
+     public function mensajes($cur,Request $request)
     {       
-        $user = Auth::user(); 
-        if($user->can('edit cursos')){
-            $user['perfil'] = $user->asesor()->get()[0];
-        }else{
-            $user['perfil'] = $user->estudiante()->get()[0];
-        }
-
+        $usero = Auth::user(); 
+        $user = User::find($usero->id,["name","email","image"]);
         $curso = $this->cursoRepository->find($cur,['id','title','cover']);     
+        $chats = [];
 
-        $chats = Auth::user()->chats()->where('curso_id',$cur)->get();
-
-        foreach($chats as $ca){
-            $ca->last = $ca->messages()->orderBy("id","DESC")->first();
+        if($usero->can('edit cursos')){
+            $user['perfil'] = $usero->asesor()->get()[0];
+        }else{
+            $user['perfil'] = $usero->estudiante()->get()[0];
         }
+
+        $chats = $usero->mensages()->withUser()->orderBy("created_at","DESC")->where('curso_id',$cur)->get();
 
         $contacts = $this->cursoRepository
         ->find($cur)
         ->estudiantes()
-        ->withUser()
-        ->get();        
+        ->get();
+
+        $contacts["asesor"] = $this->cursoRepository
+        ->find($cur)
+        ->asesor()
+        ->first();
+    
 
         $view = \View::make('chat.show')->with(compact('curso','chats','contacts','user'));
 
@@ -57,125 +61,85 @@ class ChatController extends Controller
         return $view;
     }
 
-     public function chat($cur,$u,Request $request)
+     public function send($cur,Request $request)
     {
-
-        $chats = Auth::user()->chats()->where('curso_id',$cur)
-        ->get();        
-
-        $inputm['send'] =  Auth::user()->id;
-        $inputm['reader'] = 0;
-        $inputm['body'] = $request['body'];
-        $llave = false;
+        $input = $request->all();        
+        $input['send'] =  Auth::user()->id;
+        $input['reader'] = 0;
+        $input['curso_id'] = $cur;
+        $curso = $this->cursoRepository->find($cur);
+        $llave = false;        
         
-        foreach($chats as $ca){
-            if($ca->participante($u) == 1 and $ca->users()->count() < 3){
-                 $data['chat'] = $ca;
-                 $data['i'] = Auth::user()->id;
-                 $data['messages'] = $ca->messages()->withUser()->withImage()->get();
-                 $data["state"] = "return";
+        if($curso->hasPropiedad($input["send"])) {
+            $llave = true;
+        }else{
+            $estudiante = Auth::user()->estudiante()->get()[0];
 
-                $inputm['chat'] = $ca->id;
-                
-                $message = Message::create($inputm);
+            if ($curso->hasMatriculado($estudiante->id)) {
                 $llave = true;
-            break;
-            }         
+            }
         }
 
-        if ($llave) {
-            $mischats = Auth::user()->chats()->where('curso_id',$cur)->get();
-            foreach($mischats as $ca){
-                $ca->last = $ca->messages()->orderBy("id","DESC")->first();
-            }     
-            return $mischats;
-        }                 
-        
+         if(!$llave){
+            abort(404,"Permisos insuficientes");    
+         }
 
-        $input['name'] = User::find($u)->name;
-        $input['curso_id'] = $cur;
+        if(empty($input["destino"])){
+            abort(404,"Sin envio");
+        }
 
-        $data['chat'] = Chat::create($input);
-        $data['i'] = Auth::user()->id;
-        $data['messages'] = [];        
+        $message = Message::create($input);
+       
+        foreach($input["destino"] as $destino){
+            $in['user_id'] = $destino;
+            $in['message_id'] = $message->id;
+            $in['news'] = 0;
 
-        $in['user_id'] = $data['i'];
-        $in['chat_id'] = $data['chat']->id;
-        $in['news'] = 0;
-        
-        user_chat::create($in);
+            user_message::create($in);    
+        }             
 
-        $in['user_id'] = $u;
+        $message["user"] = User::where("id",$message["send"])->get(["name","image"])[0];
 
-        user_chat::create($in);
-        $data["state"] = "new";
-        
-        $inputm['chat'] = $data['chat']->id;;        
-        $message = Message::create($inputm);
-
-        $mischats = Auth::user()->chats()->where('curso_id',$cur)->get();
-        foreach($mischats as $ca){
-            $ca->last = $ca->messages()->orderBy("id","DESC")->first();
-        }     
-        return $mischats;
+        return $message;
     }
 
      public function chatC($cur,$u,Request $request)
     {
+        $message = Message::withUser()->orderby("id","DESC")->where("id",$u)->get(); 
 
-        $data['chat'] = Chat::find($u);        
-        if(empty($data['chat'])){
-            abort(404,'mal uso');
+        if(empty($message[0])){
+            abort(404,'Contenido no disponible');
         }
-        $data['i'] = Auth::user()->id;
-        $data['participantes'] = $data['chat']->users()->get(["user_id","name"]);
-        $data['messages'] = $data['chat']->messages()->withUser()->withImage()->orderby("id","DESC")->get();
 
-        return $data;
-    }
-
-    public function message($id,Request $request){        
-        $input['chat'] = $id;
-        $input['send'] =  Auth::user()->id;
-        $input['reader'] = 0;
-        $input['body'] = $request['body'];
+        $message[0]["destino"] = Message::find($u)->users()->get(["name","email"]);
+        $message[0]["cursoName"] = Curso::where("id",$message[0]["curso_id"])->first(["title"]);
         
-        $message = Message::create($input);
-
-        return "enviado";
+        return $message[0];
     }
 
     public function destroyc($id)
     {   
-        $chat = Chat::find($id);
 
-        if (empty($chat)) {
-            Flash::error('No disponible');
+        $menssage = Message::find($id);
 
-            abort(404,' no disponible');
+        if(empty($menssage)){
+            abort(404,"Contenido no disponible");
         }
 
-        if(!$chat->participante(Auth::user()->id)){
-                Flash::success('No registrado.');
-                return redirect()->route('inicio');
-        }
-
-        $participantes = user_chat::where("chat_id",$id)->get();
+        if (!$menssage->hasPropiedad(Auth::user()->id)) {
+            $destino= user_message::where("message_id",$menssage->id)->where("user_id",Auth::user()->id);
+            $destino->delete();
+            return "eliminado";
+        }        
+        $destinos = user_message::where("message_id",$menssage->id)->get();
         
-        foreach($participantes as $p){
-            $p->delete();
-        }
-        
-        $messages = $chat->messages()->get();
-        foreach($messages as $m){
-            $m->delete();
+        foreach($destinos as $destino){
+            $destino->delete();
         }
 
-        $chat->delete();
+        $menssage->delete();
 
-        Flash::success('Eliminado.');
-
-       return Response()->json([ 'Chat' => 'chat']);
+        return "eliminado -";
     }
 
     public function mischats(Request $request){
@@ -191,63 +155,17 @@ class ChatController extends Controller
         return $mischats;
     }    
 
-    public function agregate($c,Request $request)
+    public function updatems($cur)
     {
-        $input = $request->all();
+        $usero = Auth::user();  
+        $chats = $usero->mensages()->withUser()->orderBy("created_at","DESC")->where('curso_id',$cur)->get();
+        return $chats;
+    }
 
-        if ($input["chat"] == 0) {
-            return "no chat";
-        }
-
-        $chat = Chat::find($input["chat"]);
-        
-        if(empty($chat)){
-            abort(404,'mal uso');
-        }
-
-        if($chat->participante(Auth::user()->id) == 0){
-            abort(404,'mal uso');
-        }
-
-        if($chat->participante($input["participante"]) == 1){
-            return "participante";
-        }
-        
-        if ($chat->users()->count() < 3) {
-            //crear chat
-
-            $input['name'] = "Paticipantes chat";
-            $input['curso_id'] = $chat->curso_id;
-
-            $data['chat'] = Chat::create($input);    
-            $data['participantes'] = $chat->users()->get();  
-
-            foreach ($data["participantes"] as $participante) {
-                $in['user_id'] = $participante["id"];
-                $in['chat_id'] = $data['chat']->id;
-                $in['news'] = 0;
-                
-                user_chat::create($in);    
-            }
-
-            $in['user_id'] = $input["participante"];
-            $in['chat_id'] = $data["chat"]->id;
-            $in['news'] = 0;
-            
-            user_chat::create($in);
-
-            $d["event"] = "agregadoc";
-            $d["chat"] = $data["chat"];
-            return $d;
-        }
-
-        $in['user_id'] = $input["participante"];
-        $in['chat_id'] = $input["chat"];
-        $in['news'] = 0;
-        
-        user_chat::create($in);
-        $d["event"] = "agregado";
-        $d["participante"] = User::find($in["user_id"],"name");
-        return $d;
+    public function enviadosms($cur)
+    {
+        $usero = Auth::user();  
+        $chats = $usero->messages()->withUser()->orderBy("created_at","DESC")->where('curso_id',$cur)->get();
+        return $chats;
     }
 }

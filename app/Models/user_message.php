@@ -12,16 +12,16 @@ use Eloquent as Model;
  * @property integer user_id
  * @property interger chat:id
  */
-class user_chat extends Model
+class user_message extends Model
 {
 
-    public $table = 'user_chat';
+    public $table = 'user_message';
 
 
 
     public $fillable = [
         'user_id',
-        'chat_id',
+        'message_id',
         'news'
     ];
 
@@ -48,7 +48,7 @@ class user_chat extends Model
     }
 
     public function chat() {
-        return $this->belongsToMany('App\Models\Chat','chat_id');
+        return $this->belongsToMany('App\Models\Message','message_id');
     }
     
 }

@@ -30,6 +30,7 @@ function truncateWithEllipses(text, max) {
 $(window).on("load", function() {
     var ctx = $("#chart");
     var ctx2 = $("#chart2");
+    var curso = $("#curso").val();
 
     var chart = new Chart(ctx, {
         type: "line",
@@ -105,7 +106,7 @@ $(window).on("load", function() {
         chart.update();
     }
 
-    this.ajaxg("../informacionActividades/21", function name(data) {
+    this.ajaxg("../informacionActividades/" + curso, function name(data) {
         data.forEach(element => {
             addData(
                 chart,
@@ -115,7 +116,7 @@ $(window).on("load", function() {
         });
     });
 
-    this.ajaxg("../informacionCursop/21", function name(data) {
+    this.ajaxg("../informacionCursop/" + curso, function name(data) {
         let label = ["Alto", "Medio", "Bajo"];
         let datos = [0, 0, 0];
         data.forEach(element => {

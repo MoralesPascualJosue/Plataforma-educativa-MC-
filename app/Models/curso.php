@@ -87,8 +87,8 @@ class curso extends Model
         return $this->hasMany('App\Models\fdiscusion');
     }
 
-    public function chats() {
-        return $this->hasMany('App\Models\Chat');
+    public function mensages() {
+        return $this->hasMany('App\Models\Message');
     }
 
     public function hasPropiedad($propietario){

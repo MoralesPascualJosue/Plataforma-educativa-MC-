@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/stylesci.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('css/stylesch.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('css/stylesms.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/jquery/jquery-ui.min.css') }}">
     @yield('css')
 
     <script src="{{asset('js/jquery/jquery-3.5.1.min.js')}}"> </script>
@@ -36,8 +37,10 @@
         @endif
     </div>
 
+    <script src="{{asset('js/jquery/jquery-ui.min.js')}}"> </script>
     <script src="{{ asset("js/chatmanager.js") }}"> </script>
     <script src="{{ asset("js/msmanager.js") }}"> </script>
+
 
     @stack('scripts')
 </body>

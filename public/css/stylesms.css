@@ -57,6 +57,14 @@ input[type="search"] {
     border-radius: 50%;
 }
 
+.avatar-min {
+    float: left;
+    display: block;
+    width: 1.5rem;
+    margin-right: 1rem;
+    border-radius: 50%;
+}
+
 .date {
     position: absolute;
     right: 1.375rem;
@@ -234,7 +242,6 @@ input[type="search"] {
     flex: 1 auto;
     height: calc(100% - 6.5em);
     min-height: 74vh;
-    overflow-y: scroll;
 }
 
 .email-list {
@@ -244,11 +251,10 @@ input[type="search"] {
     padding: 0;
     margin: 0;
     -webkit-overflow-scrolling: touch;
-    color: #fff;
-    background: #434753;
     overflow-y: scroll;
     max-height: 73vh;
     z-index: 10;
+    background-color: white;
 }
 
 .email-list li:hover {
@@ -262,7 +268,7 @@ input[type="search"] {
     cursor: pointer;
 }
 
-.email-list li.active {
+.email-list li.active-ms {
     color: #434753;
     background: #f0f0f0;
 }
@@ -321,13 +327,20 @@ input[type="search"] {
     border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
+.message .subject-s {
+    font-size: 1.3rem;
+    padding-left: 1.275rem;
+    margin: 0.6rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
 .m-b-5 {
     margin-top: 10px;
 }
 
 .nuevoms {
     position: absolute;
-    bottom: 0;
+    top: 0;
     display: none;
     z-index: 100;
     width: 75%;
@@ -340,19 +353,19 @@ input[type="search"] {
 .sumitmse,
 .sumitmsc {
     position: absolute;
-    width: 49px;
-    height: 49px;
-    border-radius: 100%;
+    width: 63px;
+    height: 29px;
+    border-radius: 8px;
 }
 
 .sumitmsc {
-    top: -10px;
+    top: 0px;
     right: 15px;
 }
 
 .sumitmse {
     right: 80px;
-    top: -10px;
+    top: 0px;
 }
 
 .sumitmse:hover,
@@ -391,10 +404,9 @@ input[type="search"] {
     border: solid 1px #c3c3c3;
 }
 
-#panel {
+#panel-contacts {
     padding: 5px;
     display: none;
-    min-height: 20px;
 }
 
 .addadress {
@@ -420,4 +432,33 @@ input[type="search"] {
         overflow-x: hidden;
         margin-left: inherit;
     }
+}
+
+#panel-contacts-destino {
+    min-height: 30px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#panel-contacts {
+    background-color: khaki;
+}
+
+.orange-b {
+    color: orange;
+}
+
+.default-b {
+    color: #434753;
+}
+
+.todos-c {
+    float: left;
+    padding: 0.25rem 0.5rem;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: small;
+    font-weight: normal;
+    color: white;
+    background: darkblue;
+    border-radius: 1rem;
 }
