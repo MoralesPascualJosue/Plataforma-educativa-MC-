@@ -44,11 +44,12 @@
 
 .curse-img-header {
     position: unset;
-    height: 15rem;
+    height: 10rem;
+    grid-column: 1 / 6;
 }
 
 .box-cate {
-    color: white;
+    color: black;
     display: inline-block;
     border-radius: 5px;
     margin: 10px;
@@ -59,10 +60,11 @@
 
 .box-cate:hover {
     opacity: 1;
+    color: orange;
 }
 
 .bubble {
-    color: white;
+    color: black;
     background-color: orange;
     border-radius: 10px;
     text-align: center;
@@ -71,8 +73,8 @@
 }
 
 .bubble:hover {
-    background-color: #262626;
-    color: orange;
+    background-color: #8292a2;
+    color: white;
 }
 
 /*------------------------------------------------------------------
@@ -80,17 +82,13 @@
 
 .curse-container {
     background-color: white;
+    padding: 10px;
+    grid-column: 2 / 6;
+    grid-row: 2;
 }
 
 .column-content {
-    margin-left: unset;
-    padding: 1rem;
-}
-
-.column-content {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    display: inline;
     background-color: #fff;
     color: #444;
 }
@@ -98,33 +96,37 @@
 .box {
     background-color: #444;
     color: #000000;
-    border-radius: 5px;
-    padding: 20px;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
 }
 
 .discusstitle {
     font-size: 22px;
     font-weight: bold;
+    display: inline;
+    color: black;
 }
 
-.discussbody {
+/* .discussbody {
     padding: 10px;
     width: 85%;
     display: inline-block;
     font-size: 15px;
-}
+} */
 
 .discussname {
-    color: whitesmoke;
+    float: right;
+    color: black;
     font-size: 13px;
 }
 
 .discussitem {
     display: inline;
     text-align: right;
-    padding: 5px;
     background-color: #f9f9f9;
     border-radius: 8px;
+    padding: 5px;
 }
 
 .discussitem:hover {
@@ -132,19 +134,27 @@
 }
 
 .discussitemcon {
-    margin-top: 5px;
-    text-align: end;
+    text-align: center;
+}
+
+.discussitemconc {
+    text-align: right;
 }
 
 .cursoreview {
     text-align: center;
 }
 
+.curso-message {
+    background-color: white;
+}
+
 .nuevotema {
-    position: absolute;
+    float: right;
     padding: 10px;
     font-size: 18px;
     border-radius: 5px;
+    background-color: orange;
 }
 
 .nuevotema:hover {
@@ -157,12 +167,15 @@
 }
 .discuss {
     cursor: pointer;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border-bottom: 1px outset;
 }
 
 .discuss:hover {
     border-radius: 0px;
     padding: 15px;
-    box-shadow: 0 -0.25rem 0 #262626 inset;
     transition: box-shadow 0.25s linear;
     transition: padding 0.25s linear;
 }
@@ -186,12 +199,18 @@
     background-color: #f0f0f0;
     border-bottom: 1px solid orange;
     margin-top: 10px;
+    background-color: white;
 }
 .discussli:hover {
-    background-color: #8292a2;
+    border: 2px solid #8292a2;
 }
 
-@media (max-width: 992px) {
+.aside {
+    grid-column: 1 / 2;
+    grid-row: 2;
+}
+
+@media (max-width: 1050px) {
     .column-content {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
@@ -211,6 +230,10 @@
     .discussbody {
         width: 100%;
     }
+
+    .container {
+        display: inherit;
+    }
 }
 
 #new_discussion,
@@ -218,11 +241,10 @@
 #edit_comentario {
     display: none;
     border: 2px solid orange;
-    border-bottom: 0px;
-    position: fixed;
-    bottom: 0px;
+    /* position: fixed; */
+    top: 0px;
     width: minmax(300px, 750px);
-    margin-left: -375px;
+    /* margin-left: -375px; */
     left: 50%;
     height: auto;
     background: #fff;
@@ -283,6 +305,8 @@
 
 .curse-headerfs {
     width: 100%;
+    background: white;
+    padding: 10px;
 }
 
 .curse-containerfs {
@@ -312,17 +336,6 @@
     }
 }
 
-.regresar {
-    background-color: orange;
-    padding: 5px;
-    position: absolute;
-}
-
-.regresar:hover {
-    color: white;
-    background-color: #262626;
-}
-
 .canedit {
     visibility: visible;
     z-index: 1;
@@ -331,8 +344,8 @@
 }
 
 .userpost {
+    padding: 5px;
     font-size: 15px;
-    display: inline;
     color: orange;
 }
 
@@ -340,13 +353,12 @@
     float: right;
 }
 
-.container {
+/* .container {
     display: unset;
-}
+} */
 
 .imagep {
     width: 100px;
-    border-radius: 100%;
     border: 1px solid;
     overflow: hidden;
     height: 100px;
@@ -362,7 +374,6 @@
     padding-left: inherit;
     margin-top: inherit;
     margin-left: inherit;
-    width: 100%;
 }
 
 @media (max-width: 992px) {
@@ -373,4 +384,136 @@
     .containerfs {
         display: inline;
     }
+}
+
+#wrap100 {
+    background-color: inherit;
+}
+
+.curse-header {
+    margin-left: inherit;
+    padding: 10px;
+    grid-column: 2 / 6;
+    grid-row: 2/2;
+}
+
+.regresar {
+    background-color: orange;
+    padding: 5px;
+    position: absolute;
+}
+
+.regresar:hover {
+    color: white;
+    background-color: #8292a2;
+    border-radius: 0px;
+    padding: 6px;
+    transition: box-shadow 0.25s linear;
+    transition: padding 0.25s linear;
+}
+
+.posts-content {
+    padding: 10px;
+}
+
+.discussli {
+    display: flex;
+}
+
+.inline-c {
+    display: inline;
+    padding: 10px;
+}
+
+.categoria {
+    display: inline-block;
+}
+
+.row {
+    display: inline;
+}
+
+#new_discussion_footer {
+    display: inline;
+}
+
+.btnd {
+    background-color: orange;
+    padding: 10px;
+}
+
+.btnd:hover {
+    background-color: #8292a2;
+}
+
+#title {
+    width: 100%;
+    padding: 5px;
+}
+
+.post-user {
+    padding: 5px;
+    background-color: white;
+    text-align: center;
+    border-right: 1px solid #cdcdcd;
+}
+
+.post-data {
+    width: 100%;
+    margin-left: 30px;
+    padding: 10px;
+}
+
+#down-p {
+    width: 100%;
+    height: 100px;
+}
+
+@media (max-width: 1050px) {
+    .discussli {
+        display: inherit;
+    }
+
+    .post-user {
+        border-right: inherit;
+        border-bottom: 1px solid #cdcdcd;
+    }
+}
+
+.menud {
+    cursor: pointer;
+    background-color: #f9f9f9;
+    position: absolute;
+    margin-left: calc(100% - 56%);
+    padding: 2%;
+    margin-top: calc(100% - 80%);
+    text-align: center;
+    width: 200px;
+    visibility: hidden;
+    border-radius: 10px;
+}
+
+.menud-option {
+    display: inline-block;
+    width: 45%;
+    text-align: center;
+}
+
+.menud-option:hover {
+    background-color: orange;
+    color: white;
+}
+
+.menud-option-confirmar:hover {
+    background-color: red;
+}
+
+.top-dis {
+    padding: 5px;
+    border-radius: 8px;
+    color: black;
+}
+
+.scategoria {
+    display: none;
 }

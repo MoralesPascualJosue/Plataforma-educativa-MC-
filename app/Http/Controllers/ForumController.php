@@ -15,6 +15,7 @@ use App\Repositories\EstudianteRepository;
 use App\Http\Controllers\AppBaseController;
 
 use App\Models\fdiscusion;
+use App\Models\fcategoria;
 use App\Models\fpost;
 use Flash;
 Use Response;
@@ -38,7 +39,7 @@ class ForumController extends Controller
     public function foro($cur,Request $request)
     {        
         $curso = $this->cursoRepository->find($cur,['id','title','cover']);
-        $categorias = $this->fcategoriaRepository->all([],null,null,['id','name','color']);
+        $categorias = fcategoria::orderby("updated_at","DESC")->get(['id','name','color']);
         $discusst = [];    
         $discuss = [];
 
@@ -78,11 +79,33 @@ class ForumController extends Controller
 
      public function store($id,Request $request)
     {
+
+        $cate;
         $input = $request->all();
+        
+        if ($input["title"] == "") {
+            Flash::success('Tema vacio');
+
+            return redirect()->back();
+        }
+
+        if ($input["nuevacategoria"] == "nuevasi" ) {
+            if ($input["categoria"] == "" ){
+                Flash::success('Nombre vacio');
+                return redirect()->back();
+            }
+
+            $inputc["name"] = $input["categoria"];
+            $inputc["color"] = $input["color"];
+            $cate = $this->fcategoriaRepository->create($inputc);
+            $input["fcategoria"] = $cate->id;
+        }
+
         $input["curso_id"] = $id;
         $input["user_id"] = Auth::user()->id;
         $input["views"] = 0;
         $input["answered"] = 0;
+        $input["body"] = "";
 
         $fdiscusion = $this->fdiscusionRepository->create($input);
 
@@ -123,7 +146,7 @@ class ForumController extends Controller
 
         }
 
-        $categorias= $this->fcategoriaRepository->all();
+        $categorias= $this->fcategoriaRepository->all();        
         $view = \View::make('forum.show')->with(compact('curso','discuss','fposts','categorias'));
 
         if($request->ajax()){
@@ -139,6 +162,13 @@ class ForumController extends Controller
     {
 
         $input = $request->all();
+
+        if ($input["body"] == "") {
+            Flash::success('Comentario vacio');
+
+            return redirect()->back();
+        }
+
         $input["fdiscusion_id"] = $id;
         $input["user_id"] = Auth::user()->id;
         $input["locked"] = 0;
@@ -147,7 +177,7 @@ class ForumController extends Controller
 
         Flash::success('comentado');
 
-        return redirect()->back();//apuntar comentario con back registrado
+        return redirect()->back();
     }    
    
 
@@ -179,6 +209,14 @@ class ForumController extends Controller
      public function updated($id,Request $request)    
     {
         $input = $request->all();
+        
+        if ($input["title"] == "") {
+            Flash::success('Tema vacio');
+
+            return redirect()->back();
+        }
+
+        $input["body"] = "";
         $fdiscusion = $this->fdiscusionRepository->find($id);
 
         if (empty($fdiscusion)) {
@@ -189,7 +227,7 @@ class ForumController extends Controller
 
         if($fdiscusion->hasPropiedad(Auth::user()->id )  == 1){
             Flash::success('Actualizado.');
-            $fdiscusion = $this->fdiscusionRepository->update($request->all(), $id);   
+            $fdiscusion = $this->fdiscusionRepository->update($input, $id);   
         }                
 
         return redirect()->back();
@@ -198,7 +236,13 @@ class ForumController extends Controller
       public function updateco($id, Request $request)
     {
 
-        $input = $request->all();     
+        $input = $request->all();   
+        
+          if ($input["body"] == "") {
+            Flash::success('Comentario vacio');
+
+            return redirect()->back();
+        }
         
         $fpost = $this->fpostRepository->find($input["comentario"]);
 

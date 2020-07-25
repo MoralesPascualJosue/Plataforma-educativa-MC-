@@ -78,8 +78,8 @@ class fpost extends Model
     }
 
     public function scopeWithImage( $query){
-         $subquery = Estudiante::select('estudiantes.image') 
-         ->whereColumn('fposts.user_id','estudiantes.user_id');
+         $subquery = User::select('users.image') 
+         ->whereColumn('fposts.user_id','users.id');
  
         $query->addSelect(['image' => $subquery]);
     }

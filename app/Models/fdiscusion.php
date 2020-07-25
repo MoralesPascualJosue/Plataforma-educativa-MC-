@@ -52,7 +52,8 @@ class fdiscusion extends Model
         'answered' => 'integer',
         'user_id' => 'integer',
         'curso_id' => 'integer',
-        'fcategoria' => 'integer'
+        'fcategoria' => 'integer',
+        'created_at' => 'date:Y-m-d'
     ];
 
     /**

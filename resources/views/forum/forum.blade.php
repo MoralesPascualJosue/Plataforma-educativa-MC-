@@ -35,7 +35,8 @@
         @endif
     </div>
 
-    <script src="{{ asset('ckeditor/ckeditor5 1/build/ckeditor.js') }}"> </script>
+    {{-- <script src="{{ asset('ckeditor/ckeditor5 1/build/ckeditor.js') }}"> </script> --}}
+    <script src="{{ asset('ckeditor/ckeditor5-build-classic/ckeditor.js') }}"> </script>
     <script src="{{ asset("js/forummanager.js") }}"> </script>
 
     @stack('scripts')
