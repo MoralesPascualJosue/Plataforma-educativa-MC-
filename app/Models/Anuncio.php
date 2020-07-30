@@ -37,7 +37,8 @@ class Anuncio extends Model
     protected $casts = [
         'id' => 'integer',
         'anuncio' => 'string',
-        'user_id' => 'integer'
+        'user_id' => 'integer',
+        'updated_at' => 'date:Y-m-d'
     ];
 
     /**

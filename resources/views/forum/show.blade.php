@@ -4,7 +4,7 @@
 @section('content')
 
 @include('flash::message')
-<div class="discuss regresar" id="{{ $curso->id}}">Regresar</div>
+<div class="discuss regresar" id="{{ $curso->id}}?en={{$curso->back}}">Regresar</div>
 <div class="containerfs">
 
     @if ( $discuss['propiedad'] == 1)

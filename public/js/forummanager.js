@@ -122,7 +122,9 @@ $(document).on("click", ".discuss", function(event) {
     $di = $(this)["0"].id;
     $url = "/foro/" + $di;
 
-    $(this).ajaxPostt($url, "#wrap100", [], "get");
+    data = { back: $("#back").val() };
+
+    $(this).ajaxPostt($url, "#wrap100", data, "get");
     history.pushState(null, "", $url);
 });
 

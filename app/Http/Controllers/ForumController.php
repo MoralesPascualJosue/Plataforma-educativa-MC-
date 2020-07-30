@@ -42,6 +42,7 @@ class ForumController extends Controller
         $categorias = fcategoria::orderby("updated_at","DESC")->get(['id','name','color']);
         $discusst = [];    
         $discuss = [];
+        $back = "";
 
         if (!$request["en"] == "") {
 
@@ -55,6 +56,7 @@ class ForumController extends Controller
         ;
 
         $discuss = $discusst->where("nameCategoria",$request["en"]);
+        $back = $request["en"];
         
         }else{
              $discuss = fdiscusion::query()
@@ -67,7 +69,7 @@ class ForumController extends Controller
         ;
         }
 
-        $view = \View::make('forum.content')->with(compact('curso','categorias','discuss'));
+        $view = \View::make('forum.content')->with(compact('curso','categorias','discuss','back'));
 
         if($request->ajax()){
             $sections = $view->renderSections();
@@ -117,7 +119,7 @@ class ForumController extends Controller
     public function show($cur,$id,Request $request){
 
          $curso = $this->cursoRepository->find($cur,['id','title','cover']);
-         $curso['back'] = "foro/";
+         $curso['back'] = $request["back"];
 
          $user = Auth::user()->id;
 
@@ -133,6 +135,10 @@ class ForumController extends Controller
         ->where("id","=",$id)
         ->get()[0];
 
+        $fdiscusion = $this->fdiscusionRepository->find($id);
+        $input["views"] = $fdiscusion["views"]+1;
+        $this->fdiscusionRepository->update($input, $id);
+
         $discuss['propiedad'] = $discuss->hasPropiedad($user);        
 
         $fposts = fpost::query()
@@ -143,7 +149,6 @@ class ForumController extends Controller
 
         foreach($fposts as $post){
             $post["propiedad"] =  $post->hasPropiedad($user);
-
         }
 
         $categorias= $this->fcategoriaRepository->all();        
@@ -175,6 +180,10 @@ class ForumController extends Controller
 
         $fpost = $this->fpostRepository->create($input);
 
+        $fdiscusion = $this->fdiscusionRepository->find($id);
+        $input["answered"] = $fdiscusion["answered"]+1;
+        $this->fdiscusionRepository->update($input, $id);
+
         Flash::success('comentado');
 
         return redirect()->back();
@@ -186,7 +195,7 @@ class ForumController extends Controller
         
         $data = $this->fdiscusionRepository->find($discusion);        
 
-        if($data->hasPropiedad(Auth::user()->id) == 1 ){
+        if($data->hasPropiedad(Auth::user()->id) == 1 ){            
             return $data;
         }
 
@@ -271,6 +280,10 @@ class ForumController extends Controller
         if($fpost->hasPropiedad(Auth::user()->id )  == 1){
             Flash::success('Eliminado.');
             $this->fpostRepository->delete($id);
+            
+            $fdiscusion = $this->fdiscusionRepository->find($fpost->fdiscusion_id);
+            $input["answered"] = $fdiscusion["answered"]-1;
+            $this->fdiscusionRepository->update($input, $fpost->fdiscusion_id);
             
             return "Eliminado";
         }                

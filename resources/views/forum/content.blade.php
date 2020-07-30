@@ -6,6 +6,7 @@
 @include('flash::message')
 
 <div class="container">
+    <input type="hidden" id="back" name="back" value="{{$back}}">
     @if ($curso->cover==null)
     <div class="curse-img-header"
         style="background: url('../resources/welcome1.jpg')  no-repeat; background-size: cover; background-position:0;">
