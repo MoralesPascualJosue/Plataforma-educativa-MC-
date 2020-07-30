@@ -186,7 +186,7 @@ class QualificationController extends AppBaseController
         
         if($qualification->count() == 0){
             $data["qualification"] = 0;
-            $data["observaciones"] = ".";
+            $data["observaciones"] = "Sin observaciones";
             $data["estado"] = 1;
             $data["activitie_id"] = $id;
             $data["estudiante_id"] = $input["estudiante"];

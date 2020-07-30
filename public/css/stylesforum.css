@@ -366,6 +366,10 @@
     align-items: center;
 }
 
+.imagep img {
+    width: 100%;
+}
+
 .posts-content {
     padding: 10px;
 }

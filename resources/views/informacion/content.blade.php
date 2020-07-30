@@ -52,7 +52,6 @@
 
 </div>
 
-
 <script>
     $("div.alert")
         .not(".alert-important")

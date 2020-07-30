@@ -234,7 +234,7 @@ class ActivitieController extends AppBaseController
             $data['url'] = asset($ruta);
             $data['type'] = request()->fileToUpload->getClientOriginalExtension();
             $data['name'] = request()->fileToUpload->getClientOriginalName();
-            $data['icon'] = "http://localhost:8000/resources/icons/work.svg";
+            $data['icon'] = "../resources/icons/work.svg";
             return $data;
         }
 

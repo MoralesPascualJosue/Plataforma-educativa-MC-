@@ -2,13 +2,6 @@
 
 @section('content')
 
-<script>
-    $("div.alert")
-        .not(".alert-important")
-        .delay(3000)
-        .fadeOut(350);
-</script>
-
 @include('flash::message')
 
 @can("edit cursos")
@@ -63,6 +56,13 @@
     </div> --}}
 </div>
 @can('edit cursos')
-<div class="newblock">New Block</div>
+<div class="newblock">Agregar bloque</div>
 @endcan
+
+<script>
+    $("div.alert")
+        .not(".alert-important")
+        .delay(3000)
+        .fadeOut(350);
+</script>
 @endsection

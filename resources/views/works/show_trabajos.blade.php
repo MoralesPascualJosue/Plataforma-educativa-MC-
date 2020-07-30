@@ -24,7 +24,7 @@
                 </th>
             </li>
             @endforeach
-            <span class="empty-item">no results</span>
+            <span class="empty-item">sin resultados</span>
         </ul>
     </section>
 

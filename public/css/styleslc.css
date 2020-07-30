@@ -76,7 +76,7 @@ table {
     text-transform: uppercase;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    height: 300px;
+    max-height: 300px;
 }
 
 #pakete th,

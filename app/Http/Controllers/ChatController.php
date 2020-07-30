@@ -88,6 +88,10 @@ class ChatController extends Controller
             abort(404,"Sin envio");
         }
 
+        if(empty($input["asunto"])){
+            abort(404,"Sin asunto");
+        }
+
         $message = Message::create($input);
        
         foreach($input["destino"] as $destino){
