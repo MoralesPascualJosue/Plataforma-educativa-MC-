@@ -9,8 +9,9 @@
 
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('css/stylesl.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/styleslw.css') }}">
     <link rel="stylesheet" href="{{ asset('js/jquery/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/jquery/jquery.sweet-modal.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleslw.css') }}">
     @yield('css')
 
     <script src="{{asset('js/jquery/jquery-3.5.1.min.js')}}"> </script>
@@ -45,6 +46,7 @@
 
     <script src="{{ asset('js/listamanager.js') }}"> </script>
     <script src="{{asset('js/jquery/jquery-ui.min.js')}}"> </script>
+    <script src="{{asset('js/jquery/jquery.sweet-modal.min.js')}}"> </script>
     @stack('scripts')
 </body>
 

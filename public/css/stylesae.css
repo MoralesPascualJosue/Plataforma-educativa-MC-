@@ -1171,7 +1171,7 @@ div.menu ul li.move a {
 }
 
 .optionfd {
-    background-image: url("http://localhost:8000/resources/icons/descargar.svg");
+    background-image: url("http://localhost:8000/resources/icons/icon-view.svg");
     background-size: cover;
     background-position: center;
     display: inline-block;
@@ -1267,4 +1267,17 @@ div.menu ul li.move a {
 
 .options-r p:hover {
     background-color: #8292a2;
+}
+
+.sweet-modal-box {
+    height: 80%;
+}
+
+.sweet-modal-content {
+    height: 100%;
+}
+
+.completo {
+    width: 100%;
+    height: 100%;
 }

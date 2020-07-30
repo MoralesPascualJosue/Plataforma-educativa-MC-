@@ -26,7 +26,6 @@ $.fn.ajaxPosttReload = function(url, location, data, method) {
 $(".entregarev").on("click", function() {
     $(".vista").empty();
     $(".seccionToggle").slideDown();
-    //$(this).text("Cerrar");
 
     $activitie = $(".activitie-name")[0].id;
     $es = $(this)[0].id;
@@ -172,4 +171,18 @@ $(document).ready(function() {
     }
 
     searchList();
+});
+
+$(document).on("click", ".optionfd", function(event) {
+    $contenido = `<iframe class="completo" src='${this.id}'></iframe>`;
+    $name = this.getAttribute("name");
+    console.log($name);
+
+    $.sweetModal({
+        title: $name,
+        width: "98%",
+        margimtop: "-432.4px",
+        content: $contenido,
+        clases: ["rwgular"]
+    });
 });

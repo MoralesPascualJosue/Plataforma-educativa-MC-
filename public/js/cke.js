@@ -64,9 +64,11 @@ $(document).on("submit", ".input-area", function(e) {
                     data["icon"] +
                     "'></div><div class='filename'><p>" +
                     data["name"] +
-                    "</p></div><div class='fileoption'> <a class='optionf optionfd' href='" +
+                    "</p></div><div class='fileoption'> <p class='optionf optionfd' id='" +
                     data["url"] +
-                    "'></a><a class='optionf optionfe' href='javascript:void(0);'></a></div></div>"
+                    "' name=" +
+                    data["name"] +
+                    "></p><a class='optionf optionfe' href='javascript:void(0);'></a></div></div>"
             );
             setTimeout(function heythere() {
                 $bar.textContent = "";
@@ -109,4 +111,32 @@ $(document).on("click", ".savebuttone", function(event) {
 $(document).on("click", ".optionfe", function(event) {
     $archive = this.parentElement.parentElement;
     $archive.remove();
+});
+
+$(document).on("click", ".optionfd", function(event) {
+    $contenido = `<iframe class="completo" src='${this.id}'>Descargar</a></p>"></iframe>`;
+    $name = this.getAttribute("name") + " > Entrega";
+    console.log($name);
+
+    $.sweetModal({
+        title: $name,
+        width: "98%",
+        margimtop: "-432.4px",
+        content: $contenido,
+        clases: ["rwgular"]
+    });
+});
+
+$(document).on("click", ".name-r", function(event) {
+    $contenido = `<iframe class="completo" src='${this.id}'></iframe>`;
+    $name = this.textContent;
+    console.log($name);
+
+    $.sweetModal({
+        title: $name,
+        width: "98%",
+        margimtop: "-432.4px",
+        content: $contenido,
+        clases: ["rwgular"]
+    });
 });

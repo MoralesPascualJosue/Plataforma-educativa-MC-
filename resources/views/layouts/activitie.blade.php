@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="http://localhost:8000/resources/logo/Logo minmin white.svg" type="image/svg+xml">
 
     <title>@yield('title')</title>
+    <link rel="stylesheet" href="{{ asset('js/jquery/jquery.sweet-modal.min.css') }}">
     @can('edit cursos')
     <link rel="stylesheet" href="{{ asset('css/stylesa.css') }}">
     @else
@@ -82,6 +83,7 @@
 
     {{-- <script src="{{ asset('js/dropzone/dropzone.min.js') }}"> </script> --}}
     <script src="{{ asset('videojs/video.min.js') }}"> </script>
+    <script src="{{asset('js/jquery/jquery.sweet-modal.min.js')}}"> </script>
     {{-- <script src="{{ asset('js/ckfinder/ckfinder.js') }}"> </script>
     <script>
         CKFinder.config( { connectorPath: '/ckfinder/connector' } );

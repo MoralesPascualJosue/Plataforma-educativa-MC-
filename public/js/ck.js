@@ -393,7 +393,7 @@ $(document).on("submit", ".input-areafile", function(e) {
 
             $ele = `
                 <div class="img-r"><img src="../resources/icons/archivos.svg" alt="alt"></div>
-                <a href="${data["url"]}" class="name-r">${data["name"]}</a>
+                <a id="${data["url"]}" class="name-r" href="javascript:void(0);">${data["name"]}</a>
                 <div class="options-r"><p class="remove-r">X</p><p class="editn-r">E</p></div>
             `;
 
@@ -927,3 +927,17 @@ function eleHide(el) {
         });
     });
 }
+
+$(document).on("click", ".name-r", function(event) {
+    $contenido = `<iframe class="completo" src='${this.id}'></iframe>`;
+    $name = this.textContent;
+    console.log($name);
+
+    $.sweetModal({
+        title: $name,
+        width: "98%",
+        margimtop: "-432.4px",
+        content: $contenido,
+        clases: ["rwgular"]
+    });
+});

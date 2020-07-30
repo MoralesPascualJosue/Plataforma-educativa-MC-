@@ -216,3 +216,16 @@ p {
         width: 100%;
     }
 }
+
+.sweet-modal-box {
+    height: 80%;
+}
+
+.sweet-modal-content {
+    height: 100%;
+}
+
+.completo {
+    width: 100%;
+    height: 100%;
+}

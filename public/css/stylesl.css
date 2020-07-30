@@ -624,12 +624,12 @@ tr:hover {
 }
 
 .optionfd {
-    background-image: url("http://localhost:8000/resources/icons/descargar.svg");
+    background-image: url("http://localhost:8000/resources/icons/icon-view.svg");
     background-size: cover;
     background-position: center;
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 30px;
+    height: 30px;
     padding: 10px;
 }
 
