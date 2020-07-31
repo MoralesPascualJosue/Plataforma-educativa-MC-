@@ -133,11 +133,7 @@ class ForumController extends Controller
         ->withCategoriaColor()
         ->withUSer()
         ->where("id","=",$id)
-        ->get()[0];
-
-        $fdiscusion = $this->fdiscusionRepository->find($id);
-        $input["views"] = $fdiscusion["views"]+1;
-        $this->fdiscusionRepository->update($input, $id);
+        ->get()[0];        
 
         $discuss['propiedad'] = $discuss->hasPropiedad($user);        
 
@@ -155,11 +151,16 @@ class ForumController extends Controller
         $view = \View::make('forum.show')->with(compact('curso','discuss','fposts','categorias'));
 
         if($request->ajax()){
+            $fdiscusion = $this->fdiscusionRepository->find($id);
+            $input["views"] = $fdiscusion["views"]+1;
+            $this->fdiscusionRepository->update($input, $id);
+
             $sections = $view->renderSections();
             return Response::json($sections['content']);
         }
         
         return $view;
+        
     }
 
 
@@ -181,8 +182,8 @@ class ForumController extends Controller
         $fpost = $this->fpostRepository->create($input);
 
         $fdiscusion = $this->fdiscusionRepository->find($id);
-        $input["answered"] = $fdiscusion["answered"]+1;
-        $this->fdiscusionRepository->update($input, $id);
+        $inputd["answered"] = $fdiscusion["answered"]+1;
+        $this->fdiscusionRepository->update($inputd, $id);
 
         Flash::success('comentado');
 

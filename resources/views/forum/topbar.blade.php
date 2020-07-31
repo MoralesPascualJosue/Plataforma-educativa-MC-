@@ -18,7 +18,8 @@
                     <img src="{{ asset("resources/icons/contenido-c.svg") }}" alt="Contenido">
                 </a>
             </li>
-            <li class="course-tool-tab  {{ Route::is('foro') ? 'active' : '' }}">
+            <li class="course-tool-tab  {{ Route::is('foro') ? 'active' : '' }}
+                {{ Route::is('showtema') ? 'active' : '' }}">
                 <a class="course-tab-content" href="{{ route("foro",[$curso->id]) }}">
                     <img src="{{ asset("resources/icons/debate-c.svg") }}" alt="Foro">
                 </a>
