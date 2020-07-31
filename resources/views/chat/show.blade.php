@@ -8,17 +8,17 @@
 <div class="inbox-wrapper">
     <header class="main-header clearfix">
 
-        <form>
-            <input id="busqueda" name="search" type="text" placeholder="Buscar" />
-            <input id="curso" type="hidden" name="curso" value="{{$curso->id}}">
-        </form>
+
+        <input id="busqueda" name="search" class="search i" type="text" placeholder="Buscar" />
+        <input id="curso" type="hidden" name="curso" value="{{$curso->id}}">
+        <span class="clear-b">X</span>
 
         <div class="active-user">
             <li class="itemop nuevomso">Nuevo</li>
             <li class="itemop updatems" id="enviadosms/{{$curso->id}}">Enviados</li>
             <li class="itemop updatems orange-b" id="updatems/{{$curso->id}}">Bandeja de entrada</li>
             <li class="itemop" style="float: right;">{{ $user->name }}</li>
-            <img class=" avatar" src="../{{ $user->image }}" alt="avatar" />
+            <img class="avatar" src="../{{ $user->image }}" alt="avatar" />
         </div>
     </header>
 

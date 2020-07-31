@@ -386,57 +386,6 @@ $("#grupo").change(function() {
     }
 });
 
-$(document).ready(function() {
-    var busqueda = $("#busqueda"),
-        titulo = $("ul li h2");
-
-    $(titulo).each(function() {
-        var li = $(this);
-        //si presionamos la tecla
-        $(busqueda).keyup(function() {
-            //cambiamos a minusculas
-            this.value = this.value.toLowerCase();
-            //
-            var clase = $(".search i");
-            if ($(busqueda).val() != "") {
-                $(clase).attr("class", "fa fa-times");
-            } else {
-                $(clase).attr("class", "fa fa-search");
-            }
-            if ($(clase).hasClass("fa fa-times")) {
-                $(clase).click(function() {
-                    //borramos el contenido del input
-                    $(busqueda).val("");
-                    //mostramos todas las listas
-                    $(li)
-                        .parent()
-                        .show();
-                    //volvemos a añadir la clase para mostrar la lupa
-                    $(clase).attr("class", "fa fa-search");
-                });
-            }
-            //ocultamos toda la lista
-            $(li)
-                .parent()
-                .hide();
-            //valor del h3
-            var txt = $(this).val();
-            //si hay coincidencias en la búsqueda cambiando a minusculas
-            if (
-                $(li)
-                    .text()
-                    .toLowerCase()
-                    .indexOf(txt) > -1
-            ) {
-                //mostramos las listas que coincidan
-                $(li)
-                    .parent()
-                    .show();
-            }
-        });
-    });
-});
-
 $(function() {
     var $contacts = $("#panel-contacts"),
         $destino = $("#panel-contacts-destino");
@@ -477,4 +426,55 @@ $(function() {
             $item.appendTo($contacts).fadeIn();
         });
     }
+});
+
+$(document).ready(function() {
+    //si presionamos la tecla
+    $("#busqueda").keyup(function() {
+        var searchTerm = $("#busqueda").val();
+        var searchSplit = searchTerm.replace(/ /g, "'):containsi('");
+
+        //extends :contains to be case insensitive
+        $.extend($.expr[":"], {
+            containsi: function(elem, i, match, array) {
+                return (
+                    (elem.textContent || elem.innerText || "")
+                        .toLowerCase()
+                        .indexOf((match[3] || "").toLowerCase()) >= 0
+                );
+            }
+        });
+
+        $("ul li h2")
+            .not(":containsi('" + searchSplit + "')")
+            .each(function(e) {
+                $(this.parentElement)
+                    .addClass("hiding outb")
+                    .removeClass("in");
+                setTimeout(function() {
+                    $(".outb").addClass("hidden");
+                }, 300);
+            });
+
+        $("ul li h2:containsi('" + searchSplit + "')").each(function(e) {
+            $(this.parentElement)
+                .removeClass("hidden outb")
+                .addClass("in");
+            setTimeout(function() {
+                $(".in").removeClass("hiding");
+            }, 300);
+        });
+    });
+});
+
+$(document).on("click", ".clear-b", function(event) {
+    $("#busqueda").val("");
+    $("ul li h2").each(function(e) {
+        $(this.parentElement)
+            .removeClass("hidden outb")
+            .addClass("in");
+        setTimeout(function() {
+            $(".in").removeClass("hiding");
+        }, 300);
+    });
 });
