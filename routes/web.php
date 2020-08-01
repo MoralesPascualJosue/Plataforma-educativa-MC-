@@ -42,9 +42,9 @@ Route::get('/perfil', 'FrontController@perfil')->name('perfil');
 
 Route::delete('/destroyp/{id}','AsesorController@destroyp')->name('destroyp');
 
-Route::put('/updatePerfil','frontController@updatePerfil')->name('updatePerfil');
+Route::put('/updatePerfil','FrontController@updatePerfil')->name('updatePerfil');
 
-Route::post('/updateimage','frontController@updateimage')->name('updateimage');
+Route::post('/updateimage','FrontController@updateimage')->name('updateimage');
 
 //________[END Perfil routes]__________
 
