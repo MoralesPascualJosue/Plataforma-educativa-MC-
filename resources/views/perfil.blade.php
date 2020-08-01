@@ -32,7 +32,7 @@
             @if ($perfil->image==null)
             <img src="{{ asset('resources/users/user-default.svg') }}" width="142px" />
             @else
-            <img src="{{ asset( $perfil->image) }}" width="142px" />
+            <img src="../{{ $perfil->image }}" width="142px" />
             @endif
         </div>
     </div>
