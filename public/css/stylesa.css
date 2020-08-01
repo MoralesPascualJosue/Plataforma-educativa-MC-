@@ -933,7 +933,7 @@ div.menu ul li.animate a {
     transition: all 300ms ease-out;
 }
 div.menu ul li.lock a {
-    background-image: url("http://localhost:8000/resources/icons/am-delete.png");
+    background-image: url("../resources/icons/am-delete.png");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-50px, -30px, 0px);
@@ -942,7 +942,7 @@ div.menu ul li.lock a {
     transform: translate3d(-50px, -30px, 0px);
 }
 div.menu ul li.imageblock a {
-    background-image: url("http://localhost:8000/resources/icons/am-image1.png");
+    background-image: url("../resources/icons/am-image1.png");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-50px, 0px, 0px);
@@ -951,7 +951,7 @@ div.menu ul li.imageblock a {
     transform: translate3d(-50px, 0px, 0px);
 }
 div.menu ul li.videoblock a {
-    background-image: url("http://localhost:8000/resources/icons/am-video.png");
+    background-image: url("../resources/icons/am-video.png");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-50px, 30px, 0px);
@@ -961,7 +961,7 @@ div.menu ul li.videoblock a {
 }
 
 div.menu ul li.docblock a {
-    background-image: url("http://localhost:8000/resources/icons/am-pdf.svg");
+    background-image: url("../resources/icons/am-pdf.svg");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-50px, 30px, 0px);
@@ -971,7 +971,7 @@ div.menu ul li.docblock a {
 }
 
 div.menu ul li.textblock a {
-    background-image: url("http://localhost:8000/resources/icons/am-text.png");
+    background-image: url("../resources/icons/am-text.png");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-50px, 30px, 0px);
@@ -981,7 +981,7 @@ div.menu ul li.textblock a {
 }
 
 div.menu ul li.resourcesblock a {
-    background-image: url("http://localhost:8000/resources/icons/coloeccion-box.svg");
+    background-image: url("../resources/icons/coloeccion-box.svg");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-50px, 30px, 0px);
@@ -1042,7 +1042,7 @@ div.menu-options ul li.animate a {
 }
 
 div.menu-options ul li.alingleft-option a {
-    background-image: url("http://localhost:8000/resources/icons/text-aling-left.svg");
+    background-image: url("../resources/icons/text-aling-left.svg");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-45px, 30px, 0px);
@@ -1051,7 +1051,7 @@ div.menu-options ul li.alingleft-option a {
     transform: translate3d(-45px, 30px, 0px);
 }
 div.menu-options ul li.alingcenter-option a {
-    background-image: url("http://localhost:8000/resources/icons/text-aling-center.svg");
+    background-image: url("../resources/icons/text-aling-center.svg");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-45px, 30px, 0px);
@@ -1061,7 +1061,7 @@ div.menu-options ul li.alingcenter-option a {
 }
 
 div.menu-options ul li.alingright-option a {
-    background-image: url("http://localhost:8000/resources/icons/text-aling-right.svg");
+    background-image: url("../resources/icons/text-aling-right.svg");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-45px, 30px, 0px);
@@ -1071,7 +1071,7 @@ div.menu-options ul li.alingright-option a {
 }
 
 div.menu-options ul li.downfont-option a {
-    background-image: url("http://localhost:8000/resources/icons/font-down.png");
+    background-image: url("../resources/icons/font-down.png");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-45px, 30px, 0px);
@@ -1081,7 +1081,7 @@ div.menu-options ul li.downfont-option a {
 }
 
 div.menu-options ul li.upfont-option a {
-    background-image: url("http://localhost:8000/resources/icons/font-up.png");
+    background-image: url("../resources/icons/font-up.png");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-45px, 30px, 0px);
@@ -1091,7 +1091,7 @@ div.menu-options ul li.upfont-option a {
 }
 
 div.menu-options ul li.addtextblock a {
-    background-image: url("http://localhost:8000/resources/icons/edit-field-type-text.svg");
+    background-image: url("../resources/icons/edit-field-type-text.svg");
     background-size: cover;
     background-position: center;
     -webkit-transform: translate3d(-45px, 30px, 0px);
