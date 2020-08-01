@@ -30,6 +30,7 @@
 
     <section class="seccionToggle">
         <div class="wrap">
+            <div class="back-c">Cerrar</div>
             <p class="subtitle">Entregas realizadas</p>
             <p class="po">
                 <textarea name="observaciones" class="observaciones" id="{{ $activitie->id }}" rows="10"></textarea>

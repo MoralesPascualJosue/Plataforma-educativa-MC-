@@ -8,6 +8,9 @@
 <button class="btn-save savebutton" id="{{$activitie->id}}">
     Guardar contenido
 </button>
+<button class="btn-save editbutton" id="{{$activitie->id}}">
+    Editar
+</button>
 @endcan
 
 <div class="content">

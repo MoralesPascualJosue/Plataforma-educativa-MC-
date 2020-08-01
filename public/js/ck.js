@@ -931,8 +931,6 @@ function eleHide(el) {
 $(document).on("click", ".name-r", function(event) {
     $contenido = `<iframe class="completo" src='${this.id}'></iframe>`;
     $name = this.textContent;
-    console.log($name);
-
     $.sweetModal({
         title: $name,
         width: "98%",

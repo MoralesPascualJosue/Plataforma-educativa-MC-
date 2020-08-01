@@ -26,6 +26,7 @@ $.fn.ajaxPosttReload = function(url, location, data, method) {
 $(".entregarev").on("click", function() {
     $(".vista").empty();
     $(".seccionToggle").slideDown();
+    $(".list-wrap").addClass("hidden-l");
 
     $activitie = $(".activitie-name")[0].id;
     $es = $(this)[0].id;
@@ -185,4 +186,10 @@ $(document).on("click", ".optionfd", function(event) {
         content: $contenido,
         clases: ["rwgular"]
     });
+});
+
+$(".back-c").on("click", function() {
+    $(".seccionToggle").slideUp();
+    $(".vista").empty();
+    $(".list-wrap").removeClass("hidden-l");
 });
