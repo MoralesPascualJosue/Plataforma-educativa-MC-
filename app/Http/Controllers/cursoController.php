@@ -98,7 +98,7 @@ class cursoController extends AppBaseController
             $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_final","ASC")->paginate(10);
             $actividadeshoy = $curso->activities()->where("visible","=",1)->where("fecha_final","=",$hoy)->get();
             $actividadessemana = $curso->activities()->where("visible","=",1)
-             ->whereRaw("WEEKOFYEAR(fecha_final)=WEEKOFYEAR(NOW())")->get();            
+             ->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->get();            
         }
         
         $view = \View::make('scurso')->with(compact('curso','actividades','actividadeshoy','actividadessemana'));
