@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string cover
  * @property integer asesor_id
  */
-class curso extends Model
+class Curso extends Model
 {
     use SoftDeletes;
 
