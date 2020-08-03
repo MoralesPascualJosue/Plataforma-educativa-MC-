@@ -54,7 +54,7 @@ class Curso extends Model
         'review' => 'string',
         'cover' => 'string',
         'asesor_id' => 'integer',
-        'crated_at' => 'date'
+        'created_at' => 'date:Y-m-d',
     ];
 
     /**

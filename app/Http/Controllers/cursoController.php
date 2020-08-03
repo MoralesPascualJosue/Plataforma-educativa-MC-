@@ -20,6 +20,7 @@ use App\Models\Work;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\MatriculadoRepository;
 use App\Repositories\ActivitieRepository;
+use Barryvdh\DomPDF\Facade as PDF;
 
 
 class cursoController extends AppBaseController
@@ -30,9 +31,12 @@ class cursoController extends AppBaseController
     private $cursoRepository;
     private $matriculadoRepository;
     private $activitieRepository;
+    private $mesesN;
 
     public function __construct(cursoRepository $cursoRepo,MatriculadoRepository $matriculadoRepo,ActivitieRepository $activitieRepo)
     {
+        $this->mesesN=array(1=>"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio",
+                    "Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $this->cursoRepository = $cursoRepo;
         $this->matriculadoRepository = $matriculadoRepo;
         $this->activitieRepository = $activitieRepo;
@@ -345,4 +349,75 @@ class cursoController extends AppBaseController
 
         return $actividades;
     }
+
+    public function reporteLista(){
+        $pdf = PDF::loadHTML('welcome');
+        return $pdf->stream('invoice.pdf');
+    }
+
+    public function reporteListac($curso){
+        $id = $curso;
+
+        $curso = $this->cursoRepository->find($id);
+        
+        if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
+                Flash::success('Curso no registrado.');
+                return redirect()->route('inicio');
+        } 
+
+        $anoi = date("Y");
+        $mesi= date("n");
+        $mod_date = strtotime($curso->created_at);
+        $anof = date('Y',$mod_date);
+        $mesf = date('n',$mod_date);
+         
+        $periodoi = $this->mesesN[$mesf]."/".$anof;
+        $periodof = $this->mesesN[$mesi]."/".$anoi;
+        $periodo =  $periodoi." - ".$periodof;
+
+        $asesor = $curso->asesor()->get(["name"])[0];
+
+        $estudiantes = $curso->estudiantes()->orderBy("name")->get();
+        
+        $actividades = $curso->activities()->where("visible","=",1)->get();
+
+        $curso['participantes'] = $estudiantes->count();
+
+        $numero = 1;
+        foreach ($estudiantes as $estudi) {   
+            $calificacionescontenedor = [];      
+            $suma = 0;                  
+            foreach($actividades as $acti){
+                
+                $calificacion = $acti->qualifications()->where("estudiante_id","=", $estudi->id )->get();
+
+                if (empty($calificacion['0'])) {
+                    $contenidocal["id"] = $acti->id;
+                    $contenidocal['qualification'] = 'NA';
+                    $contenidocal['estado'] = "NA";
+                    $calificacion['0'] = $contenidocal;
+                }                                    
+                
+                $calificacionescontenedor[$acti->id] = $calificacion['0'];
+
+                if(is_numeric( $calificacion['0']['qualification'] )){
+                    $suma = $suma + $calificacion['0']['qualification'];
+                }                
+
+            }
+            
+            $promedio['qualification'] = round($suma/$actividades->count());
+            $promedio['estado'] = "Proemdio";
+            $calificacionescontenedor["promedio"] = $promedio;
+
+            $estudi["calificaciones"] = $calificacionescontenedor;  
+            $estudi["numero"] = $numero;
+            $numero++;
+        }        
+
+
+        $pdf = PDF::loadView('reportes.reportelista',compact('estudiantes','curso','actividades','asesor',"periodo"));
+        return $pdf->stream('invoice.pdf');
+    }
+    
 }

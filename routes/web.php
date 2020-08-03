@@ -185,3 +185,7 @@ Route::post('/test', function () { return 'Hello World Post'; });
 // Route::group(['middleware' => ['role:Coordinador']], function () {   
 
 // });
+
+Route::get('/pdf','cursoController@reporteLista');
+
+Route::get('/generarlista/{curso}', 'cursoController@reporteListac');

@@ -20,7 +20,7 @@ $(document).ready(function() {
                             <h4 class="time_line-date">limite: ${element["fecha_final"]}</h4>                            
                           </div>
                           <div class="time_line-content">
-                            <a href="../sactivitiec/${element["id"]}">${element["title"]}</a>
+                            <a href="../trabajos/${element["id"]}">${element["title"]}</a>
                             <div class="time_line-descr">
                 `;
 

@@ -1171,7 +1171,7 @@ div.menu ul li.move a {
 }
 
 .optionfd {
-    background-image: url("..resources/icons/icon-view.svg");
+    background-image: url("../resources/icons/icon-view.svg");
     background-size: cover;
     background-position: center;
     display: inline-block;
