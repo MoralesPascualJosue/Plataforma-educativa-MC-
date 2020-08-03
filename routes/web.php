@@ -186,6 +186,5 @@ Route::post('/test', function () { return 'Hello World Post'; });
 
 // });
 
-Route::get('/pdf','cursoController@reporteLista');
-
 Route::get('/generarlista/{curso}', 'cursoController@reporteListac');
+Route::get('/generarexcel/{curso}', 'cursoController@reporteListae');

@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Storage;
 
-
 class ActivitieController extends AppBaseController
 {
     /** @var  ActivitieRepository */

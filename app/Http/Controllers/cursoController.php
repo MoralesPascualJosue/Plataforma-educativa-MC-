@@ -22,6 +22,10 @@ use App\Repositories\MatriculadoRepository;
 use App\Repositories\ActivitieRepository;
 use Barryvdh\DomPDF\Facade as PDF;
 
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 
 class cursoController extends AppBaseController
 {
@@ -350,11 +354,6 @@ class cursoController extends AppBaseController
         return $actividades;
     }
 
-    public function reporteLista(){
-        $pdf = PDF::loadHTML('welcome');
-        return $pdf->stream('invoice.pdf');
-    }
-
     public function reporteListac($curso){
         $id = $curso;
 
@@ -418,6 +417,11 @@ class cursoController extends AppBaseController
 
         $pdf = PDF::loadView('reportes.reportelista',compact('estudiantes','curso','actividades','asesor',"periodo"));
         return $pdf->stream('invoice.pdf');
+    }
+
+    public function reporteListae($curso){  
+
+        return Excel::download(new UsersExport($this->cursoRepository,$curso), 'lista.xlsx');
     }
     
 }

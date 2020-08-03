@@ -10,6 +10,7 @@
         <p class="section-text">Aqui se concentran las calificaciones asignadas.
             <em>Tambien se ofrece un resumen de las entregas realizadas!</em></p>
         <a href="../generarlista/{{$curso->id}}">Generar lista</a>
+        <a href="../generarexcel/{{$curso->id}}">Exportar excel</a>
 
         <div class="box">
             <!-- The surrounding box -->
