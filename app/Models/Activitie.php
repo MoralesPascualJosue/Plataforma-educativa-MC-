@@ -89,4 +89,12 @@ class Activitie extends Model
         }
         return false;
     }
+
+    public function scopeWithEntregas($id){
+        $subquery = Work::select('works.entregas')
+        ->where('activities.id', 'works.activitie_id')
+        ;
+ 
+        $query->addSelect(['entregas' => $subquery]);
+    }
 }

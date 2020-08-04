@@ -197,3 +197,14 @@ html {
         margin-top: 5px;
     }
 }
+
+.seccion2 {
+    text-align: center;
+    padding: 10px;
+    justify-content: center;
+    display: grid;
+}
+
+.tb-activitie-info {
+    padding: 5px;
+}

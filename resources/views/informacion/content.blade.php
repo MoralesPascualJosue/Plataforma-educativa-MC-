@@ -52,6 +52,26 @@
 
 </div>
 
+<div class="seccion2">
+    <h4>Historial de actividades</h4>
+    <table>
+        <thead>
+            <th>Actividad</th>
+            <th>Creada en</th>
+            <th>fechas inicio/limite</th>
+        </thead>
+        <tbody>
+            @foreach ($actividades as $actividad)
+            <tr>
+                <td class="tb-activitie-info">{{$actividad->title}}</td>
+                <td class="tb-activitie-info">{{$actividad->created_at}}</td>
+                <td class="tb-activitie-info">{{$actividad->fecha_inicio}} a {{$actividad->fecha_final}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
 <script>
     $("div.alert")
         .not(".alert-important")

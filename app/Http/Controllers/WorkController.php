@@ -29,140 +29,6 @@ class WorkController extends AppBaseController
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the Work.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function index(Request $request)
-    {
-        $works = $this->workRepository->all();
-
-        return view('works.index')
-            ->with('works', $works);
-    }
-
-    /**
-     * Show the form for creating a new Work.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('works.create');
-    }
-
-    /**
-     * Store a newly created Work in storage.
-     *
-     * @param CreateWorkRequest $request
-     *
-     * @return Response
-     */
-    public function store(CreateWorkRequest $request)
-    {
-        $input = $request->all();
-
-        $work = $this->workRepository->create($input);
-
-        Flash::success('Work saved successfully.');
-
-        return redirect(route('works.index'));
-    }
-
-    /**
-     * Display the specified Work.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $work = $this->workRepository->find($id);
-
-        if (empty($work)) {
-            Flash::error('Work not found');
-
-            return redirect(route('works.index'));
-        }
-
-        return view('works.show')->with('work', $work);
-    }
-
-    /**
-     * Show the form for editing the specified Work.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $work = $this->workRepository->find($id);
-
-        if (empty($work)) {
-            Flash::error('Work not found');
-
-            return redirect(route('works.index'));
-        }
-
-        return view('works.edit')->with('work', $work);
-    }
-
-    /**
-     * Update the specified Work in storage.
-     *
-     * @param int $id
-     * @param UpdateWorkRequest $request
-     *
-     * @return Response
-     */
-    public function update($id, UpdateWorkRequest $request)
-    {
-        $work = $this->workRepository->find($id);
-
-        if (empty($work)) {
-            Flash::error('Work not found');
-
-            return redirect(route('works.index'));
-        }
-
-        $work = $this->workRepository->update($request->all(), $id);
-
-        Flash::success('Work updated successfully.');
-
-        return redirect(route('works.index'));
-    }
-
-    /**
-     * Remove the specified Work from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        $work = $this->workRepository->find($id);
-
-        if (empty($work)) {
-            Flash::error('Work not found');
-
-            return redirect(route('works.index'));
-        }
-
-        $this->workRepository->delete($id);
-
-        Flash::success('Work deleted successfully.');
-
-        return redirect(route('works.index'));
-    }
-
     /* ajax display */
 
     public function storea($id,Request $request)    
@@ -194,7 +60,7 @@ class WorkController extends AppBaseController
         if($works+1 == 1){            
 
             $data["qualification"] = 0;
-            $data["observaciones"] = ".";
+            $data["observaciones"] = "Sin observacions";
             $data["estado"] = 1;
             $data["activitie_id"] = $input['activitie_id'];
             $data["estudiante_id"] = $input['estudiante_id'];

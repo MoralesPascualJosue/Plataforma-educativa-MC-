@@ -16,9 +16,22 @@
         <a href="{{ route('sactivitiec', [$actividad->id]) }}">
             <div class="course-link-icon">
                 <img src="{{ asset("resources/icons/home-work-c.svg") }}" alt="grupos">
+                @cannot('edit cursos')
+                @if ($actividad->entregas)
+                <div class="estate-ae"></div>
+                @else
+                <div class="estate-ae red"></div>
+                @endif
+                @endcan
             </div>
             <div class="course-link-details">
-                <div class="course-link-name">{{ $actividad->title }} {{ $actividad->fecha_inicio }}</div>
+                <div class="course-link-name">{{ $actividad->title }} {{ $actividad->fecha_inicio }}
+                    @if ($actividad->entregas)
+                    <p class="info-ae">
+                        Entregas
+                        {{$actividad->entregas["entregas"]}}</p>
+                    @endif
+                </div>
                 <div class="course-link-content">Fecha de vencimiento: {{ $actividad->fecha_final }}</div>
             </div>
         </a>

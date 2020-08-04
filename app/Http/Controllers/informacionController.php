@@ -27,8 +27,9 @@ class informacionController extends Controller
 
         $matriculados = $curso->estudiantes()->count();        
         $tactividades = $curso->activities()->where("visible",1)->count();
+        $actividades = $curso->activities()->where("visible",1)->get();
 
-        $view = \View::make('informacion.content')->with(compact("curso","matriculados","tactividades","promedio"));
+        $view = \View::make('informacion.content')->with(compact("curso","matriculados","tactividades","promedio","actividades"));
 
         if($request->ajax()){
             $sections = $view->renderSections();

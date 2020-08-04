@@ -103,10 +103,22 @@ class cursoController extends AppBaseController
                 Flash::success('Curso no registrado.');
                 return redirect()->route('inicio');
             }   
-            $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_final","ASC")->paginate(10);
+
+             $actividades = $curso->activities()
+             ->where("visible","=",1)
+             ->orderBy("activities.fecha_final","DESC")->paginate(10);
+
+             foreach ($actividades as $actividad) {
+                 $actividad['entregas'] = Work::where("estudiante_id",Auth::user()->estudiante()->get()['0']->id)
+                 ->where("activitie_id",$actividad->id)
+                 ->orderBy("id","desc")
+                 ->first()
+                 ;
+             }
+
             $actividadeshoy = $curso->activities()->where("visible","=",1)->where("fecha_final","=",$hoy)->get();
             $actividadessemana = $curso->activities()->where("visible","=",1)
-             ->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->get();            
+             ->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->get();
         }
         
         $view = \View::make('scurso')->with(compact('curso','actividades','actividadeshoy','actividadessemana'));

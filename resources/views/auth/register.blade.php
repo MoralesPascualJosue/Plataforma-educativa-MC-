@@ -130,7 +130,7 @@
                             <div class="form-group">
                                 <a class="tittle-input">Telefono</a>
                                 {!! Form::text('telephone', null, ['class' => 'form-control', "placeholder" =>
-                                "Telefono"]) !!}
+                                "No necesario"]) !!}
                             </div>
 
                             <div class="checkbox">
