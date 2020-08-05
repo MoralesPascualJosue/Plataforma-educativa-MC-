@@ -1135,10 +1135,11 @@ div.menu ul li.move a {
 }
 
 .savebuttone {
-    grid-column: 1/3;
-    height: 30px;
+    grid-column: 2/3;
+    height: 40px;
     border-radius: 8px;
     background-color: orange;
+    margin-top: -30px;
 }
 
 .savebuttone:hover {
@@ -1280,4 +1281,21 @@ div.menu ul li.move a {
 .completo {
     width: 100%;
     height: 100%;
+}
+
+.btn-sumit-a {
+    background-color: orange;
+    width: 140px;
+    border-radius: 8px;
+    height: 40px;
+    margin-top: -30px;
+    float: right;
+}
+
+.btn-sumit-a:hover {
+    background-color: #8292a2;
+}
+
+.sc {
+    min-height: auto;
 }

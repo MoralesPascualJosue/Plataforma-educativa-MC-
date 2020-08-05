@@ -524,7 +524,7 @@ ul.ks-cboxtags li label {
 }
 
 ul.ks-cboxtags li label {
-    padding: 0px 45px;
+    padding: 0px 35px;
     cursor: pointer;
 }
 
@@ -682,7 +682,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 .ctrl__button {
-    width: 70px;
+    width: 60px;
     line-height: 55px;
     text-align: center;
     color: #fff;

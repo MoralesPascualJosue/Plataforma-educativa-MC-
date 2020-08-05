@@ -150,6 +150,7 @@ Route::post('/uploadfilei',"ActivitieController@uploadFileimage");
 Route::post('/uploadfilev',"ActivitieController@uploadFilevideo");
 Route::post('/uploadfiled',"ActivitieController@uploadFiledoc");
 Route::post('/uploadfile',"ActivitieController@uploadFile");
+Route::post('/uploadfilee',"ActivitieController@uploadFilee");
 
 //________[END redources routes]__________
 

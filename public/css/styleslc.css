@@ -42,9 +42,27 @@ section button:hover {
     border-radius: 10px;
 }
 
-table {
-    border-collapse: inherit;
-    width: 100%;
+th {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    width: 95px;
+}
+
+/* Can't eliminate the spacing no matter what I try */
+th:first-child {
+    height: 100px;
+}
+th:not(:first-child) {
+    height: 10px;
+}
+
+td:nth-child(2),
+td:nth-child(3),
+td:nth-child(4) {
+    width: 10px;
 }
 
 /* Section Pakete */
@@ -72,11 +90,17 @@ table {
     transition: width 0.2s height 0.2s;
 }
 
+#pakete thead {
+    background-color: #cecece;
+}
+
 #pakete tr:first-child th {
     text-transform: uppercase;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
+    /* writing-mode: vertical-rl;
+    transform: rotate(180deg); */
     max-height: 300px;
+    height: 160px;
+    overflow: hidden;
 }
 
 #pakete th,
@@ -90,16 +114,17 @@ table {
 #pakete th:last-child,
 #pakete td:last-child {
     border-right: none;
-    background: gainsboro;
     color: black;
+    font-weight: bold;
 }
+
+#pakete tbody td:last-child {
+    background-color: #cecece;
+}
+
 #pakete tr:last-child td,
 #pakete tr:last-child th {
     border-bottom: none;
-}
-
-#pakete th {
-    background: #efefef;
 }
 
 #pakete td:hover {
@@ -336,13 +361,16 @@ table {
 }
 
 #pakete button {
-    border: none;
     border-radius: 5px;
-    background: white;
+    background: none;
     padding: 10px 25px;
     color: black;
     transition: box-shadow 0.1s, border-radius 0.3s;
     cursor: pointer;
+    border: outset;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 #pakete button:focus {
     box-shadow: none;
@@ -350,9 +378,6 @@ table {
 }
 #pakete button:active {
     box-shadow: 0px 3px 6px 0px #bc1414 inset;
-}
-#pakete button:hover {
-    border-radius: 10px;
 }
 
 #pakete [class*="hide-me_"] {
@@ -566,4 +591,18 @@ table {
 
 .content {
     min-height: 90vh;
+}
+
+.export-option {
+    padding: 5px;
+    background-color: #cdcdcd;
+    border-radius: 8px;
+    text-decoration: none;
+    color: black;
+    font-weight: lighter;
+}
+
+.export-option:hover {
+    background-color: orange;
+    color: white;
 }

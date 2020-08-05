@@ -223,7 +223,7 @@ class ActivitieController extends AppBaseController
     public function uploadFile(Request $request){
         if ($files = $request->file('fileToUpload')) {
             $data;            
-             $id = Auth::user()->id;
+            $id = Auth::user()->id;
             request()->validate([
                 'fileToUpload' => 'required|max:51200',
             ]);
@@ -234,6 +234,33 @@ class ActivitieController extends AppBaseController
             $data['type'] = request()->fileToUpload->getClientOriginalExtension();
             $data['name'] = request()->fileToUpload->getClientOriginalName();
             $data['icon'] = "../resources/icons/work.svg";
+            return $data;
+        }
+
+        abort(402,"Archivo no seleccionado");
+
+     }
+
+    public function uploadFilee(Request $request){
+
+        $types = array('jpeg','png','jpg','gif','svg');      
+        if ($files = $request->file('file')) {
+            $data;            
+            $id = Auth::user()->id;
+            request()->validate([
+                'file' => 'required|max:51200',
+            ]);
+            $fileName = "file".time().'.'.request()->file->getClientOriginalExtension();
+            $ruta = request()->file->storeAs('archivos/'.$id,$fileName,'public');            
+
+            $data['url'] = $ruta;
+            $data['name'] = request()->file->getClientOriginalName();
+            $data['type'] = request()->file->getClientOriginalExtension();
+            $data['icon'] = "resources/icons/work.svg";
+
+            if (in_array($data['type'],$types)) {
+                $data['icon'] = $ruta;
+            }
             return $data;
         }
 

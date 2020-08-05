@@ -8,29 +8,26 @@
 <button class="btn-save savebutton" id="{{$activitie->id}}">
     Guardar contenido
 </button>
-<button class="btn-save editbutton" id="{{$activitie->id}}">
-    Editar
-</button>
 @endcan
 
 <div class="content">
 
     {!! $task !!}
 
-    @cannot('edit cursos')
-    <h3 class="center"> <span>Entrega</span> </h3>
+    @cannot('edit cursos') <h3 class="center"> <span>Entrega</span> </h3>
 
     <div class="block-s sc">
-        <form class='input-area' action='/uploadfile' method='post' enctype='multipart/form-data'>
-            "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload'
-                    id='exampleInputFile' aria-describedby='fileHelp'>
-                <small id='fileHelp' class='form-text text-muted'>Selecciona un archivo Tamaño máximo
-                    30MB</small><button type='submit' class='btn-block'>Cargar archivo</button>
-                <div class='progress'></div>
+        <form action="/uploadfilee" id="zonedrop" class="dropzone" method='post'>
+            @csrf
+            <div class="fallback">
+                <input type="file" multiple id="file" name='file' />
             </div>
+            <div class="dz-message" data-dz-message><span>Selecciona o arrastra tus archivos aqui.</span></div>
         </form>
+        <button type="submit" id="sumit-all" class="btn-sumit-a">Subir</button>
     </div>
 
+    <p>Asegurate de subir todos tus archivos antes de entregar</p>
     <div class="block-s work">
 
     </div>
@@ -39,6 +36,7 @@
         Entregar
     </button>
 
+    <div class="block-s"></div>
 
     <h3 class="center"><span>Entregas realizadas</span></h3>
 
@@ -53,10 +51,6 @@
     @endforeach
     @endcannot
 
-
-    {{-- <div class="contenido" id="editorjs">
-        <p>contenido</p>
-    </div> --}}
 </div>
 @can('edit cursos')
 <div class="newblock">Agregar bloque</div>

@@ -431,10 +431,11 @@ $(".lock").on("click", function(e) {
 $(".imageblock").on("click", function(e) {
     e.preventDefault();
 
-    $elemento =
-        " <form class='input-areaimage' action='/uploadfilei' method='post' enctype='multipart/form-data'>" +
-        "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
-        "<small id='fileHelp' class='form-text text-muted'>Selecciona una imagen Tamaño máximo 2MB</small><button type='submit' class='btn-block'>Submit</button> </div></form>";
+    $elemento = `
+         <form class='input-areaimage' action='/uploadfilei' method='post' enctype='multipart/form-data'>
+        <div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>
+        <small id='fileHelp' class='form-text text-muted'>Selecciona una imagen Tamaño máximo 2MB</small><button type='submit' class='btn-block'>Submit</button> </div></form>    
+        `;
     $content = this.parentElement.parentElement.nextElementSibling;
     $content.innerHTML = $elemento;
 

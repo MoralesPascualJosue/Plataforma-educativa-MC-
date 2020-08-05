@@ -5,20 +5,17 @@
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="http://localhost:8000/resources/logo/Logo minmin white.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="../resources/logo/Logo minmin white.svg" type="image/svg+xml">
 
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('js/jquery/jquery.sweet-modal.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('videojs/video-js.min.css') }}">
     @can('edit cursos')
     <link rel="stylesheet" href="{{ asset('css/stylesa.css') }}">
     @else
+    <link rel="stylesheet" href="{{asset('js/dropzone/dropzone.min.css')}}">
     <link rel="stylesheet" href="{{ asset('css/stylesae.css') }}">
     @endcan
-
-    {{-- <link rel="stylesheet" href="{{ asset('css/deditor.css') }}"> --}}
-    {{-- <link rel="stylesheet" href="{{asset('js/dropzone/dropzone.min.css')}}"> --}}
-
-    <link rel="stylesheet" href="{{ asset('videojs/video-js.min.css') }}">
     @yield('css')
 
     <script src="{{asset('js/jquery/jquery-3.5.1.min.js')}}"> </script>
@@ -59,40 +56,12 @@
     </div>
 
     <script src="{{ asset('js/activitiemanager.js') }}"> </script>
-
-    {{-- <script src="{{ asset('editor/embed-block.js') }}"> </script>
-    <script src="{{ asset('editor/header-block.js') }}"> </script>
-    <script src="{{ asset('editor/marker-inline.js') }}"> </script>
-    <script src="{{ asset('editor/raw-block.js') }}"> </script>
-    <script src="{{ asset('editor/table-block.js') }}"> </script>
-    <script src="{{ asset('editor/code-inline.js') }}"> </script>
-    <script src="{{ asset('editor/paragraph-block.js') }}"> </script>
-    <script src="{{ asset('editor/simple-image-block.js') }}"> </script>
-    <script src="{{ asset('editor/attaches-block.js') }}"> </script>
-    <script src="{{ asset('editor/personality-block.js') }}"> </script>
-    <script src="{{ asset('editor/quote-block.js') }}"> </script>
-    <script src="{{ asset('editor/list-block.js') }}"> </script>
-    <script src="{{ asset('editor/warning-block.js') }}"> </script>
-    <script src="{{ asset('editor/code-block.js') }}"> </script>
-    <script src="{{ asset('editor/checklist-block.js') }}"> </script>
-    <script src="{{ asset('editor/delimiter-block.js') }}"> </script>
-
-    <script src="{{ asset('editor/image-block.js') }}"> </script>
-    <script src="{{ asset('editor/editor.js') }}"> </script>
-    <script src="{{ asset('editor/editorup.js') }}"> </script> --}}
-
-    {{-- <script src="{{ asset('js/dropzone/dropzone.min.js') }}"> </script> --}}
     <script src="{{ asset('videojs/video.min.js') }}"> </script>
     <script src="{{asset('js/jquery/jquery.sweet-modal.min.js')}}"> </script>
-    {{-- <script src="{{ asset('js/ckfinder/ckfinder.js') }}"> </script>
-    <script>
-        CKFinder.config( { connectorPath: '/ckfinder/connector' } );
-    </script>
-    <script src="{{ asset('ckeditor/ckeditor5 1/build/ckeditor.js') }}"> </script> --}}
-
     @can('edit cursos')
     <script src="{{ asset('js/ck.js') }}"> </script>
     @else
+    <script src="{{ asset('js/dropzone/dropzone.min.js') }}"> </script>
     <script src="{{ asset('js/cke.js') }}"> </script>
     @endcan
 

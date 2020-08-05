@@ -116,7 +116,6 @@ $(document).on("click", ".optionfe", function(event) {
 $(document).on("click", ".optionfd", function(event) {
     $contenido = `<iframe class="completo" src='${this.id}'>Descargar</a></p>"></iframe>`;
     $name = this.getAttribute("name") + " > Entrega";
-    console.log($name);
 
     $.sweetModal({
         title: $name,
@@ -140,3 +139,45 @@ $(document).on("click", ".name-r", function(event) {
         clases: ["rwgular"]
     });
 });
+
+//Dropzone.autoDiscover = false;
+Dropzone.options.zonedrop = {
+    autoProcessQueue: false,
+    addRemoveLinks: true,
+    //acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
+    //paramName: "file", // The name that will be used to transfer the file
+    maxFilesize: 30, // MB
+
+    init: function() {
+        var sumitButtom = document.querySelector("#sumit-all");
+        myDropzone = this;
+
+        sumitButtom.addEventListener("click", function() {
+            myDropzone.processQueue();
+        });
+
+        this.on("complete", function(data) {
+            // if (
+            //     this.getQueuedFiles().length == 0 &&
+            //     this.getUploadingFiles().length == 0
+            // ) {
+            var _this = this;
+            _this.removeFile(data);
+            // }
+        });
+
+        this.on("success", function(file, response) {
+            $(".work").append(
+                "<div class='archivo-e'><div class='filetype'><img class='wm-100'src='../" +
+                    response.icon +
+                    "'></div><div class='filename'><p>" +
+                    response.name +
+                    "</p></div><div class='fileoption'> <p class='optionf optionfd' id='../" +
+                    response.url +
+                    "' name=" +
+                    response.name +
+                    "></p><a class='optionf optionfe' href='javascript:void(0);'></a></div></div>"
+            );
+        });
+    }
+};
