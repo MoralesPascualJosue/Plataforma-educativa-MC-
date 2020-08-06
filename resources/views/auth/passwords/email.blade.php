@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PDEPI</title>
 
-    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
@@ -22,9 +21,8 @@
 
                 <form class="login100-form" method="post" action="{{ url('/password/email') }}">
                     @csrf
-
                     <span class="login100-form-title p-b-34">
-                        Enter Email to reset password
+                        Ingresa tu correo para restablecer tu contraseña
                     </span>
 
                     @if (session('status'))
@@ -50,7 +48,8 @@
 
                         <div class="container-login100-form-btn col-md-12">
                             <button type="submit" class="login100-form-btn btn btn-primary pull-right">
-                                <i class="fa fa-btn fa-envelope"></i> .>>. Send Password Reset Link
+                                <i class="fa fa-btn fa-envelope"></i> .>>. Enviar enlace de establecimiento de
+                                contraseña
                             </button>
                         </div>
 
@@ -71,7 +70,7 @@
     </div>
 
 
-    <script src="{{asset('js/jquery/jquery-3.2.1.min.js')}}"> </script>
+    {{-- <script src="{{asset('js/jquery/jquery-3.2.1.min.js')}}"> </script> --}}
     <script src="{{asset('js/main.js')}}"> </script>
 
 </body>

@@ -1,13 +1,12 @@
 <header class="panel-header">
-
     <a class="bb-close" href="{{ route("inicio") }}">×</a>
 
     <div class="panel-titles-container" id="global-title">
         <div class="title-container">
             <h1 class="panel-title">
                 <span class="course-name">{!! $curso->title !!}</span>
-                @can('edit cursos')
 
+                @can('edit cursos')
                 <div class="tools-course canedit">
                     <ul class="course-tools">
                         <li class="course-tool-tab tooltip edit" id="{{ $curso->id }}">
@@ -18,8 +17,8 @@
                         </li>
                     </ul>
                 </div>
-
                 @endcan
+
             </h1>
         </div>
     </div>
@@ -41,6 +40,7 @@
                     <img src="{{ asset("resources/icons/messages-c.svg") }}" alt="Mensajes">
                 </a>
             </li>
+
             @can('edit cursos')
             <li class="course-tool-tab  {{ Route::is('informacion') ? 'active' : '' }}">
                 <a class="course-tab-content" href="{{ route("informacion",$curso->id) }}">
@@ -48,6 +48,7 @@
                 </a>
             </li>
             @endcan
+
         </ul>
     </div>
 </header>

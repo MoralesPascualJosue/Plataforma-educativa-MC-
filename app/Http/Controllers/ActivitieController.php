@@ -15,7 +15,6 @@ use Flash;
 use Response;
 
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Support\Facades\Storage;
 
 class ActivitieController extends AppBaseController
@@ -36,8 +35,6 @@ class ActivitieController extends AppBaseController
         $this->qualificationRepository = $qualificationRepo;
         $this->middleware('auth');
     }
-
-    /* ajax display */
 
      public function storea($id,Request $request)
     {

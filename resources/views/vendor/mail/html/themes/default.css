@@ -2,8 +2,9 @@
 
 body,
 body *:not(html):not(style):not(br):not(tr):not(code) {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol";
     box-sizing: border-box;
 }
 
@@ -107,11 +108,12 @@ img {
 .header {
     padding: 25px 0;
     text-align: center;
+    background-color: #f0f0f0;
 }
 
 .header a {
-    color: #bbbfc3;
-    font-size: 19px;
+    color: orange;
+    font-size: 25px;
     font-weight: bold;
     text-decoration: none;
     text-shadow: 0 1px 0 white;
@@ -222,11 +224,11 @@ img {
 
 .button-blue,
 .button-primary {
-    background-color: #3490dc;
-    border-top: 10px solid #3490dc;
-    border-right: 18px solid #3490dc;
-    border-bottom: 10px solid #3490dc;
-    border-left: 18px solid #3490dc;
+    background-color: orange;
+    border-top: 10px solid orange;
+    border-right: 18px solid orange;
+    border-bottom: 10px solid orange;
+    border-left: 18px solid orange;
 }
 
 .button-green,

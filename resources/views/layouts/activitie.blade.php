@@ -25,9 +25,7 @@
     <div class="limiter">
         @if (!Auth::guest())
         <div class="container100">
-            <!-- Left side column. contains the logo and sidebar -->
             @include('activities.topbar')
-            <!-- Down side. Main Footer-->
             <div class="container">
                 <div class="menud">
                     <div>Eliminar</div>
@@ -42,22 +40,23 @@
                     @endcan
                 </div>
                 <div id="wrap100" class="wrap100 item2">
-                    <!-- Contains page content -->
+                    <!-- page content -->
                     @yield('content')
                 </div>
             </div>
         </div>
 
         @else
+
         <div>Invitado</div>
         @yield('invitado')
-
         @endif
     </div>
 
     <script src="{{ asset('js/activitiemanager.js') }}"> </script>
     <script src="{{ asset('videojs/video.min.js') }}"> </script>
     <script src="{{asset('js/jquery/jquery.sweet-modal.min.js')}}"> </script>
+
     @can('edit cursos')
     <script src="{{ asset('js/ck.js') }}"> </script>
     @else
