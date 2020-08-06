@@ -138,4 +138,11 @@ class FrontController extends Controller
         return Response::json($sections['content']);
     }
 
+    public function leernotificaciones()
+    {
+        $miusuario = Auth::user()->estudiante()->get()[0];
+        $miusuario->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
+
 }

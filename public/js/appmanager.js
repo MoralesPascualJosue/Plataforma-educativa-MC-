@@ -98,6 +98,16 @@ $(document).on("click", "#perfil-nav-a", function(event) {
     $(this).addClass("w--current");
 });
 
+$(document).on("click", "#home-nav-n", function(event) {
+    $url = "notificaciones";
+    $(this).ajaxPost($url, "get", $url);
+
+    $(".w--current").removeClass("w--current");
+    $(this).addClass("w--current");
+
+    history.pushState(null, "", $url);
+});
+
 $(document).on("click", "#home-nav-a", function(event) {
     $url = "home";
     $(this).ajaxPost($url, "get", $url);

@@ -78,12 +78,37 @@ class cursoController extends AppBaseController
         return $view;
     }
 
+     public function notificaciones(Request $request)
+    {     
+
+        if(Auth::user()->hasPermissionTo('edit cursos')){
+           return redirect()->back();
+        }
+        
+        $curso = [];
+        $miusuario = Auth::user()->estudiante()->get()[0];
+
+        $curso["notificacionesnum"] = count($miusuario->unreadNotifications);
+        $curso["notificaciones"] = $miusuario->unreadNotifications;
+        $curso["readnotificaciones"] = $miusuario->readNotifications;
+
+        $view = \View::make('informacion.notificaciones')->with(compact('curso'));
+
+        if($request->ajax()){
+            $sections = $view->renderSections();
+            return Response::json($sections['content']);
+        }
+        
+        return $view;
+    }
+
      public function showCurso($id,Request $request)
     {        
         $curso = $this->cursoRepository->find($id);
         $actividades = [];
         $actividadeshoy= [];
         $actividadessemana= [];
+        $miusuario;
 
         $hoy =  now()->toDateString();
 
@@ -99,7 +124,8 @@ class cursoController extends AppBaseController
             }    
             $actividades = $curso->activities()->orderBy("activities.updated_at","DESC")->paginate(10);
         }else{
-            if(!$curso->hasMatriculado(Auth::user()->estudiante()->get()['0']->id)){
+            $miusuario = Auth::user()->estudiante()->get()[0];
+            if(!$curso->hasMatriculado($miusuario->id)){
                 Flash::success('Curso no registrado.');
                 return redirect()->route('inicio');
             }   
@@ -109,7 +135,7 @@ class cursoController extends AppBaseController
              ->orderBy("activities.fecha_final","DESC")->paginate(10);
 
              foreach ($actividades as $actividad) {
-                 $actividad['entregas'] = Work::where("estudiante_id",Auth::user()->estudiante()->get()['0']->id)
+                 $actividad['entregas'] = Work::where("estudiante_id",$miusuario->id)
                  ->where("activitie_id",$actividad->id)
                  ->orderBy("id","desc")
                  ->first()
@@ -119,6 +145,10 @@ class cursoController extends AppBaseController
             $actividadeshoy = $curso->activities()->where("visible","=",1)->where("fecha_final","=",$hoy)->get();
             $actividadessemana = $curso->activities()->where("visible","=",1)
              ->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->get();
+
+            $curso["notificacionesnum"] = count($miusuario->unreadNotifications);
+            $curso["notificaciones"] = $miusuario->unreadNotifications;
+
         }
         
         $view = \View::make('scurso')->with(compact('curso','actividades','actividadeshoy','actividadessemana'));

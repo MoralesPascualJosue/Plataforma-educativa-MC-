@@ -5,7 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\User;
-
+use Illuminate\Notifications\Notifiable;
 /**
  * Class Estudiante
  * @package App\Models
@@ -21,7 +21,7 @@ use App\User;
  */
 class Estudiante extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,Notifiable;
 
     public $table = 'estudiantes';
     

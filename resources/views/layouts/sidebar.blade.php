@@ -25,6 +25,9 @@
             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
+            @cannot('edit cursos')
+            <a id="home-nav-n" class="nav-link {{ Route::is('notificaciones') ? 'w--current' : '' }}">Notificaciones</a>
+            @endcan
             <a id="home-nav-a" class="nav-link {{ Route::is('home') ? 'w--current' : '' }}">Inicio</a>
             <a id="clases-nav-a" class="nav-link {{ Route::is('inicio') ? 'w--current' : '' }}">Clases</a>
             <a class="nav-link" href="{{ url('/') }}">VER WEB </a>

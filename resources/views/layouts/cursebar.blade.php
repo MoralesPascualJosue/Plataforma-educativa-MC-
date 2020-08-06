@@ -25,6 +25,39 @@
 
     <div class="course-nav">
         <ul class="course-tools">
+
+            @cannot('edit cursos')
+            <li class="course-tool-tab button-dropdown">
+                <a href="javascript:void(0)" class="dropdown-toggle">
+                    Notificaciones▼<span class="notificaitons-number">{{ $curso->notificacionesnum }}</span>
+                </a>
+                <ul class="dropdown-menu">
+
+                    @forelse ($curso->notificaciones as $notificacion)
+                    <li>
+                        <a href="/sactivitiec/{{ $notificacion->data['activitie'] }}?n={{$notificacion->id}}"
+                            class="data-n" id="{{$notificacion->id}}">
+                            {{$notificacion->data['title']}}
+                            <span class="time-n">{{$notificacion->created_at->diffForHumans()}}</span>
+                        </a>
+                    </li>
+                    @empty
+                    <li>
+                        <a href="#" class="data-n">
+                            Sin notificaciones
+                        </a>
+                    </li>
+                    @endforelse
+
+                    <li>
+                        <a href="{{route('leernotificaciones')}}" class="data-n-n">
+                            Marcar leidas
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endcan
+
             <li class="course-tool-tab {{ Route::is('scursoc') ? 'active' : '' }}">
                 <a class=" course-tab-content" href="">
                     <img src="{{ asset("resources/icons/contenido-c.svg") }}" alt="Contenido">

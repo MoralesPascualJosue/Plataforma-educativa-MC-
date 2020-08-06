@@ -1,0 +1,56 @@
+/*====================================================
+[ Footer ]*/
+
+.footer {
+    height: 5.929rem;
+    background-color: #f0f0f0;
+    font-size: 0.8571rem;
+    padding-top: 1.429rem;
+    border-top: solid 1px #979797;
+}
+
+.footer a {
+    color: #262626;
+    padding-right: 0.3571rem;
+}
+
+.footer .float-left {
+    padding-left: 2.143rem;
+}
+
+.footer .float-right {
+    padding-right: 2.143rem;
+}
+
+.footer .logo {
+    width: 8.643rem;
+    margin-top: 0.7143rem;
+    padding-bottom: 0;
+}
+
+.copyright,
+.footer-links {
+    color: #666666;
+    line-height: 2.143rem;
+}
+
+.footer .float-right {
+    text-align: right;
+}
+
+.footer-logo-subtitle {
+    text-align: left;
+}
+
+.footer-logo-subtitle a {
+    font-size: 1rem;
+    color: #2075a3;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}

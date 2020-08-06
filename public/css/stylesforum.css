@@ -521,3 +521,7 @@
 .scategoria {
     display: none;
 }
+
+.container {
+    grid-template-rows: inherit;
+}

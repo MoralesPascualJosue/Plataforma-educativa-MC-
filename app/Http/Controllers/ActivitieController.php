@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateActivitieRequest;
 use App\Http\Requests\UpdateActivitieRequest;
 use App\Repositories\ActivitieRepository;
+use App\Repositories\CursoRepository;
 use App\Repositories\ContenidoRepository;
 use App\Repositories\WorkRepository;
 use App\Repositories\TaskRepository;
@@ -17,9 +18,10 @@ use Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+use App\Events\ActivitieEvent;
+
 class ActivitieController extends AppBaseController
 {
-    /** @var  ActivitieRepository */
     private $activitieRepository;
     private $contenidoRepository;
     private $taskRepository;
@@ -75,8 +77,9 @@ class ActivitieController extends AppBaseController
     }
 
     public function showActivitie($id,Request $request)
-    {        
+    {            
         $activitie = $this->activitieRepository->find($id);
+        $miusuario = [];
         if (empty($activitie)) {
             Flash::success('Actividad no encontrada.');
            return redirect()->route('inicio');
@@ -93,26 +96,36 @@ class ActivitieController extends AppBaseController
         $qualification=[];
         
         if(Auth::user()->hasPermissionTo('edit cursos')){
-            if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
+            $miusuario = Auth::user()->asesor()->get()['0'];
+            if(!$activitie->hasPropiedad($miusuario->id)){
                 Flash::success('Actividad no registrado.');
                 return redirect()->route('inicio');
             }    
         }else{
-            if(!$curso->hasMatriculado(Auth::user()->estudiante()->get()['0']->id) or !($activitie->visible == 1)){                
+            $miusuario = Auth::user()->estudiante()->get()[0];
+
+            if(!$curso->hasMatriculado($miusuario->id) or !($activitie->visible == 1)){                
                 return redirect()->route('inicio');
             }               
-            $works = $activitie->works()->get()->where("estudiante_id","=",Auth::user()->estudiante()->get()['0']->id);
+            $works = $activitie->works()->get()->where("estudiante_id","=",$miusuario->id);
 
-            $calificacione = $activitie->qualifications()->where("estudiante_id","=",Auth::user()->estudiante()->get()['0']->id);
+            $calificacione = $activitie->qualifications()->where("estudiante_id","=",$miusuario->id);
             if(!$calificacione->count() == 0){
                 $qualification = $calificacione->get()['0'];
             }else{
                 $qualification['estado'] = 0;
                 $qualification['qualification'] = "sin asignar";
                 $qualification['observaciones'] = "sin entregas";
+            }            
+
+            if (!$request["n"] == "") {            
+                $miusuario->unreadNotifications
+                ->when( $request["n"], function($query) use ($request){
+                    return $query->where('id',$request['n']);
+                })->markAsRead();
             }
 
-        }
+        }                
 
         $view = \View::make('activities.show')->with(compact('activitie','curso','task','works','qualification'));
         
@@ -151,7 +164,8 @@ class ActivitieController extends AppBaseController
             $input["visible"] = 1;
         }
 
-        $activitie = $this->activitieRepository->find($id);       
+        $activitie = $this->activitieRepository->find($id);   
+        $curso = $activitie->cursos()->get()[0];  
         
         if($input["fecha_inicio"] > $input["fecha_final"]){
                 abort(403,"fechas no validas");
@@ -165,6 +179,10 @@ class ActivitieController extends AppBaseController
                 Flash::success('Actividad no registrado.');
                 return redirect()->route('inicio');
         } 
+
+        if ($activitie->visible == 0 and $input['visible'] == 1) {
+            event(new ActivitieEvent($activitie,$curso->id));
+        }
 
         $activitie = $this->activitieRepository->update($input, $id);
 
@@ -235,8 +253,7 @@ class ActivitieController extends AppBaseController
         }
 
         abort(402,"Archivo no seleccionado");
-
-     }
+    }
 
     public function uploadFilee(Request $request){
 

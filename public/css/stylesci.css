@@ -652,7 +652,7 @@ li:hover {
 @media (max-width: 1050px) {
     .container {
         grid-template-columns: repeat(1, 100%);
-        grid-template-rows: repeat(4, 25%);
+        grid-template-rows: inherit;
     }
 
     .item1 {
@@ -1316,4 +1316,72 @@ li:hover {
 }
 .red {
     background-color: red;
+}
+
+li .dropdown-menu {
+    list-style: none;
+    display: none;
+    position: absolute;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    margin-top: 3px;
+    text-align: left;
+    z-index: 1;
+}
+
+li .dropdown-menu.active {
+    display: block;
+}
+
+li .dropdown-menu a {
+    width: 250px;
+}
+li a.dropdown-toggle.active span {
+    color: #fff;
+}
+
+li a.dropdown-toggle.active {
+    background-color: #289dcc;
+    color: #fff;
+}
+
+.button-dropdown a {
+    display: block;
+    color: #333;
+    background-color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.button-dropdown a:hover {
+    background-color: #289dcc;
+    color: #fff;
+}
+
+.notificaitons-number {
+    background-color: #289dcc;
+    color: white;
+    position: absolute;
+    padding: 3px;
+    border-radius: 100%;
+    width: 23px;
+    height: 22px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 14px;
+    margin-left: -30px;
+    margin-top: -10px;
+    line-height: 1.2;
+}
+
+.time-n {
+    font-size: 12px;
+    display: block;
+}
+
+.data-n-n {
+    border-top: 1px solid #cdcdcd;
+    font-size: 14px;
+    display: grid;
 }

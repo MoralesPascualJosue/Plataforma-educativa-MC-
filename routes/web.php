@@ -28,6 +28,7 @@ Route::get('/mail', function () {
 //________[Asesor routes]__________
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/inicio', 'cursoController@inicio')->name('inicio');
+Route::get('/notificaciones', 'cursoController@notificaciones')->name('notificaciones');
 Route::post('/storea','AnuncioController@storea')->name('storea');
 Route::delete('/destroya/{id}','AnuncioController@destroya')->name('destroya');
 Route::put('/updatea/{id}','AnuncioController@updatea')->name('updatea');
@@ -39,6 +40,7 @@ Route::get('/perfil', 'FrontController@perfil')->name('perfil');
 Route::delete('/destroyp/{id}','AsesorController@destroyp')->name('destroyp');
 Route::put('/updatePerfil','FrontController@updatePerfil')->name('updatePerfil');
 Route::post('/updateimage','FrontController@updateimage')->name('updateimage');
+Route::get('/leernotificaciones', 'FrontController@leernotificaciones')->name('leernotificaciones');
 //________[END Perfil routes]__________
 
 
@@ -130,8 +132,6 @@ Route::Get('/test', function () { return 'Hello World Get'; });
 
 
 // Route::group(['middleware' => ['role:Asesor']], function () {          
-// });
-// Route::group(['middleware' => ['role:Estudiante']], function () {   
 // });
 // Route::group(['middleware' => ['role:Coordinador']], function () {   
 // });
