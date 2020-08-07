@@ -5,7 +5,7 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
-use App\Repositories\CursoRepository;
+use App\Repositories\cursoRepository;
 use App\Models\Estudiante;
 use App\Notifications\ActivitieNotification;
 
@@ -19,7 +19,7 @@ class ActivitieListener{
      */
     private $cursoRepository;
 
-    public function __construct(CursoRepository $cursoRepo)
+    public function __construct(cursoRepository $cursoRepo)
     {
         $this->cursoRepository = $cursoRepo;
     }
