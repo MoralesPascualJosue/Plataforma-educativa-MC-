@@ -335,8 +335,12 @@ class cursoController extends AppBaseController
                 }
 
             }
+
+            $promedio['qualification']= 0;
+            if ($actividades->count() != 0) {
+             $promedio['qualification'] = round($suma/$actividades->count());   
+            }            
             
-            $promedio['qualification'] = round($suma/$actividades->count());
             $promedio['estado'] = "Proemdio";
             $calificacionescontenedor["promedio"] = $promedio;
 
