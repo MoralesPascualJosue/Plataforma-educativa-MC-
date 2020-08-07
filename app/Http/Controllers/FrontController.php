@@ -108,13 +108,10 @@ class FrontController extends Controller
     {
 
         $perfil['perfil'] = Auth::user()->roles()->pluck('name')['0'];
-        $userb = Auth::user();
-        $user;
+        $user = Auth::user();
 
         if($perfil['perfil'] == "Asesor"){
-            $user = $this->asesorRepository->findwhere("user_id","=",Auth::user()->id)->first();
         }else{
-            $user = $this->estudianteRepository->findwhere("user_id","=",Auth::user()->id)->first();
         }        
 
         if (empty($user)) {
@@ -125,7 +122,6 @@ class FrontController extends Controller
        if($request->file('image')){
             $path = Storage::disk('public')->put('photos',$request->file('image'));
             $user->fill(['image'=>$path])->save();
-            $userb->fill(['image'=>$path])->save();
         }
 
 

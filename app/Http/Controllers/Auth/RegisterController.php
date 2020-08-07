@@ -74,7 +74,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'image' => 'photos/ileLyX10t6kFGvmYCYGT6VDIGgeOwoXL1PKFg7FR.png',
+            'image' => 'resources/users/user-default.svg',
             'password' => Hash::make($data['password']),
         ]);
 
@@ -82,7 +82,6 @@ class RegisterController extends Controller
             Asesor::create([
             'user_id'=> $user->id,
             'name' => $data['name'],
-            'image' => 'photos/ileLyX10t6kFGvmYCYGT6VDIGgeOwoXL1PKFg7FR.png',
             'bio' => " ",
             'institute' => $data['instituto'],
             'department' => $data['departamento'],
@@ -92,7 +91,6 @@ class RegisterController extends Controller
             Estudiante::create([
             'user_id'=> $user->id,
             'name' => $data['name'],
-            'image' => 'photos/ileLyX10t6kFGvmYCYGT6VDIGgeOwoXL1PKFg7FR.png',
             'bio' => " ",
             'institute' => $data['instituto'],
             'department' => $data['departamento'],

@@ -85,7 +85,7 @@ class ForumController extends Controller
         $cate;
         $input = $request->all();
         
-        if ($input["title"] == "") {
+        if ($input["title"] == "" or $input["categoria"] == "") {
             Flash::success('Tema vacio');
 
             return redirect()->back();

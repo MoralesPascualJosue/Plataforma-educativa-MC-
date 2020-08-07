@@ -873,3 +873,14 @@ li.active a {
         opacity: 1;
     }
 }
+
+.n-number {
+    position: absolute;
+    margin-left: -25px;
+    margin-top: -7px;
+    background-color: orange;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    font-size: 15px;
+}

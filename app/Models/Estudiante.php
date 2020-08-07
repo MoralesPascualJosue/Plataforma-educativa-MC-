@@ -33,7 +33,6 @@ class Estudiante extends Model
     public $fillable = [
         'name',
         'bio',
-        'image',
         'institute',
         'department',
         'telephone',
@@ -49,7 +48,6 @@ class Estudiante extends Model
         'id' => 'integer',
         'name' => 'string',
         'bio' => 'string',
-        'image' => 'string',
         'institute' => 'string',
         'department' => 'string'
     ];
@@ -81,9 +79,6 @@ class Estudiante extends Model
     }
 
    public function scopeWithUser( $query){
-        $subquery = User::select('users.id') 
-        ->whereColumn('users.id', 'estudiantes.user_id');
- 
-        $query->addSelect(['usuario_id' => $subquery]);
+        $query->with('user');
     }
 }

@@ -43,13 +43,14 @@ class ChatController extends Controller
         $contacts = $this->cursoRepository
         ->find($cur)
         ->estudiantes()
-        ->get();
+        ->withUser()
+        ->get();        
 
         $contacts["asesor"] = $this->cursoRepository
         ->find($cur)
         ->asesor()
+        ->withUser()
         ->first();
-    
 
         $view = \View::make('chat.show')->with(compact('curso','chats','contacts','user'));
 

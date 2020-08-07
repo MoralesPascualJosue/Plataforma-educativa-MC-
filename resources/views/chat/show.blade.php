@@ -56,9 +56,6 @@
 
         <div class="nuevoms">
             <div class="message">
-                {{-- <div class="no-messages">
-                            <i class="fa fa-file-o"> condicion You have no messages.</i>
-                        </div> --}}
                 <div>
                     <ul class="message-actions">
                         <li><button class="sumitmse" type="submit">Enviar</button></li>
@@ -67,7 +64,7 @@
                     </ul>
 
                     <span class="date">Hoy</span>
-                    <img class="avatar" src="../{{$user->perfil->image}}" alt="active email avatar" />
+                    <img class="avatar" src="../{{$user->image}}" alt="active email avatar" />
                     <label for="">De:</label>
                     <h3 class="from">{{$user->name}}</h3>
                     <label for="">Para:</label><button class="addadress" id="flip">+</button>
@@ -78,7 +75,7 @@
                     <div id="panel-contacts">
                         @foreach($contacts as $contac)
                         <span class="address" id="{{$contac->user_id}}"><img class="avatar-min"
-                                src="{{asset($contac->image)}}" alt="avatar">{{ $contac->name }}</span>
+                                src="{{asset($contac->user->image)}}" alt="avatar">{{ $contac->name }}</span>
                         @endforeach
                     </div>
                     <div>Asunto: <h3 class="subject-s subjectms" contenteditable="true">Asunto</h3>

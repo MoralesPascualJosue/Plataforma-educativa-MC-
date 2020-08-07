@@ -9,8 +9,7 @@ $factory->define(Estudiante::class, function (Faker $faker) {
 
     return [
         'name' => $faker->word,
-        'bio' => $faker->text,
-        'image' => $faker->word,
+        'bio' => $faker->text,  
         'institute' => $faker->word,
         'department' => $faker->word,
         'telephone' => $faker->word,

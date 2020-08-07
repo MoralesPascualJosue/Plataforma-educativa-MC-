@@ -17,7 +17,6 @@ class CreateAsesorsTable extends Migration
             $table->increments('id');
             $table->bigInteger('user_id')->unsigned();
             $table->string('name');
-            $table->string('image');
             $table->text('bio');
             $table->string('institute');
             $table->string('department');

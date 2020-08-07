@@ -26,12 +26,12 @@
                 @csrf
             </form>
             @cannot('edit cursos')
-            <a id="home-nav-n" class="nav-link {{ Route::is('notificaciones') ? 'w--current' : '' }}">Notificaciones</a>
-            @endcan
-            <a id="home-nav-a" class="nav-link {{ Route::is('home') ? 'w--current' : '' }}">Inicio</a>
-            <a id="clases-nav-a" class="nav-link {{ Route::is('inicio') ? 'w--current' : '' }}">Clases</a>
-            <a class="nav-link" href="{{ url('/') }}">VER WEB </a>
-            <div class="grey-rule w-hidden-small w-hidden-tiny"></div>
+            <a id="home-nav-n" class="nav-link {{ Route::is('notificaciones') ? 'w--current' : '' }}">Mis Actividades
+                @endcan
+                <a id="home-nav-a" class="nav-link {{ Route::is('home') ? 'w--current' : '' }}">Inicio</a>
+                <a id="clases-nav-a" class="nav-link {{ Route::is('inicio') ? 'w--current' : '' }}">Clases</a>
+                <a class="nav-link" href="{{ url('/') }}">VER WEB </a>
+                <div class="grey-rule w-hidden-small w-hidden-tiny"></div>
         </nav>
 
         <div class="social-link-group hide-on-medium">

@@ -169,7 +169,7 @@ class cursoController extends AppBaseController
 
         $input =  [];
         $input['title'] = "Nombre de curso";
-        $input['cover'] = "covers/erxDp0dMXQyPz8hYuLLUKj2gk9FlBrhrq06DyLtx.png";
+        $input['cover'] = "resources/img-msg100.jpg";
         $input['review'] = "Breve mensaje";
         $input['asesor_id'] = Auth::user()->asesor()->get()['0']->id;
         $input['password'] = Str::random(10);

@@ -9,10 +9,11 @@ use App\Repositories\CursoRepository;
 use App\Models\Estudiante;
 use App\Notifications\ActivitieNotification;
 
-class ActivitieListener
-{
-    /**
-     * Create the event listener.
+//class ActivitieListener implements ShouldQueue{
+    /** implements queue necesita queue work process
+     * Create the event listener. */
+class ActivitieListener{
+    /*
      *
      * @return void
      */

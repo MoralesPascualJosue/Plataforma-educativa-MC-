@@ -17,7 +17,6 @@ class CreateEstudiantesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('bio');
-            $table->string('image');
             $table->string('institute');
             $table->string('department');
             $table->unsignedBigInteger('telephone');
