@@ -7,7 +7,7 @@
 
 @include('flash::message')
 
-@foreach($anuncios as $anuncio)
+@forelse($anuncios as $anuncio)
 
 <div class="anuncio">
 
@@ -40,6 +40,15 @@
 
     @endcan
 
-</div>
 
-@endforeach
+    @empty
+
+    <div class="anuncio">
+
+        <div class="tittle-anuncios">
+            <img class="anuncio-icon" src="{{ asset('resources/icons/anuncio.svg') }}" alt=" AN" />
+            <div id="at-" class="anuncio-texto">Sin nuevos anuncios</div>
+        </div>
+
+    </div>
+    @endforelse

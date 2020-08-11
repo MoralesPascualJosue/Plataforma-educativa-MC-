@@ -23,8 +23,8 @@
     </header>
 
     <section class="inbox">
-        <ul class="email-list">
 
+        <ul class="email-list">
             @if (count($chats))
             @foreach ($chats as $item)
             <li class="chat-name" id="{{$item->id}}">
@@ -42,9 +42,8 @@
                 </i>
             </li>
             @endif
-
         </ul>
-        <div class="cerrarms">X</div>
+        <div class="cerrarms">>></div>
         <div class="message out">
             @if($messages ?? 'null')
             <div class="no-messages">

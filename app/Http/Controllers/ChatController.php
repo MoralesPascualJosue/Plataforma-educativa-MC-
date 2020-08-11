@@ -15,8 +15,7 @@ use App\Models\user_message;
 
 
 class ChatController extends Controller
-{
-    //
+{    
     private $cursoRepository;
 
       public function __construct(CursoRepository $cursoRepo)
@@ -146,19 +145,6 @@ class ChatController extends Controller
 
         return "eliminado -";
     }
-
-    public function mischats(Request $request){
-
-        $input = $request->all();
-        $mischats=[];
-        if (!$request["en"] == "") {
-            $mischats = Auth::user()->chats()->where('curso_id',$input["en"])->get();
-        }         
-        foreach($mischats as $ca){
-            $ca->last = $ca->messages()->orderBy("id","DESC")->first();
-        }     
-        return $mischats;
-    }    
 
     public function updatems($cur)
     {

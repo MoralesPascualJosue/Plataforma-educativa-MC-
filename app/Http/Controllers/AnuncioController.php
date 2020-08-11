@@ -15,17 +15,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AnuncioController extends AppBaseController
 {
-    /** @var  AnuncioRepository */
     private $anuncioRepository;
 
     public function __construct(AnuncioRepository $anuncioRepo)
     {
         $this->anuncioRepository = $anuncioRepo;
     }
-
-
-/*Disply with ajax */
-
 
     public function storea(CreateAnuncioRequest $request)
     {        

@@ -47,9 +47,6 @@ class cursoController extends AppBaseController
         $this->middleware('auth');
     }
 
-    /* Displat with ajax */
-
-
     public function inicio(Request $request)
     {     
         $cursos;

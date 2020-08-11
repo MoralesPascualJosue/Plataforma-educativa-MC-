@@ -140,7 +140,7 @@
     <div class="column user-settings">
         <section>
             <h2>Configuración del sistema</h2>
-            <ul>
+            {{-- <ul>
                 <li class="data-row">
                     <div class="data-container">
                         <span class="data-title">Ajustes de notificaciones globales</span>
@@ -167,7 +167,7 @@
                         </a>
                     </div>
                 </li>
-            </ul>
+            </ul> --}}
 
         </section>
 

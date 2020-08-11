@@ -38,79 +38,84 @@ class ActivitieController extends AppBaseController
         $this->middleware('auth');
     }
 
-     public function storea($id,Request $request)
+     public function storea($id)
     {
+        $input =  [];
+        $miusuario = Auth::user();
 
-        if(!Auth::user()->hasPermissionTo('edit cursos')){
+        if(!$miusuario->hasPermissionTo('edit cursos')){
             return redirect(route('inicio'));
         }
 
+        $miusuario = $miusuario->asesor()->get()['0'];
+
         $date = date("Y-m-d");
         $mod_date = strtotime($date."+ 2 days");
-
-        $input =  [];
+        
         $input['title'] = "Nueva actividad  $date ";        
         $input['visible'] = 0;
         $input['intentos'] = 1;
         $input['fecha_inicio'] = $date;
         $input['fecha_final'] = date("Y-m-d",$mod_date); 
-        $input['asesor_id'] = Auth::user()->asesor()->get()['0']->id;
-                
+        $input['asesor_id'] = $miusuario->id;                    
+
         $activitie = $this->activitieRepository->create($input);
 
         $contenido['activitie_id'] = $activitie->id;
         $contenido['curso_id'] = $id;
+
+        $task["contenido"] =     "Contenido";
+        $task['asesor_id'] =  $miusuario->id;
+        $task['activitie_id'] = $activitie->id;        
         
         $this->contenidoRepository->create($contenido);
-
-        
-        $task["contenido"] =     "---";
-        $task['asesor_id'] =  Auth::user()->asesor()->get()['0']->id;
-        $task['activitie_id'] = $activitie->id;
-
-
         $this->taskRepository->create($task);
 
         Flash::success('Actividad creada.');
 
-        return redirect(route('scursoc',$id));
+        return redirect()->back();
     }
 
     public function showActivitie($id,Request $request)
     {            
-        $activitie = $this->activitieRepository->find($id);
-        $miusuario = [];
-        if (empty($activitie)) {
+        $miusuario = Auth::user();
+        $curso = [];
+        $works= [];
+        $qualification=[];
+        $task = [];
+        $activitie = $this->activitieRepository->find($id);        
+
+        if (empty($activitie)) {            
             Flash::success('Actividad no encontrada.');
-           return redirect()->route('inicio');
+           return redirect()->back();
         }
 
         $curso = $activitie->cursos()->first();
 
          if (empty($curso)) {
-           return redirect()->route('inicio');
+            Flash::success('Curso no disponible.');
+           return redirect()->back();
         }
 
-        $task = $activitie->task()->get()['0']->contenido;
-        $works= [];
-        $qualification=[];
+        $task = $activitie->task()->get()['0']->contenido;        
         
-        if(Auth::user()->hasPermissionTo('edit cursos')){
-            $miusuario = Auth::user()->asesor()->get()['0'];
+        if($miusuario->hasPermissionTo('edit cursos')){
+            $miusuario = $miusuario->asesor()->get()['0'];
             if(!$activitie->hasPropiedad($miusuario->id)){
-                Flash::success('Actividad no registrado.');
+                Flash::success('Actividad no registrada.');
                 return redirect()->route('inicio');
             }    
         }else{
-            $miusuario = Auth::user()->estudiante()->get()[0];
+            $miusuario = $miusuario->estudiante()->get()['0'];
 
-            if(!$curso->hasMatriculado($miusuario->id) or !($activitie->visible == 1)){                
+            if(!$curso->hasMatriculado($miusuario->id) or $activitie->visible != 1){
                 return redirect()->route('inicio');
             }               
+            
             $works = $activitie->works()->get()->where("estudiante_id","=",$miusuario->id);
-
             $calificacione = $activitie->qualifications()->where("estudiante_id","=",$miusuario->id);
-            if(!$calificacione->count() == 0){
+
+            if($calificacione->count() != 0){
                 $qualification = $calificacione->get()['0'];
             }else{
                 $qualification['estado'] = 0;
@@ -176,8 +181,8 @@ class ActivitieController extends AppBaseController
         }
 
         if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('Actividad no registrado.');
-                return redirect()->route('inicio');
+            Flash::success('Actividad no registrado.');
+            return redirect()->route('inicio');
         } 
 
         if ($activitie->visible == 0 and $input['visible'] == 1) {

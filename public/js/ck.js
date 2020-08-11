@@ -4,6 +4,8 @@ $(document).ready(function() {
     //Código que se ejecutará al cargar la página
     $(".textb").attr("contenteditable", "true");
 
+    $(".block-s").removeClass("minh-n");
+
     jQuery.makeArray($(".list-r")).forEach(element => {
         $forme = `
         <form class='input-areafile' action='/uploadfile' method='post' enctype='multipart/form-data'>
@@ -132,6 +134,7 @@ $(document).on("click", ".savebutton", function(event) {
     let saveb = this;
     $(".textb").attr("contenteditable", "false");
     $(".options-r").remove();
+    $(".block-s").addClass("minh-n");
 
     jQuery.makeArray($(".list-r")).forEach(element => {
         if (element.nextElementSibling != null) {

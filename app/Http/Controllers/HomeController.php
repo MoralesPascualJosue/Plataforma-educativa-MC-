@@ -9,7 +9,8 @@ use App\Models\Anuncio;
 
 class HomeController extends Controller
 {
-    /**we
+    /**
+     * Create a new controller instance.
      *
      * @return void
      */
@@ -21,10 +22,11 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request)
     {
+        $anuncios = [];
         $anuncios = Anuncio::all()->sortBy('updated_at' ,SORT_REGULAR , true);
 
         $view = \View::make('home')->with('anuncios',$anuncios);
@@ -36,5 +38,4 @@ class HomeController extends Controller
 
         return $view;
     }
-    
 }

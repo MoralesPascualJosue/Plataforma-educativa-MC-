@@ -141,6 +141,7 @@ input[type="search"] {
     text-decoration: none;
     list-style: none;
     margin-left: 10px;
+    display: inline-block;
 }
 .users {
     position: absolute;
@@ -222,10 +223,16 @@ input[type="search"] {
         width: 100%;
     }
 
-    .active-user {
-        position: absolute;
-        top: 0.75em;
-        right: 1em;
+    .avatar {
+        float: inherit;
+    }
+
+    .date {
+        position: inherit;
+    }
+
+    #busqueda {
+        width: 100%;
     }
 
     .users {
@@ -513,4 +520,10 @@ li {
 
 .clear-b:hover {
     background-color: #434753;
+}
+
+@media (max-width: 860px) {
+    .clear-b {
+        left: 0;
+    }
 }

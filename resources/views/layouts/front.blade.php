@@ -37,6 +37,7 @@
     @endif
   </div>
 
+  <script src="{{ asset('js/pusher-js/web/pusher.min.js') }}"> </script>
   <script src="{{ asset('js/cursemanager.js') }}"> </script>
   @stack('scripts')
 </body>

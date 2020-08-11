@@ -335,3 +335,31 @@ jQuery(document).ready(function(e) {
             e(".button-dropdown .dropdown-toggle").removeClass("active");
     });
 });
+
+$(document).ready(function() {
+    const pusher = new Pusher("PDEPI2020", {
+        wsHost: window.location.hostname,
+        wsPort: 6001,
+        wssPort: 6001,
+        disableStats: true,
+        authEndpoint: "/laravel-websockets/auth",
+        forceTLS: false,
+        auth: {
+            headers: {
+                "X-CSRF-Token": $('meta[name="csrf-token"]').attr("content"),
+                "X-App-ID": "20201108"
+            }
+        },
+        enabledTransports: ["ws", "flash"]
+    });
+
+    var channel = pusher.subscribe("channelmessage");
+
+    channel.bind("pusher:subscription_succeeded", function(members) {
+        alert("successfully subscribed!");
+    });
+
+    channel.bind("App\\Events\\MessageEvent", function(data) {
+        console.log(data);
+    });
+});

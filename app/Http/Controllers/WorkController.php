@@ -29,8 +29,6 @@ class WorkController extends AppBaseController
         $this->middleware('auth');
     }
 
-    /* ajax display */
-
     public function storea($id,Request $request)    
     {        
         if($request->contenido == ""){

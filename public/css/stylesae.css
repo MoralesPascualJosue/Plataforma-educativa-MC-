@@ -831,7 +831,7 @@ iframe {
 div.contentblock {
     height: 100%;
     width: 100%;
-    background: #f0f0f0;
+    background: white;
     -webkit-transition: all 250ms ease;
     -moz-transition: all 250ms ease;
     -ms-transition: all 250ms ease;
@@ -1298,4 +1298,8 @@ div.menu ul li.move a {
 
 .sc {
     min-height: auto;
+}
+
+.minh-n {
+    min-height: inherit;
 }

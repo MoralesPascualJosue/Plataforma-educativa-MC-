@@ -128,6 +128,8 @@ Route::get('/informacionCursop/{cur}','informacionController@informacionCursop')
 //________[Test routes]__________
 Route::post('/test', function () { return 'Hello World Post'; }); 
 Route::Get('/test', function () { return 'Hello World Get'; }); 
+
+Route::get('/homevue', 'AppController@index')->name('homevue');
 //________[END Test routes]__________
 
 
