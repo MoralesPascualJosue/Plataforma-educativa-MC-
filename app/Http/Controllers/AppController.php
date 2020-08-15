@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Response;
+
+use App\Models\Anuncio;
 
 class AppController extends Controller
 {
@@ -21,8 +25,19 @@ class AppController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('homevue');
+        $anuncios = [];
+        $perfil = Auth::user()->roles()->pluck('name')['0'];
+        $anuncios = Anuncio::orderBy('updated_at','DESC')->get();
+
+        if($request->ajax()){
+            return $anuncios;
+        }
+
+        $view = \View::make('homevue')->with(compact('anuncios','perfil'));
+        return $view;
     }
+
+
 }

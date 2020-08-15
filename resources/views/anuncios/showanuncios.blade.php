@@ -14,7 +14,7 @@
     <div class="tittle-anuncios">
         <img class="anuncio-icon" src="{{ asset('resources/icons/anuncio.svg') }}" alt=" AN" />
         <div id="at-{{ $anuncio->id }}" class="anuncio-texto">{{ $anuncio->anuncio }}</div> <span
-            class="text-p">({{ $anuncio->updated_at }})</span>
+            class="text-p">({{ $anuncio->updated_at->diffForHumans() }})</span>
     </div>
 
     @can('edit anuncios')
@@ -37,18 +37,18 @@
 
         </ul>
     </div>
-
     @endcan
+</div>
 
 
-    @empty
+@empty
 
-    <div class="anuncio">
+<div class="anuncio">
 
-        <div class="tittle-anuncios">
-            <img class="anuncio-icon" src="{{ asset('resources/icons/anuncio.svg') }}" alt=" AN" />
-            <div id="at-" class="anuncio-texto">Sin nuevos anuncios</div>
-        </div>
-
+    <div class="tittle-anuncios">
+        <img class="anuncio-icon" src="{{ asset('resources/icons/anuncio.svg') }}" alt=" AN" />
+        <div id="at-" class="anuncio-texto">Sin nuevos anuncios</div>
     </div>
-    @endforelse
+
+</div>
+@endforelse

@@ -30,12 +30,16 @@ class AnuncioController extends AppBaseController
         $input['user_id'] = Auth::user()->id;
 
         $anuncio = $this->anuncioRepository->create($input);
+
+        if($request->ajax()){
+            return $anuncio;
+        }
         
         Flash::success('Anuncio publicado.');     
 
-        $anuncios = $this->anuncioRepository->all()->sortBy('updated_at' ,SORT_REGULAR , true);;
+        $anuncios = $this->anuncioRepository->all()->sortBy('updated_at' ,SORT_REGULAR , true);        
 
-         $view = \View::make('anuncios.showanuncios')->with('anuncios',$anuncios);
+        $view = \View::make('anuncios.showanuncios')->with('anuncios',$anuncios);
         
         return $view;
     }
@@ -74,7 +78,11 @@ class AnuncioController extends AppBaseController
 
         $anuncio = $this->anuncioRepository->update($input, $id);
 
-       Flash::success('Anuncio actualizado.');
+        if($request->ajax()){
+            return $anuncio;
+        }
+
+        Flash::success('Anuncio actualizado.');
 
         $anuncios = $this->anuncioRepository->all()->sortBy('updated_at' ,SORT_REGULAR , true);
 

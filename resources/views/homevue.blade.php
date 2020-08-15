@@ -1,6 +1,7 @@
 @extends('layouts.appvue')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -14,10 +15,17 @@
                     </div>
                     @endif
 
-                    You are logged in!
+                    @can('edit cursos')
+                    you are loguet how Asesor
+                    @endcan
+
+                    @cannot('edit cursos')
+                    you are loguet how Estudiante
+                    @endcannot
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection

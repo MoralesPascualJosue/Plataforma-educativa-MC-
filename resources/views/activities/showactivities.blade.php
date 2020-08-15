@@ -22,7 +22,7 @@
                 @else
                 <div class="estate-ae red"></div>
                 @endif
-                @endcan
+                @endcannot
             </div>
             <div class="course-link-details">
                 <div class="course-link-name">{{ $actividad->title }} {{ $actividad->fecha_inicio }}

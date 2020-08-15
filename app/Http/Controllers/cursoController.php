@@ -68,8 +68,10 @@ class cursoController extends AppBaseController
         $view = \View::make('cursos.inicioc')->with('cursos',$cursos);
 
         if($request->ajax()){
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
+            Flash::success('Cursos cargado.');
+            return $cursos;
+            //$sections = $view->renderSections(); vue comment
+            //return Response::json($sections['content']);
         }
         
         return $view;
@@ -101,6 +103,7 @@ class cursoController extends AppBaseController
 
      public function showCurso($id,Request $request)
     {        
+        
         $curso = $this->cursoRepository->find($id);
         $actividades = [];
         $actividadeshoy= [];
@@ -150,9 +153,15 @@ class cursoController extends AppBaseController
         
         $view = \View::make('scurso')->with(compact('curso','actividades','actividadeshoy','actividadessemana'));
 
+        $data['curso'] = $curso;
+        $data['actividades'] = $actividades;
+        $data['actividadeshoy'] = $actividadeshoy;
+        $data['actividadessemana'] = $actividadessemana;
+
         if($request->ajax()){
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
+            return $data;
+            //$sections = $view->renderSections(); vue comment
+            //return Response::json($sections['content']);
         }
         
         return $view;
@@ -160,6 +169,7 @@ class cursoController extends AppBaseController
 
      public function storea(Request $request)
     {
+        return $request;
         if(!Auth::user()->hasPermissionTo('edit cursos')){
             return redirect(route('inicio'));
         }
@@ -172,6 +182,10 @@ class cursoController extends AppBaseController
         $input['password'] = Str::random(10);
 
         $curso = $this->cursoRepository->create($input);
+
+        if($request->ajax()){
+            return $curso;
+        }
 
         Flash::success('Curso creado.');
 

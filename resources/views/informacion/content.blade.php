@@ -62,7 +62,7 @@
         </thead>
         <tbody>
             @foreach ($actividades as $actividad)
-            <tr>
+            <tr class="activitie-info">
                 <td class="tb-activitie-info">{{$actividad->title}}</td>
                 <td class="tb-activitie-info">{{$actividad->created_at}}</td>
                 <td class="tb-activitie-info">{{$actividad->fecha_inicio}} a {{$actividad->fecha_final}}</td>

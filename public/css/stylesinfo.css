@@ -208,3 +208,9 @@ html {
 .tb-activitie-info {
     padding: 5px;
 }
+
+.activitie-info {
+    background-color: white;
+    border: 1px solid black;
+    padding: 5px;
+}

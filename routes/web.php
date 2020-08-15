@@ -45,7 +45,6 @@ Route::get('/leernotificaciones', 'FrontController@leernotificaciones')->name('l
 
 
 //________[Curses routes]__________
-Route::get('/inicioc','FrontController@index')->name('inicioc');
 Route::get('/scursoc/{id}', 'cursoController@showCurso')->name('scursoc');
 Route::post('/storeac','cursoController@storea')->name('storeac');
 Route::put('/updateac/{id}','cursoController@updatea')->name('updateac');

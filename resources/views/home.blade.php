@@ -41,7 +41,7 @@
 <div id="anunciosprueba"></div>
 <h3 class="subheader-tittle">Mision maestria en construccion</h3>
 
-<div class="anuncios">
+<div class="">
     <div class="content-mensaje">
         <div class="content-img-mision"><img alt="Mision imagen" class="img-decoration"
                 src="{{ asset('resources/img-msg100.jpg') }}"></div>

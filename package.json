@@ -25,6 +25,10 @@
     },
     "dependencies": {
         "laravel-echo": "^1.8.1",
-        "pusher-js": "^7.0.0"
+        "pusher-js": "^7.0.0",
+        "serialize-javascript": "^4.0.0",
+        "vue-router": "^3.4.3",
+        "vuex": "^3.5.1",
+        "xmodal-vue": "^1.0.2"
     }
 }
