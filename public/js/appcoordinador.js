@@ -60121,8 +60121,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 window.events = new Vue();
 
-window.flash = function (message) {
-  window.events.$emit("flash", message);
+window.flash = function (message, type) {
+  window.events.$emit("flash", message, type);
 };
 
 /***/ }),

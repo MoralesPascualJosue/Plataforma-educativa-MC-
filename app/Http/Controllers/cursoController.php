@@ -47,9 +47,26 @@ class cursoController extends AppBaseController
         $this->middleware('auth');
     }
 
+    public function curso($id)
+    {
+        $curso = $this->cursoRepository->find($id);
+        if (empty($curso)) {
+            Flash::success('Curso no registrado.');
+           abort(404,"No disponible");
+        }
+
+        if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
+            Flash::success('Curso no registrado.');
+           abort(404,"No disponible");
+        }
+
+        return $curso;
+    }
+
     public function inicio(Request $request)
     {     
         $cursos;
+        $miusuario = Auth::user();
 
         if (!$request["ele"] == "") {
             $elementos = $request["ele"];
@@ -57,7 +74,7 @@ class cursoController extends AppBaseController
             $elementos = 12;
         }
 
-        if(Auth::user()->hasPermissionTo('edit cursos')){
+        if($miusuario->hasPermissionTo('edit cursos')){
             $cursos = $this->cursoRepository->findWherePaginate("asesor_id","=",Auth::user()->asesor()->get()['0']->id,$elementos);
         }else{
             $cursos = Auth::user()->estudiante()->get()['0']->cursos()->orderBy("pivot_updated_at","DESC")->paginate($elementos);            
@@ -168,20 +185,30 @@ class cursoController extends AppBaseController
     }
 
      public function storea(Request $request)
-    {
-        return $request;
+    {        
+        request()->validate([            
+            'title' => 'required',
+            'review' => 'required',
+            'cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+        ]);
+
         if(!Auth::user()->hasPermissionTo('edit cursos')){
             return redirect(route('inicio'));
         }
 
-        $input =  [];
-        $input['title'] = "Nombre de curso";
+        $input =  $request->all();
+        // $input['title'] = "Nombre de curso";
         $input['cover'] = "resources/img-msg100.jpg";
-        $input['review'] = "Breve mensaje";
+        // $input['review'] = "Breve mensaje";
         $input['asesor_id'] = Auth::user()->asesor()->get()['0']->id;
         $input['password'] = Str::random(10);
 
         $curso = $this->cursoRepository->create($input);
+
+        if($request->file('cover')){
+            $path = Storage::disk('public')->put('covers',$request->file('cover'));
+            $curso->fill(['cover'=>$path])->save();
+        }        
 
         if($request->ajax()){
             return $curso;
@@ -192,9 +219,15 @@ class cursoController extends AppBaseController
         return redirect(route('scursoc',$curso->id));
     }
 
-    public function updatea($id, UpdatecursoRequest $request)
+    public function updatea($id, Request $request)
     {        
-        $curso = $this->cursoRepository->find($id);        
+        $curso = $this->cursoRepository->find($id);  
+        
+        request()->validate([            
+            'title' => 'required',
+            'review' => 'required',
+            'cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+        ]);
 
         if (empty($curso)) {
            abort(404,'Curso no disponible');
@@ -210,6 +243,10 @@ class cursoController extends AppBaseController
        if($request->file('cover')){
             $path = Storage::disk('public')->put('covers',$request->file('cover'));
             $curso->fill(['cover'=>$path])->save();
+        }
+
+         if($request->ajax()){
+            return $curso;
         }
 
         Flash::success('Curso actualizado.');

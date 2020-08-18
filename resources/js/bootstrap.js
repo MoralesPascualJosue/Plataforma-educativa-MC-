@@ -48,6 +48,6 @@ window.Echo = new Echo({
 window.Vue = require("vue");
 window.events = new Vue();
 
-window.flash = function(message) {
-    window.events.$emit("flash", message);
+window.flash = function(message, type) {
+    window.events.$emit("flash", message, type);
 };

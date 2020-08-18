@@ -1,23 +1,38 @@
 <template>
   <div ref="list" class="list" :class="{ 'zoom-down-cursor': isPopoutCoverActive }">
     <slot :togglePopup="openPopup" />
+    <xmodal v-model="ismodalOpen" :params="options" />
   </div>
 </template>
 
 <script>
+import ModalCurso from "./ModalCurso";
 export default {
   data() {
     return {
-      isPopoutCoverActive: false
+      isPopoutCoverActive: false,
+      ismodalOpen: false,
+      // basic modal options
+      options: {
+        component: ModalCurso,
+        backgroundColor: "rgb(169 194 203)",
+        opacity: "0.7",
+        animation: "scaleIn"
+      }
     };
   },
-  beforeCreate() {
-    // this.isPopout = false;
-  },
   methods: {
-    openPopup() {
-      this.$store.commit("changecurso", { id: 1, title: "1" });
-      this.$xmodal.open();
+    openPopup(curso) {
+      this.$store.commit("changecurso", curso);
+      //this.$xmodal.open();
+      // this.$xmodal.save("curso-modal", {
+      //   component: Modal,
+      //   backgroundColor: "#000000",
+      //   opacity: "0.7",
+      //   animation: "scaleIn"
+      // });
+      // this.$xmodal.openFromStore("curso-modal");
+      this.ismodalOpen = true;
     }
   }
 };

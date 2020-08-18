@@ -1,6 +1,8 @@
 <template>
   <div class="course-actividad">
-    <a :href="ruta">
+    <a :href="ruta" @click="
+            $emit('pop-image', activitie)
+        ">
       <div class="course-link-icon">
         <img :src="icon" alt="grupos" />
       </div>
@@ -24,7 +26,8 @@ export default {
   },
   computed: {
     ruta() {
-      return "../sactivitiec/" + this.activitie.id;
+      //return "../sactivitiec/" + this.activitie.id;
+      return "javascript:void(0)";
     }
   }
 };

@@ -1,20 +1,15 @@
 <template>
   <div class="modal">
-    <button @click="close()">Close modal</button>
-    <ListaActividades />
+    <button class="btn btn-primary backbtn" @click="close()">X</button>
+    <TabsCurso />
   </div>
 </template>
 
 <script>
-import ListaActividades from "./ListaActividades";
+import TabsCurso from "./TabsCurso";
 export default {
-  name: "myModal",
-  components: { ListaActividades },
-  computed: {
-    curso() {
-      return this.$store.state.curso;
-    }
-  },
+  name: "curso-modal",
+  components: { TabsCurso },
   methods: {
     close() {
       // close disabled modal from component
@@ -26,13 +21,23 @@ export default {
 
 <style>
 .modal {
+  padding: 5px;
   position: relative;
-  width: 90%;
+  width: 93%;
   height: 95%;
   background: white;
   border-radius: 8px;
   margin: 0 0 10px 0;
   display: block;
   justify-content: center;
+}
+
+.backbtn {
+  border-radius: 100%;
+  position: absolute;
+  left: 0;
+  font-weight: bolder;
+  font-size: 20px;
+  width: 45px;
 }
 </style>

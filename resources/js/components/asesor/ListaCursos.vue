@@ -1,7 +1,8 @@
 <template>
   <div class="example">
-    <div class="page-title">Crear curso</div>
-    <FormActividad />
+    <flash />
+    <div class="page-title">Buscar</div>
+    <FormCurso @crear-curso="createcurso" />
     <UncoverList>
       <template slot-scope="{ togglePopup }">
         <div v-for="(curso, index) in cursos.data" :key="index" class="card">
@@ -9,8 +10,8 @@
 
           <UncoverImage
             alt="example"
-            :image-url="curso.cover"
             v-bind:height="168"
+            v-bind:curso="curso"
             @pop-image="togglePopup"
           />
           <div class="content">{{ curso.review }}</div>
@@ -19,26 +20,20 @@
     </UncoverList>
     <button v-if="more" class="page-title" @click="nextpage()">Más</button>
     <div class="bottom">Maestria en contruccion 2020</div>
-    <flash class="alert-flash" message="Charged!"></flash>
   </div>
 </template>
 
 <script>
 import UncoverList from "./Cursos";
 import UncoverImage from "./Curso";
-import FormActividad from "./FormActividad";
+import FormCurso from "./FormCurso";
 import Flash from "../Flash";
 
 export default {
-  data() {
-    return {
-      cursos: []
-    };
-  },
   components: {
     UncoverList,
     UncoverImage,
-    FormActividad,
+    FormCurso,
     Flash
   },
   computed: {
@@ -47,23 +42,34 @@ export default {
         return true;
       }
       return false;
+    },
+    cursos() {
+      return this.$store.getters.cursosview;
     }
   },
   created() {
     axios.get("/inicio").then(res => {
-      this.cursos = res.data;
+      this.$store.commit("changecursos", res.data);
     });
   },
   methods: {
+    createcurso(curso) {
+      if (curso.id) {
+        this.cursos.data.unshift(curso);
+      }
+    },
     nextpage() {
+      let posy = window.scrollY;
       axios.get(this.cursos.next_page_url).then(res => {
         res.data.data.forEach(element => {
           this.cursos.data.push(element);
         });
         this.cursos.next_page_url = res.data.next_page_url;
+        setTimeout(function() {
+          window.scrollBy(0, -(window.scrollY - posy));
+        }, 200);
       });
-    },
-    createcurse() {}
+    }
   }
 };
 </script>
@@ -115,3 +121,4 @@ h1 {
   margin-bottom: 20px;
 }
 </style>
+

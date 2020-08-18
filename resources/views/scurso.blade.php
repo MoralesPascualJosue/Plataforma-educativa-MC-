@@ -54,7 +54,6 @@
       <div class="username-header">
         <span>Asesor</span>
       </div>
-
     </div>
 
     <div class="curso-message">

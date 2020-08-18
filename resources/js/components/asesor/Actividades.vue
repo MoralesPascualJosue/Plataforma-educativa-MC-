@@ -2,26 +2,27 @@
   <div
     ref="list-actividades"
     class="list-actividades"
-    :class="{ 'zoom-down-cursor': isPopoutCoverActive }"
+    :class="{ 'zoom-down-cursor': isPopoutCoverActiveA }"
   >
+    <ModalActividad :show="showModal" @close="showModal = false" />
     <slot :togglePopup="openPopup" />
   </div>
 </template>
 
 <script>
+import ModalActividad from "./ModalActividad";
 export default {
   data() {
     return {
-      isPopoutCoverActive: false
+      isPopoutCoverActiveA: false,
+      showModal: false
     };
   },
-  beforeCreate() {
-    // this.isPopout = false;
-  },
+  components: { ModalActividad },
   methods: {
-    openPopup() {
-      //this.$store.commit("changecurso", { id: 77, title: "77" });
-      //this.$xmodal.open();
+    openPopup(actividad) {
+      this.$store.commit("changeactividad", { activitie: actividad });
+      this.showModal = true;
     }
   }
 };

@@ -38,7 +38,7 @@ class ActivitieController extends AppBaseController
         $this->middleware('auth');
     }
 
-     public function storea($id)
+     public function storea($id,Request $request)
     {
         $input =  [];
         $miusuario = Auth::user();
@@ -70,6 +70,12 @@ class ActivitieController extends AppBaseController
         
         $this->contenidoRepository->create($contenido);
         $this->taskRepository->create($task);
+
+        if($request->ajax()){
+            return $activitie;
+        }
+
+
 
         Flash::success('Actividad creada.');
 
@@ -130,7 +136,17 @@ class ActivitieController extends AppBaseController
                 })->markAsRead();
             }
 
-        }                
+        }     
+        
+        if($request->ajax()){
+            $data["activitie"] = $activitie;
+            $data["curso"] = $curso;
+            $data["task"] = $task;
+            $data["works"] = $works;
+            $data["qualification"] = $qualification;
+
+            return $data;
+        }
 
         $view = \View::make('activities.show')->with(compact('activitie','curso','task','works','qualification'));
         

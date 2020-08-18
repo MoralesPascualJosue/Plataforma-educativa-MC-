@@ -73,12 +73,11 @@
         </nav>
 
         <div class="container">
+            <app></app>
             <main>
                 @yield('content')
             </main>
-            <app></app>
         </div>
-        <xmodal v-model="ismodalOpen" :params="options" />
     </div>
 </body>
 

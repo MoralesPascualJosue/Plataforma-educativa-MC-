@@ -30,7 +30,6 @@ import HomeLayout from "./components/HomeLayout";
 
 import ListaCursos from "./components/asesor/ListaCursos";
 import App from "./components/asesor/App";
-import Modal from "./components/asesor/modal";
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -39,25 +38,64 @@ import Modal from "./components/asesor/modal";
 
 const store = new Vuex.Store({
     state: {
+        cursos: {
+            next_page_url: ""
+        },
+        actividades: {},
         curso: {
             id: 0,
             title: "0"
         },
         actividad: {
             id: 0,
-            title: "0"
+            activitie: {
+                title: "0"
+            }
         }
     },
     mutations: {
+        changecursos(state, cursos) {
+            state.cursos = cursos;
+        },
         changecurso(state, curso) {
             state.curso = curso;
+        },
+        updatecurso(state, curso) {
+            const index = state.cursos.data.findIndex(
+                item => item.id === curso.id
+            );
+            state.cursos.data[index] = curso;
+        },
+        deletecurso(state, curso) {
+            const index = state.cursos.data.findIndex(
+                item => item.id === curso.id
+            );
+            state.cursos.data.splice(index, 1);
+        },
+        changeactividades(state, actividades) {
+            state.actividades = actividades;
+        },
+        changeactividad(state, actividad) {
+            state.actividad = actividad;
         }
     },
     actions: {},
     getters: {
-        //retornar datos procesados
+        //retornar datos procesados,
+        cursosview(state) {
+            return state.cursos;
+        },
         cursoview(state) {
             return state.curso;
+        },
+        actividadesview(state) {
+            return state.actividades;
+        },
+        actividadview(state) {
+            return state.actividad;
+        },
+        cursosviewindex: state => index => {
+            return state.cursos.data[index];
         }
     }
 });
@@ -80,24 +118,7 @@ const router = new VueRouter({
 
 const app = new Vue({
     //el: "#app",
-    data() {
-        return {
-            ismodalOpen: false,
-            // basic modal options
-            options: {
-                component: Modal,
-                backgroundColor: "rgb(194 213 207)",
-                opacity: "0.7",
-                animation: "scaleLeft"
-            }
-        };
-    },
-    components: { App, Modal },
+    components: { App },
     store: store,
     router
 }).$mount("#app");
-
-$("#myList a").on("click", function(e) {
-    e.preventDefault();
-    $(this).tab("show");
-});

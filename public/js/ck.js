@@ -413,6 +413,7 @@ $(document).on("submit", ".input-areafile", function(e) {
         }
     });
 });
+
 /*	Click menu toggle */
 $(".toggle").on("click", function(e) {
     obj = this;
@@ -932,6 +933,7 @@ function eleHide(el) {
     });
 }
 
+/*open modal view resource*/
 $(document).on("click", ".name-r", function(event) {
     $contenido = `<iframe class="completo" src='${this.id}'></iframe>`;
     $name = this.textContent;

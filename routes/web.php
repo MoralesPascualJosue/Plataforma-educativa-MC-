@@ -45,9 +45,10 @@ Route::get('/leernotificaciones', 'FrontController@leernotificaciones')->name('l
 
 
 //________[Curses routes]__________
+Route::get('/curso/{id}', 'cursoController@curso')->name('curso');
 Route::get('/scursoc/{id}', 'cursoController@showCurso')->name('scursoc');
 Route::post('/storeac','cursoController@storea')->name('storeac');
-Route::put('/updateac/{id}','cursoController@updatea')->name('updateac');
+Route::post('/updateac/{id}','cursoController@updatea')->name('updateac');
 Route::post('/updateCover/{id}','cursoController@updateCover')->name('updatecover');
 Route::delete('/destroyac/{id}','cursoController@destroya')->name('destroyac');
 Route::post('/matricular','cursoController@matricular')->name('matricular');
