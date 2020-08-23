@@ -4,7 +4,7 @@
       <button class="btn btn-primary backbtna" @click="close()">X</button>
       <div class="modal-body">
         <!-- Form fields removed for brevity -->
-        <TabsActividad v-if="show" @close="close" />
+        <DiscuShow v-if="show" @close="close" />
       </div>
 
       <div class="modal-footer text-right"></div>
@@ -14,7 +14,7 @@
 
 <script>
 import Modal from "../Modal";
-import TabsActividad from "./TabsActividad";
+import DiscuShow from "./DiscuShow";
 export default {
   props: {
     show: {
@@ -24,7 +24,7 @@ export default {
   },
   components: {
     Modal,
-    TabsActividad
+    DiscuShow
   },
   methods: {
     close: function() {

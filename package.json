@@ -28,6 +28,7 @@
         "pusher-js": "^7.0.0",
         "serialize-javascript": "^4.0.0",
         "vue-router": "^3.4.3",
+        "vue-select": "^3.10.8",
         "vuex": "^3.5.1",
         "xmodal-vue": "^1.0.2"
     }

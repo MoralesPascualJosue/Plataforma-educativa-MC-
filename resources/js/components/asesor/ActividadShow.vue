@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="example container">
     <div class="modal-header">
       <h3>{{actividad.activitie.title}}</h3>
     </div>

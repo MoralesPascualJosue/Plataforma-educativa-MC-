@@ -54,35 +54,52 @@ class TaskController extends AppBaseController
         return "guardado";
     }
 
-    public function trabajos($id)
+    public function trabajos($id, Request $request)
     {
         $activitie = $this->activitieRepository->find($id);
 
         if(empty($activitie)){
-                return redirect()->route('inicio');
+            return redirect()->route('inicio');
         }
 
         if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('Actividad no registrado.');
-                return redirect()->route('inicio');
+            Flash::success('Actividad no registrado.');
+            return redirect()->route('inicio');
         } 
 
         $curso = $activitie->cursos()->first();
         
         $estudiantes = $curso->estudiantes()->orderBy("name")->get();
-
+        $numeroentregas = 0;
+        $enrevision = 0;
         foreach($estudiantes as $estudiante){
             $qua = $estudiante->qualifications()->where("activitie_id","=",$id)->get();
             if(empty($qua['0'])){
-                $estudiante["qualificationestado"] = "0";
-                $estudiante["qualificationqualification"] = "Sin entregas";
+                $estudiante["qualificationestado"] = "Sin entregas";
+                $estudiante["qualificationqualification"] = "NA";
             }else{
                 $estudiante["qualificationestado"] =$qua['0']->estado;
                 $estudiante["qualificationqualification"] = $qua['0']->qualification;
+                
+                if($qua['0']->estado == 1){
+                    $enrevision++;
+                }
+
+                $numeroentregas++;
             }
         }
 
-        $works = [];                
+        $works = [];      
+        if($request->ajax()){
+            $data["activitie"] = $activitie;
+            $data["estudiantes"] = $estudiantes;
+            $data["curso"] = $curso;
+            $data["works"] = $works;
+            $data["numeroentregas"] = $numeroentregas;
+            $data["enrevision"] = $enrevision;
+
+            return $data;
+        }          
         return view('works.show_trabajos')
             ->with(compact('activitie','estudiantes','curso','works'));
     }

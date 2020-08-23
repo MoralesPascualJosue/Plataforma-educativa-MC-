@@ -22,15 +22,15 @@
       <div class="dropdown-menu">
         <form class="px-4 py-3" @submit="checkForm">
           <div class="form-group">
-            <label for="exampleDropdownFormEmail1">Nombre del curso</label>
-            <input type="text" class="form-control" id="exampleDropdownFormEmail1" v-model="name" />
+            <label for="namecursou">Nombre del curso</label>
+            <input type="text" class="form-control" id="namecursou" v-model="name" />
           </div>
           <div class="form-group">
-            <label for="exampleDropdownFormPassword1">Descripción o mensage</label>
+            <label for="descripcioncursou">Descripción o mensage</label>
             <input
               type="text"
               class="form-control block-d"
-              id="exampleDropdownFormPassword1"
+              id="descripcioncursou"
               v-model="description"
             />
           </div>
@@ -47,7 +47,6 @@
           </div>
           <button type="submit" class="btn btn-primary af">Editar</button>
         </form>
-        <button class="btn btn-warning btn-af" @Click="closeform()">Cancear</button>
       </div>
     </div>
   </div>
@@ -77,11 +76,8 @@ export default {
     this.previewimg = this.curso.cover;
   },
   methods: {
-    closeform() {
-      $("#dLabelu").dropdown("toggle");
-    },
     dropmenu() {
-      $(".dropdown-toggle").dropdown();
+      $("#dLabelu").dropdown();
     },
     onChangeFileUpload() {
       this.file = this.$refs.file.files[0];

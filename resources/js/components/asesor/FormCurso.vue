@@ -22,25 +22,20 @@
       <div class="dropdown-menu">
         <form class="px-4 py-3" @submit="checkForm">
           <div class="form-group">
-            <label for="exampleDropdownFormEmail1">Nombre del curso</label>
-            <input type="text" class="form-control" id="exampleDropdownFormEmail1" v-model="name" />
+            <label for="namecurso">Nombre del curso</label>
+            <input type="text" class="form-control" id="namecurso" v-model="name" />
           </div>
           <div class="form-group">
-            <label for="exampleDropdownFormPassword1">Descripción o mensage</label>
-            <input
-              type="text"
-              class="form-control block-d"
-              id="exampleDropdownFormPassword1"
-              v-model="description"
-            />
+            <label for="descripcion">Descripción o mensage</label>
+            <input type="text" class="form-control block-d" id="descripcion" v-model="description" />
           </div>
           <div class="form-group">
             <label>Imagen del curso</label>
             <input
               class="file-i"
               type="file"
-              id="File"
-              ref="file"
+              id="Filecover"
+              ref="filecover"
               v-on:change="onChangeFileUpload()"
             />
             <img id="preview" alt="Imagen curso" class="preview-img" :src="previewimg" />
@@ -59,7 +54,7 @@ export default {
       previewimg: "../resources/img-msg100.jpg",
       name: "Nombre",
       description: "Descripcion",
-      file: "",
+      filecover: "",
       errorr: false,
       info: "",
       loading: false,
@@ -68,11 +63,13 @@ export default {
   },
   methods: {
     dropmenu() {
-      $(".dropdown-toggle").dropdown();
+      $("#dLabel").dropdown();
     },
     onChangeFileUpload() {
-      this.file = this.$refs.file.files[0];
-      this.previewimg = window.URL.createObjectURL(this.$refs.file.files[0]);
+      this.filecover = this.$refs.filecover.files[0];
+      this.previewimg = window.URL.createObjectURL(
+        this.$refs.filecover.files[0]
+      );
     },
     checkForm: function(e) {
       e.preventDefault();
@@ -88,7 +85,7 @@ export default {
       }
 
       let formData = new FormData();
-      formData.append("cover", this.file);
+      formData.append("cover", this.filecover);
       formData.append("title", this.name);
       formData.append("review", this.description);
 

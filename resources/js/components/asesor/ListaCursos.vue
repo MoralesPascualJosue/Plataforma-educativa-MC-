@@ -5,17 +5,19 @@
     <FormCurso @crear-curso="createcurso" />
     <UncoverList>
       <template slot-scope="{ togglePopup }">
-        <div v-for="(curso, index) in cursos.data" :key="index" class="card">
-          <h1>{{ curso.title }}</h1>
+        <transition-group name="list-complete" tag="div" class="list">
+          <div v-for="curso in cursos.data" v-bind:key="curso.id" class="card list-complete-item">
+            <h1>{{ curso.title }}</h1>
 
-          <UncoverImage
-            alt="example"
-            v-bind:height="168"
-            v-bind:curso="curso"
-            @pop-image="togglePopup"
-          />
-          <div class="content">{{ curso.review }}</div>
-        </div>
+            <UncoverImage
+              alt="example"
+              v-bind:height="168"
+              v-bind:curso="curso"
+              @pop-image="togglePopup"
+            />
+            <div class="content">{{ curso.review }}</div>
+          </div>
+        </transition-group>
       </template>
     </UncoverList>
     <button v-if="more" class="page-title" @click="nextpage()">Más</button>
@@ -119,6 +121,18 @@ h1 {
 }
 .bottom {
   margin-bottom: 20px;
+}
+
+.list-complete-item {
+  transition: all 0.5s;
+}
+.list-complete-enter, .list-complete-leave-to
+/* .list-complete-leave-active for <2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-complete-leave-active {
+  position: absolute;
 }
 </style>
 

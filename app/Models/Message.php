@@ -24,7 +24,8 @@ class Message extends Model
         'curso_id' => 'integer',
         'send' => 'integer',
         'reader' => 'integer',
-        'body' => 'string'
+        'body' => 'string',
+        'created_at' => 'date:Y-m-d'
     ];
 
     public function user() {

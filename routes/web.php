@@ -64,7 +64,7 @@ Route::get('/generarexcel/{curso}', 'cursoController@reporteListae');
 Route::post('/storeaa/{id}','ActivitieController@storea')->name('storeaa');
 Route::get('/sactivitiec/{id}', 'ActivitieController@showActivitie')->name('sactivitiec');
 Route::delete('/destroyaa/{id}','ActivitieController@destroya')->name('destroyaa');
-Route::put('/updateaa/{id}','ActivitieController@updatea')->name('updateaa');
+Route::post('/updateaa/{id}','ActivitieController@updatea')->name('updateaa');
 //________[END activities routes]__________
 
 
@@ -94,7 +94,7 @@ Route::get('/foro/{curso}/discusion/{id}','ForumController@discusion')->name('di
 Route::post('/foro/update/{id}/','ForumController@updated')->name('updatead');
 Route::post('/foro/modificarco/{id}/','ForumController@updateco')->name('modificarco');
 Route::delete('/foro/{curso}/eliminarco/{id}/','ForumController@deleteco')->name('eliminarco');
-Route::post('/foro/{curso}/eliminardis/{id}/','ForumController@deletedis')->name('eliminardis');
+Route::delete('/foro/{curso}/eliminardis/{id}/','ForumController@deletedis')->name('eliminardis');
 Route::get('/foro/{curso}/comentario/{id}','ForumController@comentario')->name('comentario');
 //________[END forum routes]__________
 

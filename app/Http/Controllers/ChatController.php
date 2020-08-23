@@ -43,20 +43,28 @@ class ChatController extends Controller
         ->find($cur)
         ->estudiantes()
         ->withUser()
-        ->get();        
+        ->get(["user_id","name"]);      
 
-        $contacts["asesor"] = $this->cursoRepository
+        $contacts[] = $this->cursoRepository
         ->find($cur)
         ->asesor()
         ->withUser()
-        ->first();
+        ->first(["user_id","name"]);
 
-        $view = \View::make('chat.show')->with(compact('curso','chats','contacts','user'));
+        $enviados = $usero->messages()->withUser()->orderBy("created_at","DESC")->where('curso_id',$cur)->get();
 
         if($request->ajax()){
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
+            // $sections = $view->renderSections();
+            // return Response::json($sections['content']);
+            $data["enviado"] = $enviados;
+            $data["chats"] =$chats;
+            $data["contacts"] = $contacts;
+            $data["user"] = $user;
+
+            return $data;
         }
+
+        $view = \View::make('chat.show')->with(compact('curso','chats','contacts','user'));
         
         return $view;
     }

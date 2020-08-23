@@ -70,17 +70,12 @@ class QualificationController extends AppBaseController
 
         $update["qualification"] = $input["calificacion"];        
         $update["estado"] = 2;
-
-        if(empty($input["observaciones"])){
-            $update["observaciones"] = " Observaciones:". $input["observaciones"]." Calificación: ".$input["calificacion"];
-        }else{
-            $update["observaciones"] = $input["observaciones"];
-        }
+        $update["observaciones"] = "Sin oberservaciones";
 
         $qualification = $this->qualificationRepository->update($update, $qualification->id);
 
         Flash::success('Calificacion asignada.');
 
-        return $id;
+        return $qualification;
     }
 }

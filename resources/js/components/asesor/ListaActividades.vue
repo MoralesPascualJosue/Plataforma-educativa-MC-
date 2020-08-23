@@ -1,9 +1,9 @@
 <template>
-  <div class="page-tab">
+  <div class="example page-tab">
     <div class="item1">
       <h1 :id="curso.id">{{ curso.title }}</h1>
       <div class="curse-img-header" :style="cursoimg"></div>
-      <div class="curse-header">
+      <div class="curse-header text-right">
         <div class="user-name-header">
           <span id="name-u">{{ asesor.name }}</span>
         </div>
@@ -27,7 +27,7 @@
           aria-haspopup="true"
           aria-expanded="false"
           @click="createactividad()"
-          class="btn btn-primary"
+          class="btn btn-primary float-right"
         >
           <p class="line-d" v-if="!loading">Crear actividad</p>
           <span
@@ -40,13 +40,19 @@
         </button>
         <Actividades>
           <template slot-scope="{ togglePopup }">
-            <div v-for="(activitie, index) in actividades.data" :key="index" class="actividad">
-              <Actividad
-                :alt="'A'+activitie.id"
-                v-bind:activitie="activitie"
-                @pop-image="togglePopup"
-              />
-            </div>
+            <transition-group name="list-complete" tag="p" mode="out-in">
+              <div
+                v-for="activitie in actividades.data"
+                v-bind:key="activitie.id"
+                class="actividad list-complete-item"
+              >
+                <Actividad
+                  :alt="'A'+activitie.id"
+                  v-bind:activitie="activitie"
+                  @pop-image="togglePopup"
+                />
+              </div>
+            </transition-group>
           </template>
         </Actividades>
         <button v-if="more" class="page-title" @click="nextpage()">Más</button>
@@ -218,5 +224,17 @@ export default {
 
 #dlabela {
   margin-bottom: 5px;
+}
+
+.list-complete-item {
+  transition: all 1s;
+}
+.list-complete-enter, .list-complete-leave-to
+/* .list-complete-leave-active for <2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-complete-leave-active {
+  position: absolute;
 }
 </style>

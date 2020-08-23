@@ -30,30 +30,35 @@
       <div class="tab-pane fade" :class="{ 'active show': isActive('home') }" id="home">
         <ActividadShow />
       </div>
-      <div
-        class="tab-pane fade"
-        :class="{ 'active show': isActive('entregas') }"
-        id="entregas"
-      >Entregas content</div>
+      <div class="tab-pane fade" :class="{ 'active show': isActive('entregas') }" id="entregas">
+        <EntregasActividad />
+      </div>
       <div
         class="tab-pane fade"
         :class="{ 'active show': isActive('informacion') }"
         id="informacion"
-      >Informacion content</div>
+      >
+        <FormActividad @close="close" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import ActividadShow from "./ActividadShow";
+import FormActividad from "./FormActividad";
+import EntregasActividad from "./EntregasActividad";
 export default {
   data() {
     return {
       activeItem: "home"
     };
   },
-  components: { ActividadShow },
+  components: { ActividadShow, FormActividad, EntregasActividad },
   methods: {
+    close() {
+      this.$emit("close");
+    },
     isActive(menuItem) {
       return this.activeItem === menuItem;
     },

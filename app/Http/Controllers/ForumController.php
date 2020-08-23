@@ -72,8 +72,12 @@ class ForumController extends Controller
         $view = \View::make('forum.content')->with(compact('curso','categorias','discuss','back'));
 
         if($request->ajax()){
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
+            // $sections = $view->renderSections();
+            // return Response::json($sections['content']);
+            $data["curso"] = $curso;
+            $data["categorias"] = $categorias;
+            $data["discuss"] = $discuss;
+            return $data;
         }
         
         return $view;
@@ -82,25 +86,28 @@ class ForumController extends Controller
      public function store($id,Request $request)
     {
 
-        $cate;
+        $cate = "";
         $input = $request->all();
         
-        if ($input["title"] == "" or $input["categoria"] == "") {
-            Flash::success('Tema vacio');
-
-            return redirect()->back();
+        if ($input["title"] == "") {
+            // Flash::success('Tema vacio');
+            // return redirect()->back();
+            abort(404,"Campos vacios");
         }
 
         if ($input["nuevacategoria"] == "nuevasi" ) {
             if ($input["categoria"] == "" ){
-                Flash::success('Nombre vacio');
-                return redirect()->back();
+                //Flash::success('Nombre vacio');
+                //return redirect()->back();
+                abort(404,"campos vacios");
             }
 
             $inputc["name"] = $input["categoria"];
             $inputc["color"] = $input["color"];
             $cate = $this->fcategoriaRepository->create($inputc);
             $input["fcategoria"] = $cate->id;
+        }else{
+            $cate =  $this->fcategoriaRepository->find($input["fcategoria"]);
         }
 
         $input["curso_id"] = $id;
@@ -110,6 +117,13 @@ class ForumController extends Controller
         $input["body"] = "";
 
         $fdiscusion = $this->fdiscusionRepository->create($input);
+        $fdiscusion->colorCategoria = $cate->color;
+
+        if($request->ajax()){        
+            $data["discusion"] = $fdiscusion;
+            $data["categoria"] = $cate;
+            return $data;
+        }
 
         Flash::success('Discusion creada');
 
@@ -151,12 +165,15 @@ class ForumController extends Controller
         $view = \View::make('forum.show')->with(compact('curso','discuss','fposts','categorias'));
 
         if($request->ajax()){
-            $fdiscusion = $this->fdiscusionRepository->find($id);
-            $input["views"] = $fdiscusion["views"]+1;
-            $this->fdiscusionRepository->update($input, $id);
+            // $fdiscusion = $this->fdiscusionRepository->find($id);
+            // $input["views"] = $fdiscusion["views"]+1;
+            // $this->fdiscusionRepository->update($input, $id);
 
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
+            // $sections = $view->renderSections();
+            // return Response::json($sections['content']);
+            $data["fpost"] = $fposts;            
+            $data["discuss"] = $discuss["propiedad"];
+            return $data;
         }
         
         return $view;
@@ -172,7 +189,8 @@ class ForumController extends Controller
         if ($input["body"] == "") {
             Flash::success('Comentario vacio');
 
-            return redirect()->back();
+            //return redirect()->back();
+            abort(404,"Comentario vacio");
         }
 
         $input["fdiscusion_id"] = $id;
@@ -186,6 +204,18 @@ class ForumController extends Controller
         $this->fdiscusionRepository->update($inputd, $id);
 
         Flash::success('comentado');
+
+        $fcomentario = fpost::query()
+        ->withDiscuss($id)
+        ->withUser()
+        ->withImage()
+        ->where("id","=",$fpost->id)
+        ->get()["0"];
+
+        if($request->ajax()){
+            $fcomentario["propiedad"] = 1;
+            return $fcomentario;
+        }
 
         return redirect()->back();
     }    
@@ -231,16 +261,26 @@ class ForumController extends Controller
 
         if (empty($fdiscusion)) {
             Flash::error('tema  no encontrado');
-
-            return redirect()->back();
+            abort(404,"No disponible");
         }
 
         if($fdiscusion->hasPropiedad(Auth::user()->id )  == 1){
             Flash::success('Actualizado.');
             $fdiscusion = $this->fdiscusionRepository->update($input, $id);   
-        }                
+        }     
 
-        return redirect()->back();
+         $discuss = fdiscusion::query()
+        ->withCategoria()
+        ->withCategoriaColor()
+        ->withUSer()
+        ->where("id","=",$id)
+        ->get()[0];
+        if($request->ajax()){
+            return $discuss;
+        }
+
+
+        return "error";
     }
 
       public function updateco($id, Request $request)
@@ -254,7 +294,7 @@ class ForumController extends Controller
             return redirect()->back();
         }
         
-        $fpost = $this->fpostRepository->find($input["comentario"]);
+        $fpost = $this->fpostRepository->find($id);
 
         if (empty($fpost)) {
             Flash::error('contenido no encontrado');
@@ -263,8 +303,18 @@ class ForumController extends Controller
 
         if($fpost->hasPropiedad(Auth::user()->id )  == 1){
             Flash::success('Actualizado.');
-            $fpost = $this->fpostRepository->update($input, $input["comentario"]);   
+            $fpost = $this->fpostRepository->update($input, $id);   
         }                
+
+         $comentario = fpost::query()
+        ->withUser()
+        ->withImage()
+        ->where("id",$id)
+        ->get()[0];
+        if($request->ajax()){
+            $comentario["propiedad"] = 1;
+            return $comentario;
+        }
 
         return redirect()->back();
     }
@@ -275,7 +325,7 @@ class ForumController extends Controller
         $fpost = $this->fpostRepository->find($id);
 
         if (empty($fpost)) {
-            aborr(404,"Contenido no dispinible");
+            abort(404,"Contenido no dispinible");
         }
 
         if($fpost->hasPropiedad(Auth::user()->id )  == 1){
@@ -295,18 +345,23 @@ class ForumController extends Controller
      public function deletedis($curso,$id)
     {
         
-        $fdiscusion = $this->fdiscusionRepository->find($id);
+        $fdiscusion = $this->fdiscusionRepository->find($id);        
 
         if (empty($fdiscusion)) {
-              Flash::success('Contenido no disponible.');
-           return redirect()->route('foro',$curso);
-        }
+        //       Flash::success('Contenido no disponible.');
+        //    return redirect()->route('foro',$curso);
+           abort(404,"Contenido no disponible");
+        }        
 
         if($fdiscusion->hasPropiedad(Auth::user()->id )  == 1){;
+            $posts = $fdiscusion ->posts()->get();
+            foreach($posts as $post){
+             $post->delete();
+            }
             $this->fdiscusionRepository->delete($id);
-            
-            Flash::success('Contenido eliminado.');
-           return redirect()->route('foro',$curso);
+            return "Eliminado";
+        //     Flash::success('Contenido eliminado.');
+        //    return redirect()->route('foro',$curso);
         }                
 
         return "Contenido no disponible";

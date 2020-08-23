@@ -153,13 +153,14 @@ class ActivitieController extends AppBaseController
         return $view;
     }
 
-    public function destroya($id)
+    public function destroya($id,Request $request)
     {
         $activitie = $this->activitieRepository->find($id);
         $curso = $activitie->cursos()->first()->id;
         if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
                 Flash::success('Actividad no registrada.');
                 return redirect()->route('inicio');
+                abort(404,"No disponible");
         } 
 
         if (empty($activitie)) {
@@ -169,12 +170,17 @@ class ActivitieController extends AppBaseController
 
         $this->activitieRepository->delete($id);
 
+        if($request->ajax()){
+            //Flash::success('Cursos cargado.');
+            return "Eliminado";
+        }
+
         Flash::success('Actividad eliminada.');
 
        return Response()->json([ 'curso' => $curso]);
     }
 
-    public function updatea($id, UpdateactivitieRequest $request)
+    public function updatea($id, Request $request)
     {        
 
         $input = $request->all();
@@ -207,7 +213,7 @@ class ActivitieController extends AppBaseController
 
         $activitie = $this->activitieRepository->update($input, $id);
 
-         return "Actualizado";
+         return $activitie;
     }
 //////////////////////////////////////////uploads
 

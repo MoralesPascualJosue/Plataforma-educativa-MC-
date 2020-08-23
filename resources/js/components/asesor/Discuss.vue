@@ -1,42 +1,38 @@
 <template>
-  <div ref="list" :class="{ 'zoom-down-cursor': isPopoutCoverActive }">
+  <div ref="list" class="listf" :class="{ 'zoom-down-cursor': isPopoutCoverActive }">
+    <ModalDiscu :show="showModal" @close="showModal = false" />
     <slot :togglePopup="openPopup" />
-    <xmodal v-model="ismodalOpen" :params="options" />
   </div>
 </template>
 
 <script>
-import ModalCurso from "./ModalCurso";
+import ModalDiscu from "./ModalDiscu";
 export default {
   data() {
     return {
       isPopoutCoverActive: false,
-      ismodalOpen: false,
-      // basic modal options
-      options: {
-        component: ModalCurso,
-        backgroundColor: "rgb(169 194 203)",
-        opacity: "0.7",
-        animation: "scaleIn"
-      }
+      showModal: false
     };
   },
+  components: {
+    ModalDiscu
+  },
   methods: {
-    openPopup(curso) {
-      this.$store.commit("changecurso", curso);
-      this.ismodalOpen = true;
+    openPopup(discu) {
+      this.$store.commit("changediscu", discu);
+      this.showModal = true;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.list {
+.listf {
   position: relative;
   width: 100%;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(4, 23.5%);
+  grid-template-columns: repeat(2, 48.5%);
   &.zoom-down-cursor {
     cursor: zoom-out;
   }
@@ -66,7 +62,7 @@ export default {
 
 @media (max-width: 1050px) {
   .list {
-    grid-template-columns: repeat(3, 33%);
+    grid-template-columns: repeat(2, 33%);
   }
 }
 

@@ -7,6 +7,9 @@
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 import xmodal from "xmodal-vue";
+import vSelect from "vue-select";
+
+import "vue-select/dist/vue-select.css";
 
 require("./bootstrap");
 
@@ -30,6 +33,8 @@ import HomeLayout from "./components/HomeLayout";
 
 import ListaCursos from "./components/asesor/ListaCursos";
 import App from "./components/asesor/App";
+
+Vue.component("v-select", vSelect);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -51,9 +56,30 @@ const store = new Vuex.Store({
             activitie: {
                 title: "0"
             }
+        },
+        categorias: {},
+        discuss: {},
+        discu: {
+            id: 0
+        },
+        comentario: {
+            id: -1,
+            body: "mi comentario"
         }
     },
     mutations: {
+        changecomentario(state, coment) {
+            state.comentario = coment;
+        },
+        changediscuss(state, discuss) {
+            state.discuss = discuss;
+        },
+        changecategorias(state, categorias) {
+            state.categorias = categorias;
+        },
+        changediscu(state, discu) {
+            state.discu = discu;
+        },
         changecursos(state, cursos) {
             state.cursos = cursos;
         },
@@ -72,16 +98,48 @@ const store = new Vuex.Store({
             );
             state.cursos.data.splice(index, 1);
         },
+        deletetema(state, discu) {
+            const index = state.discuss.discuss.findIndex(
+                item => item.id === discu.id
+            );
+            state.discuss.discuss.splice(index, 1);
+        },
+        deleteteactividad(state, actividad) {
+            const index = state.actividades.data.findIndex(
+                item => item.id === actividad.id
+            );
+            state.actividades.data.splice(index, 1);
+        },
         changeactividades(state, actividades) {
             state.actividades = actividades;
         },
         changeactividad(state, actividad) {
             state.actividad = actividad;
+        },
+        updateactividad(state, actividad) {
+            state.actividad.activitie = actividad;
+
+            const indexa = state.actividades.data.findIndex(
+                item => item.id === actividad.id
+            );
+            state.actividades.data[indexa] = actividad;
+        },
+        updatediscuss(state, discu) {
+            const index = state.discuss.discuss.findIndex(
+                item => item.id === discu.id
+            );
+            state.discuss.discuss[index] = discu;
         }
     },
     actions: {},
     getters: {
         //retornar datos procesados,
+        comentarioview(state) {
+            return state.comentario;
+        },
+        discuview(state) {
+            return state.discu;
+        },
         cursosview(state) {
             return state.cursos;
         },
@@ -96,6 +154,12 @@ const store = new Vuex.Store({
         },
         cursosviewindex: state => index => {
             return state.cursos.data[index];
+        },
+        categoriasview(state) {
+            return state.categorias;
+        },
+        discussview(state) {
+            return state.discuss;
         }
     }
 });

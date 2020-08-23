@@ -38,16 +38,12 @@
       <div class="tab-pane fade" :class="{ 'active show': isActive('home') }" id="home">
         <ListaActividades />
       </div>
-      <div
-        class="tab-pane fade"
-        :class="{ 'active show': isActive('profile') }"
-        id="profile"
-      >Profile content</div>
-      <div
-        class="tab-pane fade"
-        :class="{ 'active show': isActive('contact') }"
-        id="contact"
-      >Contact content</div>
+      <div class="tab-pane fade" :class="{ 'active show': isActive('profile') }" id="profile">
+        <Foro />
+      </div>
+      <div class="tab-pane fade" :class="{ 'active show': isActive('contact') }" id="contact">
+        <ListaMensajes />
+      </div>
       <div
         class="tab-pane fade"
         :class="{ 'active show': isActive('informacion') }"
@@ -59,13 +55,15 @@
 
 <script>
 import ListaActividades from "./ListaActividades";
+import Foro from "./Foro";
+import ListaMensajes from "./ListaMensajes";
 export default {
   data() {
     return {
       activeItem: "home"
     };
   },
-  components: { ListaActividades },
+  components: { ListaActividades, Foro, ListaMensajes },
   methods: {
     isActive(menuItem) {
       return this.activeItem === menuItem;
