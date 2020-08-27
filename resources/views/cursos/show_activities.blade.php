@@ -35,15 +35,15 @@
                             <td><button class="show-me_1" id="{{$curso->id}}/{{$estudiante->id}}">{{$estudiante->name}}
                                 </button></td>
                             @foreach ($estudiante["calificaciones"] as $item)
-                            @if ($item['estado'] == 1)
-                            <td class="blue">revision</td>
-                            @else
-                            @if ($item['qualification'] != "NA")
-                            <td class="entypo-check">{{$item["qualification"]}}</td>
-                            @else
-                            <td class="entypo-cancel">{{$item["qualification"]}}</td>
-                            @endif
-                            @endif
+                                @if ($item['estado'] == 1)
+                                <td class="blue">revision</td>
+                                @else
+                                    @if ($item['qualification'] != "NA")
+                                    <td class="entypo-check">{{$item["qualification"]}}</td>
+                                    @else
+                                    <td class="entypo-cancel">{{$item["qualification"]}}</td>
+                                    @endif
+                                @endif
                             @endforeach
                         </tr>
                         @endforeach

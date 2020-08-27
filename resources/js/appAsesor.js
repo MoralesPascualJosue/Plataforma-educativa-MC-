@@ -30,7 +30,7 @@ Vue.use(xmodal);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 import HomeLayout from "./components/HomeLayout";
-
+import Miinformacion from "./components/Miinformacion";
 import ListaCursos from "./components/asesor/ListaCursos";
 import App from "./components/asesor/App";
 
@@ -168,7 +168,7 @@ const router = new VueRouter({
     mode: "history",
     routes: [
         {
-            path: "/homevue",
+            path: "/home",
             name: "Inicio",
             component: HomeLayout
         },
@@ -176,7 +176,13 @@ const router = new VueRouter({
             path: "/Clases",
             name: "Clases",
             component: ListaCursos
-        }
+        },
+        {
+            path: "/Miinformacion",
+            name: "Miinformacion",
+            component: Miinformacion
+        },
+        { path: "*", redirect: { name: "Inicio" } }
     ]
 });
 

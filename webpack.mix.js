@@ -17,3 +17,4 @@ mix.js("resources/js/appCoordinador.js", "public/js").sass(
 );
 
 mix.js("resources/js/appAsesor.js", "public/js");
+mix.js("resources/js/appEstudiante.js", "public/js");

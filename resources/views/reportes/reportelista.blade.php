@@ -83,7 +83,6 @@
             </div>
 
             <div class="right">
-                {{-- <P class="info-materia-r">GRUPO: <span class="info-materia-r-data">ISB</span></P> --}}
                 <P class="info-materia-r">ALUMNOS: <span class="info-materia-r-data">{{$curso->participantes}}</span>
                 </P>
             </div>
@@ -111,11 +110,7 @@
                             </p>
                         </td>
                         @foreach ($estudiante["calificaciones"] as $item)
-                        @if ($item['qualification'] != "NA")
-                        <td class="entypo-check">{{$item["qualification"]}}</td>
-                        @else
                         <td class="entypo-cancel">{{$item["qualification"]}}</td>
-                        @endif
                         @endforeach
                     </tr>
                     @endforeach

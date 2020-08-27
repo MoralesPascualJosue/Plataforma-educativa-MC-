@@ -1,7 +1,16 @@
 <div class="left">
-    <P class="info-materia">MATERIA: <span class="info-materia-data">{{ $curso->title}}</span></P>
-    <P class="info-materia">PROFESOR: <span class="info-materia-data">{{ $asesor->name}}</span></P>
-    <P class="info-materia">PERIODO: <span class="info-materia-data">{{ $periodo}}</span></P>
+    <tr>
+        <td class="info-materia">MATERIA:</td>
+        <td class="info-materia-data">{{ $curso->title}}</td>
+    </tr>
+    <tr>
+        <td class="info-materia">PROFESOR:</td>
+        <td class="info-materia-data">{{ $asesor->name}}</td>
+    </tr>
+    <tr>
+        <td class="info-materia">PERIODO:</td>
+        <td class="info-materia-data">{{ $periodo }}</td>
+    </tr>
 </div>
 
 <div class="right">

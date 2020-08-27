@@ -12,10 +12,11 @@
       class="categoria"
       :style="{
                 height: `${height}px`,
-                backgroundColor: `${objeto.colorCategoria}`
+                borderLeft: `10px solid ${objeto.colorCategoria}`
             }"
     >
-      <span class="badge badge-light">VER</span>
+      <span class="badge badge-info float-right stb">Respuestas: {{objeto.answered}}</span>
+      <h3>{{objeto.title}}</h3>
     </div>
   </div>
 </template>
@@ -40,5 +41,9 @@ export default {
   background-size: cover;
   height: 100px;
   cursor: zoom-in;
+}
+.stb {
+  color: black;
+  font-size: 15px;
 }
 </style>

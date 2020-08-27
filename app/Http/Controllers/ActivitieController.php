@@ -143,6 +143,7 @@ class ActivitieController extends AppBaseController
             $data["curso"] = $curso;
             $data["task"] = $task;
             $data["works"] = $works;
+            $data["entrega"] = sizeof($works);
             $data["qualification"] = $qualification;
 
             return $data;

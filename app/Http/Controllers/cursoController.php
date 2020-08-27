@@ -17,6 +17,7 @@ use App\Models\Activitie;
 use App\Models\Estudiante;
 use App\Models\Curso;
 use App\Models\Work;
+use App\Models\Matriculado;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\MatriculadoRepository;
 use App\Repositories\ActivitieRepository;
@@ -77,7 +78,7 @@ class cursoController extends AppBaseController
         if($miusuario->hasPermissionTo('edit cursos')){
             $cursos = $this->cursoRepository->findWherePaginate("asesor_id","=",Auth::user()->asesor()->get()['0']->id,$elementos);
         }else{
-            $cursos = Auth::user()->estudiante()->get()['0']->cursos()->orderBy("pivot_updated_at","DESC")->paginate($elementos);            
+            $cursos = Auth::user()->estudiante()->get()['0']->cursos()->where("matriculados.deleted_at",null)->orderBy("pivot_updated_at","DESC")->paginate($elementos);            
         } 
 
         $cursos->appends(['ele' => $elementos]);
@@ -145,7 +146,7 @@ class cursoController extends AppBaseController
             if(!$curso->hasMatriculado($miusuario->id)){
                 Flash::success('Curso no registrado.');
                 return redirect()->route('inicio');
-            }   
+            }               
 
              $actividades = $curso->activities()
              ->where("visible","=",1)
@@ -168,8 +169,9 @@ class cursoController extends AppBaseController
 
         }
         
-        $view = \View::make('scurso')->with(compact('curso','actividades','actividadeshoy','actividadessemana'));
+        $view = \View::make('scurso')->with(compact('curso','actividades','actividadeshoy','actividadessemana'));    
 
+        $curso["asesor"] = $curso->asesor()->get()[0];
         $data['curso'] = $curso;
         $data['actividades'] = $actividades;
         $data['actividadeshoy'] = $actividadeshoy;
@@ -321,8 +323,9 @@ class cursoController extends AppBaseController
             $curso = $this->cursoRepository->findwhere("password","=",$request->title);
             
             if (count($curso) == 0) {
-                Flash::error('Curso no encontrado');
-                return redirect(route('inicio'));  
+                // Flash::error('Curso no encontrado');
+                // return redirect(route('inicio'));  
+                abort(404,"Curso no encontrado");
             }
 
             $curso = $curso['0'];
@@ -333,22 +336,55 @@ class cursoController extends AppBaseController
                 $datos["estudiante_id"] = Auth::user()->estudiante()->get()['0']->id;
                 $matricula = $this->matriculadoRepository->create($datos);
 
-                Flash::success('Curso registrado.');
+                // Flash::success('Curso registrado.');
 
-                return redirect(route('inicio'));     
+                // return redirect(route('inicio'));     
+
+                return $curso;
             }   
 
-            Flash::success('Curso existente');
+            // Flash::success('Curso existente');
             
-            return redirect(route('inicio'));     
+            // return redirect(route('inicio'));     
 
         }
         
-        return redirect(route('inicio'));            
+        return "Ya estas registrado en este curso";            
+    }
+
+    public function desmatricular($cu,Request $request){
+
+
+        $matricula;        
+        $user = Auth::user();
+        $curso = $this->cursoRepository->find($cu);
+
+        if (empty($curso)) {
+            abort(404,"No disponible");
+        }
+
+        if ($user->can("edit cursos")) {
+            $matricula = Matriculado::where("estudiante_id",$request["estudiante"])
+            ->where("curso_id",$cu)
+            ->limit(1)->get();
+        }else{
+            $matricula = Matriculado::where("estudiante_id",$user->estudiante()->get()[0]->id)
+            ->where("curso_id",$cu)
+             ->limit(1)->get();
+        }            
+
+            
+        if (empty($matricula)) {
+            abort(404,"No disponible");
+        }
+            
+        $this->matriculadoRepository->delete($matricula[0]->id);
+                    
+        return $curso;
     }
 
 
-    public function trabajos($id)
+    public function trabajos($id,Request $request)
     {
         $curso = $this->cursoRepository->find($id);
 
@@ -394,6 +430,13 @@ class cursoController extends AppBaseController
 
             $estudi["calificaciones"] = $calificacionescontenedor;  
         }        
+        
+        if($request->ajax()){
+            $data["estudiantes"] = $estudiantes;
+            $data["curso"] = $curso;
+            $data["actividades"] = $actividades;
+            return $data;
+        }
 
         return view('cursos.show_activities')->with(compact('estudiantes','curso','actividades'));
     }
@@ -500,14 +543,13 @@ class cursoController extends AppBaseController
             }
             
             $promedio['qualification'] = round($suma/$actividades->count());
-            $promedio['estado'] = "Proemdio";
+            $promedio['estado'] = "Promedio";
             $calificacionescontenedor["promedio"] = $promedio;
 
             $estudi["calificaciones"] = $calificacionescontenedor;  
             $estudi["numero"] = $numero;
             $numero++;
         }        
-
 
         $pdf = PDF::loadView('reportes.reportelista',compact('estudiantes','curso','actividades','asesor',"periodo"));
         return $pdf->stream('invoice.pdf');

@@ -71,9 +71,9 @@ class WorkController extends AppBaseController
         $inputq['estado'] = 1;
         $qualification->update($inputq);
 
-        Flash::success('Entrega guardada');
+        //Flash::success('Entrega guardada');
 
-        return $id;
+        return $work;
     }
 
     public function showworks($activitie,$estudiante)

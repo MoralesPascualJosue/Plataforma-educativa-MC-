@@ -63,10 +63,26 @@
             </div>
             <div>
               <div v-for="(contenido, indexc) in contenidos.contenidos" :key="indexc">
-                <p>Entrega {{contenido.entregas}}</p>
-                <p>el {{contenido.created_at}}</p>
-                <div id="contenidowork" v-html="contenido.contenido"></div>
-                <a href="javascript:void(0)" @click="openFileView(contenido.contenido)">ver</a>
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">N°</th>
+                      <th scope="col">Contenido</th>
+                      <th scope="col">Fecha de entrega</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td scope="row">{{contenido.entregas}}</td>
+                    <td href="javascript:void(0)" @click="openFileView(contenido.contenido)">
+                      <a href="javascript:void(0)">Ver</a>
+                    </td>
+                    <td>{{contenido.created_at}}</td>
+                    <td></td>
+                  </tr>
+                  <tbody id="contenidowork" v-html="contenido.contenido"></tbody>
+                </table>
+                <hr />
               </div>
             </div>
           </div>
@@ -124,13 +140,14 @@ export default {
     openFileView(value) {
       this.showModal = true;
       let recursos = [];
-      let elementod = document.createElement("div");
+      let elementod = document.createElement("tbody");
       elementod.innerHTML = value;
+
       for (let index = 0; index < elementod.children.length; index++) {
         const element = elementod.children[index];
         recursos.push({
-          source: element.children[2].children[0].id,
-          name: element.children[1].children[0].textContent
+          name: element.children[1].textContent,
+          source: element.children[2].id
         });
       }
       this.recursos = recursos;
@@ -192,20 +209,17 @@ export default {
   overflow-x: hidden;
 }
 .pararevision {
-  color: blue;
+  background-color: #c1d3d9;
+  cursor: pointer;
+}
+.pararevision:hover {
+  border: 1px solid blue;
 }
 .na {
   color: red;
 }
 .calificado {
   color: green;
-}
-
-.pararevision:hover {
-  background-color: blue;
-  color: white;
-  cursor: pointer;
-  content: "Calificar";
 }
 /*fade animation */
 .fade-enter-active,

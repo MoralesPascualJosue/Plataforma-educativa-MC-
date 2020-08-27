@@ -75,7 +75,7 @@ export default {
       });
 
       jQuery.makeArray($(".content-r")).forEach(element => {
-        let ele = `<p class="remove-r">X</p><p class="editn-r">E</p>`;
+        let ele = `<p class="remove-r">X</p>`;
         let divoptions = document.createElement("div");
         divoptions.classList.add("options-r");
         divoptions.innerHTML = ele;
@@ -116,6 +116,7 @@ export default {
         closeMenu(this.parentElement.parentElement.previousElementSibling);
       });
 
+      $(".videoblock").off("click");
       $(".videoblock").on("click", function(e) {
         e.preventDefault();
 
@@ -129,6 +130,7 @@ export default {
         closeMenu(this.parentElement.parentElement.previousElementSibling);
       });
 
+      $(".docblock").off("click");
       $(".docblock").on("click", function(e) {
         e.preventDefault();
 
@@ -236,7 +238,7 @@ export default {
             <li class='resourcesblock'><a href='javascript:void(0);'>Resources</a></li>
             </ul>
             </div>    
-            <div class='contentblock'><div class='textb' contenteditable style="font-size: 30px;"></div></div>
+            <div class='contentblock'><div class='textb' contenteditable style="font-size: 30px;">Texto</div></div>
             <div class='menu-options'>
             <ul>
             <li class='alingleft-option'><a href='javascript:void(0);'>Eliminar</a></li>
@@ -654,8 +656,8 @@ export default {
 
             let ele = `
                 <div class="img-r"><img src="../resources/icons/archivos.svg" alt="alt"></div>
-                <a id="${data["url"]}" class="name-r" href="javascript:void(0);">${data["name"]}</a>
-                <div class="options-r"><p class="remove-r">X</p><p class="editn-r">E</p></div>
+                <a rel="noopener noreferrer" target="_blank" id="${data["url"]}" class="name-r" href="${data["url"]}">${data["name"]}</a>
+                <div class="options-r"><p class="remove-r">X</p></div>
             `;
 
             let nuevob = document.createElement("li");
@@ -674,24 +676,11 @@ export default {
               false
             );
 
-            nuevob.children[2].children[1].addEventListener(
-              "click",
-              function(e) {
-                $(this)
-                  .parent()
-                  .prev()
-                  .attr("contenteditable", "true")
-                  .focus();
-              },
-              false
-            );
-
             this.parentElement.children[0].children[0].append(nuevob);
           },
           error: function(data) {
             bar.textContent = "";
             bar.classList.remove("complete");
-            console.log(data);
           }
         });
       });

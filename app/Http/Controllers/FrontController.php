@@ -48,8 +48,12 @@ class FrontController extends Controller
         $view = \View::make('perfil')->with('perfil',$user);
 
         if($request->ajax()){
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
+            //$sections = $view->renderSections();
+            //return Response::json($sections['content']);
+
+            $data["perfil"] = $user;
+            $data["user"] = Auth::user();
+            return $data;
         }
         
         return $view;
@@ -57,12 +61,8 @@ class FrontController extends Controller
 
      public function updatePerfil(Request $request)
     {    
-         
         $perfil['perfil'] = Auth::user()->roles()->pluck('name')['0'];
         $user;
-        if(!is_numeric($request['telephone'])){
-            $request['telephone'] = 0;
-        }
 
         if($perfil['perfil'] == "Asesor"){
              $user = $this->asesorRepository->findwhere("user_id","=",Auth::user()->id)->first();
@@ -72,7 +72,6 @@ class FrontController extends Controller
         
         if (empty($user)) {
             Flash::error('Usuario no disponible');
-
             abort(404,"Accion no disponible");
         }
 
@@ -88,7 +87,7 @@ class FrontController extends Controller
         
         if($request->file('image')){
             $path = Storage::disk('public')->put('photos',$request->file('image'));
-            $user->fill(['image'=>asset($path)])->save();
+            Auth::user()->fill(['image'=>asset($path)])->save();
         }      
 
         Flash::success('Perfil actualizado.');
@@ -96,8 +95,11 @@ class FrontController extends Controller
         $view = \View::make('perfil')->with('perfil',$user);
 
         if($request->ajax()){
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
+            // $sections = $view->renderSections();
+            // return Response::json($sections['content']);
+            $data["perfil"] = $user;
+            $data["user"] = Auth::user();
+            return $data;
         }
         
         return $view;

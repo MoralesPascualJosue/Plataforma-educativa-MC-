@@ -59,7 +59,7 @@
         </div>
         <div class="m-subsection">
           <div class="m-browser-image-container align-center">
-            <img src="{{ asset('resources/logo/pantalla3-e.jpg') }}" alt="Clicks">
+            <img src="{{ asset('resources/logo/pantalla3-e.png') }}" alt="Clicks">
           </div>
         </div>
       </div>

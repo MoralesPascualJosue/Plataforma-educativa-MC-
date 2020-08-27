@@ -36,7 +36,7 @@ const router = new VueRouter({
     mode: "history",
     routes: [
         {
-            path: "/homevue",
+            path: "/home",
             name: "Inicio",
             component: HomeLayout
         },

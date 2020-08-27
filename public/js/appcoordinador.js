@@ -1959,7 +1959,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios.get("/homevue").then(function (res) {
+    axios.get("/home").then(function (res) {
       _this.notas = res.data;
     });
   },
@@ -44849,7 +44849,12 @@ function normalizeComponent (
     options._ssrRegister = hook
   } else if (injectStyles) {
     hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      ? function () {
+        injectStyles.call(
+          this,
+          (options.functional ? this.parent : this).$root.$options.shadowRoot
+        )
+      }
       : injectStyles
   }
 
@@ -60044,7 +60049,7 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: "history",
   routes: [{
-    path: "/homevue",
+    path: "/home",
     name: "Inicio",
     component: _components_coordinador_HomeLayout__WEBPACK_IMPORTED_MODULE_1__["default"]
   }, {

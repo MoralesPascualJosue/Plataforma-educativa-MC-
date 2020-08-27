@@ -46,7 +46,7 @@ export default {
     };
   },
   created() {
-    axios.get("/homevue").then(res => {
+    axios.get("/home").then(res => {
       this.notas = res.data;
     });
   },

@@ -32,8 +32,15 @@ class informacionController extends Controller
         $view = \View::make('informacion.content')->with(compact("curso","matriculados","tactividades","promedio","actividades"));
 
         if($request->ajax()){
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
+            // $sections = $view->renderSections();
+            // return Response::json($sections['content']);
+            $data["curso"] = $curso->password;
+            $data["matriculados"]=$matriculados;
+            $data["tactividades"]=$tactividades;
+            $data["promedio"]=$promedio;
+            $actividades["actividades"] = $actividades;
+
+            return $data;
         }
         
         return $view;

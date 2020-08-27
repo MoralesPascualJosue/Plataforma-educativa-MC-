@@ -26,7 +26,10 @@ Route::get('/mail', function () {
 
 
 //________[Asesor routes]__________
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/homeblade', 'HomeController@index')->name('homeblade');
+Route::get('/home', 'AppController@index')->name('home');
+
+
 Route::get('/inicio', 'cursoController@inicio')->name('inicio');
 Route::get('/notificaciones', 'cursoController@notificaciones')->name('notificaciones');
 Route::post('/storea','AnuncioController@storea')->name('storea');
@@ -38,7 +41,7 @@ Route::put('/updatea/{id}','AnuncioController@updatea')->name('updatea');
 //________[Perfil routes]__________
 Route::get('/perfil', 'FrontController@perfil')->name('perfil');
 Route::delete('/destroyp/{id}','AsesorController@destroyp')->name('destroyp');
-Route::put('/updatePerfil','FrontController@updatePerfil')->name('updatePerfil');
+Route::post('/updatePerfil','FrontController@updatePerfil')->name('updatePerfil');
 Route::post('/updateimage','FrontController@updateimage')->name('updateimage');
 Route::get('/leernotificaciones', 'FrontController@leernotificaciones')->name('leernotificaciones');
 //________[END Perfil routes]__________
@@ -52,6 +55,7 @@ Route::post('/updateac/{id}','cursoController@updatea')->name('updateac');
 Route::post('/updateCover/{id}','cursoController@updateCover')->name('updatecover');
 Route::delete('/destroyac/{id}','cursoController@destroya')->name('destroyac');
 Route::post('/matricular','cursoController@matricular')->name('matricular');
+Route::post('/desmatricular/{curso}','cursoController@desmatricular')->name('desmatricular');
 Route::get('/actividadescurso/{id}','cursoController@trabajos')->name('actividadescurso');
 Route::get('/entregash/{id}','cursoController@historiale')->name('entregash');
 Route::get('/entregase/{cur}/{id}','cursoController@historialu')->name('entregase');
@@ -128,8 +132,6 @@ Route::get('/informacionCursop/{cur}','informacionController@informacionCursop')
 //________[Test routes]__________
 Route::post('/test', function () { return 'Hello World Post'; }); 
 Route::Get('/test', function () { return 'Hello World Get'; }); 
-
-Route::get('/homevue', 'AppController@index')->name('homevue');
 //________[END Test routes]__________
 
 

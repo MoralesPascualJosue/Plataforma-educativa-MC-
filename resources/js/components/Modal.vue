@@ -35,6 +35,7 @@ export default {
 }
 
 .modal-container {
+  scrollbar-width: thin;
   overflow-y: scroll;
   width: 95%;
   height: 95%;

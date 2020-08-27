@@ -14,8 +14,11 @@
       <div>
         <div class="aside-header">Detalles y acciones</div>
         <FormCursoUpdate />
-        <a href="#" @click="eliminarCurso">
+        <a href="javascript:void(0)" @click="eliminarCurso">
           <div class="aside-link">Eliminar curso</div>
+        </a>
+        <a href="javascript:void(0)" @click="$emit('ver-resumen')">
+          <div class="aside-link">Resumen curso</div>
         </a>
       </div>
     </div>
@@ -105,6 +108,9 @@ export default {
     });
   },
   methods: {
+    verresumen() {
+      console.log("resument");
+    },
     eliminarCurso() {
       const confirmacion = confirm(`Eliminar anuncio ${this.curso.title}`);
       if (confirmacion) {
