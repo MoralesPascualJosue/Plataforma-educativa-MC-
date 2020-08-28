@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-  <title>PDEPI</title>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{{ asset('css/stylesw.css') }}">
+  <link rel="shortcut icon" href="../resources/logo/Logo minmin white.svg" type="image/svg+xml">
+
+  <title>PDEPI</title>
+
+  <link href="{{ asset('css/stylesw.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -112,6 +115,7 @@
         <div class="copyright">Copyright © 2020. Maestria en Contrucción. Todos los derechos reservados.</div>
       </div>
     </div>
+  </div>
 
 </body>
 
