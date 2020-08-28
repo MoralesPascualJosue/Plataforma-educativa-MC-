@@ -209,10 +209,13 @@ class ActivitieController extends AppBaseController
         } 
 
         if ($activitie->visible == 0 and $input['visible'] == 1) {
-            event(new ActivitieEvent($activitie,$curso->id));
+            $activitie = $this->activitieRepository->update($input, $id);
+            event(new ActivitieEvent($activitie,$curso));
+        }else{
+            $activitie = $this->activitieRepository->update($input, $id);
         }
 
-        $activitie = $this->activitieRepository->update($input, $id);
+        
 
          return $activitie;
     }

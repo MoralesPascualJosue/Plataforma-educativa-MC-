@@ -1,33 +1,28 @@
 <template>
   <div>
     <h3>Lista de participantes del curso</h3>
-    <a
-      class="export-option"
-      :href="'/generarlista/'+curso.id"
-      rel="noopener noreferrer"
-      target="_blank"
-    >Exportar pdf</a> |
-    <a class="export-option" :href="'/generarexcel/'+curso.id">Exportar excel</a>
     <div class="table-responsive">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col"># Actividad</th>
             <th scope="col">Nombre</th>
-            <th scope="col" v-for="actividad in actividades" :key="actividad.id">{{actividad.title}}</th>
-            <th scope="col" class="b-color">Promedio</th>
+            <th scope="col">{{estudiante.name}}</th>
           </tr>
         </thead>
         <tbody class="tb-lc">
-          <tr v-for="(estudiante,indexes) in estudiantes" :key="indexes">
-            <th scope="row">{{indexes+1}}</th>
-            <td>{{estudiante.name}}</td>
-            <td v-for="(calificacion,indexb) in estudiante.calificaciones" :key="indexb">
-              <p v-if="calificacion.estado == 1" class="bg-info cur-p">Revision</p>
+          <tr v-for="(actividad,index) in actividades" :key="index">
+            <th scope="row">{{index+1}}</th>
+            <td>{{actividad.title}}</td>
+            <td>
+              <p
+                v-if="calificaciones[index].estado == 1"
+                class="bg-info cur-p"
+              >{{calificaciones[index].qualification}}</p>
               <p
                 v-else
-                :class="{ 'bg-warning': estadocalificacion(calificacion.qualification),'nacolor':calificacion.qualification<70 }"
-              >{{calificacion.qualification}}</p>
+                :class="{ 'bg-warning': estadocalificacion(calificaciones[index].qualification),'nacolor':calificaciones[index].qualification<70 }"
+              >{{calificaciones[index].qualification}}</p>
             </td>
           </tr>
         </tbody>
@@ -46,30 +41,15 @@ export default {
   data() {
     return {
       actividades: [],
-      estudiantes: [],
-      cursoi: []
+      estudiante: [],
+      calificaciones: []
     };
   },
   created() {
-    axios.get("/actividadescurso/" + this.curso.id).then(res => {
+    axios.get("/calificaciones/" + this.curso.id).then(res => {
       this.actividades = res.data.actividades;
-      this.estudiantes = res.data.estudiantes;
-      this.cursoi = res.data.curso;
-    });
-  },
-  beforeUpdate() {
-    jQuery(function($) {
-      var $table = $(".table");
-      var $fixedColumn = $table
-        .clone()
-        .insertBefore($table)
-        .addClass("fixed-column");
-
-      $fixedColumn.find("th:not(:first-child),td:not(:first-child)").remove();
-
-      $fixedColumn.find("tr").each(function(i, elem) {
-        $(this).height($table.find("tr:eq(" + i + ")").height());
-      });
+      this.calificaciones = res.data.calificaciones;
+      this.estudiante = res.data.estudiante;
     });
   },
   methods: {
@@ -95,17 +75,5 @@ export default {
 
 .tb-lc td:last-child {
   background-color: #c1d3d9;
-}
-.table-responsive > .fixed-column {
-  position: absolute;
-  /* display: inline-block; */
-  background-color: white;
-  width: auto;
-  border-right: 1px solid #ddd;
-}
-@media (min-width: 768px) {
-  .table-responsive > .fixed-column {
-    display: none;
-  }
 }
 </style>

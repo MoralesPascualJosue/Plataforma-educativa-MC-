@@ -57,6 +57,7 @@ Route::delete('/destroyac/{id}','cursoController@destroya')->name('destroyac');
 Route::post('/matricular','cursoController@matricular')->name('matricular');
 Route::post('/desmatricular/{curso}','cursoController@desmatricular')->name('desmatricular');
 Route::get('/actividadescurso/{id}','cursoController@trabajos')->name('actividadescurso');
+Route::get('/calificaciones/{id}', 'cursoController@calificaciones');
 Route::get('/entregash/{id}','cursoController@historiale')->name('entregash');
 Route::get('/entregase/{cur}/{id}','cursoController@historialu')->name('entregase');
 Route::get('/generarlista/{curso}', 'cursoController@reporteListac');

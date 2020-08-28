@@ -53,7 +53,7 @@
                     >Eliminar</a>
                   </div>
                 </div>
-                <div class="comment-content">{{comentario.body}}</div>
+                <div class="comment-content" v-html="comentario.body"></div>
               </div>
             </div>
             <!-- Respuestas de los comentarios -->
@@ -85,7 +85,7 @@
                       >Eliminar</a>
                     </div>
                   </div>
-                  <div class="comment-content">{{comentario.body}}</div>
+                  <div class="comment-content" v-html="comentario.body"></div>
                 </div>
               </li>
             </ul>

@@ -108,9 +108,6 @@ export default {
     });
   },
   methods: {
-    verresumen() {
-      console.log("resument");
-    },
     eliminarCurso() {
       const confirmacion = confirm(`Eliminar anuncio ${this.curso.title}`);
       if (confirmacion) {

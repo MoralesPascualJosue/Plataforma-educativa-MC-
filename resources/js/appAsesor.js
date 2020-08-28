@@ -33,6 +33,7 @@ import HomeLayout from "./components/HomeLayout";
 import Miinformacion from "./components/Miinformacion";
 import ListaCursos from "./components/asesor/ListaCursos";
 import App from "./components/asesor/App";
+import Flash from "./components/Flash";
 
 Vue.component("v-select", vSelect);
 /**
@@ -188,7 +189,7 @@ const router = new VueRouter({
 
 const app = new Vue({
     //el: "#app",
-    components: { App },
+    components: { App, Flash },
     store: store,
     router
 }).$mount("#app");

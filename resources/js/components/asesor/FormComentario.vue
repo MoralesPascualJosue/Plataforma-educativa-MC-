@@ -3,9 +3,9 @@
     <div class="container">
       <form class="px-4 py-3 row" @submit="checkForm">
         <div class="col">
-          <div class="form-group">
-            <label for="bodycom">Nombre de la actividad</label>
-            <textarea type="text" class="form-control" id="bodycom" v-model="body" />
+          <label for="bodycom">Mi comentario</label>
+          <div class="form-group bg-white">
+            <vue-editor v-model="content"></vue-editor>
           </div>
           <button type="submit" class="btn btn-primary">
             <p class="line-d" v-if="!loading">Comentar</p>
@@ -24,13 +24,16 @@
 </template>
 
 <script>
+// Basic Use - Covers most scenarios
+import { VueEditor } from "vue2-editor";
+
 export default {
   data() {
     return {
-      body: "Mi comentario",
       visible: false,
       loading: false,
-      comentario: []
+      comentario: [],
+      content: "<h1>Mi comentario</h1>"
     };
   },
   computed: {
@@ -38,18 +41,21 @@ export default {
       return this.$store.getters.discuview;
     }
   },
+  components: {
+    VueEditor
+  },
   methods: {
     checkForm: function(e) {
       e.preventDefault();
 
-      if (this.body == "") {
+      if (this.content == "") {
         flash("Comentario vacio", "warning");
         return "fail";
       }
 
       let formData = new FormData();
 
-      formData.append("body", this.body);
+      formData.append("body", this.content);
 
       this.loading = true;
 
@@ -58,6 +64,7 @@ export default {
         .then(response => {
           this.errorr = false;
           this.comentario = response.data;
+          this.content = "<h1>Mi comentario</h1>";
           flash("Comentario agregado", "success");
         })
         .catch(response => {
@@ -75,6 +82,6 @@ export default {
 <style>
 .contcom {
   width: 100%;
-  max-width: 500px;
+  max-width: 610px;
 }
 </style>

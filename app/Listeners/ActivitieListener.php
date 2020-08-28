@@ -32,8 +32,8 @@ class ActivitieListener{
      */
     public function handle($event)
     {
-        $this->cursoRepository->find($event->curso)->estudiantes()->each(function(Estudiante $estudiante) use ($event){
-            Notification::send($estudiante, new ActivitieNotification($event->activitie));
+        $this->cursoRepository->find($event->curso->id)->estudiantes()->each(function(Estudiante $estudiante) use ($event){
+            Notification::send($estudiante, new ActivitieNotification($event->activitie,$event->curso));
         });
     }
 }

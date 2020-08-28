@@ -102,21 +102,22 @@ class cursoController extends AppBaseController
            return redirect()->back();
         }
         
-        $curso = [];
         $miusuario = Auth::user()->estudiante()->get()[0];
 
-        $curso["notificacionesnum"] = count($miusuario->unreadNotifications);
-        $curso["notificaciones"] = $miusuario->unreadNotifications;
-        $curso["readnotificaciones"] = $miusuario->readNotifications;
+        $notificaciones["notificacionesnum"] = count($miusuario->unreadNotifications);
+        $notificaciones["notificaciones"] = $miusuario->unreadNotifications;
+        //$curso["readnotificaciones"] = $miusuario->readNotifications;
 
-        $view = \View::make('informacion.notificaciones')->with(compact('curso'));
+        //$view = \View::make('informacion.notificaciones')->with(compact('curso'));
 
         if($request->ajax()){
-            $sections = $view->renderSections();
-            return Response::json($sections['content']);
+            // $sections = $view->renderSections();
+            // return Response::json($sections['content']);
+            return $notificaciones;
         }
         
-        return $view;
+        //return $view;
+        return "No disponible";
     }
 
      public function showCurso($id,Request $request)
@@ -323,8 +324,6 @@ class cursoController extends AppBaseController
             $curso = $this->cursoRepository->findwhere("password","=",$request->title);
             
             if (count($curso) == 0) {
-                // Flash::error('Curso no encontrado');
-                // return redirect(route('inicio'));  
                 abort(404,"Curso no encontrado");
             }
 
@@ -336,20 +335,13 @@ class cursoController extends AppBaseController
                 $datos["estudiante_id"] = Auth::user()->estudiante()->get()['0']->id;
                 $matricula = $this->matriculadoRepository->create($datos);
 
-                // Flash::success('Curso registrado.');
-
-                // return redirect(route('inicio'));     
-
                 return $curso;
             }   
 
-            // Flash::success('Curso existente');
-            
-            // return redirect(route('inicio'));     
-
+            return "Ya estas registrado en este curso";    
         }
         
-        return "Ya estas registrado en este curso";            
+        return "No disponible";
     }
 
     public function desmatricular($cu,Request $request){
@@ -560,4 +552,57 @@ class cursoController extends AppBaseController
         return Excel::download(new UsersExport($this->cursoRepository,$curso), 'lista.xlsx');
     }
     
+    public function calificaciones($curso){
+
+        $curso = Curso::find($curso);
+        $miuser = Auth::user();
+
+        if (empty($curso)) {
+            abort(404,'Curso no valido');
+        }
+
+        if(!$curso->hasMatriculado($miuser->estudiante()->get()['0']->id)){
+            abort(404,'Curso no disponible');
+        }
+
+        $actividades = $curso->activities()->where("visible","=",1)->get();
+
+        $calificacionescontenedor = [];      
+        $suma = 0;      
+        foreach($actividades as $acti){
+                
+            $calificacion = $acti->qualifications()->where("estudiante_id","=", $miuser->estudiante()->get()['0']->id )->get();
+
+            if (empty($calificacion['0'])) {
+                $contenidocal["id"] = $acti->id;
+                $contenidocal['qualification'] = 'NA';
+                $contenidocal['estado'] = "NA";
+                $calificacion['0'] = $contenidocal;
+            }                                    
+            
+            $calificacionescontenedor[] = $calificacion['0'];
+
+            if(is_numeric( $calificacion['0']['qualification'] )){
+                $suma = $suma + $calificacion['0']['qualification'];
+            }
+
+        }
+
+        $promedio['qualification']= 0;
+        if ($actividades->count() != 0) {
+            $promedio['qualification'] = round($suma/$actividades->count());   
+        }            
+
+        
+        $promedio['estado'] = "Promedio";
+        $calificacionescontenedor[] = $promedio;        
+        $promedio['title'] = "Promedio";
+        $actividades[] = $promedio;
+
+        $data["calificaciones"] = $calificacionescontenedor;
+        $data["actividades"] = $actividades;
+        $data["estudiante"] = $miuser->estudiante()->get()['0'];
+        
+        return $data;
+    }
 }

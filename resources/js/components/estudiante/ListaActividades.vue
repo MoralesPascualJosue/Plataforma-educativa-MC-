@@ -16,6 +16,9 @@
         <a href="javascript:void(0)" @click="eliminarCurso">
           <div class="aside-link">Salir del curso</div>
         </a>
+        <a href="javascript:void(0)" @click="$emit('ver-resumen')">
+          <div class="aside-link">Resumen curso</div>
+        </a>
       </div>
     </div>
     <div class="item2">

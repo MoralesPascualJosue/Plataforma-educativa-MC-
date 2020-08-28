@@ -6,7 +6,7 @@
           <div class="col">
             <div class="form-group">
               <label for="bodycom">Mi comentario</label>
-              <textarea type="text" class="form-control" id="bodycom" v-model="body" />
+              <vue-editor v-model="content"></vue-editor>
             </div>
             <button type="submit" class="btn btn-primary">
               <p class="line-d" v-if="!loading">Actualizar</p>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+// Basic Use - Covers most scenarios
+import { VueEditor } from "vue2-editor";
 export default {
   props: {
     show: {
@@ -41,6 +43,9 @@ export default {
       loading: false
     };
   },
+  components: {
+    VueEditor
+  },
   computed: {
     discu() {
       return this.$store.getters.discuview;
@@ -50,7 +55,7 @@ export default {
     }
   },
   created() {
-    this.body = this.comentario.body;
+    this.content = this.comentario.body;
   },
   methods: {
     dropmenu() {
@@ -69,7 +74,7 @@ export default {
 
       let formData = new FormData();
 
-      formData.append("body", this.body);
+      formData.append("body", this.content);
 
       this.loading = true;
 
@@ -99,8 +104,10 @@ export default {
   border: 1px solid blue;
   width: 500px;
   border-radius: 4px;
-  top: 35%;
+  top: 10%;
   left: 2%;
+  overflow-y: scroll;
+  max-height: 85%;
 }
 #bodycom {
   min-height: 130px;

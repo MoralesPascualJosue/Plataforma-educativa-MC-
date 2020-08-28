@@ -8,6 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 use App\Models\Activitie;
+use App\Models\Curso;
 
 class ActivitieNotification extends Notification
 {
@@ -18,9 +19,10 @@ class ActivitieNotification extends Notification
      *
      * @return void
      */
-    public function __construct(Activitie $activitie)
+    public function __construct(Activitie $activitie,Curso $curso)
     {
         $this->activitie = $activitie;
+        $this->curso = $curso;
     }
 
     /**
@@ -60,6 +62,7 @@ class ActivitieNotification extends Notification
             'activitie' => $this->activitie->id,
             'title' => $this->activitie->title,
             'fecha_final' => $this->activitie->fecha_final,
+            'cursoname' => $this->curso->title
         ];
     }
 }

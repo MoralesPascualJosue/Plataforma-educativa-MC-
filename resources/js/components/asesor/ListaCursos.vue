@@ -1,6 +1,5 @@
 <template>
   <div class="example">
-    <flash />
     <FormCurso @crear-curso="createcurso" />
     <UncoverList>
       <template slot-scope="{ togglePopup }">
@@ -28,14 +27,12 @@
 import UncoverList from "./Cursos";
 import UncoverImage from "./Curso";
 import FormCurso from "./FormCurso";
-import Flash from "../Flash";
 
 export default {
   components: {
     UncoverList,
     UncoverImage,
-    FormCurso,
-    Flash
+    FormCurso
   },
   computed: {
     more() {

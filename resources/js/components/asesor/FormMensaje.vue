@@ -14,6 +14,7 @@
             placeholder="Enviar a.."
             :reduce="contact => contact.user.id"
             :options="contactosdefault"
+            :closeOnSelect="false"
             v-model="destino"
           ></v-select>
         </div>

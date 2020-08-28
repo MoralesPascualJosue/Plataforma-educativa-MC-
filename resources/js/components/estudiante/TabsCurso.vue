@@ -27,8 +27,11 @@
       </li>
     </ul>
     <div class="tab-content py-3" id="myTabContent">
+      <div class="tab-pane fade" :class="{ 'active show': isActive('resumen') }" id="resumen">
+        <Resumen v-if="isActive('resumen')" />
+      </div>
       <div class="tab-pane fade" :class="{ 'active show': isActive('home') }" id="home">
-        <ListaActividades />
+        <ListaActividades @ver-resumen="setActive('resumen')" />
       </div>
       <div class="tab-pane fade" :class="{ 'active show': isActive('profile') }" id="profile">
         <Foro />
@@ -44,6 +47,7 @@
 import ListaActividades from "./ListaActividades";
 import Foro from "./Foro";
 import ListaMensajes from "./ListaMensajes";
+import Resumen from "./Resumen";
 export default {
   data() {
     return {
@@ -53,7 +57,8 @@ export default {
   components: {
     ListaActividades,
     Foro,
-    ListaMensajes
+    ListaMensajes,
+    Resumen
   },
   methods: {
     isActive(menuItem) {

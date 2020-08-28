@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ActivitieEvent
+class ActivitieEvent implements ShouldBroadcast
 {
     public $activitie;
     public $curso;
@@ -34,6 +34,6 @@ class ActivitieEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('channel-activities');
     }
 }

@@ -11,6 +11,10 @@ import vSelect from "vue-select";
 
 import "vue-select/dist/vue-select.css";
 
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
+
 require("./bootstrap");
 
 window.Vue = require("vue");
@@ -18,6 +22,12 @@ window.Vue = require("vue");
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(xmodal);
+
+Vue.use(Toast, {
+    transition: "Vue-Toastification__bounce",
+    maxToasts: 20,
+    newestOnTop: true
+});
 
 /**
  * The following block of code may be used to automatically register your
@@ -33,6 +43,8 @@ import HomeLayout from "./components/HomeLayout";
 import Miinformacion from "./components/Miinformacion";
 import ListaCursos from "./components/estudiante/ListaCursos";
 import App from "./components/estudiante/App";
+import Notificaciones from "./components/Notificaciones";
+import Flash from "./components/Flash";
 
 Vue.component("v-select", vSelect);
 /**
@@ -188,7 +200,7 @@ const router = new VueRouter({
 
 const app = new Vue({
     //el: "#app",
-    components: { App },
+    components: { App, Notificaciones, Flash },
     store: store,
     router
 }).$mount("#app");
