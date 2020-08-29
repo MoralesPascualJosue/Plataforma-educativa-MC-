@@ -8,7 +8,7 @@
 
   <title>PDEPI</title>
 
-  <link href="{{ asset('css/stylesw.css') }}" rel="stylesheet">
+  <link href="/css/stylesw.css" rel="stylesheet">
 </head>
 
 <body>

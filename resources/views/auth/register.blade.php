@@ -124,13 +124,6 @@
                                 @endif
                             </div>
 
-                            <!-- Telephone Field -->
-                            <div class="form-group">
-                                <a class="tittle-input">Telefono</a>
-                                {!! Form::text('telephone', null, ['class' => 'form-control', "placeholder" =>
-                                "No necesario"]) !!}
-                            </div>
-
                             <div class="checkbox">
                                 <input type="checkbox"> Acepto <a href="#">términos y condiciones</a>
                             </div>

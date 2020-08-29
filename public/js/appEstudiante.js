@@ -2483,9 +2483,6 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this2 = this;
 
-    // Echo.channel("channelmessage").listen("MessageEvent", e => {
-    //   console.log(e);
-    // });
     Echo.channel("channel-activities").listen("ActivitieEvent", function (e) {
       _this2.notificaciones.notificaciones.push({
         data: {
@@ -2497,7 +2494,6 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       _this2.notificaciones.notificacionesnum++;
-      flash("Tienes una nueva actividad del curso: " + e.curso.title, "info"); // Or with options
 
       _this2.$toast(" Tienes una nueva actividad del curso: " + e.curso.title, {
         position: "top-left",
@@ -2517,7 +2513,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     dropmenu: function dropmenu() {
-      $("#dLabel").dropdown();
+      $("#dLabelnoti").dropdown();
     },
     marcarleidas: function marcarleidas() {
       var _this3 = this;
@@ -3225,7 +3221,8 @@ __webpack_require__.r(__webpack_exports__);
         addRemoveLinks: true,
         parallelUploads: 4,
         //acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
-        //paramName: "file", // The name that will be used to transfer the file
+        paramName: "file",
+        // The name that will be used to transfer the file
         maxFilesize: 30,
         // MB,
         headers: {
@@ -4733,6 +4730,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4787,6 +4785,14 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/chatC/" + this.curso.id + "/" + m.id).then(function (res) {
         _this2.mensaje = res.data;
         _this2.showmensaje = true;
+
+        if (res.data.leido) {
+          var index = _this2.mensajes.chats.findIndex(function (item) {
+            return item.id === m.id;
+          });
+
+          _this2.mensajes.chats[index].pivot.news = 0;
+        }
       })["catch"](function (err) {
         flash("Mensaje no disponible", "error");
       });
@@ -63370,7 +63376,7 @@ var render = function() {
         {
           staticClass: "btn btn-primary",
           attrs: {
-            id: "dLabel",
+            id: "dLabelnoti",
             type: "button",
             "data-toggle": "dropdown",
             "aria-haspopup": "true",
@@ -63444,16 +63450,18 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("li", [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary marread",
-                on: { click: _vm.marcarleidas }
-              },
-              [_vm._v("Marcar leidas")]
-            )
-          ])
+          _vm.notificaciones.notificacionesnum > 0
+            ? _c("li", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary marread",
+                    on: { click: _vm.marcarleidas }
+                  },
+                  [_vm._v("Marcar leidas")]
+                )
+              ])
+            : _vm._e()
         ],
         2
       )
@@ -65922,6 +65930,7 @@ var render = function() {
                               {
                                 key: indexmn,
                                 staticClass: "list-group-item",
+                                class: { read: mensaje.pivot.news == 0 },
                                 attrs: { href: "javascript:void(0)" },
                                 on: {
                                   click: function($event) {

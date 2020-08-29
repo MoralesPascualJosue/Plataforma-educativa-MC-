@@ -89,7 +89,7 @@ export default {
         addRemoveLinks: true,
         parallelUploads: 4,
         //acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
-        //paramName: "file", // The name that will be used to transfer the file
+        paramName: "file", // The name that will be used to transfer the file
         maxFilesize: 30, // MB,
         headers: {
           "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]')

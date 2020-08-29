@@ -140,3 +140,5 @@ Route::Get('/test', function () { return 'Hello World Get'; });
 // });
 // Route::group(['middleware' => ['role:Coordinador']], function () {   
 // });
+
+Route::get('/{catchall?}', 'AppController@index');

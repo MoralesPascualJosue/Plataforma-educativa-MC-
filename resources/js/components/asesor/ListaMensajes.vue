@@ -74,6 +74,7 @@
                     v-for="(mensaje,indexmn) in mensajes.chats"
                     :key="indexmn"
                     @click="abrirmensaje(mensaje)"
+                    v-bind:class="{'read': mensaje.pivot.news == 0}"
                   >
                     <span class="glyphicon glyphicon-star-empty"></span>
                     <span
@@ -205,6 +206,13 @@ export default {
         .then(res => {
           this.mensaje = res.data;
           this.showmensaje = true;
+
+          if (res.data.leido) {
+            const index = this.mensajes.chats.findIndex(
+              item => item.id === m.id
+            );
+            this.mensajes.chats[index].pivot.news = 0;
+          }
         })
         .catch(err => {
           flash("Mensaje no disponible", "error");

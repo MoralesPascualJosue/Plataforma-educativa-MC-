@@ -2,7 +2,7 @@
   <div>
     <div class="dropdown m-3">
       <button
-        id="dLabel"
+        id="dLabelnoti"
         type="button"
         data-toggle="dropdown"
         aria-haspopup="true"
@@ -44,7 +44,7 @@
         <li v-if="notificaciones.notificacionesnum <1" class="notic">
           <a href="#" class="data-n">Sin notificaciones</a>
         </li>
-        <li>
+        <li v-if="notificaciones.notificacionesnum>0">
           <button class="btn btn-primary marread" @click="marcarleidas">Marcar leidas</button>
         </li>
       </div>
@@ -69,9 +69,6 @@ export default {
     });
   },
   mounted() {
-    // Echo.channel("channelmessage").listen("MessageEvent", e => {
-    //   console.log(e);
-    // });
     Echo.channel("channel-activities").listen("ActivitieEvent", e => {
       this.notificaciones.notificaciones.push({
         data: {
@@ -101,7 +98,7 @@ export default {
   },
   methods: {
     dropmenu() {
-      $("#dLabel").dropdown();
+      $("#dLabelnoti").dropdown();
     },
     marcarleidas() {
       axios.get("/leernotificaciones").then(res => {

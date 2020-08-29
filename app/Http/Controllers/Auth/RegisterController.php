@@ -85,7 +85,7 @@ class RegisterController extends Controller
             'bio' => " ",
             'institute' => $data['instituto'],
             'department' => $data['departamento'],
-            'telephone' => "0"+$data['telephone']
+            'telephone' => "0"
             ]);
         }else{
             Estudiante::create([
@@ -94,7 +94,7 @@ class RegisterController extends Controller
             'bio' => " ",
             'institute' => $data['instituto'],
             'department' => $data['departamento'],
-            'telephone' => "0"+$data['telephone']
+            'telephone' => "0"
             ]);
         }
 

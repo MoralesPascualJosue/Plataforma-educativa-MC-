@@ -17,6 +17,7 @@ use App\Models\Activitie;
 use App\Models\Estudiante;
 use App\Models\Curso;
 use App\Models\Work;
+use App\Models\Qualification;
 use App\Models\Matriculado;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\MatriculadoRepository;
@@ -64,8 +65,7 @@ class cursoController extends AppBaseController
         return $curso;
     }
 
-    public function inicio(Request $request)
-    {     
+    public function inicio(Request $request){
         $cursos;
         $miusuario = Auth::user();
 
@@ -83,10 +83,10 @@ class cursoController extends AppBaseController
 
         $cursos->appends(['ele' => $elementos]);
 
-        $view = \View::make('cursos.inicioc')->with('cursos',$cursos);
+  //      $view = \View::make('cursos.inicioc')->with('cursos',$cursos);
 
         if($request->ajax()){
-            Flash::success('Cursos cargado.');
+//            Flash::success('Cursos cargado.');
             return $cursos;
             //$sections = $view->renderSections(); vue comment
             //return Response::json($sections['content']);
@@ -106,17 +106,11 @@ class cursoController extends AppBaseController
 
         $notificaciones["notificacionesnum"] = count($miusuario->unreadNotifications);
         $notificaciones["notificaciones"] = $miusuario->unreadNotifications;
-        //$curso["readnotificaciones"] = $miusuario->readNotifications;
-
-        //$view = \View::make('informacion.notificaciones')->with(compact('curso'));
 
         if($request->ajax()){
-            // $sections = $view->renderSections();
-            // return Response::json($sections['content']);
             return $notificaciones;
         }
-        
-        //return $view;
+
         return "No disponible";
     }
 
@@ -132,21 +126,27 @@ class cursoController extends AppBaseController
         $hoy =  now()->toDateString();
 
         if (empty($curso)) {
-            Flash::success('Curso no registrado.');
-           return redirect()->route('inicio');
+            //Flash::success('Curso no registrado.');
+           //return redirect()->route('inicio');
+           abort(404,"Curso no disponible");
         }        
 
         if(Auth::user()->hasPermissionTo('edit cursos')){
             if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('Curso no registrado.');
-                return redirect()->route('inicio');
+                //Flash::success('Curso no registrado.');
+                //return redirect()->route('inicio');
+                abort(404,"Curso no disponible");
             }    
             $actividades = $curso->activities()->orderBy("activities.updated_at","DESC")->paginate(10);
+            foreach ($actividades as $actividad) {
+                 $actividad['entregas'] = Qualification::where('activitie_id',$actividad->id)->where("estado",1)->count();
+             }
         }else{
             $miusuario = Auth::user()->estudiante()->get()[0];
             if(!$curso->hasMatriculado($miusuario->id)){
-                Flash::success('Curso no registrado.');
-                return redirect()->route('inicio');
+                //Flash::success('Curso no registrado.');
+                //return redirect()->route('inicio');
+                abort(404,"Curso no disponible");
             }               
 
              $actividades = $curso->activities()
@@ -170,7 +170,7 @@ class cursoController extends AppBaseController
 
         }
         
-        $view = \View::make('scurso')->with(compact('curso','actividades','actividadeshoy','actividadessemana'));    
+        //$view = \View::make('scurso')->with(compact('curso','actividades','actividadeshoy','actividadessemana'));    
 
         $curso["asesor"] = $curso->asesor()->get()[0];
         $data['curso'] = $curso;

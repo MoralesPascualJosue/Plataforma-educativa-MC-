@@ -7,7 +7,13 @@
         <img :src="icon" alt="grupos" />
       </div>
       <div class="course-link-details">
-        <div class="course-link-name">{{ activitie.title }} {{ activitie.fecha_inicio }}</div>
+        <div class="course-link-name">
+          {{ activitie.title }} {{ activitie.fecha_inicio }}
+          <span
+            v-if="activitie.entregas>0"
+            class="badge badge-primary float-right fontct"
+          >Pendientes: {{activitie.entregas}}</span>
+        </div>
         <div class="course-link-content">Fecha de vencimiento: {{ activitie.fecha_final }}</div>
       </div>
     </a>
@@ -99,5 +105,9 @@ export default {
 .course-actividad:hover {
   border-bottom: orange solid 2px;
   background-color: #f8f8f8;
+}
+
+.fontct {
+  font-size: 14px;
 }
 </style>

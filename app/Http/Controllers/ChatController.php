@@ -105,7 +105,7 @@ class ChatController extends Controller
         foreach($input["destino"] as $destino){
             $in['user_id'] = $destino;
             $in['message_id'] = $message->id;
-            $in['news'] = 0;
+            $in['news'] = 1;
 
             user_message::create($in);    
         }             
@@ -125,6 +125,14 @@ class ChatController extends Controller
 
         $message[0]["destino"] = Message::find($u)->users()->get(["name","email"]);
         $message[0]["cursoName"] = Curso::where("id",$message[0]["curso_id"])->first(["title"]);
+        $message[0]["leido"] = false;
+
+        if(!($message[0]->user->id == Auth::user()->id)){
+            $input["news"] = 0;        
+            $marcarleido = user_message::where('user_id',Auth::user()->id)->where('message_id',$u);
+            $marcarleido->update($input);
+            $message[0]["leido"] = true;
+        }        
         
         return $message[0];
     }

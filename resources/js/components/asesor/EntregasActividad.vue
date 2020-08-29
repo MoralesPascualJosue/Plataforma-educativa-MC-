@@ -161,6 +161,8 @@ export default {
       this.estudiantes[indexe].qualificationqualification = value.qualification;
       this.estudiantes[indexe].qualificationestado = value.estado;
       this.porrevisar--;
+      this.actividad.activitie.entregas--;
+      this.$store.commit("updateactividad", this.actividad.activitie);
     },
     calificar(value) {
       this.estudiante = this.estudiantes[value];

@@ -295,7 +295,7 @@ class ActivitieController extends AppBaseController
             request()->validate([
                 'file' => 'required|max:51200',
             ]);
-            $fileName = "file".time().'.'.request()->file->getClientOriginalExtension();
+            $fileName = "file".time().request()->file->getClientOriginalName();
             $ruta = request()->file->storeAs('archivos/'.$id,$fileName,'public');            
 
             $data['url'] = $ruta;
