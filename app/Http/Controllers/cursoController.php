@@ -77,22 +77,19 @@ class cursoController extends AppBaseController
 
         if($miusuario->hasPermissionTo('edit cursos')){
             $cursos = $this->cursoRepository->findWherePaginate("asesor_id","=",Auth::user()->asesor()->get()['0']->id,$elementos);
+            foreach ($cursos as $curso) {                
+                $curso['entregas'] = Qualification::where('curso_id',$curso->id)->where("estado",1)->count();
+             }
         }else{
             $cursos = Auth::user()->estudiante()->get()['0']->cursos()->where("matriculados.deleted_at",null)->orderBy("pivot_updated_at","DESC")->paginate($elementos);            
         } 
 
         $cursos->appends(['ele' => $elementos]);
-
-  //      $view = \View::make('cursos.inicioc')->with('cursos',$cursos);
-
         if($request->ajax()){
-//            Flash::success('Cursos cargado.');
             return $cursos;
-            //$sections = $view->renderSections(); vue comment
-            //return Response::json($sections['content']);
         }
         
-        return $view;
+        return "No disponible";
     }
 
      public function notificaciones(Request $request)
@@ -119,8 +116,8 @@ class cursoController extends AppBaseController
         
         $curso = $this->cursoRepository->find($id);
         $actividades = [];
-        $actividadeshoy= [];
-        $actividadessemana= [];
+        $actividadeshoy= 0;
+        $actividadessemana= 0;
         $miusuario;
 
         $hoy =  now()->toDateString();
@@ -155,9 +152,9 @@ class cursoController extends AppBaseController
                  ;
              }
 
-            $actividadeshoy = $curso->activities()->where("visible","=",1)->where("fecha_final","=",$hoy)->get();
+            $actividadeshoy = $curso->activities()->where("visible","=",1)->where("fecha_final","=",$hoy)->count();
             $actividadessemana = $curso->activities()->where("visible","=",1)
-             ->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->get();
+             ->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->count();
 
             $curso["notificacionesnum"] = count($miusuario->unreadNotifications);
             $curso["notificaciones"] = $miusuario->unreadNotifications;

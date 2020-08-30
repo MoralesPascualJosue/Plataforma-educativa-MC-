@@ -122,6 +122,9 @@ export default {
   computed: {
     actividad() {
       return this.$store.getters.actividadview;
+    },
+    curso() {
+      return this.$store.getters.cursoview;
     }
   },
   components: {
@@ -163,6 +166,7 @@ export default {
       this.porrevisar--;
       this.actividad.activitie.entregas--;
       this.$store.commit("updateactividad", this.actividad.activitie);
+      this.curso.entregas--;
     },
     calificar(value) {
       this.estudiante = this.estudiantes[value];

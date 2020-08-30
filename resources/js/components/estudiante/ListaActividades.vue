@@ -22,6 +22,23 @@
       </div>
     </div>
     <div class="item2">
+      <div class="row">
+        <div class="col-md-5">
+          <span class="text-muted">
+            Actividades para la semana:
+            <b>{{actividadessemana}}</b>
+          </span>
+        </div>
+        <div class="col-md-4">
+          <div class="pull-right">
+            <span class="text-muted">
+              Actividades para hoy:
+              <b>{{actividadeshoy}}</b>
+            </span>
+          </div>
+        </div>
+      </div>
+      <hr />
       <div class="container">
         <Actividades>
           <template slot-scope="{ togglePopup }">
@@ -55,7 +72,9 @@ export default {
     return {
       asesor: [],
       loading: false,
-      errorr: false
+      errorr: false,
+      actividadeshoy: 0,
+      actividadessemana: 0
     };
   },
   computed: {
@@ -84,6 +103,8 @@ export default {
   created() {
     axios.get("/scursoc/" + this.curso.id).then(res => {
       this.asesor = res.data.curso.asesor;
+      this.actividadeshoy = res.data.actividadeshoy;
+      this.actividadessemana = res.data.actividadessemana;
       this.$store.commit("changeactividades", res.data.actividades);
     });
   },

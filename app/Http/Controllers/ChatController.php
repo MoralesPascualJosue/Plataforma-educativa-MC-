@@ -81,7 +81,7 @@ class ChatController extends Controller
         $curso = $this->cursoRepository->find($cur);
         $llave = false;        
         
-        if($curso->hasPropiedad(Auth::user()->asesor()->get()[0]->id)) {
+        if(Auth::user()->can("edit cursos") and $curso->hasPropiedad(Auth::user()->asesor()->get()[0]->id)) {
             $llave = true;
         }else{
             $estudiante = Auth::user()->estudiante()->get()[0];

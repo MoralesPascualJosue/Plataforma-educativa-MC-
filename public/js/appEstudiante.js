@@ -4404,6 +4404,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4411,7 +4428,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       asesor: [],
       loading: false,
-      errorr: false
+      errorr: false,
+      actividadeshoy: 0,
+      actividadessemana: 0
     };
   },
   computed: {
@@ -4441,6 +4460,8 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get("/scursoc/" + this.curso.id).then(function (res) {
       _this.asesor = res.data.curso.asesor;
+      _this.actividadeshoy = res.data.actividadeshoy;
+      _this.actividadessemana = res.data.actividadessemana;
 
       _this.$store.commit("changeactividades", res.data.actividades);
     });
@@ -4773,6 +4794,8 @@ __webpack_require__.r(__webpack_exports__);
       _this.enviados = res.data.enviado.length;
       _this.allmensajes = res.data.chats.length + res.data.enviado.length;
       _this.nuevos = res.data.nuevos;
+
+      _this.$emit("set-mensajes", res.data.nuevos);
     });
   },
   methods: {
@@ -4806,6 +4829,8 @@ __webpack_require__.r(__webpack_exports__);
           if (index > -1) {
             _this2.mensajes.chats[index].pivot.news = 0;
             _this2.nuevos--;
+
+            _this2.$emit("mensajes", false);
           }
         }
       })["catch"](function (err) {
@@ -5201,6 +5226,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5208,7 +5239,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      activeItem: "home"
+      activeItem: "home",
+      mensajesnuevos: 0
     };
   },
   components: {
@@ -5223,6 +5255,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     setActive: function setActive(menuItem) {
       this.activeItem = menuItem;
+    },
+    mensajesnuevoss: function mensajesnuevoss(value) {
+      this.mensajesnuevos = value;
+    },
+    mensajes: function mensajes(operacion) {
+      if (operacion) {
+        this.mensajesnuevos++;
+      } else {
+        this.mensajesnuevos--;
+      }
     }
   }
 });
@@ -65618,6 +65660,26 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "item2" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-5" }, [
+          _c("span", { staticClass: "text-muted" }, [
+            _vm._v("\n          Actividades para la semana:\n          "),
+            _c("b", [_vm._v(_vm._s(_vm.actividadessemana))])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "pull-right" }, [
+            _c("span", { staticClass: "text-muted" }, [
+              _vm._v("\n            Actividades para hoy:\n            "),
+              _c("b", [_vm._v(_vm._s(_vm.actividadeshoy))])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "container" },
@@ -66615,7 +66677,16 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Mensages")]
+          [
+            _vm._v("\n        Mensajes\n        "),
+            _vm.mensajesnuevos > 0
+              ? _c(
+                  "span",
+                  { staticClass: "badge badge-primary float-right fontct" },
+                  [_vm._v(_vm._s(_vm.mensajesnuevos))]
+                )
+              : _vm._e()
+          ]
         )
       ])
     ]),
@@ -66672,7 +66743,14 @@ var render = function() {
             class: { "active show": _vm.isActive("contact") },
             attrs: { id: "contact" }
           },
-          [_c("ListaMensajes")],
+          [
+            _c("ListaMensajes", {
+              on: {
+                mensajes: _vm.mensajes,
+                "set-mensajes": _vm.mensajesnuevoss
+              }
+            })
+          ],
           1
         )
       ]

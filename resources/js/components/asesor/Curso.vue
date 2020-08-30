@@ -15,6 +15,10 @@
                 backgroundImage: `url(${curso.cover})`
             }"
     />
+    <span
+      v-if="curso.entregas>0"
+      class="badge badge-primary float-right fontct"
+    >Entregas por revisar: {{curso.entregas}}</span>
   </div>
 </template>
 

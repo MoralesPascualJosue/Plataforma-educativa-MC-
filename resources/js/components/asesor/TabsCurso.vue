@@ -23,7 +23,13 @@
           @click.prevent="setActive('contact')"
           :class="{ active: isActive('contact') }"
           href="#contact"
-        >Mensages</a>
+        >
+          Mensajes
+          <span
+            v-if="mensajesnuevos>0"
+            class="badge badge-primary float-right fontct"
+          >{{mensajesnuevos}}</span>
+        </a>
       </li>
       <li class="nav-item">
         <a
@@ -45,7 +51,7 @@
         <Foro />
       </div>
       <div class="tab-pane fade" :class="{ 'active show': isActive('contact') }" id="contact">
-        <ListaMensajes />
+        <ListaMensajes @mensajes="mensajes" @set-mensajes="mensajesnuevoss" />
       </div>
       <div
         class="tab-pane fade"
@@ -67,7 +73,8 @@ import Resumen from "./Resumen";
 export default {
   data() {
     return {
-      activeItem: "home"
+      activeItem: "home",
+      mensajesnuevos: 0
     };
   },
   components: {
@@ -83,6 +90,16 @@ export default {
     },
     setActive(menuItem) {
       this.activeItem = menuItem;
+    },
+    mensajesnuevoss(value) {
+      this.mensajesnuevos = value;
+    },
+    mensajes(operacion) {
+      if (operacion) {
+        this.mensajesnuevos++;
+      } else {
+        this.mensajesnuevos--;
+      }
     }
   }
 };

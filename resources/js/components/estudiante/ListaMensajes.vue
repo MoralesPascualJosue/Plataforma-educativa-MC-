@@ -190,6 +190,8 @@ export default {
       this.enviados = res.data.enviado.length;
       this.allmensajes = res.data.chats.length + res.data.enviado.length;
       this.nuevos = res.data.nuevos;
+
+      this.$emit("set-mensajes", res.data.nuevos);
     });
   },
   methods: {
@@ -222,6 +224,7 @@ export default {
             if (index > -1) {
               this.mensajes.chats[index].pivot.news = 0;
               this.nuevos--;
+              this.$emit("mensajes", false);
             }
           }
         })
