@@ -22,6 +22,8 @@ Route::get('/mail', function () {
 //________[ALL routes]__________
  Route::get('/', function () { return view('welcome'); });
  Auth::routes(['verify' => true]);
+ Route::get('change-password', 'ChangePasswordController@index');
+ Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
 //________[END ALL routes]__________
 
 

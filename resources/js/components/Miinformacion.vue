@@ -61,7 +61,7 @@
             <li class="data-row">
               <div class="data-container">
                 <span class="data-title">Contraseña</span>
-                <a class="data-value">
+                <a class="data-value" href="/change-password">
                   <span>Cambiar contraseña</span>
                 </a>
               </div>

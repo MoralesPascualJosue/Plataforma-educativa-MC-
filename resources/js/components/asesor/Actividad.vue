@@ -32,7 +32,6 @@ export default {
   },
   computed: {
     ruta() {
-      //return "../sactivitiec/" + this.activitie.id;
       return "javascript:void(0)";
     }
   }

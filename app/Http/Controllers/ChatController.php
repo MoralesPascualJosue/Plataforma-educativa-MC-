@@ -38,6 +38,7 @@ class ChatController extends Controller
         }
 
         $chats = $usero->mensages()->withUser()->orderBy("created_at","DESC")->where('curso_id',$cur)->get();
+        $nuevos = $usero->mensages()->withUser()->where('curso_id',$cur)->where('news',1)->count();
 
         $contacts = $this->cursoRepository
         ->find($cur)
@@ -60,13 +61,15 @@ class ChatController extends Controller
             $data["chats"] =$chats;
             $data["contacts"] = $contacts;
             $data["user"] = $user;
+            $data["nuevos"] = $nuevos;
 
             return $data;
         }
 
-        $view = \View::make('chat.show')->with(compact('curso','chats','contacts','user'));
+        //$view = \View::make('chat.show')->with(compact('curso','chats','contacts','user'));
         
-        return $view;
+        //return $view;
+        return "No disponible";
     }
 
      public function send($cur,Request $request)
@@ -127,12 +130,10 @@ class ChatController extends Controller
         $message[0]["cursoName"] = Curso::where("id",$message[0]["curso_id"])->first(["title"]);
         $message[0]["leido"] = false;
 
-        if(!($message[0]->user->id == Auth::user()->id)){
-            $input["news"] = 0;        
-            $marcarleido = user_message::where('user_id',Auth::user()->id)->where('message_id',$u);
-            $marcarleido->update($input);
-            $message[0]["leido"] = true;
-        }        
+        $input["news"] = 0;        
+        $marcarleido = user_message::where('user_id',Auth::user()->id)->where('message_id',$u);
+        $marcarleido->update($input);
+        $message[0]["leido"] = true;
         
         return $message[0];
     }

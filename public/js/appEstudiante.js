@@ -2554,6 +2554,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2565,7 +2571,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     ruta: function ruta() {
-      //return "../sactivitiec/" + this.activitie.id;
       return "javascript:void(0)";
     }
   }
@@ -4731,6 +4736,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4742,7 +4752,8 @@ __webpack_require__.r(__webpack_exports__);
       allmensajes: 0,
       enviados: 0,
       recibidos: 0,
-      shownm: false
+      shownm: false,
+      nuevos: 0
     };
   },
   computed: {
@@ -4761,6 +4772,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.recibidos = res.data.chats.length;
       _this.enviados = res.data.enviado.length;
       _this.allmensajes = res.data.chats.length + res.data.enviado.length;
+      _this.nuevos = res.data.nuevos;
     });
   },
   methods: {
@@ -4791,7 +4803,10 @@ __webpack_require__.r(__webpack_exports__);
             return item.id === m.id;
           });
 
-          _this2.mensajes.chats[index].pivot.news = 0;
+          if (index > -1) {
+            _this2.mensajes.chats[index].pivot.news = 0;
+            _this2.nuevos--;
+          }
         }
       })["catch"](function (err) {
         flash("Mensaje no disponible", "error");
@@ -63250,9 +63265,11 @@ var staticRenderFns = [
       _c("div", { staticClass: "data-container" }, [
         _c("span", { staticClass: "data-title" }, [_vm._v("Contraseña")]),
         _vm._v(" "),
-        _c("a", { staticClass: "data-value" }, [
-          _c("span", [_vm._v("Cambiar contraseña")])
-        ])
+        _c(
+          "a",
+          { staticClass: "data-value", attrs: { href: "/change-password" } },
+          [_c("span", [_vm._v("Cambiar contraseña")])]
+        )
       ])
     ])
   },
@@ -63509,10 +63526,23 @@ var render = function() {
         _c("div", { staticClass: "course-link-details" }, [
           _c("div", { staticClass: "course-link-name" }, [
             _vm._v(
-              _vm._s(_vm.activitie.title) +
+              "\n        " +
+                _vm._s(_vm.activitie.title) +
                 " " +
-                _vm._s(_vm.activitie.fecha_inicio)
-            )
+                _vm._s(_vm.activitie.fecha_inicio) +
+                "\n        "
+            ),
+            _vm.activitie.entregas
+              ? _c(
+                  "span",
+                  { staticClass: "badge badge-primary float-right fontct" },
+                  [
+                    _vm._v(
+                      "Entregas: " + _vm._s(_vm.activitie.entregas.entregas)
+                    )
+                  ]
+                )
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "course-link-content" }, [
@@ -65784,7 +65814,14 @@ var render = function() {
         !_vm.showmensaje
           ? _c("div", { key: "listmensajes" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-sm-3 col-md-2" }),
+                _c("div", { staticClass: "col-sm-3 col-md-2" }, [
+                  _vm.nuevos > 0
+                    ? _c("span", { staticClass: "text-muted" }, [
+                        _vm._v("\n            Nuevos:\n            "),
+                        _c("b", [_vm._v(_vm._s(_vm.nuevos))])
+                      ])
+                    : _vm._e()
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-9 col-md-10" }, [
                   _c("div", { staticClass: "pull-right" }, [

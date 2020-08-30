@@ -3,7 +3,12 @@
     <transition name="fade" mode="out-in">
       <div v-if="!showmensaje" key="listmensajes">
         <div class="row">
-          <div class="col-sm-3 col-md-2"></div>
+          <div class="col-sm-3 col-md-2">
+            <span v-if="nuevos>0" class="text-muted">
+              Nuevos:
+              <b>{{nuevos}}</b>
+            </span>
+          </div>
           <div class="col-sm-9 col-md-10">
             <div class="pull-right">
               <span class="text-muted">
@@ -166,7 +171,8 @@ export default {
       allmensajes: 0,
       enviados: 0,
       recibidos: 0,
-      shownm: false
+      shownm: false,
+      nuevos: 0
     };
   },
   computed: {
@@ -183,6 +189,7 @@ export default {
       this.recibidos = res.data.chats.length;
       this.enviados = res.data.enviado.length;
       this.allmensajes = res.data.chats.length + res.data.enviado.length;
+      this.nuevos = res.data.nuevos;
     });
   },
   methods: {
@@ -211,7 +218,11 @@ export default {
             const index = this.mensajes.chats.findIndex(
               item => item.id === m.id
             );
-            this.mensajes.chats[index].pivot.news = 0;
+
+            if (index > -1) {
+              this.mensajes.chats[index].pivot.news = 0;
+              this.nuevos--;
+            }
           }
         })
         .catch(err => {
