@@ -3,33 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-use App\Repositories\cursoRepository;
 use App\Repositories\fdiscusionRepository;
 use App\Repositories\fcategoriaRepository;
 use App\Repositories\fpostRepository;
-use Illuminate\Support\Facades\Auth;
-use App\Repositories\AsesorRepository;
-use App\Repositories\EstudianteRepository;
-
-use App\Http\Controllers\AppBaseController;
 
 use App\Models\fdiscusion;
 use App\Models\fcategoria;
 use App\Models\fpost;
-use Flash;
-Use Response;
+
 class ForumController extends Controller
 {    
 
-    private $cursoRepository;
     private $fdiscusionRepository;
     private $fcategoriaRepository;
     private $fpostRepository;
 
-    public function __construct(CursoRepository $cursoRepo,fdiscusionRepository $fdiscusionRepo,fcategoriaRepository $fcategoriaRepo,fpostRepository $fpostRepos)
+    public function __construct(fdiscusionRepository $fdiscusionRepo,fcategoriaRepository $fcategoriaRepo,fpostRepository $fpostRepos)
     {
-        $this->cursoRepository = $cursoRepo;
         $this->fdiscusionRepository = $fdiscusionRepo;
         $this->fcategoriaRepository = $fcategoriaRepo;
         $this->fpostRepository = $fpostRepos;
@@ -38,49 +30,21 @@ class ForumController extends Controller
 
     public function foro($cur,Request $request)
     {        
-        $curso = $this->cursoRepository->find($cur,['id','title','cover']);
         $categorias = fcategoria::orderby("updated_at","DESC")->get(['id','name','color']);
-        $discusst = [];    
-        $discuss = [];
-        $back = "";
 
-        if (!$request["en"] == "") {
-
-             $discusst = fdiscusion::query()
-        ->withCategoria()
-        ->withCategoriaColor()
-        ->withUSer()
-        ->withCurso($cur)
-        ->orderBy('updated_at','DESC')        
-        ->get()
-        ;
-
-        $discuss = $discusst->where("nameCategoria",$request["en"]);
-        $back = $request["en"];
-        
-        }else{
-             $discuss = fdiscusion::query()
-        ->withCategoria()
-        ->withCategoriaColor()
+        $discuss = fdiscusion::query()->withCategoria()->withCategoriaColor()
         ->withUSer()
         ->withCurso($cur)
         ->orderBy('updated_at','DESC')
-        ->get()
-        ;
-        }
-
-        $view = \View::make('forum.content')->with(compact('curso','categorias','discuss','back'));
+        ->get();
 
         if($request->ajax()){
-            // $sections = $view->renderSections();
-            // return Response::json($sections['content']);
-            $data["curso"] = $curso;
             $data["categorias"] = $categorias;
             $data["discuss"] = $discuss;
             return $data;
         }
         
-        return $view;
+        return "No disponible";
     }
 
      public function store($id,Request $request)
@@ -90,15 +54,11 @@ class ForumController extends Controller
         $input = $request->all();
         
         if ($input["title"] == "") {
-            // Flash::success('Tema vacio');
-            // return redirect()->back();
             abort(404,"Campos vacios");
         }
 
         if ($input["nuevacategoria"] == "nuevasi" ) {
             if ($input["categoria"] == "" ){
-                //Flash::success('Nombre vacio');
-                //return redirect()->back();
                 abort(404,"campos vacios");
             }
 
@@ -125,34 +85,26 @@ class ForumController extends Controller
             return $data;
         }
 
-        Flash::success('Discusion creada');
-
-        return redirect()->back();
+        return "No disponible";
     }
 
     public function show($cur,$id,Request $request){
 
-         $curso = $this->cursoRepository->find($cur,['id','title','cover']);
-         $curso['back'] = $request["back"];
-
          $user = Auth::user()->id;
-
          $discuss = fdiscusion::find($id);
+         
          if (empty($discuss)) {
-             return redirect()->back();
+             return "No disponible";
          }
 
-          $discuss = fdiscusion::query()
-        ->withCategoria()
-        ->withCategoriaColor()
+        $discuss = fdiscusion::query()->withCategoria()->withCategoriaColor()
         ->withUSer()
         ->where("id","=",$id)
         ->get()[0];        
 
-        $discuss['propiedad'] = $discuss->hasPropiedad($user);        
+        $discuss['propiedad'] = $discuss->hasPropiedad($user);
 
-        $fposts = fpost::query()
-        ->withDiscuss($id)
+        $fposts = fpost::query()->withDiscuss($id)
         ->withUser()
         ->withImage()
         ->get();
@@ -162,24 +114,16 @@ class ForumController extends Controller
         }
 
         $categorias= $this->fcategoriaRepository->all();        
-        $view = \View::make('forum.show')->with(compact('curso','discuss','fposts','categorias'));
 
         if($request->ajax()){
-            // $fdiscusion = $this->fdiscusionRepository->find($id);
-            // $input["views"] = $fdiscusion["views"]+1;
-            // $this->fdiscusionRepository->update($input, $id);
-
-            // $sections = $view->renderSections();
-            // return Response::json($sections['content']);
             $data["fpost"] = $fposts;            
             $data["discuss"] = $discuss["propiedad"];
             return $data;
         }
         
-        return $view;
+        return "No disponible";
         
     }
-
 
      public function comentar($id,Request $request)
     {
@@ -187,9 +131,6 @@ class ForumController extends Controller
         $input = $request->all();
 
         if ($input["body"] == "") {
-            Flash::success('Comentario vacio');
-
-            //return redirect()->back();
             abort(404,"Comentario vacio");
         }
 
@@ -203,10 +144,7 @@ class ForumController extends Controller
         $inputd["answered"] = $fdiscusion["answered"]+1;
         $this->fdiscusionRepository->update($inputd, $id);
 
-        Flash::success('comentado');
-
-        $fcomentario = fpost::query()
-        ->withDiscuss($id)
+        $fcomentario = fpost::query()->withDiscuss($id)
         ->withUser()
         ->withImage()
         ->where("id","=",$fpost->id)
@@ -217,70 +155,38 @@ class ForumController extends Controller
             return $fcomentario;
         }
 
-        return redirect()->back();
+        return "No disponible";
     }    
-   
-
-    public function discusion($id,$discusion)
-    {
-        
-        $data = $this->fdiscusionRepository->find($discusion);        
-
-        if($data->hasPropiedad(Auth::user()->id) == 1 ){            
-            return $data;
-        }
-
-        return redirect()->back();
-    }
-
-     public function comentario($id,$comentario)
-    {
-        
-        $data = $this->fpostRepository->find($comentario);
-
-        if($data->hasPropiedad(Auth::user()->id) == 1 ){
-            return $data;
-        }
-
-        return redirect()->back();
-    }
-
 
      public function updated($id,Request $request)    
     {
         $input = $request->all();
         
         if ($input["title"] == "") {
-            Flash::success('Tema vacio');
-
-            return redirect()->back();
+            abort(404,"Tema vacio");
         }
 
         $input["body"] = "";
         $fdiscusion = $this->fdiscusionRepository->find($id);
 
         if (empty($fdiscusion)) {
-            Flash::error('tema  no encontrado');
             abort(404,"No disponible");
         }
 
         if($fdiscusion->hasPropiedad(Auth::user()->id )  == 1){
-            Flash::success('Actualizado.');
             $fdiscusion = $this->fdiscusionRepository->update($input, $id);   
         }     
 
-         $discuss = fdiscusion::query()
-        ->withCategoria()
-        ->withCategoriaColor()
+         $discuss = fdiscusion::query()->withCategoria()->withCategoriaColor()
         ->withUSer()
         ->where("id","=",$id)
         ->get()[0];
+
         if($request->ajax()){
             return $discuss;
         }
 
-
-        return "error";
+        return "No disponible";
     }
 
       public function updateco($id, Request $request)
@@ -288,35 +194,30 @@ class ForumController extends Controller
 
         $input = $request->all();   
         
-          if ($input["body"] == "") {
-            Flash::success('Comentario vacio');
-
-            return redirect()->back();
+        if ($input["body"] == "") {
+            abort(404,"Comentario vacio");
         }
         
         $fpost = $this->fpostRepository->find($id);
 
         if (empty($fpost)) {
-            Flash::error('contenido no encontrado');
-            return redirect()->back();
+            abort(404,"No disponible");
         }
 
         if($fpost->hasPropiedad(Auth::user()->id )  == 1){
-            Flash::success('Actualizado.');
             $fpost = $this->fpostRepository->update($input, $id);   
         }                
 
-         $comentario = fpost::query()
-        ->withUser()
-        ->withImage()
+         $comentario = fpost::query()->withUser()->withImage()
         ->where("id",$id)
         ->get()[0];
+
         if($request->ajax()){
             $comentario["propiedad"] = 1;
             return $comentario;
         }
 
-        return redirect()->back();
+        return "No disponibe";
     }
 
      public function deleteco($curso,$id)
@@ -329,9 +230,7 @@ class ForumController extends Controller
         }
 
         if($fpost->hasPropiedad(Auth::user()->id )  == 1){
-            Flash::success('Eliminado.');
             $this->fpostRepository->delete($id);
-            
             $fdiscusion = $this->fdiscusionRepository->find($fpost->fdiscusion_id);
             $input["answered"] = $fdiscusion["answered"]-1;
             $this->fdiscusionRepository->update($input, $fpost->fdiscusion_id);
@@ -348,20 +247,18 @@ class ForumController extends Controller
         $fdiscusion = $this->fdiscusionRepository->find($id);        
 
         if (empty($fdiscusion)) {
-        //       Flash::success('Contenido no disponible.');
-        //    return redirect()->route('foro',$curso);
            abort(404,"Contenido no disponible");
         }        
 
         if($fdiscusion->hasPropiedad(Auth::user()->id )  == 1){;
             $posts = $fdiscusion ->posts()->get();
+            
             foreach($posts as $post){
              $post->delete();
             }
+
             $this->fdiscusionRepository->delete($id);
             return "Eliminado";
-        //     Flash::success('Contenido eliminado.');
-        //    return redirect()->route('foro',$curso);
         }                
 
         return "Contenido no disponible";

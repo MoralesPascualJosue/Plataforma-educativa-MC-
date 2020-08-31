@@ -2,15 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreatecursoRequest;
-use App\Http\Requests\UpdatecursoRequest;
-use App\Repositories\cursoRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Flash;
-use Response;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Asesor;
 use App\Models\Activitie;
@@ -19,25 +13,24 @@ use App\Models\Curso;
 use App\Models\Work;
 use App\Models\Qualification;
 use App\Models\Matriculado;
-use Illuminate\Support\Facades\Auth;
 use App\Repositories\MatriculadoRepository;
 use App\Repositories\ActivitieRepository;
-use Barryvdh\DomPDF\Facade as PDF;
+use App\Repositories\cursoRepository;
 
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 
 
-class cursoController extends AppBaseController
+class cursoController extends Controller
 {
-    /** @var  cursoRepository
-     *  @var  MatriculadoRepository
-     */
+
     private $cursoRepository;
     private $matriculadoRepository;
     private $activitieRepository;
     private $mesesN;
+    private $elementos;
 
     public function __construct(cursoRepository $cursoRepo,MatriculadoRepository $matriculadoRepo,ActivitieRepository $activitieRepo)
     {
@@ -46,45 +39,23 @@ class cursoController extends AppBaseController
         $this->cursoRepository = $cursoRepo;
         $this->matriculadoRepository = $matriculadoRepo;
         $this->activitieRepository = $activitieRepo;
+        $this->elementos = 12;
         $this->middleware('auth');
-    }
-
-    public function curso($id)
-    {
-        $curso = $this->cursoRepository->find($id);
-        if (empty($curso)) {
-            Flash::success('Curso no registrado.');
-           abort(404,"No disponible");
-        }
-
-        if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-            Flash::success('Curso no registrado.');
-           abort(404,"No disponible");
-        }
-
-        return $curso;
     }
 
     public function inicio(Request $request){
         $cursos;
         $miusuario = Auth::user();
 
-        if (!$request["ele"] == "") {
-            $elementos = $request["ele"];
-        }else{
-            $elementos = 12;
-        }
-
         if($miusuario->hasPermissionTo('edit cursos')){
-            $cursos = $this->cursoRepository->findWherePaginate("asesor_id","=",Auth::user()->asesor()->get()['0']->id,$elementos);
+            $cursos = $this->cursoRepository->findWherePaginate("asesor_id","=",Auth::user()->asesor()->get()['0']->id,$this->elementos);
             foreach ($cursos as $curso) {                
                 $curso['entregas'] = Qualification::where('curso_id',$curso->id)->where("estado",1)->count();
              }
         }else{
-            $cursos = Auth::user()->estudiante()->get()['0']->cursos()->where("matriculados.deleted_at",null)->orderBy("pivot_updated_at","DESC")->paginate($elementos);            
+            $cursos = Auth::user()->estudiante()->get()['0']->cursos()->where("matriculados.deleted_at",null)->orderBy("pivot_updated_at","DESC")->paginate($this->elementos);            
         } 
 
-        $cursos->appends(['ele' => $elementos]);
         if($request->ajax()){
             return $cursos;
         }
@@ -96,7 +67,7 @@ class cursoController extends AppBaseController
     {     
 
         if(Auth::user()->hasPermissionTo('edit cursos')){
-           return redirect()->back();
+           return "No disponible";
         }
         
         $miusuario = Auth::user()->estudiante()->get()[0];
@@ -130,7 +101,7 @@ class cursoController extends AppBaseController
             if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
                 abort(404,"Curso no disponible");
             }    
-            $actividades = $curso->activities()->orderBy("activities.fecha_final","DESC")->paginate(12);
+            $actividades = $curso->activities()->orderBy("activities.fecha_final","DESC")->paginate($this->elementos);
             foreach ($actividades as $actividad) {                
                 $actividad['entregas'] = Qualification::where('activitie_id',$actividad->id)->where("estado",1)->count();
              }
@@ -140,9 +111,7 @@ class cursoController extends AppBaseController
                 abort(404,"Curso no disponible");
             }               
 
-             $actividades = $curso->activities()
-             ->where("visible","=",1)
-             ->orderBy("activities.fecha_final","DESC")->paginate(12);
+             $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_final","DESC")->paginate($this->elementos);
 
              foreach ($actividades as $actividad) {
                  $actividad['entregas'] = Work::where("estudiante_id",$miusuario->id)
@@ -153,8 +122,7 @@ class cursoController extends AppBaseController
              }
 
             $actividadeshoy = $curso->activities()->where("visible","=",1)->where("fecha_final","=",$hoy)->count();
-            $actividadessemana = $curso->activities()->where("visible","=",1)
-             ->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->count();
+            $actividadessemana = $curso->activities()->where("visible","=",1)->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->count();
 
             $curso["notificacionesnum"] = count($miusuario->unreadNotifications);
             $curso["notificaciones"] = $miusuario->unreadNotifications;
@@ -183,13 +151,11 @@ class cursoController extends AppBaseController
         ]);
 
         if(!Auth::user()->hasPermissionTo('edit cursos')){
-            return redirect(route('inicio'));
+            return "No disponible";
         }
 
         $input =  $request->all();
-        // $input['title'] = "Nombre de curso";
         $input['cover'] = "resources/img-msg100.jpg";
-        // $input['review'] = "Breve mensaje";
         $input['asesor_id'] = Auth::user()->asesor()->get()['0']->id;
         $input['password'] = Str::random(10);
 
@@ -204,9 +170,7 @@ class cursoController extends AppBaseController
             return $curso;
         }
 
-        Flash::success('Curso creado.');
-
-        return redirect(route('scursoc',$curso->id));
+        return "No disponible";
     }
 
     public function updatea($id, Request $request)
@@ -224,8 +188,7 @@ class cursoController extends AppBaseController
         }
 
         if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('Curso no registrado.');
-                return redirect()->route('inicio');
+            return "No disponible";
         } 
 
         $curso = $this->cursoRepository->update($request->all(), $id);
@@ -239,46 +202,7 @@ class cursoController extends AppBaseController
             return $curso;
         }
 
-        Flash::success('Curso actualizado.');
-
-        $actividades = $curso->activities()->orderBy("activities.updated_at","DESC")->paginate(10);
-        
-        $view = \View::make('scurso')->with(compact('curso','actividades'));
-
-        $sections = $view->renderSections();
-
-        return Response::json($sections['content']);
-    }
-
-    public function updatecover($id, Request $request)
-    {
-        $curso = $this->cursoRepository->find($id);        
-
-        if (empty($curso)) {
-            Flash::error('Curso not found');
-
-            abort(403,'error no disponible');
-        }
-
-        if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('Curso no registrado.');
-                return redirect()->route('inicio');
-            } 
-
-       if($request->file('cover')){
-            $path = Storage::disk('public')->put('covers',$request->file('cover'));
-            $curso->fill(['cover'=>$path])->save();
-        }
-
-        Flash::success('Imagen actualizada.');
-
-        $actividades = $curso->activities()->orderBy("activities.updated_at","DESC")->paginate(10);
-        
-        $view = \View::make('scurso')->with(compact('curso','actividades'));
-
-        $sections = $view->renderSections();
-        
-        return Response::json($sections['content']);
+        return "No disponible";
     }
 
     public function destroya($id)
@@ -286,21 +210,16 @@ class cursoController extends AppBaseController
         $curso = $this->cursoRepository->find($id);
 
         if (empty($curso)) {
-            Flash::error('Curso not found');
-
-            abort(404,'Anuncio no disponible');
+            return "No disponible";
         }
 
         if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('Curso no registrado.');
-                return redirect()->route('inicio');
-            } 
+            return "No disponible";
+        }
 
         $this->cursoRepository->delete($id);
 
-        Flash::success('Curso eliminado.');
-
-       return Response()->json([ 'Curso' => 'curso']);
+       return "Eliminado";
     }
 
     /**/
@@ -333,7 +252,6 @@ class cursoController extends AppBaseController
 
     public function desmatricular($cu,Request $request){
 
-
         $matricula;        
         $user = Auth::user();
         $curso = $this->cursoRepository->find($cu);
@@ -362,14 +280,12 @@ class cursoController extends AppBaseController
         return $curso;
     }
 
-
     public function trabajos($id,Request $request)
     {
         $curso = $this->cursoRepository->find($id);
 
         if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('Curso no registrado.');
-                return redirect()->route('inicio');
+            return "No disponible";
         } 
 
         $estudiantes = $curso->estudiantes()->orderBy("name")->get();
@@ -417,57 +333,7 @@ class cursoController extends AppBaseController
             return $data;
         }
 
-        return view('cursos.show_activities')->with(compact('estudiantes','curso','actividades'));
-    }
-
-    public function historiale($id)
-    {
-        $curso = $this->cursoRepository->find($id);
-        $estudiante = Auth::user()->estudiante()->get()[0];
-
-        if(!$curso->hasMatriculado($estudiante->id)){
-                Flash::success('Curso no registrado.');
-                return redirect()->route('inicio');
-        } 
-
-        $actividades = $curso->activities()->where("visible",1)->get();
-    
-        foreach ($actividades as $actividad) {
-            $entregas = $actividad->works()->where("estudiante_id",$estudiante->id)->get();
-
-            if(empty($entregas[0])){
-                $actividad["works"] = "Sin entregas";
-            }else{
-                $actividad["works"] = $entregas;
-            }
-        }
-
-        return $actividades;
-    }
-
-    public function historialu($cur,$est)
-    {
-        $curso = $this->cursoRepository->find($cur);
-        $estudiante = Estudiante::find($est);
-
-        if(!$curso->hasMatriculado($estudiante->id)){
-                Flash::success('Curso no registrado.');
-                return redirect()->route('inicio');
-        } 
-
-        $actividades = $curso->activities()->where("visible",1)->get();
-    
-        foreach ($actividades as $actividad) {
-            $entregas = $actividad->works()->where("estudiante_id",$estudiante->id)->get();
-
-            if(empty($entregas[0])){
-                $actividad["works"] = "Sin entregas";
-            }else{
-                $actividad["works"] = $entregas;
-            }
-        }
-
-        return $actividades;
+        return "No disponible";
     }
 
     public function reporteListac($curso){
@@ -476,8 +342,7 @@ class cursoController extends AppBaseController
         $curso = $this->cursoRepository->find($id);
         
         if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('Curso no registrado.');
-                return redirect()->route('inicio');
+            return "No disponible";
         } 
 
         $anoi = date("Y");

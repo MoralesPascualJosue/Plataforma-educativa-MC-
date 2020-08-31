@@ -131,8 +131,6 @@ export default {
         .then(response => {
           $("#dLabelut").dropdown("toggle");
           this.errorr = false;
-          console.log(response);
-
           this.$store.commit("changediscu", response.data);
           this.$store.commit("updatediscuss", response.data);
           flash("tema actualizado", "success");

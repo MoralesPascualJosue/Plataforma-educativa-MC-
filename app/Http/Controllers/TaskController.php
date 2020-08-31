@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateTaskRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Repositories\TaskRepository;
 use App\Repositories\ActivitieRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
-use Response;
 
-use Illuminate\Support\Facades\Auth;
-
-
-class TaskController extends AppBaseController
+class TaskController extends Controller
 {
-    /** @var  TaskRepository */
     private $taskRepository;
     private $activitieRepository;
 
@@ -33,12 +26,11 @@ class TaskController extends AppBaseController
 
         $activitie = $this->activitieRepository->find($id);
         if (empty($activitie)) {
-            abort(404,'Contenido no disponible');
+            abort(404,'No disponible');
         }
 
          if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('No tienes los permisos necesarios.');
-                return redirect()->route('inicio');
+            abort(404,'No disponible');
         } 
 
         $task = $activitie->task()->get();
@@ -49,8 +41,6 @@ class TaskController extends AppBaseController
 
         $task = $this->taskRepository->update($request->all(), $task['0']->id);
 
-        Flash::success('Guardado.');
-
         return "guardado";
     }
 
@@ -59,12 +49,11 @@ class TaskController extends AppBaseController
         $activitie = $this->activitieRepository->find($id);
 
         if(empty($activitie)){
-            return redirect()->route('inicio');
+            abort(404,'No disponible');
         }
 
         if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-            Flash::success('Actividad no registrado.');
-            return redirect()->route('inicio');
+            abort(404,'No disponible');
         } 
 
         $curso = $activitie->cursos()->first();
@@ -100,8 +89,8 @@ class TaskController extends AppBaseController
 
             return $data;
         }          
-        return view('works.show_trabajos')
-            ->with(compact('activitie','estudiantes','curso','works'));
+        
+        return "No disponible";
     }
 
 

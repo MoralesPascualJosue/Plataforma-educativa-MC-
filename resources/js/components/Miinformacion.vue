@@ -196,8 +196,6 @@ export default {
       );
     },
     guardarcambiosp() {
-      console.log("guardado");
-
       if (
         this.nombre == "" ||
         this.institucion == "" ||

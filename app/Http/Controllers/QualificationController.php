@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateQualificationRequest;
-use App\Http\Requests\UpdateQualificationRequest;
 use App\Repositories\QualificationRepository;
 use App\Repositories\ActivitieRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
-use Response;
 use Illuminate\Support\Facades\Auth;
 
-class QualificationController extends AppBaseController
+class QualificationController extends Controller
 {
-    /** @var  QualificationRepository */
     private $qualificationRepository;
     private $activitieRepository;
 
@@ -31,20 +25,17 @@ class QualificationController extends AppBaseController
         $input = $request->all();
 
         if(empty($input['calificacion'])  or  !is_numeric($input['calificacion']) or $input['calificacion'] < 0 or $input['calificacion']>100){
-            Flash::success('calificacion no registrado.');
-            return $id;
+            abort(404,"Formato invalido");
         }
 
         $activitie = $this->activitieRepository->find($id);
 
         if(empty($activitie)){
-            Flash::success('calificacion no registrado.');
-            return $id;
+            abort(404,"No disponible");
         }        
 
         if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-            Flash::success('Actividad no registrada.');
-            return $id;
+            abort(404,"No disponible");
         } 
 
         $qualification = $activitie->qualifications()->where("estudiante_id","=",$input["estudiante"])->get();
@@ -64,8 +55,7 @@ class QualificationController extends AppBaseController
 
 
         if (empty($qualification)) {
-            Flash::error('Calificacion no asignada');
-            return $id;
+            abort(404,"No disponible");
         }
 
         $update["qualification"] = $input["calificacion"];        
@@ -73,8 +63,6 @@ class QualificationController extends AppBaseController
         $update["observaciones"] = "Sin oberservaciones";
 
         $qualification = $this->qualificationRepository->update($update, $qualification->id);
-
-        Flash::success('Calificacion asignada.');
 
         return $qualification;
     }

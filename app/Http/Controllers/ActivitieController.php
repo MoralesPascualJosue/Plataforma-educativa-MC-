@@ -2,25 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateActivitieRequest;
-use App\Http\Requests\UpdateActivitieRequest;
 use App\Repositories\ActivitieRepository;
 use App\Repositories\CursoRepository;
 use App\Repositories\ContenidoRepository;
 use App\Repositories\WorkRepository;
 use App\Repositories\TaskRepository;
 use App\Repositories\QualificationRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
-use Response;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-
 use App\Events\ActivitieEvent;
 
-class ActivitieController extends AppBaseController
+class ActivitieController extends Controller
 {
     private $activitieRepository;
     private $contenidoRepository;
@@ -44,7 +37,7 @@ class ActivitieController extends AppBaseController
         $miusuario = Auth::user();
 
         if(!$miusuario->hasPermissionTo('edit cursos')){
-            return redirect(route('inicio'));
+            abort(404,"No disponible");
         }
 
         $miusuario = $miusuario->asesor()->get()['0'];
@@ -75,11 +68,7 @@ class ActivitieController extends AppBaseController
             return $activitie;
         }
 
-
-
-        Flash::success('Actividad creada.');
-
-        return redirect()->back();
+        return "No dosponible";
     }
 
     public function showActivitie($id,Request $request)
@@ -92,15 +81,13 @@ class ActivitieController extends AppBaseController
         $activitie = $this->activitieRepository->find($id);        
 
         if (empty($activitie)) {            
-            Flash::success('Actividad no encontrada.');
-           return redirect()->back();
+           return "Actividad no encontrada";
         }
 
         $curso = $activitie->cursos()->first();
 
-         if (empty($curso)) {
-            Flash::success('Curso no disponible.');
-           return redirect()->back();
+        if (empty($curso)) {
+           return "Curso no disponible";
         }
 
         $task = $activitie->task()->get()['0']->contenido;        
@@ -108,14 +95,13 @@ class ActivitieController extends AppBaseController
         if($miusuario->hasPermissionTo('edit cursos')){
             $miusuario = $miusuario->asesor()->get()['0'];
             if(!$activitie->hasPropiedad($miusuario->id)){
-                Flash::success('Actividad no registrada.');
-                return redirect()->route('inicio');
+                return "Actividad no registrada";
             }    
         }else{
             $miusuario = $miusuario->estudiante()->get()['0'];
 
             if(!$curso->hasMatriculado($miusuario->id) or $activitie->visible != 1){
-                return redirect()->route('inicio');
+                return "No disponible";
             }               
             
             $works = $activitie->works()->get()->where("estudiante_id","=",$miusuario->id);
@@ -135,7 +121,6 @@ class ActivitieController extends AppBaseController
                     return $query->where('id',$request['n']);
                 })->markAsRead();
             }
-
         }     
         
         if($request->ajax()){
@@ -145,13 +130,10 @@ class ActivitieController extends AppBaseController
             $data["works"] = $works;
             $data["entrega"] = sizeof($works);
             $data["qualification"] = $qualification;
-
             return $data;
         }
 
-        $view = \View::make('activities.show')->with(compact('activitie','curso','task','works','qualification'));
-        
-        return $view;
+        return "No disponible";
     }
 
     public function destroya($id,Request $request)
@@ -159,26 +141,20 @@ class ActivitieController extends AppBaseController
         $activitie = $this->activitieRepository->find($id);
         $curso = $activitie->cursos()->first()->id;
         if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-                Flash::success('Actividad no registrada.');
-                return redirect()->route('inicio');
                 abort(404,"No disponible");
         } 
 
         if (empty($activitie)) {
-
             return 'Actividad no encontrada';
         }
 
         $this->activitieRepository->delete($id);
 
         if($request->ajax()){
-            //Flash::success('Cursos cargado.');
-            return "Eliminado";
+            return "Actividad eliminada";
         }
 
-        Flash::success('Actividad eliminada.');
-
-       return Response()->json([ 'curso' => $curso]);
+       return "No disponible";
     }
 
     public function updatea($id, Request $request)
@@ -196,7 +172,7 @@ class ActivitieController extends AppBaseController
         $curso = $activitie->cursos()->get()[0];  
         
         if($input["fecha_inicio"] > $input["fecha_final"]){
-                abort(403,"fechas no validas");
+            abort(403,"fechas no validas");
         } 
         
         if (empty($activitie)) {
@@ -204,8 +180,7 @@ class ActivitieController extends AppBaseController
         }
 
         if(!$activitie->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
-            Flash::success('Actividad no registrado.');
-            return redirect()->route('inicio');
+            return "Actividad no registrada";
         } 
 
         if ($activitie->visible == 0 and $input['visible'] == 1) {
@@ -215,102 +190,8 @@ class ActivitieController extends AppBaseController
             $activitie = $this->activitieRepository->update($input, $id);
         }
 
-        
-
          return $activitie;
     }
-//////////////////////////////////////////uploads
 
-    public function uploadFileimage(Request $request){
-        if ($files = $request->file('fileToUpload')) {
-             $id = Auth::user()->id;
-            request()->validate([
-                'fileToUpload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-            $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
-            $ruta = request()->fileToUpload->storeAs('images/'.$id,$fileName,'public');
-            return asset($ruta);
-        }
-
-        abort(402,"Archivo no seleccionado");
-
-    }
-
-    public function uploadFilevideo(Request $request){
-        if ($files = $request->file('fileToUpload')) {
-             $id = Auth::user()->id;
-            request()->validate([
-                'fileToUpload' => 'required|mimes:mpeg,mp4,webm,mov,flv,avi,wmv|max:307200'
-            ]);
-            $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
-            $ruta = request()->fileToUpload->storeAs('media/'.$id,$fileName,'public');
-            return asset($ruta);
-        }
-
-        abort(402,"Archivo no seleccionado");
-
-    }
-
-    public function uploadFiledoc(Request $request){
-        if ($files = $request->file('fileToUpload')) {
-             $id = Auth::user()->id;
-            request()->validate([
-                'fileToUpload' => 'required|mimes:pdf|max:30720'
-            ]);
-            $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
-            $ruta = request()->fileToUpload->storeAs('archivos/'.$id,$fileName,'public');
-            return asset($ruta);
-        }
-
-        abort(402,"Archivo no seleccionado");
-
-    }
-
-    public function uploadFile(Request $request){
-        if ($files = $request->file('fileToUpload')) {
-            $data;            
-            $id = Auth::user()->id;
-            request()->validate([
-                'fileToUpload' => 'required|max:51200',
-            ]);
-            $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
-            $ruta = request()->fileToUpload->storeAs('archivos/'.$id,$fileName,'public');            
-
-            $data['url'] = asset($ruta);
-            $data['type'] = request()->fileToUpload->getClientOriginalExtension();
-            $data['name'] = request()->fileToUpload->getClientOriginalName();
-            $data['icon'] = "../resources/icons/work.svg";
-            return $data;
-        }
-
-        abort(402,"Archivo no seleccionado");
-    }
-
-    public function uploadFilee(Request $request){
-
-        $types = array('jpeg','png','jpg','gif','svg');      
-        if ($files = $request->file('file')) {
-            $data;            
-            $id = Auth::user()->id;
-            request()->validate([
-                'file' => 'required|max:51200',
-            ]);
-            $fileName = "file".time().request()->file->getClientOriginalName();
-            $ruta = request()->file->storeAs('archivos/'.$id,$fileName,'public');            
-
-            $data['url'] = $ruta;
-            $data['name'] = request()->file->getClientOriginalName();
-            $data['type'] = request()->file->getClientOriginalExtension();
-            $data['icon'] = "resources/icons/work.svg";
-
-            if (in_array($data['type'],$types)) {
-                $data['icon'] = $ruta;
-            }
-            return $data;
-        }
-
-        abort(402,"Archivo no seleccionado");
-
-    }
 }
 

@@ -4,27 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Response;
 
 use App\Models\Anuncio;
 
 class AppController extends Controller
 {
-     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index(Request $request)
     {
         $anuncios = [];
@@ -38,6 +28,5 @@ class AppController extends Controller
         $view = \View::make('homevue')->with(compact('anuncios','perfil'));
         return $view;
     }
-
-
+    
 }

@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateWorkRequest;
-use App\Http\Requests\UpdateWorkRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 use App\Repositories\WorkRepository;
 use App\Repositories\ActivitieRepository;
 use App\Repositories\QualificationRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
-use Flash;
-use Response;
 
-use Illuminate\Support\Facades\Auth;
-
-class WorkController extends AppBaseController
+class WorkController extends Controller
 {
-    /** @var  WorkRepository */
+
     private $workRepository;
     private $activitieRepository;
     private $qualificationRepository;
@@ -71,15 +66,13 @@ class WorkController extends AppBaseController
         $inputq['estado'] = 1;
         $qualification->update($inputq);
 
-        //Flash::success('Entrega guardada');
-
         return $work;
     }
 
     public function showworks($activitie,$estudiante)
     {
         if(!(Auth::user()->hasPermissionTo('edit cursos'))){
-            return redirect()->route('inicio');
+            abort(404,"No disponible");
         }
 
         $activitie = $this->activitieRepository->find($activitie);

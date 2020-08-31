@@ -2332,8 +2332,6 @@ __webpack_require__.r(__webpack_exports__);
     guardarcambiosp: function guardarcambiosp() {
       var _this2 = this;
 
-      console.log("guardado");
-
       if (this.nombre == "" || this.institucion == "" || this.departamento == "") {
         flash("Campos vacios", "warning");
         return "fail";
@@ -4062,7 +4060,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         $("#dLabelut").dropdown("toggle");
         _this2.errorr = false;
-        console.log(response);
 
         _this2.$store.commit("changediscu", response.data);
 

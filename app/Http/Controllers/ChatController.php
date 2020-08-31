@@ -8,8 +8,6 @@ use Flash;
 use Response;
 
 use App\Repositories\cursoRepository;
-use App\User;
-use App\Models\Curso;
 use App\Models\Message;
 use App\Models\user_message;
 
@@ -27,27 +25,18 @@ class ChatController extends Controller
      public function mensajes($cur,Request $request)
     {       
         $usero = Auth::user(); 
-        $user = User::find($usero->id,["name","email","image"]);
         $curso = $this->cursoRepository->find($cur,['id','title','cover']);     
         $chats = [];
-
-        if($usero->can('edit cursos')){
-            $user['perfil'] = $usero->asesor()->get()[0];
-        }else{
-            $user['perfil'] = $usero->estudiante()->get()[0];
-        }
 
         $chats = $usero->mensages()->withUser()->orderBy("created_at","DESC")->where('curso_id',$cur)->get();
         $nuevos = $usero->mensages()->withUser()->where('curso_id',$cur)->where('news',1)->count();
 
-        $contacts = $this->cursoRepository
-        ->find($cur)
+        $contacts = $this->cursoRepository->find($cur)
         ->estudiantes()
         ->withUser()
         ->get(["user_id","name"]);      
 
-        $contacts[] = $this->cursoRepository
-        ->find($cur)
+        $contacts[] = $this->cursoRepository->find($cur)
         ->asesor()
         ->withUser()
         ->first(["user_id","name"]);
@@ -55,20 +44,13 @@ class ChatController extends Controller
         $enviados = $usero->messages()->withUser()->orderBy("created_at","DESC")->where('curso_id',$cur)->get();
 
         if($request->ajax()){
-            // $sections = $view->renderSections();
-            // return Response::json($sections['content']);
             $data["enviado"] = $enviados;
             $data["chats"] =$chats;
             $data["contacts"] = $contacts;
-            $data["user"] = $user;
             $data["nuevos"] = $nuevos;
 
             return $data;
         }
-
-        //$view = \View::make('chat.show')->with(compact('curso','chats','contacts','user'));
-        
-        //return $view;
         return "No disponible";
     }
 
@@ -113,7 +95,7 @@ class ChatController extends Controller
             user_message::create($in);    
         }             
 
-        $message["user"] = User::where("id",$message["send"])->get(["name","image"])[0];
+        $message["user"] = Auth::user()->get(["name","image"])[0];
 
         return $message;
     }
@@ -127,20 +109,21 @@ class ChatController extends Controller
         }
 
         $message[0]["destino"] = Message::find($u)->users()->get(["name","email"]);
-        $message[0]["cursoName"] = Curso::where("id",$message[0]["curso_id"])->first(["title"]);
         $message[0]["leido"] = false;
 
         $input["news"] = 0;        
         $marcarleido = user_message::where('user_id',Auth::user()->id)->where('message_id',$u);
-        $marcarleido->update($input);
-        $message[0]["leido"] = true;
+
+        if ($marcarleido->get()[0]->news != 0) {
+            $marcarleido->update($input);            
+            $message[0]["leido"] = true;
+        }        
         
         return $message[0];
     }
 
     public function destroyc($id)
     {   
-
         $menssage = Message::find($id);
 
         if(empty($menssage)){
@@ -161,19 +144,5 @@ class ChatController extends Controller
         $menssage->delete();
 
         return "eliminado -";
-    }
-
-    public function updatems($cur)
-    {
-        $usero = Auth::user();  
-        $chats = $usero->mensages()->withUser()->orderBy("created_at","DESC")->where('curso_id',$cur)->get();
-        return $chats;
-    }
-
-    public function enviadosms($cur)
-    {
-        $usero = Auth::user();  
-        $chats = $usero->messages()->withUser()->orderBy("created_at","DESC")->where('curso_id',$cur)->get();
-        return $chats;
     }
 }

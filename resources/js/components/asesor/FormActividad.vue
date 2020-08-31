@@ -44,7 +44,7 @@
       </form>
       <button class="btn btn-warning" @click="restaurarvaloresa()">Restaurar valores</button>
     </div>
-    <a href="javascrip:void(0)" class="aside-link" @click="eliminarac()">Eliminar actividad</a>
+    <a href="javascript:void(0)" class="aside-link" @click="eliminarac()">Eliminar actividad</a>
   </div>
 </template>
 

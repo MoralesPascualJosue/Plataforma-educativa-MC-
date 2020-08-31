@@ -5,48 +5,43 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateAnuncioRequest;
 use App\Http\Requests\UpdateAnuncioRequest;
 use App\Repositories\AnuncioRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
-use Flash;
-use Response;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class AnuncioController extends AppBaseController
+class AnuncioController extends Controller
 {
     private $anuncioRepository;
 
     public function __construct(AnuncioRepository $anuncioRepo)
     {
         $this->anuncioRepository = $anuncioRepo;
+        $this->middleware('auth');
     }
 
     public function storea(CreateAnuncioRequest $request)
     {        
-
+        if (Auth::user()->cannot("edit cursos")) {
+            return "No disponible";     
+        }
         $input = $request->all();
-
         $input['user_id'] = Auth::user()->id;
-
         $anuncio = $this->anuncioRepository->create($input);
 
         if($request->ajax()){
             return $anuncio;
         }
         
-        Flash::success('Anuncio publicado.');     
-
-        $anuncios = $this->anuncioRepository->all()->sortBy('updated_at' ,SORT_REGULAR , true);        
-
-        $view = \View::make('anuncios.showanuncios')->with('anuncios',$anuncios);
-        
-        return $view;
+        return "No disponible";
     }
-
 
     public function destroya($id)
     {
+
+        if (Auth::user()->cannot("edit cursos")) {
+            return "No disponible";     
+        }
+
         $anuncio = $this->anuncioRepository->find($id);
 
         if (empty($anuncio)) {
@@ -54,18 +49,16 @@ class AnuncioController extends AppBaseController
         }
 
         $this->anuncioRepository->delete($id);
-
-        Flash::success('Anuncio eliminado.');
-
-        $anuncios = $this->anuncioRepository->all()->sortBy('updated_at' ,SORT_REGULAR , true);
-
-        $view = \View::make('anuncios.showanuncios')->with('anuncios',$anuncios);
         
-        return $view;
+        return "Anuncio eliminado";
     }
 
      public function updatea($id, UpdateAnuncioRequest $request)
     {
+        if (Auth::user()->cannot("edit cursos")) {
+            return "No disponible";     
+        }
+
         $anuncio = $this->anuncioRepository->find($id);
 
         if (empty($anuncio)) {
@@ -81,14 +74,8 @@ class AnuncioController extends AppBaseController
         if($request->ajax()){
             return $anuncio;
         }
-
-        Flash::success('Anuncio actualizado.');
-
-        $anuncios = $this->anuncioRepository->all()->sortBy('updated_at' ,SORT_REGULAR , true);
-
-        $view = \View::make('anuncios.showanuncios')->with('anuncios',$anuncios);
         
-        return $view;
+        return "No disponible";
     }
 
 }
