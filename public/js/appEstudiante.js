@@ -66103,7 +66103,7 @@ var render = function() {
                         return _c(
                           "div",
                           {
-                            key: activitie.id,
+                            key: activitie.type + activitie.id,
                             staticClass: "actividad list-complete-item"
                           },
                           [
