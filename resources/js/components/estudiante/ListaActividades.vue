@@ -45,7 +45,7 @@
             <transition-group name="list-complete" tag="p" mode="out-in">
               <div
                 v-for="activitie in actividades.data"
-                v-bind:key="activitie.id"
+                v-bind:key="activitie.type+activitie.id"
                 class="actividad list-complete-item"
               >
                 <Actividad
