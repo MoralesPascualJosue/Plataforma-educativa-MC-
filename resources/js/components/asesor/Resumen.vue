@@ -14,7 +14,11 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
-            <th scope="col" v-for="actividad in actividades" :key="actividad.id">{{actividad.title}}</th>
+            <th
+              scope="col"
+              v-for="actividad in actividades"
+              :key="actividad.type+actividad.id"
+            >{{actividad.title}}</th>
             <th scope="col" class="b-color">Promedio</th>
           </tr>
         </thead>
