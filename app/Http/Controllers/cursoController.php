@@ -40,7 +40,7 @@ class cursoController extends Controller
         $this->cursoRepository = $cursoRepo;
         $this->matriculadoRepository = $matriculadoRepo;
         $this->activitieRepository = $activitieRepo;
-        $this->elementos = 12;
+        $this->elementos = 15;
         $this->middleware('auth');
     }
 
