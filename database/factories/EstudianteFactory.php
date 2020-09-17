@@ -12,7 +12,7 @@ $factory->define(Estudiante::class, function (Faker $faker) {
         'bio' => $faker->text,  
         'institute' => $faker->word,
         'department' => $faker->word,
-        'telephone' => $faker->word,
+        'telephone' => '0',
         'user_id' => $faker->word,
         'created_at' => $faker->date('Y-m-d H:i:s'),
         'updated_at' => $faker->date('Y-m-d H:i:s')

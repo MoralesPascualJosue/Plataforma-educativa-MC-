@@ -11,8 +11,10 @@ $factory->define(Qualification::class, function (Faker $faker) {
         'qualification' => $faker->randomDigitNotNull,
         'observaciones' => $faker->text,
         'estado' => $faker->randomDigitNotNull,
-        'activitie_id' => $faker->randomDigitNotNull,
-        'created_at' => $faker->date('Y-m-d H:i:s'),
-        'updated_at' => $faker->date('Y-m-d H:i:s')
+        'activitie_id' => $faker->numberBetween(1,50),
+        'curso_id' => $faker->numberBetween(1,50),
+        'estudiante_id' => $faker->numberBetween(1,50),
+        'created_at' => $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-2 years', $timezone = null),
+        'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
     ];
 });

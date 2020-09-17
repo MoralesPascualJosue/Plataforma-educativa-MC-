@@ -39,55 +39,109 @@
         </table>
       </div>
       <div v-else key="calificar">
-        <div @click="regresaralista" class="backtolist">Regresar a la lista</div>
-        <transition name="slide-fade">
-          <div v-if="!loading">
-            <div class="row mt-3">
-              <div class="col">
-                Calificacion:
-                <span class="h3">
-                  {{estudiante.qualificationqualification}}
-                  <span class="fsmall">
-                    <FormCalificacion
-                      v-bind:estudiante="estudiante"
-                      v-bind:activitie=" this.actividad.activitie.id"
-                      @asignar-calificacion="asignarcalificacion"
-                    />
+        <div v-if="type == 'activitie'">
+          <div @click="regresaralista" class="backtolist">Regresar a la lista</div>
+          <transition name="slide-fade">
+            <div v-if="!loading">
+              <div class="row mt-3">
+                <div class="col">
+                  Calificacion:
+                  <span class="h3">
+                    {{estudiante.qualificationqualification}}
+                    <span class="fsmall">
+                      <FormCalificacion
+                        v-bind:estudiante="estudiante"
+                        v-bind:activitie=" this.actividad.activitie.id"
+                        @asignar-calificacion="asignarcalificacion"
+                      />
+                    </span>
                   </span>
-                </span>
+                </div>
+                <div class="col">
+                  Nombre:
+                  <span class="h3">{{estudiante.name}}</span>
+                </div>
               </div>
-              <div class="col">
-                Nombre:
-                <span class="h3">{{estudiante.name}}</span>
+              <div>
+                <div v-for="(contenido, indexc) in contenidos.contenidos" :key="indexc">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Contenido</th>
+                        <th scope="col">Fecha de entrega</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tr>
+                      <td scope="row">{{contenido.entregas}}</td>
+                      <td href="javascript:void(0)" @click="openFileView(contenido.contenido)">
+                        <a href="javascript:void(0)">Ver</a>
+                      </td>
+                      <td>{{contenido.created_at}}</td>
+                      <td></td>
+                    </tr>
+                    <tbody id="contenidowork" v-html="contenido.contenido"></tbody>
+                  </table>
+                  <hr />
+                </div>
               </div>
             </div>
-            <div>
-              <div v-for="(contenido, indexc) in contenidos.contenidos" :key="indexc">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">N°</th>
-                      <th scope="col">Contenido</th>
-                      <th scope="col">Fecha de entrega</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tr>
-                    <td scope="row">{{contenido.entregas}}</td>
-                    <td href="javascript:void(0)" @click="openFileView(contenido.contenido)">
-                      <a href="javascript:void(0)">Ver</a>
-                    </td>
-                    <td>{{contenido.created_at}}</td>
-                    <td></td>
-                  </tr>
-                  <tbody id="contenidowork" v-html="contenido.contenido"></tbody>
-                </table>
-                <hr />
-              </div>
+          </transition>
+          <FileShow :show="showModal" v-bind:recursos="recursos" @close="showModal = false" />
+        </div>
+        <div v-else>
+          <div @click="regresaralista" class="backtolist">Regresar a la lista</div>
+          <div class="row mt-3">
+            <div class="col">
+              Calificación:
+              <span class="h3">{{contenidos.calificacion}}</span>
+            </div>
+            <div class="col">
+              Nombre:
+              <span class="h3">{{estudiante.name}}</span>
             </div>
           </div>
-        </transition>
-        <FileShow :show="showModal" v-bind:recursos="recursos" @close="showModal = false" />
+          <hr />
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Pregunta</th>
+                  <th scope="col"></th>
+                  <th scope="col">Puntaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(question,indexq) in contenidos.questions" :key="indexq">
+                  <th scope="row">{{indexq+1}}</th>
+                  <td colspan="3">
+                    <h4>{{question.question}}</h4>
+                    <hr />
+                    <div class="row" v-for="(respuesta,indexr) in question.respuesta" :key="indexr">
+                      <div class="col-8">{{respuesta.answer}}</div>
+                      <div class="col-4">
+                        Puntaje:
+                        <input
+                          class="w-50"
+                          type="number"
+                          v-model="puntajes[indexq].calificacion[indexr].valor"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3"></td>
+                  <td>
+                    <button class="btn btn-primary" @click="guardarpuntajes">Guardar puntajes</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </transition>
     <span
@@ -105,6 +159,7 @@ import FileShow from "./FileShow";
 export default {
   data() {
     return {
+      type: "",
       numeromatriculados: 0,
       numerodeentregas: 0,
       porrevisar: 0,
@@ -116,10 +171,18 @@ export default {
       loading: false,
       contenidos: [],
       showModal: false,
-      recursos: []
+      recursos: [],
+      puntajes: []
     };
   },
   computed: {
+    suma() {
+      let suma = 0;
+      this.puntajes.forEach(element => {
+        suma = suma + parseInt(element);
+      });
+      return suma;
+    },
     actividad() {
       return this.$store.getters.actividadview;
     },
@@ -132,14 +195,47 @@ export default {
     FileShow
   },
   created() {
-    axios.get("/trabajos/" + this.actividad.activitie.id).then(res => {
+    let url = "/trabajos/";
+
+    if (this.actividad.activitie.type != "activitie") {
+      url = "/test/trabajos/";
+    }
+
+    axios.get(url + this.actividad.activitie.id).then(res => {
       this.estudiantes = res.data.estudiantes;
       this.numeromatriculados = res.data.estudiantes.length;
       this.numerodeentregas = res.data.numeroentregas;
       this.porrevisar = res.data.enrevision;
+      this.type = res.data.type;
     });
   },
   methods: {
+    guardarpuntajes() {
+      axios
+        .post("test/puntajes/" + this.actividad.id + "/" + this.estudiante.id, {
+          puntajes: this.puntajes
+        })
+        .then(res => {
+          this.contenidos.calificacion = res.data.calificacion;
+          let estudiante = this.estudiante;
+          estudiante.qualificationestado = 2;
+          estudiante.qualificationqualification = res.data.calificacion;
+
+          const index = this.estudiantes.findIndex(
+            item => item.id === estudiante.id
+          );
+
+          this.estudiantes[index] = estudiante;
+          this.actividad.entregas--;
+          this.porrevisar--;
+          this.$store.commit("updateactividad", this.actividad);
+
+          flash("Puntajes guardados", "success");
+        })
+        .catch(res => {
+          flash("Fallo el guardar puntajes: intenta mas tarde", "error");
+        });
+    },
     openFileView(value) {
       this.showModal = true;
       let recursos = [];
@@ -172,17 +268,47 @@ export default {
       this.estudiante = this.estudiantes[value];
       this.calificando = true;
       this.loading = true;
-      axios
-        .get(
-          "/showworks/" + this.actividad.activitie.id + "/" + this.estudiante.id
-        )
-        .then(res => {
-          this.loading = false;
-          this.contenidos = res.data;
-        })
-        .catch(res => {
-          console.log(error);
-        });
+
+      if (this.type == "activitie") {
+        axios
+          .get(
+            "/showworks/" +
+              this.actividad.activitie.id +
+              "/" +
+              this.estudiante.id
+          )
+          .then(res => {
+            this.loading = false;
+            this.contenidos = res.data;
+          })
+          .catch(res => {
+            this.loading = false;
+          });
+      } else {
+        axios
+          .get("test/showwork/" + this.actividad.id + "/" + this.estudiante.id)
+          .then(res => {
+            this.loading = false;
+            this.contenidos = res.data;
+
+            res.data.questions.forEach(element => {
+              let respu = {
+                question: element.id,
+                calificacion: []
+              };
+              element.respuesta.forEach(res => {
+                respu.calificacion.push({
+                  pregunta: res.id,
+                  valor: res.qualification
+                });
+              });
+              this.puntajes.push(respu);
+            });
+          })
+          .catch(res => {
+            this.loading = false;
+          });
+      }
     },
     regresaralista() {
       this.calificando = false;

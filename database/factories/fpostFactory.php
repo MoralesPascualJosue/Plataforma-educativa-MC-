@@ -10,9 +10,9 @@ $factory->define(fpost::class, function (Faker $faker) {
     return [
         'body' => $faker->text,
         'locked' => $faker->randomDigitNotNull,
-        'fdiscusion_id' => $faker->randomDigitNotNull,
-        'user_id' => $faker->randomDigitNotNull,
-        'created_at' => $faker->date('Y-m-d H:i:s'),
-        'updated_at' => $faker->date('Y-m-d H:i:s')
+        'fdiscusion_id' => $faker->numberBetween(1,1000),
+        'user_id' => $faker->numberBetween(1,60),   
+        'created_at' => $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-2 years', $timezone = null),
+        'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
     ];
 });

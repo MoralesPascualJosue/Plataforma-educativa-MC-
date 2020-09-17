@@ -1,7 +1,7 @@
 <template>
   <div class="container slideani">
     <transition name="fade" mode="out-in">
-      <div v-if="!calificando" key="lista">
+      <div v-if="this.actividad.activitie" key="lista">
         <div class="row">
           <div class="col">
             Entregas realizadas
@@ -60,6 +60,23 @@
           </div>
         </div>
         <FileShow :show="showModal" v-bind:recursos="recursos" @close="showModal = false" />
+      </div>
+      <div v-else>
+        <div class="row" v-if="actividad.estado">
+          <div class="col">
+            Entrega realizada el:
+            <span class="h3">{{actividad.result[0].taken_date}}</span>
+          </div>
+          <div class="col">
+            Calificacion
+            <span class="h3">{{actividad.calificacion}}</span>
+          </div>
+        </div>
+        <div v-else>
+          <div class="col">
+            <span class="h3">Sin entregas</span>
+          </div>
+        </div>
       </div>
     </transition>
   </div>

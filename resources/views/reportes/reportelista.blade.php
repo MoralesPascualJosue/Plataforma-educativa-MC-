@@ -69,6 +69,10 @@
         .box tr {
             border-bottom: 1px solid black;
         }
+
+        #selectable {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -94,8 +98,11 @@
                     <tr>
                         <th>No.</th>
                         <th class="orange">Nombre del alumno</th>
-                        @for ($i = 0; $i < $actividades->count(); $i++)
+                        @for ($i = 0; $i < count($actividadesa); $i++) @if ($actividadesa[$i]['type']=='activitie' )
                             <th>A{{$i+1}}</th>
+                            @else
+                            <th>P{{$i+1}}</th>
+                            @endif
                             @endfor
                             <th>Calificación</th>
                     </tr>

@@ -24,29 +24,14 @@
     </div>
     <div class="item2">
       <div class="container">
-        <button
-          id="dlabela"
-          type="button"
-          aria-haspopup="true"
-          aria-expanded="false"
-          @click="createactividad()"
-          class="btn btn-primary float-right"
-        >
-          <p class="line-d" v-if="!loading">Crear actividad</p>
-          <span
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-            v-if="loading"
-          ></span>
-          <p class="line-d" v-if="loading">Creando...</p>
-        </button>
+        <FormContent @crear-actividad="createactividad" />
+
         <Actividades>
           <template slot-scope="{ togglePopup }">
             <transition-group name="list-complete" tag="p" mode="out-in">
               <div
                 v-for="activitie in actividades.data"
-                v-bind:key="activitie.id"
+                :key="activitie.id"
                 class="actividad list-complete-item"
               >
                 <Actividad
@@ -68,13 +53,12 @@
 import Actividades from "./Actividades";
 import Actividad from "./Actividad";
 import FormCursoUpdate from "./FormCursoUpdate";
+import FormContent from "./FormContent";
 
 export default {
   data() {
     return {
-      asesor: [],
-      loading: false,
-      errorr: false
+      asesor: []
     };
   },
   computed: {
@@ -99,10 +83,22 @@ export default {
   components: {
     Actividades,
     Actividad,
-    FormCursoUpdate
+    FormCursoUpdate,
+    FormContent
   },
   created() {
     axios.get("/scursoc/" + this.curso.id).then(res => {
+      Array.prototype.push.apply(res.data.actividades.data, res.data.tests);
+      res.data.actividades.data.sort(function(a, b) {
+        if (a.fecha_final < b.fecha_final) {
+          return 1;
+        }
+        if (a.fecha_final > b.fecha_final) {
+          return -1;
+        }
+        // a must be equal to b
+        return 0;
+      });
       this.asesor = res.data.curso.asesor;
       this.$store.commit("changeactividades", res.data.actividades);
     });
@@ -118,24 +114,8 @@ export default {
         });
       }
     },
-    createactividad() {
-      axios
-        .post("/storeaa/" + this.curso.id)
-        .then(response => {
-          this.errorr = false;
-          this.actividades.data.unshift(response.data);
-          flash("Actividad creada", "success");
-        })
-        .catch(response => {
-          this.errorr = true;
-          flash(
-            "Fallo la creacion del la actividad:prueba mas tarde.",
-            "error"
-          );
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+    createactividad(contenido) {
+      this.actividades.data.unshift(contenido);
     },
     nextpage() {
       let posy = window.scrollY;

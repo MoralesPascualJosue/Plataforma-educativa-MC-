@@ -6,7 +6,8 @@
       <div class="course-link-icon">
         <img :src="icon" alt="grupos" />
       </div>
-      <div class="course-link-details">
+
+      <div v-if="activitie.type != 'activitie'" class="course-link-details">
         <div class="course-link-name">
           {{ activitie.title }} {{ activitie.fecha_inicio }}
           <span
@@ -14,6 +15,18 @@
             class="badge badge-primary float-right fontct"
           >Pendientes: {{activitie.entregas}}</span>
         </div>
+        <div class="course-link-content">Fecha de vencimiento: {{ activitie.fecha_final }}</div>
+      </div>
+
+      <div v-else class="course-link-details">
+        <div class="course-link-name" v-if="activitie.type == 'activitie'">
+          {{ activitie.title }} {{ activitie.fecha_inicio }}
+          <span
+            v-if="activitie.entregas>0"
+            class="badge badge-primary float-right fontct"
+          >Pendientes: {{activitie.entregas}}</span>
+        </div>
+
         <div class="course-link-content">Fecha de vencimiento: {{ activitie.fecha_final }}</div>
       </div>
     </a>

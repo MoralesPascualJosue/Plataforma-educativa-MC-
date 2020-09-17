@@ -118,11 +118,19 @@ const store = new Vuex.Store({
             state.actividad = actividad;
         },
         updateactividad(state, actividad) {
-            state.actividad.activitie = actividad;
+            let title = "";
+            if (actividad.type == "activitie") {
+                title = state.actividad.activitie.title;
+                state.actividad.activitie = actividad;
+            } else {
+                title = state.actividad.title;
+                state.actividad = actividad;
+            }
 
             const indexa = state.actividades.data.findIndex(
-                item => item.id === actividad.id
+                item => item.title === title
             );
+
             state.actividades.data[indexa] = actividad;
         },
         updatediscuss(state, discu) {
@@ -189,7 +197,10 @@ const router = new VueRouter({
 
 const app = new Vue({
     //el: "#app",
-    components: { App, Flash },
+    components: {
+        App,
+        Flash
+    },
     store: store,
     router
 }).$mount("#app");

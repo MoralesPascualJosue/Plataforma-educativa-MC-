@@ -30,6 +30,7 @@ class Activitie extends Model
     public $fillable = [
         'title',
         'visible',
+        'type',
         'intentos',
         'fecha_inicio',
         'fecha_final',
@@ -45,6 +46,7 @@ class Activitie extends Model
         'id' => 'integer',
         'title' => 'string',
         'visible' => 'integer',
+        'type' => 'string',        
         'intentos' => 'integer',
         'asesor_id' => 'integer',
         'created_at' => 'date:Y-m-d'

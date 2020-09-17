@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Asesor;
 
 class AsesorsSeeder extends Seeder
 {
@@ -13,59 +12,18 @@ class AsesorsSeeder extends Seeder
     public function run()
     {
 
-        Factory(App\Models\Asesor::class)->create([
-              'user_id'=> 1,
-            'name' => Str::random(10),
-            'bio' => Str::random(10).'--bio',
-            'institute' => 'Instituto Tecnologico de Oaxaca',
-            'department' => 'Maestria en construccion',
-            'telephone' => '9511782851'
-        ]);
+       //Factory(App\Models\Matriculado::class,4500)->create();        
+        //Factory(App\Models\Activitie::class,4500)->create();
 
-        Factory(App\Models\Asesor::class)->create([
-                        'user_id'=> 2,
-            'name' => Str::random(10),
-            'bio' => Str::random(10).'--bio',
-            'institute' => 'Instituto Tecnologico de Oaxaca',
-            'department' => 'Maestria en construccion',
-            'telephone' => '9511782852'
-        ]);
+        Factory(App\Models\Contenido::class,4500)->create();
+        Factory(App\Models\Work::class,4500)->create();
+        Factory(App\Models\Task::class,4500)->create();
+        Factory(App\Models\Qualification::class,4500)->create();
 
-        Factory(App\Models\Estudiante::class)->create([
-           'user_id'=> 3,
-            'name' => Str::random(10),
-            'bio' => Str::random(10).'--bio',
-            'institute' => 'Instituto Tecnologico de Oaxaca',
-            'department' => 'Maestria en construccion',
-            'telephone' => '9511782833'
-        ]);
-
-        Factory(App\Models\Estudiante::class)->create([
-            'user_id'=> 4,
-            'name' => Str::random(10),
-            'bio' => Str::random(10).'--bio',
-            'institute' => 'Instituto Tecnologico de Oaxaca',
-            'department' => 'Maestria en construccion',
-            'telephone' => '9511782854'
-        ]);
-
-        Factory(App\Models\Asesor::class)->create([
-           'user_id'=> 5,
-            'name' => Str::random(10),
-            'bio' => Str::random(10).'--bio',
-            'institute' => 'Instituto Tecnologico de Oaxaca',
-            'department' => 'Maestria en Diseño',
-            'telephone' => '9521782833'
-        ]);
-
-        Factory(App\Models\Asesor::class)->create([
-            'user_id'=> 6,
-            'name' => Str::random(10),
-            'bio' => Str::random(10).'--bio',
-            'institute' => 'Instituto Tecnologico de Oaxaca',
-            'department' => 'Maestria en diseño',
-            'telephone' => '9512782854'
-        ]);
+        Factory(App\Models\fcategoria::class,200)->create();       
+        Factory(App\Models\fdiscusion::class,2000)->create();
+        Factory(App\Models\fpost::class,4500)->create();
+        Factory(App\Models\user_fdiscusion::class,4500)->create();
 
     }
 

@@ -4,7 +4,7 @@
       <form class="px-4 py-3 row" @submit="checkForm">
         <div class="col">
           <div class="form-group">
-            <label for="title">Nombre de la actividad</label>
+            <label for="title">Nombre</label>
             <input type="text" class="form-control" id="title" v-model="title" />
           </div>
           <div class="form-group">
@@ -31,7 +31,7 @@
             <input type="date" class="form-control block-d" id="fechafinal" v-model="fechafinal" />
           </div>
           <button type="submit" class="btn btn-primary">
-            <p class="line-d" v-if="!loading">Editar actividad</p>
+            <p class="line-d" v-if="!loading">Editar</p>
             <span
               class="spinner-border spinner-border-sm"
               role="status"
@@ -44,7 +44,10 @@
       </form>
       <button class="btn btn-warning" @click="restaurarvaloresa()">Restaurar valores</button>
     </div>
-    <a href="javascript:void(0)" class="aside-link" @click="eliminarac()">Eliminar actividad</a>
+    <a href="javascript:void(0)" class="aside-link" @click="eliminarac()">
+      <p v-if="this.actividad.num_takes >= 0">Eliminar prueba</p>
+      <p v-else>Eliminar actividad</p>
+    </a>
   </div>
 </template>
 
@@ -67,10 +70,19 @@ export default {
   },
   created() {
     this.title = this.actividad.activitie.title;
-    this.visible = this.actividad.activitie.visible;
-    this.intentos = this.actividad.activitie.intentos;
-    this.fechainicio = this.actividad.activitie.fecha_inicio;
-    this.fechafinal = this.actividad.activitie.fecha_final;
+
+    if (this.actividad.activitie.type != "activitie") {
+      this.visible = this.actividad.activitie.visible;
+      this.intentos = this.actividad.activitie.num_takes;
+      this.fechainicio = this.actividad.activitie.fecha_inicio;
+      this.fechafinal = this.actividad.activitie.fecha_final;
+    } else {
+      this.visible = this.actividad.activitie.visible;
+      this.intentos = this.actividad.activitie.intentos;
+      this.fechainicio = this.actividad.activitie.fecha_inicio;
+      this.fechafinal = this.actividad.activitie.fecha_final;
+    }
+
     jQuery(function($) {
       $("#fechafinal").prop("min", $("#fechainicio").val());
     });
@@ -82,16 +94,24 @@ export default {
   },
   methods: {
     restaurarvaloresa() {
-      this.title = this.actividad.activitie.title;
-      this.visible = this.actividad.activitie.visible;
-      this.intentos = this.actividad.activitie.intentos;
-      this.fechainicio = this.actividad.activitie.fecha_inicio;
-      this.fechafinal = this.actividad.activitie.fecha_final;
+      if (this.actividad.num_takes >= 0) {
+        this.title = this.actividad.title;
+        this.visible = this.actividad.visible;
+        this.intentos = this.actividad.num_takes;
+        this.fechainicio = this.actividad.start_date;
+        this.fechafinal = this.actividad.end_date;
+      } else {
+        this.title = this.actividad.activitie.title;
+        this.visible = this.actividad.activitie.visible;
+        this.intentos = this.actividad.activitie.intentos;
+        this.fechainicio = this.actividad.activitie.fecha_inicio;
+        this.fechafinal = this.actividad.activitie.fecha_final;
+      }
     },
     checkForm: function(e) {
       e.preventDefault();
 
-      if (this.title == "" || this.intentos == "") {
+      if (this.title == "") {
         flash("Campos vacios", "warning");
         return "fail";
       }
@@ -114,8 +134,14 @@ export default {
 
       this.loading = true;
 
+      let url = "";
+      if (this.actividad.num_takes >= 0) {
+        url = "/updateat/" + this.actividad.id;
+      } else {
+        url = "/updateaa/" + this.actividad.activitie.id;
+      }
       axios
-        .post("/updateaa/" + this.actividad.activitie.id, formData, {
+        .post(url, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -123,12 +149,12 @@ export default {
         .then(response => {
           this.errorr = false;
           this.$store.commit("updateactividad", response.data);
-          flash("Actividad actualizada", "success");
+          flash("Contenido actualizado", "success");
         })
         .catch(response => {
           this.errorr = true;
           flash(
-            "Fallo la actualizacion de la actividad: intentalo más tarde",
+            "Fallo la actualizacion del contenido: intentalo más tarde",
             "error"
           );
         })
@@ -137,11 +163,28 @@ export default {
         });
     },
     eliminarac() {
-      const confirmacion = confirm(`Eliminar actividad: ${this.title}`);
+      let url = "";
+      let mensaje = "";
+      if (this.actividad.num_takes >= 0) {
+        url = `/destroyat/${this.actividad.id}`;
+        mensaje = "Eliminar prueba: ";
+      } else {
+        url = `/destroyaa/${this.actividad.activitie.id}`;
+        mensaje = "Eliminar actividad: ";
+      }
+
+      const confirmacion = confirm(`${mensaje} ${this.title}`);
+
       if (confirmacion) {
-        axios.delete(`/destroyaa/${this.actividad.activitie.id}`).then(() => {
-          this.$store.commit("deleteteactividad", this.actividad.activitie);
-          flash("Actividad Eliminada", "info");
+        axios.delete(url).then(() => {
+          if (this.actividad.num_takes >= 0) {
+            this.$store.commit("deleteteactividad", this.actividad);
+            flash("Prueba Eliminada", "info");
+          } else {
+            this.$store.commit("deleteteactividad", this.actividad.activitie);
+            flash("Actividad Eliminada", "info");
+          }
+
           this.$emit("close");
         });
       }

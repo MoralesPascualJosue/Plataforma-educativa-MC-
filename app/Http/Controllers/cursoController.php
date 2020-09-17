@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Asesor;
 use App\Models\Activitie;
+use App\Models\Test;
 use App\Models\Estudiante;
 use App\Models\Curso;
 use App\Models\Work;
@@ -83,13 +84,14 @@ class cursoController extends Controller
     }
 
      public function showCurso($id,Request $request)
-    {        
+    {                
         
         $curso = $this->cursoRepository->find($id);
         $actividades = [];
         $actividadeshoy= 0;
         $actividadessemana= 0;
         $miusuario;
+        $tests=[];
 
         $hoy =  now()->toDateString();
 
@@ -101,9 +103,15 @@ class cursoController extends Controller
             if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
                 abort(404,"Curso no disponible");
             }    
-            $actividades = $curso->activities()->orderBy("activities.fecha_final","DESC")->paginate($this->elementos);
+            $actividades = $curso->activities()->orderBy("activities.fecha_final","DESC")->paginate($this->elementos);            
+            $tests = $curso->tests()->orderBy("tests.fecha_final","DESC")->get();  
+                      
             foreach ($actividades as $actividad) {                
                 $actividad['entregas'] = Qualification::where('activitie_id',$actividad->id)->where("estado",1)->count();
+             }
+
+             foreach ($tests as $test) {                
+                $test['entregas'] = $test->results()->where("state",1)->count();
              }
         }else{
             $miusuario = Auth::user()->estudiante()->get()[0];
@@ -112,7 +120,7 @@ class cursoController extends Controller
             }               
 
              $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_final","DESC")->paginate($this->elementos);
-
+             $tests = $curso->tests()->where("visible",1)->orderBy("tests.fecha_final","DESC")->get();
              foreach ($actividades as $actividad) {
                  $actividad['entregas'] = Work::where("estudiante_id",$miusuario->id)
                  ->where("activitie_id",$actividad->id)
@@ -121,8 +129,11 @@ class cursoController extends Controller
                  ;
              }
 
-            $actividadeshoy = $curso->activities()->where("visible","=",1)->where("fecha_final","=",$hoy)->count();
-            $actividadessemana = $curso->activities()->where("visible","=",1)->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->count();
+            $actividadeshoy = $curso->activities()->where("visible",1)->where("fecha_final",$hoy)->count();
+            $actividadeshoy = $actividadeshoy + $curso->tests()->where("visible",1)->where("fecha_final",$hoy)->count();
+            
+            $actividadessemana = $curso->activities()->where("visible",1)->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->count();
+            $actividadessemana = $actividadessemana + $curso->tests()->where("visible",1)->whereRaw("EXTRACT(week from fecha_final)=EXTRACT(week from NOW())")->count();
 
             $curso["notificacionesnum"] = count($miusuario->unreadNotifications);
             $curso["notificaciones"] = $miusuario->unreadNotifications;
@@ -134,6 +145,7 @@ class cursoController extends Controller
         $data['actividades'] = $actividades;
         $data['actividadeshoy'] = $actividadeshoy;
         $data['actividadessemana'] = $actividadessemana;
+        $data['tests'] = $tests;
 
         if($request->ajax()){
             return $data;
@@ -290,29 +302,54 @@ class cursoController extends Controller
 
         $estudiantes = $curso->estudiantes()->orderBy("name")->get();
         $actividades = $curso->activities()->where("visible","=",1)->get();
+        $tests = $curso->tests()->where("visible","=",1)->get();        
 
+        foreach ($tests as $test) { 
+            $actividades[] = $test;
+        }
+        
         $curso['participantes'] = $estudiantes->count();
 
         foreach ($estudiantes as $estudi) {   
             $calificacionescontenedor = [];      
             $suma = 0;      
             foreach($actividades as $acti){
-                
-                $calificacion = $acti->qualifications()->where("estudiante_id","=", $estudi->id )->get();
+                if ($acti['type'] == "test") {
+                    $calificacion = $acti->results()->where("estudiante_id","=", $estudi->id )->get();
 
-                if (empty($calificacion['0'])) {
-                    $contenidocal["id"] = $acti->id;
-                    $contenidocal['qualification'] = 'NA';
-                    $contenidocal['estado'] = "NA";
-                    $calificacion['0'] = $contenidocal;
-                }                                    
-                
-                $calificacionescontenedor[$acti->id] = $calificacion['0'];
+                    if (empty($calificacion['0'])) {
+                        $contenidocal["id"] = $acti->id;
+                        $contenidocal['qualification'] = 'NA';
+                        $contenidocal['estado'] = "NA";
+                        $calificacion['0'] = $contenidocal;
+                    }else{
+                        $contenidocal["id"] = $acti->id;
+                        $contenidocal['qualification'] = $calificacion[0]->result;
+                        $contenidocal['estado'] = $calificacion[0]->state;
+                        $calificacion['0'] = $contenidocal;
+                    }
 
-                if(is_numeric( $calificacion['0']['qualification'] )){
-                    $suma = $suma + $calificacion['0']['qualification'];
+                    $calificacionescontenedor[] = $calificacion['0'];
+
+                    if(is_numeric( $calificacion['0']['qualification'] )){
+                        $suma = $suma + $calificacion['0']['qualification'];
+                    }
+                }else{
+                     $calificacion = $acti->qualifications()->where("estudiante_id","=", $estudi->id )->get();
+
+                    if (empty($calificacion['0'])) {
+                        $contenidocal["id"] = $acti->id;
+                        $contenidocal['qualification'] = 'NA';
+                        $contenidocal['estado'] = "NA";
+                        $calificacion['0'] = $contenidocal;
+                    }                                    
+                    
+                    $calificacionescontenedor[] = $calificacion['0'];
+
+                    if(is_numeric( $calificacion['0']['qualification'] )){
+                        $suma = $suma + $calificacion['0']['qualification'];
+                    }
                 }
-
             }
 
             $promedio['qualification']= 0;
@@ -325,11 +362,20 @@ class cursoController extends Controller
 
             $estudi["calificaciones"] = $calificacionescontenedor;  
         }        
+       
+        $actividadesa = $actividades->toArray();
+
+        usort($actividadesa,function ($a,$b) {
+            if ($a['fecha_final'] == $b['fecha_final']) {
+                return 0;
+            }
+            return ($a['fecha_final'] < $b['fecha_final']) ? -1 : 1;
+        });
         
         if($request->ajax()){
             $data["estudiantes"] = $estudiantes;
             $data["curso"] = $curso;
-            $data["actividades"] = $actividades;
+            $data["actividades"] = $actividadesa;
             return $data;
         }
 
@@ -358,44 +404,78 @@ class cursoController extends Controller
         $asesor = $curso->asesor()->get(["name"])[0];
 
         $estudiantes = $curso->estudiantes()->orderBy("name")->get();
-        
         $actividades = $curso->activities()->where("visible","=",1)->get();
+        $tests = $curso->tests()->where("visible","=",1)->get();        
+
+        foreach ($tests as $test) { 
+            $actividades[] = $test;
+        }
 
         $curso['participantes'] = $estudiantes->count();
 
         $numero = 1;
         foreach ($estudiantes as $estudi) {   
+
             $calificacionescontenedor = [];      
-            $suma = 0;                  
+            $suma = 0;      
             foreach($actividades as $acti){
-                
-                $calificacion = $acti->qualifications()->where("estudiante_id","=", $estudi->id )->get();
+                if ($acti['type'] == "test") {
+                    $calificacion = $acti->results()->where("estudiante_id","=", $estudi->id )->get();
 
-                if (empty($calificacion['0'])) {
-                    $contenidocal["id"] = $acti->id;
-                    $contenidocal['qualification'] = 'NA';
-                    $contenidocal['estado'] = "NA";
-                    $calificacion['0'] = $contenidocal;
-                }                                    
-                
-                $calificacionescontenedor[$acti->id] = $calificacion['0'];
+                    if (empty($calificacion['0'])) {
+                        $contenidocal["id"] = $acti->id;
+                        $contenidocal['qualification'] = 'NA';
+                        $contenidocal['estado'] = "NA";
+                        $calificacion['0'] = $contenidocal;
+                    }else{
+                        $contenidocal["id"] = $acti->id;
+                        $contenidocal['qualification'] = $calificacion[0]->result;
+                        $contenidocal['estado'] = $calificacion[0]->state;
+                        $calificacion['0'] = $contenidocal;
+                    }
 
-                if(is_numeric( $calificacion['0']['qualification'] )){
-                    $suma = $suma + $calificacion['0']['qualification'];
-                }                
+                    $calificacionescontenedor[] = $calificacion['0'];
 
+                    if(is_numeric( $calificacion['0']['qualification'] )){
+                        $suma = $suma + $calificacion['0']['qualification'];
+                    }
+                }else{
+                     $calificacion = $acti->qualifications()->where("estudiante_id","=", $estudi->id )->get();
+
+                    if (empty($calificacion['0'])) {
+                        $contenidocal["id"] = $acti->id;
+                        $contenidocal['qualification'] = 'NA';
+                        $contenidocal['estado'] = "NA";
+                        $calificacion['0'] = $contenidocal;
+                    }                                    
+                    
+                    $calificacionescontenedor[] = $calificacion['0'];
+
+                    if(is_numeric( $calificacion['0']['qualification'] )){
+                        $suma = $suma + $calificacion['0']['qualification'];
+                    }
+                }
             }
             
-            $promedio['qualification'] = round($suma/$actividades->count());
-            $promedio['estado'] = "Promedio";
-            $calificacionescontenedor["promedio"] = $promedio;
+                $promedio['qualification'] = round($suma/$actividades->count());
+                $promedio['estado'] = "Promedio";
+                $calificacionescontenedor[] = $promedio;
 
-            $estudi["calificaciones"] = $calificacionescontenedor;  
-            $estudi["numero"] = $numero;
+                $estudi["calificaciones"] = $calificacionescontenedor;  
+                $estudi["numero"] = $numero;                            
             $numero++;
-        }        
+        }
 
-        $pdf = PDF::loadView('reportes.reportelista',compact('estudiantes','curso','actividades','asesor',"periodo"));
+        $actividadesa = $actividades->toArray();
+
+        usort($actividadesa,function ($a,$b) {
+            if ($a['fecha_final'] == $b['fecha_final']) {
+                return 0;
+            }
+            return ($a['fecha_final'] < $b['fecha_final']) ? -1 : 1;
+        });
+
+        $pdf = PDF::loadView('reportes.reportelista',compact('estudiantes','curso','actividadesa','asesor',"periodo"));
         return $pdf->stream('invoice.pdf');
     }
 
@@ -418,25 +498,52 @@ class cursoController extends Controller
         }
 
         $actividades = $curso->activities()->where("visible","=",1)->get();
+        $tests = $curso->tests()->where("visible","=",1)->get();        
+
+        foreach ($tests as $test) { 
+            $actividades[] = $test;
+        }
 
         $calificacionescontenedor = [];      
         $suma = 0;      
         foreach($actividades as $acti){
-                
-            $calificacion = $acti->qualifications()->where("estudiante_id","=", $miuser->estudiante()->get()['0']->id )->get();
 
-            if (empty($calificacion['0'])) {
-                $contenidocal["id"] = $acti->id;
-                $contenidocal['qualification'] = 'NA';
-                $contenidocal['estado'] = "NA";
-                $calificacion['0'] = $contenidocal;
-            }                                    
-            
-            $calificacionescontenedor[] = $calificacion['0'];
+             if ($acti['type'] == "test") {
+                    $calificacion = $acti->results()->where("estudiante_id","=", $miuser->estudiante()->get()['0']->id )->get();
 
-            if(is_numeric( $calificacion['0']['qualification'] )){
-                $suma = $suma + $calificacion['0']['qualification'];
-            }
+                    if (empty($calificacion['0'])) {
+                        $contenidocal["id"] = $acti->id;
+                        $contenidocal['qualification'] = 'NA';
+                        $contenidocal['estado'] = "NA";
+                        $calificacion['0'] = $contenidocal;
+                    }else{
+                        $contenidocal["id"] = $acti->id;
+                        $contenidocal['qualification'] = $calificacion[0]->result;
+                        $contenidocal['estado'] = $calificacion[0]->state;
+                        $calificacion['0'] = $contenidocal;
+                    }
+
+                    $calificacionescontenedor[] = $calificacion['0'];
+
+                    if(is_numeric( $calificacion['0']['qualification'] )){
+                        $suma = $suma + $calificacion['0']['qualification'];
+                    }
+                }else{
+                     $calificacion = $acti->qualifications()->where("estudiante_id","=", $miuser->estudiante()->get()['0']->id )->get();
+
+                    if (empty($calificacion['0'])) {
+                        $contenidocal["id"] = $acti->id;
+                        $contenidocal['qualification'] = 'NA';
+                        $contenidocal['estado'] = "NA";
+                        $calificacion['0'] = $contenidocal;
+                    }                                    
+                    
+                    $calificacionescontenedor[] = $calificacion['0'];
+
+                    if(is_numeric( $calificacion['0']['qualification'] )){
+                        $suma = $suma + $calificacion['0']['qualification'];
+                    }
+                }
 
         }
 
@@ -445,14 +552,24 @@ class cursoController extends Controller
             $promedio['qualification'] = round($suma/$actividades->count());   
         }            
 
+          $actividadesa = $actividades->toArray();
+
+        usort($actividadesa,function ($a,$b) {
+            if ($a['fecha_final'] == $b['fecha_final']) {
+                return 0;
+            }
+            return ($a['fecha_final'] < $b['fecha_final']) ? -1 : 1;
+        });
+
+
         
         $promedio['estado'] = "Promedio";
         $calificacionescontenedor[] = $promedio;        
         $promedio['title'] = "Promedio";
-        $actividades[] = $promedio;
+        $actividadesa[] = $promedio;
 
         $data["calificaciones"] = $calificacionescontenedor;
-        $data["actividades"] = $actividades;
+        $data["actividades"] = $actividadesa;
         $data["estudiante"] = $miuser->estudiante()->get()['0'];
         
         return $data;

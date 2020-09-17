@@ -15,7 +15,13 @@
           @click.prevent="setActive('entregas')"
           :class="{ active: isActive('entregas') }"
           href="#profile"
-        >Entregas</a>
+        >
+          Entregas
+          <span
+            v-if="entregas>0"
+            class="badge badge-primary float-right fontct"
+          >{{entregas}}</span>
+        </a>
       </li>
       <li class="nav-item">
         <a
@@ -28,7 +34,7 @@
     </ul>
     <div class="tab-content py-3" id="myTabContent">
       <div class="tab-pane fade" :class="{ 'active show': isActive('home') }" id="home">
-        <ActividadShow />
+        <ActividadShow @entregas="entrega" />
       </div>
       <div class="tab-pane fade" :class="{ 'active show': isActive('entregas') }" id="entregas">
         <keep-alive>
@@ -53,7 +59,8 @@ import EntregasActividad from "./EntregasActividad";
 export default {
   data() {
     return {
-      activeItem: "home"
+      activeItem: "home",
+      entregas: 0
     };
   },
   components: { ActividadShow, FormActividad, EntregasActividad },
@@ -66,6 +73,13 @@ export default {
     },
     setActive(menuItem) {
       this.activeItem = menuItem;
+    },
+    entrega(operacion) {
+      if (operacion) {
+        this.entregas++;
+      } else {
+        this.entregas--;
+      }
     }
   }
 };

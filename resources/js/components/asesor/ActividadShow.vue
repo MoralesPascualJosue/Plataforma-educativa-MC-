@@ -1,27 +1,58 @@
 <template>
   <div class="example container">
-    <div class="modal-header">
-      <h3>{{actividad.activitie.title}}</h3>
+    <div v-if="!loading">
+      <div class="modal-header">
+        <h3 v-if="type == 'activitie'">{{actividad.activitie.title}}</h3>
+        <h3 v-else>{{actividad.title}}</h3>
+      </div>
+      <Block v-if="type == 'activitie'" v-bind:contenidoinicial="actividad.task" />
+      <TestShow v-else />
     </div>
-    <Block v-bind:contenidoinicial="actividad.task" />
+    <div v-else>
+      <span
+        class="spinner-border width: 3rem; height: 3rem;-sm mt-3"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </div>
   </div>
 </template>
 
 <script>
 import Block from "./Block";
+import TestShow from "./TestShow";
 export default {
+  data() {
+    return {
+      type: "activitie",
+      loading: true
+    };
+  },
   computed: {
     actividad() {
       return this.$store.getters.actividadview;
     }
   },
   components: {
-    Block
+    Block,
+    TestShow
   },
   created() {
-    axios.get("/sactivitiec/" + this.actividad.activitie.id).then(res => {
-      this.$store.commit("changeactividad", res.data);
-    });
+    let url = "/sactivitiec/";
+    this.type = "activitie";
+    if (this.actividad.activitie.type != "activitie") {
+      url = "/test/show/";
+      this.type = "test";
+    }
+
+    axios
+      .get(url + this.actividad.activitie.id)
+      .then(res => {
+        this.$store.commit("changeactividad", res.data);
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 };
 </script>

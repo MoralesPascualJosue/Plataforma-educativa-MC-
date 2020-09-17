@@ -9,8 +9,8 @@ $factory->define(fcategoria::class, function (Faker $faker) {
 
     return [
         'name' => $faker->word,
-        'color' => $faker->word,
-        'created_at' => $faker->date('Y-m-d H:i:s'),
-        'updated_at' => $faker->date('Y-m-d H:i:s')
+        'color' => $faker->hexcolor,
+        'created_at' => $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-2 years', $timezone = null),
+        'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
     ];
 });

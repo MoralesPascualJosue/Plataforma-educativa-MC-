@@ -17,6 +17,7 @@ class CreateActivitiesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->integer('visible');
+            $table->string('type');
             $table->integer('intentos');
             $table->date('fecha_inicio');
             $table->date('fecha_final');

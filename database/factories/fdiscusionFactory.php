@@ -12,10 +12,10 @@ $factory->define(fdiscusion::class, function (Faker $faker) {
         'body' => $faker->text,
         'views' => $faker->randomDigitNotNull,
         'answered' => $faker->randomDigitNotNull,
-        'user_id' => $faker->randomDigitNotNull,
-        'curso_id' => $faker->randomDigitNotNull,
+        'user_id' => $faker->numberBetween(1,60),
+        'curso_id' => $faker->numberBetween(1,50),   
         'fcategoria' => $faker->randomDigitNotNull,
-        'created_at' => $faker->date('Y-m-d H:i:s'),
-        'updated_at' => $faker->date('Y-m-d H:i:s')
+        'created_at' => $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-2 years', $timezone = null),
+        'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
     ];
 });

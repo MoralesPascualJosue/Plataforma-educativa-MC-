@@ -10,7 +10,7 @@ $factory->define(Anuncio::class, function (Faker $faker) {
     return [
         'anuncio' => $faker->word,
         'user_id' => $faker->randomDigitNotNull,
-        'created_at' => $faker->date('Y-m-d H:i:s'),
-        'updated_at' => $faker->date('Y-m-d H:i:s')
+        'created_at' => $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-2 years', $timezone = null),
+        'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
     ];
 });

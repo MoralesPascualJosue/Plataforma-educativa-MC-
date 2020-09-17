@@ -8,9 +8,9 @@ use Faker\Generator as Faker;
 $factory->define(user_fdiscusion::class, function (Faker $faker) {
 
     return [
-        'user_id' => $faker->randomDigitNotNull,
-        'fdiscusion_id' => $faker->word,
-        'created_at' => $faker->date('Y-m-d H:i:s'),
-        'updated_at' => $faker->date('Y-m-d H:i:s')
+        'user_id' => $faker->numberBetween(1,60),
+        'fdiscusion_id' => $faker->numberBetween(1,1000),
+        'created_at' => $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-2 years', $timezone = null),
+        'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
     ];
 });

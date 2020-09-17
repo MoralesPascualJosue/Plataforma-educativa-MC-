@@ -86,12 +86,13 @@ class TaskController extends Controller
             $data["works"] = $works;
             $data["numeroentregas"] = $numeroentregas;
             $data["enrevision"] = $enrevision;
+            $data["type"] = "activitie";
 
             return $data;
         }          
         
         return "No disponible";
-    }
+    }    
 
 
 }

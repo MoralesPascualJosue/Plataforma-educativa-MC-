@@ -26,8 +26,7 @@
         <tr>
             <th>No.</th>
             <th class="orange">Nombre del alumno</th>
-            @for ($i = 0; $i < $actividades->count(); $i++)
-                <th>{{$actividades[$i]->title}}</th>
+            @for ($i = 0; $i < count($actividadesa); $i++) <th>{{$actividadesa[$i]['title']}}</th>
                 @endfor
                 <th>Calificación</th>
         </tr>
@@ -38,7 +37,7 @@
         <tr class="tupla">
             <td>{{$estudiante->numero}}</td>
             <td>
-                <p class="est-name" id="{{$curso->id}}/{{$estudiante->id}}">{{$estudiante->name}}
+                <p class="est-name">{{$estudiante->name}}
                 </p>
             </td>
             @foreach ($estudiante["calificaciones"] as $item)

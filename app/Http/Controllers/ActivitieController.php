@@ -47,6 +47,7 @@ class ActivitieController extends Controller
         
         $input['title'] = "Nueva actividad  $date ";        
         $input['visible'] = 0;
+        $input['type'] = 'activitie';
         $input['intentos'] = 1;
         $input['fecha_inicio'] = $date;
         $input['fecha_final'] = date("Y-m-d",$mod_date); 
@@ -68,7 +69,7 @@ class ActivitieController extends Controller
             return $activitie;
         }
 
-        return "No dosponible";
+        return "No disponible";
     }
 
     public function showActivitie($id,Request $request)

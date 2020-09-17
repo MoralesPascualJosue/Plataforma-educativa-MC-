@@ -83,12 +83,16 @@ class Curso extends Model
         return $this->hasMany('App\Models\Qualification');
     }
 
-     public function discusiones() {
+    public function discusiones() {
         return $this->hasMany('App\Models\fdiscusion');
     }
 
     public function mensages() {
         return $this->hasMany('App\Models\Message');
+    }
+
+    public function tests() {
+        return $this->hasMany('App\Models\Test');
     }
 
     public function hasPropiedad($propietario){

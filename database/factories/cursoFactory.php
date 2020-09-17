@@ -2,17 +2,18 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\curso;
+use App\Models\Curso;
 use Faker\Generator as Faker;
 
-$factory->define(curso::class, function (Faker $faker) {
+$factory->define(Curso::class, function (Faker $faker) {
 
-    return [
+    return [        
         'title' => $faker->word,
         'review' => $faker->text,
         'cover' => $faker->word,
-        'asesor_id' => $faker->randomDigitNotNull,
-        'created_at' => $faker->date('Y-m-d H:i:s'),
-        'updated_at' => $faker->date('Y-m-d H:i:s')
+        'password' => $faker->word,
+        'asesor_id' => $faker->numberBetween(1,5),
+        'created_at' => $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-2 years', $timezone = null),
+        'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
     ];
 });

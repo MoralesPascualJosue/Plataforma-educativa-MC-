@@ -63,7 +63,7 @@ class Estudiante extends Model
     ];
 
     public function cursos(){
-        return $this->belongsToMany('App\Models\curso','matriculados','estudiante_id','curso_id')->withPivot('updated_at');
+        return $this->belongsToMany('App\Models\Curso','matriculados','estudiante_id','curso_id')->withPivot('updated_at');
     }
 
     public function user() {
@@ -76,6 +76,14 @@ class Estudiante extends Model
     
     public function qualifications(){
         return $this->hasMany('App\Models\Qualification');
+    }
+
+    public function answers(){
+        return $this->hasMany('App\Models\Test_question_answered');
+    }
+
+    public function tests(){
+        return $this->hasMany('App\Models\Test_result');
     }
 
    public function scopeWithUser( $query){

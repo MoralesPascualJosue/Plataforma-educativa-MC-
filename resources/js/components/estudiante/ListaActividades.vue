@@ -102,6 +102,17 @@ export default {
   },
   created() {
     axios.get("/scursoc/" + this.curso.id).then(res => {
+      Array.prototype.push.apply(res.data.actividades.data, res.data.tests);
+      res.data.actividades.data.sort(function(a, b) {
+        if (a.created_at < b.created_at) {
+          return 1;
+        }
+        if (a.created_at > b.created_at) {
+          return -1;
+        }
+        // a must be equal to b
+        return 0;
+      });
       this.asesor = res.data.curso.asesor;
       this.actividadeshoy = res.data.actividadeshoy;
       this.actividadessemana = res.data.actividadessemana;

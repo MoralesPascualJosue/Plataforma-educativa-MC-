@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ActivitieEvent implements ShouldBroadcast
+class ActivitieEvent// implements ShouldBroadcast
 {
     public $activitie;
     public $curso;

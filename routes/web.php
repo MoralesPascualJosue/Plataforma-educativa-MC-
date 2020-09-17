@@ -114,4 +114,18 @@ Route::get('/informacionActividades/{cur}','informacionController@informacionAct
 Route::get('/informacionCursop/{cur}','informacionController@informacionCursop')->name("informacionCursop");
 //________[END Informacion routes]__________
 
+
+//________[Test routes]__________
+Route::post('test/create/{id}','TestController@storeTest');
+Route::get('test/show/{id}','TestController@showTest');
+Route::post('test/question/{id}','TestController@storeQuestion');
+Route::post('test/questiond/{id}','TestController@deleteQuestion');
+Route::post('test/result/{id}','TestController@resultTest');
+Route::post('/updateat/{id}','TestController@updateTest')->name('updateat');
+Route::delete('/destroyat/{id}','TestController@destroyTest')->name('destroyat');
+Route::get('test/trabajos/{id}','TestController@trabajos')->name('trabajost');
+Route::get('test/showwork/{act}/{est}','TestController@showworks')->name('workst');
+Route::post('test/puntajes/{act}/{est}','TestController@puntajes')->name('puntajes');
+//________[END Test routes]__________
+
 Route::get('/{catchall?}', 'AppController@index');
