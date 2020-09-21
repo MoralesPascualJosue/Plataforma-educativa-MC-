@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Lista de participantes del curso</h3>
+    <h3>Lista de actividades del curso</h3>
     <div class="table-responsive">
       <table class="table table-hover">
         <thead>

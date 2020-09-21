@@ -82,23 +82,6 @@ export default {
             }
           },
           {
-            type: "switch",
-            label: "Status",
-            model: "status",
-            multi: true,
-            readonly: false,
-            featured: false,
-            disabled: false,
-            default: true,
-            textOn: "Es respuesta",
-            textOff: "Marcar respuesta",
-            visible: function(model) {
-              return (
-                model && (model.type == "select" || model.type == "checklist")
-              );
-            }
-          },
-          {
             type: "input",
             inputType: "text",
             label: "Agrega una opción",
@@ -125,22 +108,17 @@ export default {
                   if (model.type == "checklist") {
                     option = {
                       name: model.optiondefault,
-                      value: model.optiondefault,
-                      respuesta: "no"
+                      value: model.optiondefault
                     };
                   }
 
                   if (model.type == "select") {
                     option = {
                       name: model.optiondefault,
-                      id: model.optiondefault,
-                      respuesta: "no"
+                      id: model.optiondefault
                     };
                   }
 
-                  if (model.status) {
-                    option.respuesta = "si";
-                  }
                   model.values.push(option);
                   model.optiondefault = "";
                 }

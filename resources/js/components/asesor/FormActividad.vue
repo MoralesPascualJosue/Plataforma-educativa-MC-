@@ -98,8 +98,8 @@ export default {
         this.title = this.actividad.title;
         this.visible = this.actividad.visible;
         this.intentos = this.actividad.num_takes;
-        this.fechainicio = this.actividad.start_date;
-        this.fechafinal = this.actividad.end_date;
+        this.fechainicio = this.actividad.fecha_inicio;
+        this.fechafinal = this.actividad.fecha_final;
       } else {
         this.title = this.actividad.activitie.title;
         this.visible = this.actividad.activitie.visible;

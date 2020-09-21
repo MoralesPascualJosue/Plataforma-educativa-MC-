@@ -177,10 +177,7 @@ class TestController extends Controller
         if (!empty($input['options'])) {
             foreach($input["options"] as $option){
                 $in['option'] = $option[0];                
-                $in['answer'] = 0;//6&
-                if ($option[2] == "si") {
-                    $in['answer'] = 1;//6&
-                }
+                $in['answer'] = 0;
                 $in['question_id'] = $question->id;
 
                 Test_question_options::create($in);    

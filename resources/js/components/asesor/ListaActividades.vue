@@ -88,7 +88,10 @@ export default {
   },
   created() {
     axios.get("/scursoc/" + this.curso.id).then(res => {
-      Array.prototype.push.apply(res.data.actividades.data, res.data.tests);
+      Array.prototype.push.apply(
+        res.data.actividades.data,
+        res.data.tests.data
+      );
       res.data.actividades.data.sort(function(a, b) {
         if (a.fecha_final < b.fecha_final) {
           return 1;
@@ -99,8 +102,15 @@ export default {
         // a must be equal to b
         return 0;
       });
+
       this.asesor = res.data.curso.asesor;
       this.$store.commit("changeactividades", res.data.actividades);
+
+      if (res.data.actividades.next_page_url) {
+        this.actividades.next_page_url = res.data.actividades.next_page_url;
+      } else {
+        this.actividades.next_page_url = res.data.tests.next_page_url;
+      }
     });
   },
   methods: {
@@ -120,10 +130,31 @@ export default {
     nextpage() {
       let posy = window.scrollY;
       axios.get(this.actividades.next_page_url).then(res => {
+        Array.prototype.push.apply(
+          res.data.actividades.data,
+          res.data.tests.data
+        );
+        res.data.actividades.data.sort(function(a, b) {
+          if (a.fecha_final < b.fecha_final) {
+            return 1;
+          }
+          if (a.fecha_final > b.fecha_final) {
+            return -1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+
         res.data.actividades.data.forEach(element => {
           this.actividades.data.push(element);
         });
-        this.actividades.next_page_url = res.data.actividades.next_page_url;
+
+        if (res.data.actividades.next_page_url) {
+          this.actividades.next_page_url = res.data.actividades.next_page_url;
+        } else {
+          this.actividades.next_page_url = res.data.tests.next_page_url;
+        }
+
         setTimeout(function() {
           window.scrollBy(0, -(window.scrollY - posy));
         }, 200);

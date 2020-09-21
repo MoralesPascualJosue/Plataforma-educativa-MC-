@@ -69,32 +69,31 @@ export default {
     });
   },
   mounted() {
-    Echo.channel("channel-activities").listen("ActivitieEvent", e => {
-      this.notificaciones.notificaciones.push({
-        data: {
-          activitie: e.activitie.id,
-          title: e.activitie.title,
-          fecha_final: e.activitie.fecha_final,
-          cursoname: e.curso.title
-        }
-      });
-      this.notificaciones.notificacionesnum++;
-
-      this.$toast(" Tienes una nueva actividad del curso: " + e.curso.title, {
-        position: "top-left",
-        timeout: 5000,
-        closeOnClick: true,
-        pauseOnFocusLoss: true,
-        pauseOnHover: true,
-        draggable: true,
-        draggablePercent: 0.6,
-        showCloseButtonOnHover: false,
-        hideProgressBar: false,
-        closeButton: "button",
-        icon: true,
-        rtl: true
-      });
-    });
+    // Echo.channel("channel-activities").listen("ActivitieEvent", e => {
+    //   this.notificaciones.notificaciones.push({
+    //     data: {
+    //       activitie: e.activitie.id,
+    //       title: e.activitie.title,
+    //       fecha_final: e.activitie.fecha_final,
+    //       cursoname: e.curso.title
+    //     }
+    //   });
+    //   this.notificaciones.notificacionesnum++;
+    //   this.$toast(" Tienes una nueva actividad del curso: " + e.curso.title, {
+    //     position: "top-left",
+    //     timeout: 5000,
+    //     closeOnClick: true,
+    //     pauseOnFocusLoss: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     draggablePercent: 0.6,
+    //     showCloseButtonOnHover: false,
+    //     hideProgressBar: false,
+    //     closeButton: "button",
+    //     icon: true,
+    //     rtl: true
+    //   });
+    // });
   },
   methods: {
     dropmenu() {
