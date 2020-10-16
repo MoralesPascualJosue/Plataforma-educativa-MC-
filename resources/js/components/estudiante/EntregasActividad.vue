@@ -34,7 +34,7 @@
         </table>
         <h3>Realizar entrega</h3>
         <div v-if="actividad.entrega < actividad.activitie.intentos">
-          <table class="table table-hover">
+          <table class="table table-hover mtb-40">
             <thead>
               <tr>
                 <th scope="col"></th>
@@ -333,5 +333,10 @@ export default {
   width: 10px;
   height: 10px;
   padding: 10px;
+}
+
+.mtb-40 {
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 </style>

@@ -45,6 +45,666 @@ export default {
       return this.$store.getters.actividadview;
     }
   },
+  mounted() {
+    jQuery(function($) {
+      $.ajaxSetup({
+        headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        }
+      });
+      $(".block-s").removeClass("minh-n");
+      $(".textb").attr("contenteditable", "true");
+
+      jQuery.makeArray($(".list-r")).forEach(element => {
+        let forme = `
+        <form class='input-areafile' action='/uploadfile' method='post' enctype='multipart/form-data'>
+            <div class='form-group'>
+            <input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>
+            <small id='fileHelp' class='form-text text-muted'>Selecciona un documento Tamaño máximo 30MB</small>
+            <button type='submit' class='btn-block'>Submit</button>
+            <div class='progress'></div>
+            </div>
+        </form>
+        `;
+        let div = document.createElement("div");
+        div.innerHTML = forme;
+
+        if (element.nextElementSibling == null) {
+          element.parentElement.append(div.children[0]);
+        }
+      });
+
+      jQuery.makeArray($(".content-r")).forEach(element => {
+        let ele = `<p class="remove-r">X</p>`;
+        let divoptions = document.createElement("div");
+        divoptions.classList.add("options-r");
+        divoptions.innerHTML = ele;
+        if (element.childElementCount == 2) {
+          element.append(divoptions);
+        }
+      });
+
+      /*	Click menu toggle */
+      $(".toggle").on("click", function(e) {
+        obj = this;
+        if (flag) {
+          if (!$(this).hasClass("minus")) {
+            openMenu(this);
+          } else {
+            closeMenu(this);
+          }
+        }
+      });
+      /* Toggle menu options blocks  */
+      $(".lock").on("click", function(e) {
+        e.preventDefault();
+        this.parentElement.parentElement.parentElement.remove();
+      });
+
+      $(".imageblock").off("click");
+      $(".imageblock").on("click", function(e) {
+        e.preventDefault();
+
+        let elemento = `
+         <form class='input-areaimage' action='/uploadfilei' method='post' enctype='multipart/form-data'>
+        <div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>
+        <small id='fileHelp' class='form-text text-muted'>Selecciona una imagen Tamaño máximo 2MB</small><button type='submit' class='btn-block'>Submit</button> </div></form>    
+        `;
+        let content = this.parentElement.parentElement.nextElementSibling;
+        content.innerHTML = elemento;
+
+        closeMenu(this.parentElement.parentElement.previousElementSibling);
+      });
+
+      $(".videoblock").off("click");
+      $(".videoblock").on("click", function(e) {
+        e.preventDefault();
+
+        let elemento =
+          " <form class='input-areavideo' action='/uploadfilev' method='post' enctype='multipart/form-data'>" +
+          "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
+          "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 300MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
+        let content = this.parentElement.parentElement.nextElementSibling;
+        content.innerHTML = elemento;
+
+        closeMenu(this.parentElement.parentElement.previousElementSibling);
+      });
+
+      $(".docblock").off("click");
+      $(".docblock").on("click", function(e) {
+        e.preventDefault();
+
+        let elemento =
+          " <form class='input-areadoc' action='/uploadfiled' method='post' enctype='multipart/form-data'>" +
+          "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
+          "<small id='fileHelp' class='form-text text-muted'>Selecciona un documento Tamaño máximo 30MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
+        let content = this.parentElement.parentElement.nextElementSibling;
+        content.innerHTML = elemento;
+
+        closeMenu(this.parentElement.parentElement.previousElementSibling);
+      });
+
+      $(".textblock").on("click", function(e) {
+        e.preventDefault();
+        let elemento = "<div class='textb' contenteditable id='30'></div>";
+        let content = this.parentElement.parentElement.nextElementSibling;
+        content.innerHTML = elemento;
+
+        closeMenu(this.parentElement.parentElement.previousElementSibling);
+      });
+
+      $(".resourcesblock").on("click", function(e) {
+        e.preventDefault();
+
+        let elemento = `
+            <div class="list-r">
+                <ul class="resources-r"></ul>
+            </div>
+            <form class='input-areafile' action='/uploadfile' method='post' enctype='multipart/form-data'>
+                <div class='form-group'>
+                    <input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>
+                    <small id='fileHelp' class='form-text text-muted'>Selecciona un documento Tamaño máximo 30MB</small>
+                    <button type='submit' class='btn-block'>Submit</button>
+                    <div class='progress'></div>
+                </div>
+            </form>
+        `;
+        let content = this.parentElement.parentElement.nextElementSibling;
+        content.innerHTML = elemento;
+        closeMenu(this.parentElement.parentElement.previousElementSibling);
+      });
+
+      /*menu bottom  options */
+
+      $(".alingleft-option").on("click", function(e) {
+        this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
+          "left";
+      });
+
+      $(".alingcenter-option").on("click", function(e) {
+        this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
+          "center";
+      });
+
+      $(".alingright-option").on("click", function(e) {
+        this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
+          "right";
+      });
+
+      $(".downfont-option").on("click", function(e) {
+        let sizef =
+          this.parentElement.parentElement.previousElementSibling.children[0]
+            .id - 5;
+
+        if (sizef > 19) {
+          this.parentElement.parentElement.previousElementSibling.children[0].id = sizef;
+
+          this.parentElement.parentElement.previousElementSibling.children[0].style.fontSize =
+            sizef + "px";
+        }
+      });
+
+      $(".upfont-option").on("click", function(e) {
+        let sizef =
+          parseInt(
+            this.parentElement.parentElement.previousElementSibling.children[0]
+              .id,
+            10
+          ) + 5;
+
+        if (sizef < 111) {
+          this.parentElement.parentElement.previousElementSibling.children[0].id = sizef;
+
+          this.parentElement.parentElement.previousElementSibling.children[0].style.fontSize =
+            sizef + "px";
+        }
+      });
+
+      $(".addtextblock").on("click", function(e) {
+        console.log("add text block");
+      });
+
+      $(".newblock").off("click");
+      $(".newblock").on("click", function(e) {
+        let block = `
+            <div class='toggle'><div class='x'></div><div class='y'></div></div>
+            <div class='menu'>
+            <ul>
+            <li class='lock'><a href='javascript:void(0);'>Eliminar</a></li>
+            <li class='imageblock'><a href='javascript:void(0);'>Imagen</a></li>
+            <li class='videoblock'><a href='javascript:void(0);'>Video</a></li>
+            <li class='docblock'><a href='javascript:void(0);'>Doc</a></li>
+            <li class='textblock'><a href='javascript:void(0);'>Text</a></li>
+            <li class='resourcesblock'><a href='javascript:void(0);'>Resources</a></li>
+            </ul>
+            </div>    
+            <div class='contentblock'><div class='textb' contenteditable style="font-size: 30px;">Texto</div></div>
+            <div class='menu-options'>
+            <ul>
+            <li class='alingleft-option'><a href='javascript:void(0);'>Eliminar</a></li>
+            <li class='alingcenter-option'><a href='javascript:void(0);'>Imagen</a></li>
+            <li class='alingright-option'><a href='javascript:void(0);'>Video</a></li>
+            <li class='downfont-option'><a href='javascript:void(0);'>Doc</a></li>
+            <li class='upfont-option'><a href='javascript:void(0);'>Text</a></li>
+            <li class='addtextblock'><a href='javascript:void(0);'>addText</a></li>
+            </ul>
+            </div>
+        `;
+        let div = document.createElement("div");
+        div.classList.add("block-s");
+        div.innerHTML = block;
+        /* Registro de eventos para e nuevo block creado  */
+        div.children[0].addEventListener(
+          "click",
+          function(e) {
+            obj = this;
+            if (flag) {
+              if (!$(this).hasClass("minus")) {
+                //openMenu();
+                openMenu(this);
+              } else {
+                closeMenu(this);
+              }
+            }
+          },
+          false
+        );
+
+        div.children[2].children[0].id = 30;
+
+        div.children[1].children[0].children[0].addEventListener(
+          "click",
+          function(e) {
+            e.preventDefault();
+            this.parentElement.parentElement.parentElement.remove();
+          }
+        );
+
+        div.children[1].children[0].children[1].addEventListener(
+          "click",
+          function(e) {
+            e.preventDefault();
+
+            let elemento =
+              " <form class='input-areaimage' action='/uploadfilei' method='post' enctype='multipart/form-data'>" +
+              "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
+              "<small id='fileHelp' class='form-text text-muted'>Selecciona una imagen Tamaño máximo 2MB</small><button type='submit' class='btn-block'>Submit</button> </div></form>";
+            let content = this.parentElement.parentElement.nextElementSibling;
+            content.innerHTML = elemento;
+
+            closeMenu(this.parentElement.parentElement.previousElementSibling);
+          }
+        );
+
+        div.children[1].children[0].children[2].addEventListener(
+          "click",
+          function(e) {
+            e.preventDefault();
+
+            let elemento =
+              " <form class='input-areavideo' action='/uploadfilev' method='post' enctype='multipart/form-data'>" +
+              "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
+              "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 300MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
+            let content = this.parentElement.parentElement.nextElementSibling;
+            content.innerHTML = elemento;
+
+            closeMenu(this.parentElement.parentElement.previousElementSibling);
+          }
+        );
+
+        div.children[1].children[0].children[3].addEventListener(
+          "click",
+          function(e) {
+            e.preventDefault();
+
+            let elemento =
+              " <form class='input-areadoc' action='/uploadfiled' method='post' enctype='multipart/form-data'>" +
+              "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
+              "<small id='fileHelp' class='form-text text-muted'>Selecciona un documento Tamaño máximo 30MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
+            let content = this.parentElement.parentElement.nextElementSibling;
+            content.innerHTML = elemento;
+
+            closeMenu(this.parentElement.parentElement.previousElementSibling);
+          }
+        );
+
+        div.children[1].children[0].children[4].addEventListener(
+          "click",
+          function(e) {
+            e.preventDefault();
+            let elemento = "<div class='textb' contenteditable id='30'></div>";
+            let content = this.parentElement.parentElement.nextElementSibling;
+            content.innerHTML = elemento;
+
+            closeMenu(this.parentElement.parentElement.previousElementSibling);
+          }
+        );
+
+        div.children[1].children[0].children[5].addEventListener(
+          "click",
+          function(e) {
+            e.preventDefault();
+
+            let elemento = `
+                <div class="list-r">
+                    <ul class="resources-r"></ul>
+                </div>
+                <form class='input-areafile' action='/uploadfile' method='post' enctype='multipart/form-data'>
+                    <div class='form-group'>
+                        <input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>
+                        <small id='fileHelp' class='form-text text-muted'>Selecciona un documento Tamaño máximo 30MB</small>
+                        <button type='submit' class='btn-block'>Submit</button>
+                        <div class='progress'></div>
+                    </div>
+                </form>
+            `;
+            let content = this.parentElement.parentElement.nextElementSibling;
+            content.innerHTML = elemento;
+
+            closeMenu(this.parentElement.parentElement.previousElementSibling);
+          }
+        );
+
+        div.children[3].children[0].children[0].addEventListener(
+          "click",
+          function(e) {
+            this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
+              "left";
+          }
+        );
+
+        div.children[3].children[0].children[1].addEventListener(
+          "click",
+          function(e) {
+            this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
+              "center";
+          }
+        );
+
+        div.children[3].children[0].children[2].addEventListener(
+          "click",
+          function(e) {
+            this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
+              "right";
+          }
+        );
+
+        div.children[3].children[0].children[3].addEventListener(
+          "click",
+          function(e) {
+            let sizef =
+              this.parentElement.parentElement.previousElementSibling
+                .children[0].id - 5;
+
+            if (sizef > 19) {
+              this.parentElement.parentElement.previousElementSibling.children[0].id = sizef;
+
+              this.parentElement.parentElement.previousElementSibling.children[0].style.fontSize =
+                sizef + "px";
+            }
+          }
+        );
+
+        div.children[3].children[0].children[4].addEventListener(
+          "click",
+          function(e) {
+            let sizef =
+              parseInt(
+                this.parentElement.parentElement.previousElementSibling
+                  .children[0].id,
+                10
+              ) + 5;
+
+            if (sizef < 111) {
+              this.parentElement.parentElement.previousElementSibling.children[0].id = sizef;
+
+              this.parentElement.parentElement.previousElementSibling.children[0].style.fontSize =
+                sizef + "px";
+            }
+          }
+        );
+
+        $("#taskcontenido").append(div);
+      });
+
+      /*eventos sumit */
+      //$(document).off("submit", ".input-areaimage");
+      $(document).off("submit");
+      $(document).on("submit", ".input-areaimage", function(e) {
+        e.preventDefault();
+        let form = this;
+
+        const msgText = this.children[0].children[0].value;
+
+        if (!msgText) return;
+
+        var formData = new FormData(form);
+
+        $.ajax({
+          type: "POST",
+          url: form.action,
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: data => {
+            this.parentElement.innerHTML =
+              "<img src='" + data + "' alt='img'class='wm-100'>";
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });
+      });
+
+      $(document).on("submit", ".input-areavideo", function(e) {
+        let bar = this.children[0].children[3];
+
+        e.preventDefault();
+        let form = this;
+
+        const msgText = this.children[0].children[0].value;
+        if (!msgText) return;
+
+        var formData = new FormData(form);
+
+        $.ajax({
+          xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener(
+              "progress",
+              function(evt) {
+                if (evt.lengthComputable) {
+                  var percentComplete = evt.loaded / evt.total;
+                  bar.setAttribute(
+                    "style",
+                    "width:" + percentComplete * 100 + "%"
+                  );
+                  if (percentComplete === 1) {
+                    bar.textContent = "procesando";
+                    bar.classList.add("complete");
+                  }
+                }
+              },
+              false
+            );
+            xhr.addEventListener(
+              "progress",
+              function(evt) {
+                if (evt.lengthComputable) {
+                  var percentComplete = evt.loaded / evt.total;
+                  console.log(percentComplete);
+                  bar.setAttribute(
+                    "style",
+                    "width:" + percentComplete * 100 + "%"
+                  );
+                }
+              },
+              false
+            );
+            return xhr;
+          },
+          type: "POST",
+          url: form.action,
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: data => {
+            bar.classList.add("hide");
+            bar.classList.remove("complete");
+            this.parentElement.innerHTML =
+              "<video id='preview-player_html5_api' preload='auto' controls class='vjs-tech wm-100' playsinline='playsinline' tabindex='-1' poster=''" +
+              "src='" +
+              data +
+              "'></video>";
+          },
+          error: function(data) {
+            bar.textContent = "";
+            bar.classList.remove("complete");
+            console.log(data);
+          }
+        });
+      });
+
+      $(document).on("submit", ".input-areadoc", function(e) {
+        let bar = this.children[0].children[3];
+
+        e.preventDefault();
+        let form = this;
+
+        const msgText = this.children[0].children[0].value;
+        if (!msgText) return;
+
+        var formData = new FormData(form);
+
+        $.ajax({
+          xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener(
+              "progress",
+              function(evt) {
+                if (evt.lengthComputable) {
+                  var percentComplete = evt.loaded / evt.total;
+                  bar.setAttribute(
+                    "style",
+                    "width:" + percentComplete * 100 + "%"
+                  );
+                  if (percentComplete === 1) {
+                    bar.textContent = "procesando";
+                    bar.classList.add("complete");
+                  }
+                }
+              },
+              false
+            );
+            xhr.addEventListener(
+              "progress",
+              function(evt) {
+                if (evt.lengthComputable) {
+                  var percentComplete = evt.loaded / evt.total;
+                  console.log(percentComplete);
+                  bar.setAttribute(
+                    "style",
+                    "width:" + percentComplete * 100 + "%"
+                  );
+                }
+              },
+              false
+            );
+            return xhr;
+          },
+          type: "POST",
+          url: form.action,
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: data => {
+            bar.classList.add("hide");
+            bar.classList.remove("complete");
+
+            this.parentElement.innerHTML =
+              "<iframe class='wm-100'src='" +
+              data +
+              "' frameborder='0'></iframe>";
+          },
+          error: function(data) {
+            bar.textContent = "";
+            bar.classList.remove("complete");
+            console.log(data);
+          }
+        });
+      });
+
+      $(document).on("submit", ".input-areafile", function(e) {
+        let bar = this.children[0].children[3];
+
+        e.preventDefault();
+        let form = this;
+
+        const msgText = this.children[0].children[0].value;
+        if (!msgText) return;
+
+        var formData = new FormData(form);
+
+        $.ajax({
+          xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener(
+              "progress",
+              function(evt) {
+                if (evt.lengthComputable) {
+                  var percentComplete = evt.loaded / evt.total;
+                  bar.setAttribute(
+                    "style",
+                    "width:" + percentComplete * 100 + "%"
+                  );
+                  if (percentComplete === 1) {
+                    bar.textContent = "procesando";
+                    bar.classList.add("complete");
+                  }
+                }
+              },
+              false
+            );
+            xhr.addEventListener(
+              "progress",
+              function(evt) {
+                if (evt.lengthComputable) {
+                  var percentComplete = evt.loaded / evt.total;
+                  console.log(percentComplete);
+                  bar.setAttribute(
+                    "style",
+                    "width:" + percentComplete * 100 + "%"
+                  );
+                }
+              },
+              false
+            );
+            return xhr;
+          },
+          type: "POST",
+          url: form.action,
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: data => {
+            bar.classList.add("hide");
+            bar.classList.remove("complete");
+
+            let ele = `
+                <div class="img-r"><img src="../resources/icons/archivos.svg" alt="alt"></div>
+                <a rel="noopener noreferrer" target="_blank" id="${data["url"]}" class="name-r" href="${data["url"]}">${data["name"]}</a>
+                <div class="options-r"><p class="remove-r">X</p></div>
+            `;
+
+            let nuevob = document.createElement("li");
+            nuevob.classList.add("content-r");
+            nuevob.innerHTML = ele;
+            /* agregar eventos al elemento creado  */
+            nuevob.children[2].children[0].addEventListener(
+              "click",
+              function(e) {
+                eleHide(
+                  $(this)
+                    .parent()
+                    .parent()
+                );
+              },
+              false
+            );
+
+            this.parentElement.children[0].children[0].append(nuevob);
+          },
+          error: function(data) {
+            bar.textContent = "";
+            bar.classList.remove("complete");
+          }
+        });
+      });
+
+      /**resourcecontent options **/
+      $(".remove-r").click(function(e) {
+        eleHide(
+          $(this)
+            .parent()
+            .parent()
+        );
+      });
+
+      $(".editn-r").click(function(e) {
+        //error: no funciona
+        $(this)
+          .parent()
+          .prev()
+          .attr("contenteditable", "true")
+          .focus();
+      });
+      /*end */
+    });
+  },
   beforeUpdate() {
     jQuery(function($) {
       $.ajaxSetup({

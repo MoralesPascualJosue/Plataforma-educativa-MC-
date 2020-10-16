@@ -215,7 +215,7 @@ class TestController extends Controller
         }
 
         foreach ($input["preguntas"] as $question) {
-            $aux = Test_questions::where("question",$question)->get()[0];            
+            $aux = Test_questions::where("id",$question)->get()[0];               
 
             if(is_array($input["respuestas"][$question])){
                 

@@ -67,7 +67,7 @@ export default {
           inputType: "text",
           type: element.type,
           label: element.question,
-          model: element.question,
+          model: element.id + "",
           listBox: true
         };
 
