@@ -5,15 +5,19 @@
         <div class="row">
           <div class="col">
             Entregas realizadas
-            <span class="h3">{{actividad.entrega}}</span> de
-            <span class="h3">{{actividad.activitie.intentos}}</span>
+            <span class="h3">{{ actividad.entrega }}</span> de
+            <span class="h3">{{ actividad.activitie.intentos }}</span>
           </div>
           <div class="col">
             Calificacion
-            <span class="h3">{{actividad.qualification.qualification}}</span>
+            <span class="h3">{{ actividad.qualification.qualification }}</span>
           </div>
         </div>
-        <table class="table table-hover" v-for="(work, index) in actividad.works" :key="index">
+        <table
+          class="table table-hover"
+          v-for="(work, index) in actividad.works"
+          :key="index"
+        >
           <thead>
             <tr>
               <th scope="col">N°</th>
@@ -23,11 +27,11 @@
             </tr>
           </thead>
           <tr>
-            <td scope="row">{{work.entregas}}</td>
+            <td scope="row">{{ work.entregas }}</td>
             <td href="javascript:void(0)" @click="openFileView(work.contenido)">
               <a href="javascript:void(0)">Ver</a>
             </td>
-            <td>{{work.created_at}}</td>
+            <td>{{ work.created_at }}</td>
             <td></td>
           </tr>
           <tbody v-html="work.contenido"></tbody>
@@ -38,38 +42,40 @@
             <thead>
               <tr>
                 <th scope="col"></th>
-                <th scope="col">Contenido</th>
+                <th scope="col">
+                  Asegurate de cargar tus todos tus archivos antes de entregar.
+                </th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col">
-                  <button class="btn btn-primary" @click="entregar()">Entregar</button>
+                  <button class="btn btn-primary" @click="entregar()">
+                    Entregar
+                  </button>
                 </th>
               </tr>
             </thead>
-            <tbody id="tbe"></tbody>
+            <!-- <tbody id="tbe"></tbody> -->
           </table>
 
-          <div class="row p-t-10">
-            <div class="col-8">
-              <h5>Asegurate de cargar tus todos tus archivos antes de entregar.</h5>
-              <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
-            </div>
-            <div class="col-2">
-              <button type="submit" id="sumit-all" class="btn btn-info">Subir</button>
-            </div>
+          <div class="row">
+            <UploadFile />
           </div>
         </div>
-        <FileShow :show="showModal" v-bind:recursos="recursos" @close="showModal = false" />
+        <FileShow
+          :show="showModal"
+          v-bind:recursos="recursos"
+          @close="showModal = false"
+        />
       </div>
       <div v-else>
         <div class="row" v-if="actividad.estado">
           <div class="col">
             Entrega realizada el:
-            <span class="h3">{{actividad.result[0].taken_date}}</span>
+            <span class="h3">{{ actividad.result[0].taken_date }}</span>
           </div>
           <div class="col">
             Calificacion
-            <span class="h3">{{actividad.calificacion}}</span>
+            <span class="h3">{{ actividad.calificacion }}</span>
           </div>
         </div>
         <div v-else>
@@ -84,8 +90,7 @@
 
 <script>
 import FileShow from "./FileShow";
-import vue2Dropzone from "vue2-dropzone";
-import "vue2-dropzone/dist/vue2Dropzone.min.css";
+import UploadFile from "./UploadFile";
 
 export default {
   data() {
@@ -93,7 +98,7 @@ export default {
       carga: false,
       calificando: false,
       estudiante: {
-        id: -1
+        id: -1,
       },
       loading: false,
       contenidos: {},
@@ -110,18 +115,18 @@ export default {
         maxFilesize: 30, // MB,
         headers: {
           "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]')
-            .content
+            .content,
         },
 
-        init: function() {
+        init: function () {
           var sumitButtom = document.querySelector("#sumit-all");
           let myDropzone = this;
 
-          sumitButtom.addEventListener("click", function() {
+          sumitButtom.addEventListener("click", function () {
             myDropzone.processQueue();
           });
 
-          this.on("complete", function(data) {
+          this.on("complete", function (data) {
             // if (
             //     this.getQueuedFiles().length == 0 &&
             //     this.getUploadingFiles().length == 0
@@ -131,7 +136,7 @@ export default {
             // }
           });
 
-          this.on("success", function(file, response) {
+          this.on("success", function (file, response) {
             $("#tbe").append(
               "<tr >" +
                 "<td><img width='30px' heigth='30px'  src='../" +
@@ -145,18 +150,18 @@ export default {
                 "></td></tr>"
             );
           });
-        }
-      }
+        },
+      },
     };
   },
   computed: {
     actividad() {
       return this.$store.getters.actividadview;
-    }
+    },
   },
   components: {
     FileShow,
-    vueDropzone: vue2Dropzone
+    UploadFile,
   },
   created() {
     this.loading = true;
@@ -172,40 +177,45 @@ export default {
         const element = elementod.children[index];
         recursos.push({
           name: element.children[1].textContent,
-          source: element.children[2].id
+          source: element.children[2].id,
         });
       }
       this.recursos = recursos;
     },
     entregar() {
-      let contenidoe = document.getElementById("tbe").innerHTML;
+      let contenidoe = document.getElementById("tbe");
       let formData = new FormData();
 
-      if (contenidoe == "") {
+      contenidoe.childNodes.forEach((element) => {
+        element.firstChild.remove();
+      });
+
+      if (contenidoe.innerHTML == "") {
         flash("Entrega vacia", "warning");
         return "fail;";
       }
-      formData.append("contenido", contenidoe);
+      formData.append("contenido", contenidoe.innerHTML);
 
       this.loading = true;
       axios
         .post("/storeaw/" + this.actividad.activitie.id, formData)
-        .then(response => {
+        .then((response) => {
           this.errorr = false;
           this.actividad.entrega++;
           this.actividad.works.push(response.data);
-          document.getElementById("tbe").innerHTML = ``;
           flash("Entrega realizada", "success");
         })
-        .catch(response => {
+        .catch((response) => {
           this.errorr = true;
           flash("Fallo la entrega: intenta mas tarde.", "error");
         })
         .finally(() => {
+          contenidoe.innerHTML = "";
+          document.getElementById("numarchivos").textContent = "0";
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

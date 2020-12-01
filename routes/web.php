@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test', function () { return view('home'); });
 
 //________[ALL routes]__________
  Route::get('/', function () { return view('welcome'); });
@@ -127,5 +128,7 @@ Route::get('test/trabajos/{id}','TestController@trabajos')->name('trabajost');
 Route::get('test/showwork/{act}/{est}','TestController@showworks')->name('workst');
 Route::post('test/puntajes/{act}/{est}','TestController@puntajes')->name('puntajes');
 //________[END Test routes]__________
+
+Route::post('remove/{id}','UploadController@remove');
 
 Route::get('/{catchall?}', 'AppController@index');

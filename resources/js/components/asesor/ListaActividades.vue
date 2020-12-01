@@ -25,7 +25,6 @@
     <div class="item2">
       <div class="container">
         <FormContent @crear-actividad="createactividad" />
-
         <Actividades>
           <template slot-scope="{ togglePopup }">
             <transition-group name="list-complete" tag="p" mode="out-in">

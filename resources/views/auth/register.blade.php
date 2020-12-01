@@ -69,7 +69,7 @@
                             <h2 class="fs-title">Tipo de cuenta</h2>
                             <h3 class="helps">
                                 <p>Maestro? elige asesor</p>
-                                <p> Alumno? tss... </p>
+                                <p> Alumno? elige estudiante</p>
                             </h3>
 
                             <section class="sectionr cf">
@@ -125,7 +125,8 @@
                             </div>
 
                             <div class="checkbox">
-                                <input type="checkbox"> Acepto <a href="#">términos y condiciones</a>
+                                <input class="checkboxmark" type="checkbox"> Acepto
+                                <a href="#">términos y condiciones</a>
                             </div>
                             <input type="button" name="previous" class="previous action-button" value="Regresar" />
                             <button type="submit" class="button action-button">Registrarme</button>

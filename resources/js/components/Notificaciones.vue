@@ -12,9 +12,9 @@
       >
         <p class="line-d" v-if="!loading">
           Notificaciones
-          <span
-            class="badge badge-light float-right stb"
-          >{{notificaciones.notificacionesnum}}</span>
+          <span class="badge badge-light float-right stb">{{
+            notificaciones.notificacionesnum
+          }}</span>
         </p>
         <span
           class="spinner-border spinner-border-sm"
@@ -32,20 +32,23 @@
         >
           <a href="javascript:void(0)">
             <p class="notih">
-              Nueva actividad publicada
-              <span
-                class="badge badge-primary float-right fontct"
-              >limite: {{notificacion.data.fecha_final}}</span>
+              Nueva {{ notificacion.data.type }} publicada
+              <span class="badge badge-primary float-right fontct"
+                >limite: {{ notificacion.data.fecha_final }}</span
+              >
             </p>
-            {{notificacion.data.title}}
-            <p class="notif">En {{notificacion.data.cursoname}}</p>
+            {{ notificacion.data.title }}
+            En
+            <span class="notif">{{ notificacion.data.cursoname }}</span>
           </a>
         </li>
-        <li v-if="notificaciones.notificacionesnum <1" class="notic">
+        <li v-if="notificaciones.notificacionesnum < 1" class="notic">
           <a href="#" class="data-n">Sin notificaciones</a>
         </li>
-        <li v-if="notificaciones.notificacionesnum>0">
-          <button class="btn btn-primary marread" @click="marcarleidas">Marcar leidas</button>
+        <li v-if="notificaciones.notificacionesnum > 0">
+          <button class="btn btn-primary marread" @click="marcarleidas">
+            Marcar leidas
+          </button>
         </li>
       </div>
     </div>
@@ -60,11 +63,11 @@ export default {
       info: "",
       loading: false,
       curso: {},
-      notificaciones: []
+      notificaciones: [],
     };
   },
   created() {
-    axios.get("/notificaciones").then(res => {
+    axios.get("/notificaciones").then((res) => {
       this.notificaciones = res.data;
     });
   },
@@ -100,13 +103,13 @@ export default {
       $("#dLabelnoti").dropdown();
     },
     marcarleidas() {
-      axios.get("/leernotificaciones").then(res => {
+      axios.get("/leernotificaciones").then((res) => {
         this.notificaciones.notificaciones = [];
         this.notificaciones.notificacionesnum = 0;
         flash("Notificaciones leidas", "info");
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

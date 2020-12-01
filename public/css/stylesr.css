@@ -46,7 +46,7 @@ html {
 
 .wrap {
     width: 1170px;
-    height: 85vh;
+    height: 95vh;
     background: #fff;
     overflow: hidden;
     display: flex;
@@ -165,7 +165,7 @@ html {
 /*inputs*/
 #msform input,
 #msform textarea {
-    padding: 15px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
     margin-bottom: 10px;
@@ -201,13 +201,11 @@ html {
 }
 .fs-subtitle {
     font-weight: normal;
-    font-size: 13px;
+    font-size: 12px;
     color: #666;
-    margin-bottom: 20px;
 }
 /*progressbar*/
 #progressbar {
-    margin-bottom: 30px;
     overflow: hidden;
     /*CSS counters to number the steps*/
     counter-reset: step;
@@ -257,7 +255,7 @@ html {
 
 .txtr {
     display: block;
-    margin: 50px auto;
+    margin: 20px auto;
     text-align: center;
     position: relative;
     font-size: 15px;
@@ -377,4 +375,9 @@ html {
 .helps p {
     color: #2c3e50;
     text-align: left;
+}
+
+.checkboxmark {
+    padding: unset;
+    width: unset !important;
 }

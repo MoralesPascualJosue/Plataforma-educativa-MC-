@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Asesor;
 use App\Models\Activitie;
 use App\Models\Test;
+use App\Models\Test_result;
 use App\Models\Estudiante;
 use App\Models\Curso;
 use App\Models\Work;
@@ -52,6 +53,11 @@ class cursoController extends Controller
             $cursos = $this->cursoRepository->findWherePaginate("asesor_id","=",Auth::user()->asesor()->get()['0']->id,$this->elementos);
             foreach ($cursos as $curso) {                
                 $curso['entregas'] = Qualification::where('curso_id',$curso->id)->where("estado",1)->count();
+                $tests = Test::where('curso_id',$curso->id)->where("visible",1)->get();
+
+                foreach($tests as $test){
+                    $curso['entregas'] += Test_result::where('test_id',$test->id)->where('state',1)->count();
+                }
              }
         }else{
             $cursos = Auth::user()->estudiante()->get()['0']->cursos()->where("matriculados.deleted_at",null)->orderBy("pivot_updated_at","DESC")->paginate($this->elementos);            
@@ -575,3 +581,4 @@ class cursoController extends Controller
         return $data;
     }
 }
+

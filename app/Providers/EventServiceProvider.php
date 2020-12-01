@@ -8,6 +8,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Events\ActivitieEvent;
 use App\Listeners\ActivitieListener;
+use App\Events\TestEvent;
+use App\Listeners\TestListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
 
         ActivitieEvent::class =>[
             ActivitieListener::class,
+        ],
+
+        TestEvent::class =>[
+            TestListener::class,
         ],
     ];
 

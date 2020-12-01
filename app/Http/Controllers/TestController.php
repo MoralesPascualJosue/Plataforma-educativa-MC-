@@ -11,6 +11,7 @@ use App\Models\Test_questions;
 use App\Models\Test_question_options;
 use App\Models\Test_result;
 use App\Models\Test_question_answered;
+use App\Events\TestEvent;
 
 class TestController extends Controller
 {
@@ -64,9 +65,13 @@ class TestController extends Controller
 
         if($request["visible"] == "true"){
             $input["visible"] = 1;
+        }else{
+            $input["visible"] = 0;
         }
 
         $test = Test::find($id);
+        $curso = Curso::find($test->curso_id);
+
         
         if($input["start_date"] > $input["end_date"]){
             abort(403,"fechas no validas");
@@ -76,9 +81,9 @@ class TestController extends Controller
            abort(404,'Prueba no disponible');
         }
 
-        if ($test->result_release == 0 and $input['visible'] == 1) {
+        if ($test->visible == 0 and $input['visible'] == 1) {
             $test->update($input);
-            //event(new ActivitieEvent($activitie,$curso));
+            event(new TestEvent($test,$curso));
         }else{
             $test->update($input);
         }

@@ -7,10 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-use App\Models\Activitie;
+use App\Models\Test;
 use App\Models\Curso;
 
-class ActivitieNotification extends Notification
+class TestNotification extends Notification
 {
     use Queueable;
 
@@ -19,9 +19,9 @@ class ActivitieNotification extends Notification
      *
      * @return void
      */
-    public function __construct(Activitie $activitie,Curso $curso)
+    public function __construct(Test $test,Curso $curso)
     {
-        $this->activitie = $activitie;
+        $this->test = $test;
         $this->curso = $curso;
     }
 
@@ -59,11 +59,11 @@ class ActivitieNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'activitie' => $this->activitie->id,
-            'title' => $this->activitie->title,
-            'fecha_final' => $this->activitie->fecha_final,
+            'activitie' => $this->test->id,
+            'title' => $this->test->title,
+            'fecha_final' => $this->test->fecha_final,
             'cursoname' => $this->curso->title,
-            "type" => "actividad"
+            "type" => "prueba"
         ];
     }
 }

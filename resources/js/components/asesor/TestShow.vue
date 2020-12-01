@@ -2,7 +2,11 @@
   <div class="panel panel-default">
     <div class="panel-heading">Contenido</div>
     <div class="panel-body">
-      <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+      <vue-form-generator
+        :schema="schema"
+        :model="model"
+        :options="formOptions"
+      ></vue-form-generator>
     </div>
     <hr />
     <div class="footer">
@@ -12,7 +16,13 @@
         :model="modelgenerator"
         :options="formOptionsgenerator"
       ></vue-form-generator>
-      <button class="btn btn-primary" @click="agregarpregunta">Agregar pregunta</button>
+      <div v-for="item in modelgenerator.values" :key="item.name">
+        {{ item.name }}
+      </div>
+      <br />
+      <button class="btn btn-primary" @click="agregarpregunta">
+        Agregar pregunta
+      </button>
     </div>
   </div>
 </template>
@@ -23,26 +33,26 @@ import "vue-form-generator/dist/vfg.css";
 
 export default {
   components: {
-    "vue-form-generator": VueFormGenerator.component
+    "vue-form-generator": VueFormGenerator.component,
   },
   data() {
     return {
       model: {},
       schema: {
-        fields: []
+        fields: [],
       },
 
       formOptions: {
         validateAfterLoad: true,
-        validateAfterChanged: true
+        validateAfterChanged: true,
       },
       modelgenerator: {
         type: "input",
         label: "",
         optiondefault: "",
-        values: function() {
+        values: function () {
           return [];
-        }
+        },
       },
       schemagenerator: {
         fields: [
@@ -50,36 +60,24 @@ export default {
             type: "select",
             label: "Tipo de pregunta",
             model: "type",
-            values: function() {
+            values: function () {
               return [
                 { id: "input", name: "Respuesta corta" },
                 { id: "select", name: "Selección" },
                 { id: "checklist", name: "Selección multiple" },
-                { id: "textArea", name: "Respuesta larga" }
+                { id: "textArea", name: "Respuesta larga" },
               ];
             },
-            onChanged: function(model, newVal, oldVal, field) {
-              if (newVal == "select" || newVal == "checklist") {
-                model.values = [];
-              }
-            }
+            onChanged: function (model, newVal, oldVal, field) {
+              model.values = [];
+            },
           },
           {
             type: "input",
             inputType: "text",
             label: "Pregunta",
             placeholder: "Pregunta",
-            model: "label"
-          },
-          {
-            type: "label",
-            label: "Lista de opciones",
-            model: "values",
-            visible: function(model) {
-              return (
-                model && (model.type == "select" || model.type == "checklist")
-              );
-            }
+            model: "label",
           },
           {
             type: "input",
@@ -87,7 +85,7 @@ export default {
             label: "Agrega una opción",
             placeholder: "Opción ",
             model: "optiondefault",
-            visible: function(model) {
+            visible: function (model) {
               return (
                 model && (model.type == "select" || model.type == "checklist")
               );
@@ -97,7 +95,7 @@ export default {
                 classes: "btn-clear",
                 label: "Agregar opción",
                 type: "reset",
-                onclick: function(model, field) {
+                onclick: function (model, field) {
                   if (model.optiondefault == "") {
                     flash("Opción vacia", "info");
                     return "fail";
@@ -108,55 +106,64 @@ export default {
                   if (model.type == "checklist") {
                     option = {
                       name: model.optiondefault,
-                      value: model.optiondefault
+                      value: model.optiondefault,
                     };
                   }
 
                   if (model.type == "select") {
                     option = {
                       name: model.optiondefault,
-                      id: model.optiondefault
+                      id: model.optiondefault,
                     };
                   }
 
                   model.values.push(option);
                   model.optiondefault = "";
-                }
-              }
-            ]
-          }
-        ]
+                },
+              },
+            ],
+          },
+          {
+            type: "label",
+            label: "Lista de opciones",
+            visible: function (model) {
+              return (
+                model && (model.type == "select" || model.type == "checklist")
+              );
+            },
+          },
+        ],
       },
 
       formOptionsgenerator: {
         validateAfterLoad: true,
-        validateAfterChanged: true
-      }
+        validateAfterChanged: true,
+      },
     };
   },
   computed: {
     actividad() {
       return this.$store.getters.actividadview;
-    }
+    },
   },
   created() {
-    this.actividad.questions.forEach(element => {
+    this.actividad.questions.forEach((element) => {
       let question = {
         inputType: "text",
         type: element.type,
         label: element.question,
         model: element.question,
-        listBox: true
+        listBox: true,
       };
 
       let options = [];
-      element.options.forEach(opt => {
+      element.options.forEach((opt) => {
         let option;
         if (question.type == "checklist") {
           option = {
             name: opt.option,
             value: opt.option,
-            respuesta: "no"
+            respuesta: "no",
           };
         }
 
@@ -164,7 +171,7 @@ export default {
           option = {
             name: opt.option,
             id: opt.option,
-            respuesta: "no"
+            respuesta: "no",
           };
         }
 
@@ -192,7 +199,7 @@ export default {
         type: this.modelgenerator.type,
         label: this.modelgenerator.label,
         inputType: "text",
-        model: this.modelgenerator.label
+        model: this.modelgenerator.label,
       };
 
       if (form.type == "select" && this.modelgenerator.values.length == 0) {
@@ -208,7 +215,7 @@ export default {
       ) {
         form.values = this.modelgenerator.values;
         form.listBox = true;
-        this.modelgenerator.values.forEach(element => {
+        this.modelgenerator.values.forEach((element) => {
           valuesoptions.push(Object.values(element));
         });
       }
@@ -217,16 +224,16 @@ export default {
         .post("/test/question/" + this.actividad.id, {
           type: this.modelgenerator.type,
           label: this.modelgenerator.label,
-          options: valuesoptions
+          options: valuesoptions,
         })
-        .then(response => {
+        .then((response) => {
           this.schema.fields.push(form);
 
           this.modelgenerator.label = "";
           this.modelgenerator.values = [];
           flash("Pregunta creada", "success");
         })
-        .catch(response => {
+        .catch((response) => {
           this.errorr = true;
           flash(
             "Fallo la creacion de la pregunta: revisa los campos solicitados.",
@@ -234,8 +241,8 @@ export default {
           );
         })
         .finally(() => {});
-    }
-  }
+    },
+  },
 };
 </script>
 

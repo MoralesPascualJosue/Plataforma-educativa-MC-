@@ -67,7 +67,7 @@
                         </div>
                     </div>
 
-                    <div class="w-full text-center p-t-27 p-b-130">
+                    <div class="w-full text-center p-t-27 p-b-40">
                         <span class="txt1">
                             Olvide
                         </span>

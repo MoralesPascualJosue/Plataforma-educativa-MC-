@@ -5,12 +5,12 @@
         <div class="row">
           <div class="col">
             Recibidos
-            <span class="h3">{{numerodeentregas}}</span> de
-            <span class="h3">{{numeromatriculados}}</span>
+            <span class="h3">{{ numerodeentregas }}</span> de
+            <span class="h3">{{ numeromatriculados }}</span>
           </div>
           <div class="col">
             Para calificar
-            <span class="h3">{{porrevisar}}</span>
+            <span class="h3">{{ porrevisar }}</span>
           </div>
         </div>
         <table class="table table-hover">
@@ -24,34 +24,44 @@
           </thead>
           <tbody>
             <tr v-for="(estudianteb, index) in estudiantes" :key="index">
-              <th scope="row">{{index+1}}</th>
-              <td>{{estudianteb.name}}</td>
-              <td>{{estudianteb.qualificationqualification}}</td>
+              <th scope="row">{{ index + 1 }}</th>
+              <td>{{ estudianteb.name }}</td>
+              <td>{{ estudianteb.qualificationqualification }}</td>
               <td
                 v-if="estudianteb.qualificationestado == 1"
                 class="pararevision"
                 @click="calificar(index)"
-              >Para revision</td>
-              <td v-else-if="estudianteb.qualificationestado == 2" class="calificado">Calificado</td>
-              <td v-else class="na">{{estudianteb.qualificationestado}}</td>
+              >
+                Para revision
+              </td>
+              <td
+                v-else-if="estudianteb.qualificationestado == 2"
+                class="calificado"
+                @click="calificar(index)"
+              >
+                Calificado
+              </td>
+              <td v-else class="na">{{ estudianteb.qualificationestado }}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div v-else key="calificar">
         <div v-if="type == 'activitie'">
-          <div @click="regresaralista" class="backtolist">Regresar a la lista</div>
+          <div @click="regresaralista" class="backtolist">
+            Regresar a la lista
+          </div>
           <transition name="slide-fade">
             <div v-if="!loading">
               <div class="row mt-3">
                 <div class="col">
                   Calificacion:
                   <span class="h3">
-                    {{estudiante.qualificationqualification}}
+                    {{ estudiante.qualificationqualification }}
                     <span class="fsmall">
                       <FormCalificacion
                         v-bind:estudiante="estudiante"
-                        v-bind:activitie=" this.actividad.activitie.id"
+                        v-bind:activitie="this.actividad.activitie.id"
                         @asignar-calificacion="asignarcalificacion"
                       />
                     </span>
@@ -59,11 +69,14 @@
                 </div>
                 <div class="col">
                   Nombre:
-                  <span class="h3">{{estudiante.name}}</span>
+                  <span class="h3">{{ estudiante.name }}</span>
                 </div>
               </div>
               <div>
-                <div v-for="(contenido, indexc) in contenidos.contenidos" :key="indexc">
+                <div
+                  v-for="(contenido, indexc) in contenidos.contenidos"
+                  :key="indexc"
+                >
                   <table class="table table-hover">
                     <thead>
                       <tr>
@@ -74,32 +87,44 @@
                       </tr>
                     </thead>
                     <tr>
-                      <td scope="row">{{contenido.entregas}}</td>
-                      <td href="javascript:void(0)" @click="openFileView(contenido.contenido)">
+                      <td scope="row">{{ contenido.entregas }}</td>
+                      <td
+                        href="javascript:void(0)"
+                        @click="openFileView(contenido.contenido)"
+                      >
                         <a href="javascript:void(0)">Ver</a>
                       </td>
-                      <td>{{contenido.created_at}}</td>
+                      <td>{{ contenido.created_at }}</td>
                       <td></td>
                     </tr>
-                    <tbody id="contenidowork" v-html="contenido.contenido"></tbody>
+                    <tbody
+                      id="contenidowork"
+                      v-html="contenido.contenido"
+                    ></tbody>
                   </table>
                   <hr />
                 </div>
               </div>
             </div>
           </transition>
-          <FileShow :show="showModal" v-bind:recursos="recursos" @close="showModal = false" />
+          <FileShow
+            :show="showModal"
+            v-bind:recursos="recursos"
+            @close="showModal = false"
+          />
         </div>
         <div v-else>
-          <div @click="regresaralista" class="backtolist">Regresar a la lista</div>
+          <div @click="regresaralista" class="backtolist">
+            Regresar a la lista
+          </div>
           <div class="row mt-3">
             <div class="col">
               Calificación:
-              <span class="h3">{{contenidos.calificacion}}</span>
+              <span class="h3">{{ contenidos.calificacion }}</span>
             </div>
             <div class="col">
               Nombre:
-              <span class="h3">{{estudiante.name}}</span>
+              <span class="h3">{{ estudiante.name }}</span>
             </div>
           </div>
           <hr />
@@ -114,13 +139,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(question,indexq) in contenidos.questions" :key="indexq">
-                  <th scope="row">{{indexq+1}}</th>
+                <tr
+                  v-for="(question, indexq) in contenidos.questions"
+                  :key="indexq"
+                >
+                  <th scope="row">{{ indexq + 1 }}</th>
                   <td colspan="3">
-                    <h4>{{question.question}}</h4>
+                    <h4>{{ question.question }}</h4>
                     <hr />
-                    <div class="row" v-for="(respuesta,indexr) in question.respuesta" :key="indexr">
-                      <div class="col-8">{{respuesta.answer}}</div>
+                    <div
+                      class="row"
+                      v-for="(respuesta, indexr) in question.respuesta"
+                      :key="indexr"
+                    >
+                      <div class="col-8">{{ respuesta.answer }}</div>
                       <div class="col-4">
                         Puntaje:
                         <input
@@ -135,7 +167,9 @@
                 <tr>
                   <td colspan="3"></td>
                   <td>
-                    <button class="btn btn-primary" @click="guardarpuntajes">Guardar puntajes</button>
+                    <button class="btn btn-primary" @click="guardarpuntajes">
+                      Guardar puntajes
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -166,19 +200,19 @@ export default {
       estudiantes: [],
       calificando: false,
       estudiante: {
-        id: -1
+        id: -1,
       },
       loading: false,
       contenidos: [],
       showModal: false,
       recursos: [],
-      puntajes: []
+      puntajes: [],
     };
   },
   computed: {
     suma() {
       let suma = 0;
-      this.puntajes.forEach(element => {
+      this.puntajes.forEach((element) => {
         suma = suma + parseInt(element);
       });
       return suma;
@@ -188,11 +222,11 @@ export default {
     },
     curso() {
       return this.$store.getters.cursoview;
-    }
+    },
   },
   components: {
     FormCalificacion,
-    FileShow
+    FileShow,
   },
   created() {
     let url = "/trabajos/";
@@ -201,7 +235,7 @@ export default {
       url = "/test/trabajos/";
     }
 
-    axios.get(url + this.actividad.activitie.id).then(res => {
+    axios.get(url + this.actividad.activitie.id).then((res) => {
       this.estudiantes = res.data.estudiantes;
       this.numeromatriculados = res.data.estudiantes.length;
       this.numerodeentregas = res.data.numeroentregas;
@@ -213,26 +247,27 @@ export default {
     guardarpuntajes() {
       axios
         .post("test/puntajes/" + this.actividad.id + "/" + this.estudiante.id, {
-          puntajes: this.puntajes
+          puntajes: this.puntajes,
         })
-        .then(res => {
+        .then((res) => {
           this.contenidos.calificacion = res.data.calificacion;
           let estudiante = this.estudiante;
           estudiante.qualificationestado = 2;
           estudiante.qualificationqualification = res.data.calificacion;
 
           const index = this.estudiantes.findIndex(
-            item => item.id === estudiante.id
+            (item) => item.id === estudiante.id
           );
 
           this.estudiantes[index] = estudiante;
           this.actividad.entregas--;
           this.porrevisar--;
           this.$store.commit("updateactividad", this.actividad);
+          this.curso.entregas--;
 
           flash("Puntajes guardados", "success");
         })
-        .catch(res => {
+        .catch((res) => {
           flash("Fallo el guardar puntajes: intenta mas tarde", "error");
         });
     },
@@ -246,7 +281,7 @@ export default {
         const element = elementod.children[index];
         recursos.push({
           name: element.children[1].textContent,
-          source: element.children[2].id
+          source: element.children[2].id,
         });
       }
       this.recursos = recursos;
@@ -255,7 +290,7 @@ export default {
       this.estudiante.qualificationqualification = value.qualification;
 
       const indexe = this.estudiantes.findIndex(
-        item => item.id === value.estudiante_id
+        (item) => item.id === value.estudiante_id
       );
       this.estudiantes[indexe].qualificationqualification = value.qualification;
       this.estudiantes[indexe].qualificationestado = value.estado;
@@ -277,43 +312,43 @@ export default {
               "/" +
               this.estudiante.id
           )
-          .then(res => {
+          .then((res) => {
             this.loading = false;
             this.contenidos = res.data;
           })
-          .catch(res => {
+          .catch((res) => {
             this.loading = false;
           });
       } else {
         axios
           .get("test/showwork/" + this.actividad.id + "/" + this.estudiante.id)
-          .then(res => {
+          .then((res) => {
             this.loading = false;
             this.contenidos = res.data;
 
-            res.data.questions.forEach(element => {
+            res.data.questions.forEach((element) => {
               let respu = {
                 question: element.id,
-                calificacion: []
+                calificacion: [],
               };
-              element.respuesta.forEach(res => {
+              element.respuesta.forEach((res) => {
                 respu.calificacion.push({
                   pregunta: res.id,
-                  valor: res.qualification
+                  valor: res.qualification,
                 });
               });
               this.puntajes.push(respu);
             });
           })
-          .catch(res => {
+          .catch((res) => {
             this.loading = false;
           });
       }
     },
     regresaralista() {
       this.calificando = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

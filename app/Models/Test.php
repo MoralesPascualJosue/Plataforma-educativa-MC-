@@ -29,8 +29,6 @@ class Test extends Model
         'id' => 'integer',
         'title' => 'string',
         'instructions' => 'string',
-        'fecha_inicio' => 'date:Y-m-d',
-        'fecha_final' => 'date:Y-m-d',
         'visible' => 'integer',
         'type' => 'string',
         'result_release' => 'integer',

@@ -103,4 +103,20 @@ class UploadController extends Controller
         abort(402,"Archivo no seleccionado");
 
     }
+
+    public function remove($id,Request $request){
+
+        $input = $request->all();
+        $message;
+        if(is_File($input["path"])){
+            Storage::delete($input["path"]);
+            $message = "Archivo eliminado";
+        }else{
+            $message = "Archivo no encontrado";
+        }
+
+       return $message;
+
+    }
 }
+
