@@ -19,15 +19,25 @@
         ></span>
         <p class="line-d" v-if="loading">Creando...</p>
       </button>
-      <div class="dropdown-menu">
+      <div class="dropdown-menu contenido-c">
         <form class="px-4 py-3" @submit="checkForm">
           <div class="form-group">
             <label for="namecurso">Nombre del curso</label>
-            <input type="text" class="form-control" id="namecurso" v-model="name" />
+            <input
+              type="text"
+              class="form-control"
+              id="namecurso"
+              v-model="name"
+            />
           </div>
           <div class="form-group">
             <label for="descripcion">Descripción o mensage</label>
-            <input type="text" class="form-control block-d" id="descripcion" v-model="description" />
+            <input
+              type="text"
+              class="form-control block-d"
+              id="descripcion"
+              v-model="description"
+            />
           </div>
           <div class="form-group">
             <label>Imagen del curso</label>
@@ -38,7 +48,12 @@
               ref="filecover"
               v-on:change="onChangeFileUpload()"
             />
-            <img id="preview" alt="Imagen curso" class="preview-img" :src="previewimg" />
+            <img
+              id="preview"
+              alt="Imagen curso"
+              class="preview-img"
+              :src="previewimg"
+            />
           </div>
           <button type="submit" class="btn btn-primary">Crear</button>
         </form>
@@ -58,7 +73,7 @@ export default {
       errorr: false,
       info: "",
       loading: false,
-      curso: {}
+      curso: {},
     };
   },
   methods: {
@@ -71,7 +86,7 @@ export default {
         this.$refs.filecover.files[0]
       );
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.name == "" || this.description == "") {
@@ -79,8 +94,8 @@ export default {
         return "fail";
       }
 
-      if (this.file == "") {
-        flash("Selecciona una imagen", "warning");
+      if (this.filecover == "") {
+        flash("Imagen no seleccionada", "warning");
         return "fail";
       }
 
@@ -93,16 +108,16 @@ export default {
       axios
         .post("/storeac", formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
+        .then((response) => {
           $("#dLabel").dropdown("toggle");
           this.errorr = false;
           this.curso = response.data;
           flash("Curso creado", "success");
         })
-        .catch(response => {
+        .catch((response) => {
           this.errorr = true;
           flash(
             "Fallo la creacion del curso: revisa los campos solicitados.",
@@ -113,8 +128,8 @@ export default {
           this.loading = false;
           this.$emit("crear-curso", this.curso);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -138,5 +153,9 @@ export default {
 
 .line-d {
   display: inline;
+}
+
+.contenido-c {
+  max-width: 500px;
 }
 </style>

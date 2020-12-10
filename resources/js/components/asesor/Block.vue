@@ -28,13 +28,13 @@ export default {
   props: {
     contenidoinicial: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
       obj: {},
-      loading: false
+      loading: false,
     };
   },
   computed: {
@@ -43,19 +43,19 @@ export default {
     },
     actividad() {
       return this.$store.getters.actividadview;
-    }
+    },
   },
   mounted() {
-    jQuery(function($) {
+    jQuery(function ($) {
       $.ajaxSetup({
         headers: {
-          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-        }
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
       });
       $(".block-s").removeClass("minh-n");
       $(".textb").attr("contenteditable", "true");
 
-      jQuery.makeArray($(".list-r")).forEach(element => {
+      jQuery.makeArray($(".list-r")).forEach((element) => {
         let forme = `
         <form class='input-areafile' action='/uploadfile' method='post' enctype='multipart/form-data'>
             <div class='form-group'>
@@ -74,7 +74,7 @@ export default {
         }
       });
 
-      jQuery.makeArray($(".content-r")).forEach(element => {
+      jQuery.makeArray($(".content-r")).forEach((element) => {
         let ele = `<p class="remove-r">X</p>`;
         let divoptions = document.createElement("div");
         divoptions.classList.add("options-r");
@@ -85,7 +85,7 @@ export default {
       });
 
       /*	Click menu toggle */
-      $(".toggle").on("click", function(e) {
+      $(".toggle").on("click", function (e) {
         obj = this;
         if (flag) {
           if (!$(this).hasClass("minus")) {
@@ -96,13 +96,13 @@ export default {
         }
       });
       /* Toggle menu options blocks  */
-      $(".lock").on("click", function(e) {
+      $(".lock").on("click", function (e) {
         e.preventDefault();
         this.parentElement.parentElement.parentElement.remove();
       });
 
       $(".imageblock").off("click");
-      $(".imageblock").on("click", function(e) {
+      $(".imageblock").on("click", function (e) {
         e.preventDefault();
 
         let elemento = `
@@ -117,7 +117,7 @@ export default {
       });
 
       $(".videoblock").off("click");
-      $(".videoblock").on("click", function(e) {
+      $(".videoblock").on("click", function (e) {
         e.preventDefault();
 
         let elemento =
@@ -131,7 +131,7 @@ export default {
       });
 
       $(".docblock").off("click");
-      $(".docblock").on("click", function(e) {
+      $(".docblock").on("click", function (e) {
         e.preventDefault();
 
         let elemento =
@@ -144,7 +144,7 @@ export default {
         closeMenu(this.parentElement.parentElement.previousElementSibling);
       });
 
-      $(".textblock").on("click", function(e) {
+      $(".textblock").on("click", function (e) {
         e.preventDefault();
         let elemento = "<div class='textb' contenteditable id='30'></div>";
         let content = this.parentElement.parentElement.nextElementSibling;
@@ -153,7 +153,7 @@ export default {
         closeMenu(this.parentElement.parentElement.previousElementSibling);
       });
 
-      $(".resourcesblock").on("click", function(e) {
+      $(".resourcesblock").on("click", function (e) {
         e.preventDefault();
 
         let elemento = `
@@ -176,22 +176,22 @@ export default {
 
       /*menu bottom  options */
 
-      $(".alingleft-option").on("click", function(e) {
+      $(".alingleft-option").on("click", function (e) {
         this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
           "left";
       });
 
-      $(".alingcenter-option").on("click", function(e) {
+      $(".alingcenter-option").on("click", function (e) {
         this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
           "center";
       });
 
-      $(".alingright-option").on("click", function(e) {
+      $(".alingright-option").on("click", function (e) {
         this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
           "right";
       });
 
-      $(".downfont-option").on("click", function(e) {
+      $(".downfont-option").on("click", function (e) {
         let sizef =
           this.parentElement.parentElement.previousElementSibling.children[0]
             .id - 5;
@@ -204,7 +204,7 @@ export default {
         }
       });
 
-      $(".upfont-option").on("click", function(e) {
+      $(".upfont-option").on("click", function (e) {
         let sizef =
           parseInt(
             this.parentElement.parentElement.previousElementSibling.children[0]
@@ -220,12 +220,12 @@ export default {
         }
       });
 
-      $(".addtextblock").on("click", function(e) {
+      $(".addtextblock").on("click", function (e) {
         console.log("add text block");
       });
 
       $(".newblock").off("click");
-      $(".newblock").on("click", function(e) {
+      $(".newblock").on("click", function (e) {
         let block = `
             <div class='toggle'><div class='x'></div><div class='y'></div></div>
             <div class='menu'>
@@ -256,7 +256,7 @@ export default {
         /* Registro de eventos para e nuevo block creado  */
         div.children[0].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             obj = this;
             if (flag) {
               if (!$(this).hasClass("minus")) {
@@ -274,7 +274,7 @@ export default {
 
         div.children[1].children[0].children[0].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
             this.parentElement.parentElement.parentElement.remove();
           }
@@ -282,7 +282,7 @@ export default {
 
         div.children[1].children[0].children[1].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
 
             let elemento =
@@ -298,7 +298,7 @@ export default {
 
         div.children[1].children[0].children[2].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
 
             let elemento =
@@ -314,7 +314,7 @@ export default {
 
         div.children[1].children[0].children[3].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
 
             let elemento =
@@ -330,7 +330,7 @@ export default {
 
         div.children[1].children[0].children[4].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
             let elemento = "<div class='textb' contenteditable id='30'></div>";
             let content = this.parentElement.parentElement.nextElementSibling;
@@ -342,7 +342,7 @@ export default {
 
         div.children[1].children[0].children[5].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
 
             let elemento = `
@@ -367,7 +367,7 @@ export default {
 
         div.children[3].children[0].children[0].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
               "left";
           }
@@ -375,7 +375,7 @@ export default {
 
         div.children[3].children[0].children[1].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
               "center";
           }
@@ -383,7 +383,7 @@ export default {
 
         div.children[3].children[0].children[2].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
               "right";
           }
@@ -391,7 +391,7 @@ export default {
 
         div.children[3].children[0].children[3].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             let sizef =
               this.parentElement.parentElement.previousElementSibling
                 .children[0].id - 5;
@@ -407,7 +407,7 @@ export default {
 
         div.children[3].children[0].children[4].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             let sizef =
               parseInt(
                 this.parentElement.parentElement.previousElementSibling
@@ -430,7 +430,7 @@ export default {
       /*eventos sumit */
       //$(document).off("submit", ".input-areaimage");
       $(document).off("submit");
-      $(document).on("submit", ".input-areaimage", function(e) {
+      $(document).on("submit", ".input-areaimage", function (e) {
         e.preventDefault();
         let form = this;
 
@@ -447,17 +447,17 @@ export default {
           cache: false,
           contentType: false,
           processData: false,
-          success: data => {
+          success: (data) => {
             this.parentElement.innerHTML =
               "<img src='" + data + "' alt='img'class='wm-100'>";
           },
-          error: function(data) {
+          error: function (data) {
             console.log(data);
-          }
+          },
         });
       });
 
-      $(document).on("submit", ".input-areavideo", function(e) {
+      $(document).on("submit", ".input-areavideo", function (e) {
         let bar = this.children[0].children[3];
 
         e.preventDefault();
@@ -469,11 +469,11 @@ export default {
         var formData = new FormData(form);
 
         $.ajax({
-          xhr: function() {
+          xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   bar.setAttribute(
@@ -490,7 +490,7 @@ export default {
             );
             xhr.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   console.log(percentComplete);
@@ -510,7 +510,7 @@ export default {
           cache: false,
           contentType: false,
           processData: false,
-          success: data => {
+          success: (data) => {
             bar.classList.add("hide");
             bar.classList.remove("complete");
             this.parentElement.innerHTML =
@@ -519,15 +519,15 @@ export default {
               data +
               "'></video>";
           },
-          error: function(data) {
+          error: function (data) {
             bar.textContent = "";
             bar.classList.remove("complete");
             console.log(data);
-          }
+          },
         });
       });
 
-      $(document).on("submit", ".input-areadoc", function(e) {
+      $(document).on("submit", ".input-areadoc", function (e) {
         let bar = this.children[0].children[3];
 
         e.preventDefault();
@@ -539,11 +539,11 @@ export default {
         var formData = new FormData(form);
 
         $.ajax({
-          xhr: function() {
+          xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   bar.setAttribute(
@@ -560,7 +560,7 @@ export default {
             );
             xhr.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   console.log(percentComplete);
@@ -580,7 +580,7 @@ export default {
           cache: false,
           contentType: false,
           processData: false,
-          success: data => {
+          success: (data) => {
             bar.classList.add("hide");
             bar.classList.remove("complete");
 
@@ -589,15 +589,15 @@ export default {
               data +
               "' frameborder='0'></iframe>";
           },
-          error: function(data) {
+          error: function (data) {
             bar.textContent = "";
             bar.classList.remove("complete");
             console.log(data);
-          }
+          },
         });
       });
 
-      $(document).on("submit", ".input-areafile", function(e) {
+      $(document).on("submit", ".input-areafile", function (e) {
         let bar = this.children[0].children[3];
 
         e.preventDefault();
@@ -609,11 +609,11 @@ export default {
         var formData = new FormData(form);
 
         $.ajax({
-          xhr: function() {
+          xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   bar.setAttribute(
@@ -630,7 +630,7 @@ export default {
             );
             xhr.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   console.log(percentComplete);
@@ -650,7 +650,7 @@ export default {
           cache: false,
           contentType: false,
           processData: false,
-          success: data => {
+          success: (data) => {
             bar.classList.add("hide");
             bar.classList.remove("complete");
 
@@ -666,56 +666,44 @@ export default {
             /* agregar eventos al elemento creado  */
             nuevob.children[2].children[0].addEventListener(
               "click",
-              function(e) {
-                eleHide(
-                  $(this)
-                    .parent()
-                    .parent()
-                );
+              function (e) {
+                eleHide($(this).parent().parent());
               },
               false
             );
 
             this.parentElement.children[0].children[0].append(nuevob);
           },
-          error: function(data) {
+          error: function (data) {
             bar.textContent = "";
             bar.classList.remove("complete");
-          }
+          },
         });
       });
 
       /**resourcecontent options **/
-      $(".remove-r").click(function(e) {
-        eleHide(
-          $(this)
-            .parent()
-            .parent()
-        );
+      $(".remove-r").click(function (e) {
+        eleHide($(this).parent().parent());
       });
 
-      $(".editn-r").click(function(e) {
+      $(".editn-r").click(function (e) {
         //error: no funciona
-        $(this)
-          .parent()
-          .prev()
-          .attr("contenteditable", "true")
-          .focus();
+        $(this).parent().prev().attr("contenteditable", "true").focus();
       });
       /*end */
     });
   },
   beforeUpdate() {
-    jQuery(function($) {
+    jQuery(function ($) {
       $.ajaxSetup({
         headers: {
-          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-        }
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
       });
       $(".block-s").removeClass("minh-n");
       $(".textb").attr("contenteditable", "true");
 
-      jQuery.makeArray($(".list-r")).forEach(element => {
+      jQuery.makeArray($(".list-r")).forEach((element) => {
         let forme = `
         <form class='input-areafile' action='/uploadfile' method='post' enctype='multipart/form-data'>
             <div class='form-group'>
@@ -734,7 +722,7 @@ export default {
         }
       });
 
-      jQuery.makeArray($(".content-r")).forEach(element => {
+      jQuery.makeArray($(".content-r")).forEach((element) => {
         let ele = `<p class="remove-r">X</p>`;
         let divoptions = document.createElement("div");
         divoptions.classList.add("options-r");
@@ -745,7 +733,7 @@ export default {
       });
 
       /*	Click menu toggle */
-      $(".toggle").on("click", function(e) {
+      $(".toggle").on("click", function (e) {
         obj = this;
         if (flag) {
           if (!$(this).hasClass("minus")) {
@@ -756,13 +744,13 @@ export default {
         }
       });
       /* Toggle menu options blocks  */
-      $(".lock").on("click", function(e) {
+      $(".lock").on("click", function (e) {
         e.preventDefault();
         this.parentElement.parentElement.parentElement.remove();
       });
 
       $(".imageblock").off("click");
-      $(".imageblock").on("click", function(e) {
+      $(".imageblock").on("click", function (e) {
         e.preventDefault();
 
         let elemento = `
@@ -777,7 +765,7 @@ export default {
       });
 
       $(".videoblock").off("click");
-      $(".videoblock").on("click", function(e) {
+      $(".videoblock").on("click", function (e) {
         e.preventDefault();
 
         let elemento =
@@ -791,7 +779,7 @@ export default {
       });
 
       $(".docblock").off("click");
-      $(".docblock").on("click", function(e) {
+      $(".docblock").on("click", function (e) {
         e.preventDefault();
 
         let elemento =
@@ -804,7 +792,7 @@ export default {
         closeMenu(this.parentElement.parentElement.previousElementSibling);
       });
 
-      $(".textblock").on("click", function(e) {
+      $(".textblock").on("click", function (e) {
         e.preventDefault();
         let elemento = "<div class='textb' contenteditable id='30'></div>";
         let content = this.parentElement.parentElement.nextElementSibling;
@@ -813,7 +801,7 @@ export default {
         closeMenu(this.parentElement.parentElement.previousElementSibling);
       });
 
-      $(".resourcesblock").on("click", function(e) {
+      $(".resourcesblock").on("click", function (e) {
         e.preventDefault();
 
         let elemento = `
@@ -836,22 +824,22 @@ export default {
 
       /*menu bottom  options */
 
-      $(".alingleft-option").on("click", function(e) {
+      $(".alingleft-option").on("click", function (e) {
         this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
           "left";
       });
 
-      $(".alingcenter-option").on("click", function(e) {
+      $(".alingcenter-option").on("click", function (e) {
         this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
           "center";
       });
 
-      $(".alingright-option").on("click", function(e) {
+      $(".alingright-option").on("click", function (e) {
         this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
           "right";
       });
 
-      $(".downfont-option").on("click", function(e) {
+      $(".downfont-option").on("click", function (e) {
         let sizef =
           this.parentElement.parentElement.previousElementSibling.children[0]
             .id - 5;
@@ -864,7 +852,7 @@ export default {
         }
       });
 
-      $(".upfont-option").on("click", function(e) {
+      $(".upfont-option").on("click", function (e) {
         let sizef =
           parseInt(
             this.parentElement.parentElement.previousElementSibling.children[0]
@@ -880,12 +868,12 @@ export default {
         }
       });
 
-      $(".addtextblock").on("click", function(e) {
+      $(".addtextblock").on("click", function (e) {
         console.log("add text block");
       });
 
       $(".newblock").off("click");
-      $(".newblock").on("click", function(e) {
+      $(".newblock").on("click", function (e) {
         let block = `
             <div class='toggle'><div class='x'></div><div class='y'></div></div>
             <div class='menu'>
@@ -916,7 +904,7 @@ export default {
         /* Registro de eventos para e nuevo block creado  */
         div.children[0].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             obj = this;
             if (flag) {
               if (!$(this).hasClass("minus")) {
@@ -934,7 +922,7 @@ export default {
 
         div.children[1].children[0].children[0].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
             this.parentElement.parentElement.parentElement.remove();
           }
@@ -942,7 +930,7 @@ export default {
 
         div.children[1].children[0].children[1].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
 
             let elemento =
@@ -958,7 +946,7 @@ export default {
 
         div.children[1].children[0].children[2].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
 
             let elemento =
@@ -974,7 +962,7 @@ export default {
 
         div.children[1].children[0].children[3].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
 
             let elemento =
@@ -990,7 +978,7 @@ export default {
 
         div.children[1].children[0].children[4].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
             let elemento = "<div class='textb' contenteditable id='30'></div>";
             let content = this.parentElement.parentElement.nextElementSibling;
@@ -1002,7 +990,7 @@ export default {
 
         div.children[1].children[0].children[5].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             e.preventDefault();
 
             let elemento = `
@@ -1027,7 +1015,7 @@ export default {
 
         div.children[3].children[0].children[0].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
               "left";
           }
@@ -1035,7 +1023,7 @@ export default {
 
         div.children[3].children[0].children[1].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
               "center";
           }
@@ -1043,7 +1031,7 @@ export default {
 
         div.children[3].children[0].children[2].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             this.parentElement.parentElement.previousElementSibling.children[0].style.textAlign =
               "right";
           }
@@ -1051,7 +1039,7 @@ export default {
 
         div.children[3].children[0].children[3].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             let sizef =
               this.parentElement.parentElement.previousElementSibling
                 .children[0].id - 5;
@@ -1067,7 +1055,7 @@ export default {
 
         div.children[3].children[0].children[4].addEventListener(
           "click",
-          function(e) {
+          function (e) {
             let sizef =
               parseInt(
                 this.parentElement.parentElement.previousElementSibling
@@ -1090,7 +1078,7 @@ export default {
       /*eventos sumit */
       //$(document).off("submit", ".input-areaimage");
       $(document).off("submit");
-      $(document).on("submit", ".input-areaimage", function(e) {
+      $(document).on("submit", ".input-areaimage", function (e) {
         e.preventDefault();
         let form = this;
 
@@ -1107,17 +1095,17 @@ export default {
           cache: false,
           contentType: false,
           processData: false,
-          success: data => {
+          success: (data) => {
             this.parentElement.innerHTML =
               "<img src='" + data + "' alt='img'class='wm-100'>";
           },
-          error: function(data) {
+          error: function (data) {
             console.log(data);
-          }
+          },
         });
       });
 
-      $(document).on("submit", ".input-areavideo", function(e) {
+      $(document).on("submit", ".input-areavideo", function (e) {
         let bar = this.children[0].children[3];
 
         e.preventDefault();
@@ -1129,11 +1117,11 @@ export default {
         var formData = new FormData(form);
 
         $.ajax({
-          xhr: function() {
+          xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   bar.setAttribute(
@@ -1150,7 +1138,7 @@ export default {
             );
             xhr.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   console.log(percentComplete);
@@ -1170,7 +1158,7 @@ export default {
           cache: false,
           contentType: false,
           processData: false,
-          success: data => {
+          success: (data) => {
             bar.classList.add("hide");
             bar.classList.remove("complete");
             this.parentElement.innerHTML =
@@ -1179,15 +1167,15 @@ export default {
               data +
               "'></video>";
           },
-          error: function(data) {
+          error: function (data) {
             bar.textContent = "";
             bar.classList.remove("complete");
             console.log(data);
-          }
+          },
         });
       });
 
-      $(document).on("submit", ".input-areadoc", function(e) {
+      $(document).on("submit", ".input-areadoc", function (e) {
         let bar = this.children[0].children[3];
 
         e.preventDefault();
@@ -1199,11 +1187,11 @@ export default {
         var formData = new FormData(form);
 
         $.ajax({
-          xhr: function() {
+          xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   bar.setAttribute(
@@ -1220,7 +1208,7 @@ export default {
             );
             xhr.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   console.log(percentComplete);
@@ -1240,7 +1228,7 @@ export default {
           cache: false,
           contentType: false,
           processData: false,
-          success: data => {
+          success: (data) => {
             bar.classList.add("hide");
             bar.classList.remove("complete");
 
@@ -1249,15 +1237,15 @@ export default {
               data +
               "' frameborder='0'></iframe>";
           },
-          error: function(data) {
+          error: function (data) {
             bar.textContent = "";
             bar.classList.remove("complete");
             console.log(data);
-          }
+          },
         });
       });
 
-      $(document).on("submit", ".input-areafile", function(e) {
+      $(document).on("submit", ".input-areafile", function (e) {
         let bar = this.children[0].children[3];
 
         e.preventDefault();
@@ -1269,11 +1257,11 @@ export default {
         var formData = new FormData(form);
 
         $.ajax({
-          xhr: function() {
+          xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   bar.setAttribute(
@@ -1290,7 +1278,7 @@ export default {
             );
             xhr.addEventListener(
               "progress",
-              function(evt) {
+              function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = evt.loaded / evt.total;
                   console.log(percentComplete);
@@ -1310,7 +1298,7 @@ export default {
           cache: false,
           contentType: false,
           processData: false,
-          success: data => {
+          success: (data) => {
             bar.classList.add("hide");
             bar.classList.remove("complete");
 
@@ -1326,41 +1314,29 @@ export default {
             /* agregar eventos al elemento creado  */
             nuevob.children[2].children[0].addEventListener(
               "click",
-              function(e) {
-                eleHide(
-                  $(this)
-                    .parent()
-                    .parent()
-                );
+              function (e) {
+                eleHide($(this).parent().parent());
               },
               false
             );
 
             this.parentElement.children[0].children[0].append(nuevob);
           },
-          error: function(data) {
+          error: function (data) {
             bar.textContent = "";
             bar.classList.remove("complete");
-          }
+          },
         });
       });
 
       /**resourcecontent options **/
-      $(".remove-r").click(function(e) {
-        eleHide(
-          $(this)
-            .parent()
-            .parent()
-        );
+      $(".remove-r").click(function (e) {
+        eleHide($(this).parent().parent());
       });
 
-      $(".editn-r").click(function(e) {
+      $(".editn-r").click(function (e) {
         //error: no funciona
-        $(this)
-          .parent()
-          .prev()
-          .attr("contenteditable", "true")
-          .focus();
+        $(this).parent().prev().attr("contenteditable", "true").focus();
       });
       /*end */
     });
@@ -1374,16 +1350,16 @@ export default {
         type: "put",
         url: "../updateat/" + update,
         data: {
-          contenido: document.getElementById("taskcontenido").innerHTML
+          contenido: document.getElementById("taskcontenido").innerHTML,
         },
         headers: {
-          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-        }
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
       })
-        .done(function(data) {
+        .done(function (data) {
           flash("Contenido guardado", "success");
         })
-        .fail(function(data) {
+        .fail(function (data) {
           flash(
             "Fallo el guardado del contenido: intentalo mas tarde.",
             "error"
@@ -1392,8 +1368,8 @@ export default {
         .always(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 
 let obj;
@@ -1402,7 +1378,7 @@ function formatoparaguardarcontenido() {
   $(".block-s").addClass("minh-n");
   $(".textb").attr("contenteditable", "false");
   $(".options-r").remove();
-  jQuery.makeArray($(".list-r")).forEach(element => {
+  jQuery.makeArray($(".list-r")).forEach((element) => {
     if (element.nextElementSibling != null) {
       element.nextElementSibling.remove();
     }
@@ -1410,8 +1386,8 @@ function formatoparaguardarcontenido() {
 }
 // Animated element removal
 function eleHide(el) {
-  el.animate({ opacity: "0" }, 150, function() {
-    el.animate({ height: "0px" }, 150, function() {
+  el.animate({ opacity: "0" }, 150, function () {
+    el.animate({ height: "0px" }, 150, function () {
       el.remove();
     });
   });
@@ -1434,16 +1410,16 @@ function openMenu(ele) {
   // Update toggle
   toggle.classList.add("minus");
   toggle.children[1].classList.add("minus");
-  setTimeout(function() {
+  setTimeout(function () {
     toggle.children[0].classList.add("stretch");
   }, 100);
-  setTimeout(function() {
+  setTimeout(function () {
     toggle.children[0].classList.remove("stretch");
   }, 300);
 
   // Move content
   content.classList.add("bounce");
-  setTimeout(function() {
+  setTimeout(function () {
     content.classList.remove("bounce");
     content.classList.add("open");
   }, 250);
@@ -1463,7 +1439,7 @@ function openMenu(ele) {
   menuoptions.children[0].children[4].classList.add("animate", "move");
   menuoptions.children[0].children[5].classList.add("animate", "move");
 
-  setTimeout(function() {
+  setTimeout(function () {
     menu.children[0].children[0].classList.add("color");
     menu.children[0].children[1].classList.add("color");
     menu.children[0].children[2].classList.add("color");
@@ -1478,7 +1454,7 @@ function openMenu(ele) {
     menuoptions.children[0].children[4].classList.add("color");
     menuoptions.children[0].children[5].classList.add("color");
   }, 200);
-  setTimeout(function() {
+  setTimeout(function () {
     flag = true;
   }, 400);
 }
@@ -1496,14 +1472,14 @@ function closeMenu(ele) {
   toggle.classList.remove("minus");
   toggle.children[1].classList.remove("minus");
   toggle.children[0].classList.add("shrink");
-  setTimeout(function() {
+  setTimeout(function () {
     toggle.children[0].classList.remove("shrink");
   }, 200);
 
   // Move content
   content.classList.remove("open");
   // Reset menu icons
-  setTimeout(function() {
+  setTimeout(function () {
     menu.children[0].children[0].classList.remove("animate", "move", "color");
     menu.children[0].children[1].classList.remove("animate", "move", "color");
     menu.children[0].children[2].classList.remove("animate", "move", "color");
@@ -1558,6 +1534,8 @@ function closeMenu(ele) {
   scrollbar-width: thin;
   grid-column: 1 / 3;
   text-align: center;
+  background-color: #3490dc;
+  padding: 1px;
 }
 
 iframe {
@@ -1732,7 +1710,7 @@ div.menu ul li.resourcesblock a {
 }
 
 div.menu ul li.color a {
-  background-color: #f0f0f0;
+  background-color: #3490dc;
 }
 div.menu ul li.move a {
   -webkit-transform: translate3d(0px, 0px, 0px);
@@ -2042,5 +2020,11 @@ div.menu-options ul li.move a {
 
 .minh-n {
   min-height: inherit;
+}
+
+#guardarcontenido {
+  position: absolute;
+  right: 5%;
+  top: 5rem;
 }
 </style>

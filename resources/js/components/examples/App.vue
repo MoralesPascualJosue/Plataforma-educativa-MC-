@@ -1,13 +1,20 @@
 <template>
-  <div>example app <UploadFile /> inter</div>
+  <div>
+    example app test
+    <div><UploadFile /> inter</div>
+    <div><PortadaSelected /></div>
+  </div>
 </template>
 <script>
 import UploadFile from "./UploadFile";
+import PortadaSelected from "./PortadaSelected";
 export default {
   components: {
     UploadFile,
+    PortadaSelected,
   },
 };
 </script>
-<style>
+<styl
+    PortadaSelectede>
 </style>

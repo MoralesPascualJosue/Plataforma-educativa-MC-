@@ -132,6 +132,7 @@ export default {
 .notih {
   font-weight: 700;
   border-bottom: 1px solid;
+  color: black;
 }
 .notif {
   font-weight: 700;

@@ -197,6 +197,43 @@ a.header-button:active {
     font-family: "Open Sans", sans-serif;
 }
 
+@media screen and (min-width: 1370px) {
+    .header-button,
+    a.header-button,
+    a.header-button:visited {
+        width: 10.587rem;
+        margin-top: 1.2rem;
+        margin-left: 1.2rem;
+        border: 2px solid #ffffff5e;
+        font-size: 2rem;
+        padding: 0.5rem;
+    }
+    .information-header {
+        font-size: 5rem;
+    }
+    .informacion-content {
+        font-size: 20px;
+    }
+    .book-container {
+        width: 40rem;
+        height: 60rem;
+    }
+    .book-tittle {
+        font-size: 5.4286rem;
+        line-height: 5.4286rem;
+        margin-top: 32rem;
+    }
+    .copyright {
+        font-size: large;
+    }
+    .logo {
+        width: 4.643rem;
+    }
+    .header-logo-subtitle {
+        font-size: 2rem;
+    }
+}
+
 @media screen and (max-width: 1020px) {
     .right-container {
         height: unset;
@@ -210,6 +247,9 @@ a.header-button:active {
     .right-container {
         margin-left: unset;
         grid-template-columns: unset;
+    }
+    .information-header {
+        padding-top: unset;
     }
 }
 

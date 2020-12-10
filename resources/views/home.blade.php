@@ -8,7 +8,7 @@
 
 @section('content')
 <div id="app">
-    claro
+    claro test
     <app></app>
 </div>
 @endsection

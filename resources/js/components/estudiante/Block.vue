@@ -9,13 +9,13 @@ export default {
   props: {
     contenidoinicial: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
       obj: {},
-      loading: false
+      loading: false,
     };
   },
   computed: {
@@ -24,9 +24,9 @@ export default {
     },
     actividad() {
       return this.$store.getters.actividadview;
-    }
+    },
   },
-  methods: {}
+  methods: {},
 };
 </script>
 
@@ -37,6 +37,8 @@ export default {
   scrollbar-width: thin;
   grid-column: 1 / 3;
   text-align: center;
+  background-color: white;
+  padding: 1px;
 }
 
 iframe {

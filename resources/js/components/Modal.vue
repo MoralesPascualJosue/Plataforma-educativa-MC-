@@ -1,6 +1,6 @@
 <template>
   <div class="modal-mask" @click="close" v-show="show">
-    <div class="modal-container" style="border-radius: 8px;" @click.stop>
+    <div class="modal-container" style="border-radius: 8px" @click.stop>
       <slot></slot>
     </div>
   </div>
@@ -11,14 +11,14 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
-    close: function() {
+    close: function () {
       this.$emit("close");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -54,7 +54,7 @@ export default {
 }
 
 .modal-body {
-  margin: 20px 0;
+  margin: 0;
 }
 
 .text-right {

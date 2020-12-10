@@ -1,56 +1,79 @@
 <template>
   <div class="container sizec">
-    <ul class="nav nav-tabs nav-justified">
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('home')"
-          :class="{ active: isActive('home') }"
-          href="#home"
-        >Curso</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('profile')"
-          :class="{ active: isActive('profile') }"
-          href="#profile"
-        >foro</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('contact')"
-          :class="{ active: isActive('contact') }"
-          href="#contact"
-        >
-          Mensajes
-          <span
-            v-if="mensajesnuevos>0"
-            class="badge badge-primary float-right fontct"
-          >{{mensajesnuevos}}</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('informacion')"
-          :class="{ active: isActive('informacion') }"
-          href="#informacion"
-        >Informacion</a>
-      </li>
-    </ul>
+    <div class="top-content">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item back-color">
+          <a
+            class="nav-link back-color"
+            @click.prevent="setActive('home')"
+            :class="{ active: isActive('home') }"
+            href="#home"
+            >Curso</a
+          >
+        </li>
+        <li class="nav-item back-color">
+          <a
+            class="nav-link back-color"
+            @click.prevent="setActive('profile')"
+            :class="{ active: isActive('profile') }"
+            href="#profile"
+            >foro</a
+          >
+        </li>
+        <li class="nav-item back-color">
+          <a
+            class="nav-link back-color"
+            @click.prevent="setActive('contact')"
+            :class="{ active: isActive('contact') }"
+            href="#contact"
+          >
+            Mensajes
+            <span
+              v-if="mensajesnuevos > 0"
+              class="badge badge-primary float-right fontct"
+              >{{ mensajesnuevos }}</span
+            >
+          </a>
+        </li>
+        <li class="nav-item back-color">
+          <a
+            class="nav-link back-color"
+            @click.prevent="setActive('informacion')"
+            :class="{ active: isActive('informacion') }"
+            href="#informacion"
+            >Informacion</a
+          >
+        </li>
+      </ul>
+    </div>
+
     <div class="tab-content py-3" id="myTabContent">
-      <div class="tab-pane fade" :class="{ 'active show': isActive('resumen') }" id="resumen">
+      <div
+        class="tab-pane fade"
+        :class="{ 'active show': isActive('resumen') }"
+        id="resumen"
+      >
         <Resumen v-if="isActive('resumen')" />
       </div>
-      <div class="tab-pane fade" :class="{ 'active show': isActive('home') }" id="home">
+      <div
+        class="tab-pane fade"
+        :class="{ 'active show': isActive('home') }"
+        id="home"
+      >
         <ListaActividades @ver-resumen="setActive('resumen')" />
       </div>
-      <div class="tab-pane fade" :class="{ 'active show': isActive('profile') }" id="profile">
+      <div
+        class="tab-pane fade"
+        :class="{ 'active show': isActive('profile') }"
+        id="profile"
+      >
         <Foro />
       </div>
-      <div class="tab-pane fade" :class="{ 'active show': isActive('contact') }" id="contact">
+      <div
+        class="tab-pane fade"
+        :class="{ 'active show': isActive('contact') }"
+        id="contact"
+      >
         <ListaMensajes @mensajes="mensajes" @set-mensajes="mensajesnuevoss" />
       </div>
       <div
@@ -74,7 +97,7 @@ export default {
   data() {
     return {
       activeItem: "home",
-      mensajesnuevos: 0
+      mensajesnuevos: 0,
     };
   },
   components: {
@@ -82,7 +105,7 @@ export default {
     Foro,
     ListaMensajes,
     InformacionShow,
-    Resumen
+    Resumen,
   },
   methods: {
     isActive(menuItem) {
@@ -100,8 +123,8 @@ export default {
       } else {
         this.mensajesnuevos--;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -147,5 +170,19 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #5b9911;
+}
+
+.back-color {
+  background-color: inherit !important;
+}
+
+.top-content {
+  border-bottom: 1px solid #dee2e6;
+  margin-left: 26px;
+}
+
+.nav-tabs {
+  max-width: 500px;
+  border-bottom: none;
 }
 </style>

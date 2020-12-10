@@ -1,42 +1,56 @@
 <template>
   <div class="container sizec">
-    <ul class="nav nav-tabs nav-justified">
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('home')"
-          :class="{ active: isActive('home') }"
-          href="#home"
-        >Actividad</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('entregas')"
-          :class="{ active: isActive('entregas') }"
-          href="#profile"
-        >
-          Entregas
-          <span
-            v-if="entregas>0"
-            class="badge badge-primary float-right fontct"
-          >{{entregas}}</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('informacion')"
-          :class="{ active: isActive('informacion') }"
-          href="#informacion"
-        >Detalles</a>
-      </li>
-    </ul>
+    <div class="top-content">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            @click.prevent="setActive('home')"
+            :class="{ active: isActive('home') }"
+            href="#home"
+            >Actividad</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            @click.prevent="setActive('entregas')"
+            :class="{ active: isActive('entregas') }"
+            href="#profile"
+          >
+            Entregas
+            <span
+              v-if="entregas > 0"
+              class="badge badge-primary float-right fontct"
+              >{{ entregas }}</span
+            >
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            @click.prevent="setActive('informacion')"
+            :class="{ active: isActive('informacion') }"
+            href="#informacion"
+            >Detalles</a
+          >
+        </li>
+      </ul>
+    </div>
+
     <div class="tab-content py-3" id="myTabContent">
-      <div class="tab-pane fade" :class="{ 'active show': isActive('home') }" id="home">
+      <div
+        class="tab-pane fade"
+        :class="{ 'active show': isActive('home') }"
+        id="home"
+      >
         <ActividadShow @entregas="entrega" />
       </div>
-      <div class="tab-pane fade" :class="{ 'active show': isActive('entregas') }" id="entregas">
+      <div
+        class="tab-pane fade"
+        :class="{ 'active show': isActive('entregas') }"
+        id="entregas"
+      >
         <keep-alive>
           <EntregasActividad v-if="activeItem == 'entregas'" />
         </keep-alive>
@@ -60,7 +74,7 @@ export default {
   data() {
     return {
       activeItem: "home",
-      entregas: 0
+      entregas: 0,
     };
   },
   components: { ActividadShow, FormActividad, EntregasActividad },
@@ -80,8 +94,8 @@ export default {
       } else {
         this.entregas--;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

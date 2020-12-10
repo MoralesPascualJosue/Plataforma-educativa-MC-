@@ -1,36 +1,49 @@
 <template>
   <div class="container sizec">
-    <ul class="nav nav-tabs nav-justified">
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('home')"
-          :class="{ active: isActive('home') }"
-          href="#home"
-        >Actividad</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('entregas')"
-          :class="{ active: isActive('entregas') }"
-          href="#profile"
-        >Entregas</a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          @click.prevent="setActive('informacion')"
-          :class="{ active: isActive('informacion') }"
-          href="#informacion"
-        >Detalles</a>
-      </li>
-    </ul>
+    <div class="top-content">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            @click.prevent="setActive('home')"
+            :class="{ active: isActive('home') }"
+            href="#home"
+            >Actividad</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            @click.prevent="setActive('entregas')"
+            :class="{ active: isActive('entregas') }"
+            href="#profile"
+            >Entregas</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            @click.prevent="setActive('informacion')"
+            :class="{ active: isActive('informacion') }"
+            href="#informacion"
+            >Detalles</a
+          >
+        </li>
+      </ul>
+    </div>
     <div class="tab-content py-3" id="myTabContent">
-      <div class="tab-pane fade" :class="{ 'active show': isActive('home') }" id="home">
+      <div
+        class="tab-pane fade"
+        :class="{ 'active show': isActive('home') }"
+        id="home"
+      >
         <ActividadShow />
       </div>
-      <div class="tab-pane fade" :class="{ 'active show': isActive('entregas') }" id="entregas">
+      <div
+        class="tab-pane fade"
+        :class="{ 'active show': isActive('entregas') }"
+        id="entregas"
+      >
         <EntregasActividad />
       </div>
       <div
@@ -51,7 +64,7 @@ import EntregasActividad from "./EntregasActividad";
 export default {
   data() {
     return {
-      activeItem: "home"
+      activeItem: "home",
     };
   },
   components: { ActividadShow, FormActividad, EntregasActividad },
@@ -64,8 +77,8 @@ export default {
     },
     setActive(menuItem) {
       this.activeItem = menuItem;
-    }
-  }
+    },
+  },
 };
 </script>
 
