@@ -5,11 +5,21 @@
         <div class="col">
           <div class="form-group">
             <label for="title">Nombre</label>
-            <input type="text" class="form-control" id="title" v-model="title" />
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              v-model="title"
+            />
           </div>
           <div class="form-group">
             <label for="visible">Visible para los estudiantes</label>
-            <input type="checkbox" class="form-control block-d" id="visible" v-model="visible" />
+            <input
+              type="checkbox"
+              class="form-control block-d"
+              id="visible"
+              v-model="visible"
+            />
           </div>
           <div class="form-group">
             <label for="intentosdisponibles">Intentos disponibless</label>
@@ -24,11 +34,21 @@
         <div class="col">
           <div class="form-group">
             <label for="fechainicio">Fecha de inicio</label>
-            <input type="date" class="form-control block-d" id="fechainicio" v-model="fechainicio" />
+            <input
+              type="date"
+              class="form-control block-d"
+              id="fechainicio"
+              v-model="fechainicio"
+            />
           </div>
           <div class="form-group">
             <label for="fechafinal">Fecha final</label>
-            <input type="date" class="form-control block-d" id="fechafinal" v-model="fechafinal" />
+            <input
+              type="date"
+              class="form-control block-d"
+              id="fechafinal"
+              v-model="fechafinal"
+            />
           </div>
           <button type="submit" class="btn btn-primary">
             <p class="line-d" v-if="!loading">Editar</p>
@@ -42,7 +62,9 @@
           </button>
         </div>
       </form>
-      <button class="btn btn-warning" @click="restaurarvaloresa()">Restaurar valores</button>
+      <button class="btn btn-warning" @click="restaurarvaloresa()">
+        Restaurar valores
+      </button>
     </div>
     <a href="javascript:void(0)" class="aside-link" @click="eliminarac()">
       <p v-if="this.actividad.num_takes >= 0">Eliminar prueba</p>
@@ -60,13 +82,13 @@ export default {
       intentos: 1,
       fechainicio: "",
       fechafinal: "",
-      loading: false
+      loading: false,
     };
   },
   computed: {
     actividad() {
       return this.$store.getters.actividadview;
-    }
+    },
   },
   created() {
     this.title = this.actividad.activitie.title;
@@ -83,12 +105,12 @@ export default {
       this.fechafinal = this.actividad.activitie.fecha_final;
     }
 
-    jQuery(function($) {
+    jQuery(function ($) {
       $("#fechafinal").prop("min", $("#fechainicio").val());
     });
   },
   beforeUpdate() {
-    jQuery(function($) {
+    jQuery(function ($) {
       $("#fechafinal").prop("min", $("#fechainicio").val());
     });
   },
@@ -108,7 +130,7 @@ export default {
         this.fechafinal = this.actividad.activitie.fecha_final;
       }
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.title == "") {
@@ -143,15 +165,18 @@ export default {
       axios
         .post(url, formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
+        .then((response) => {
           this.errorr = false;
           this.$store.commit("updateactividad", response.data);
           flash("Contenido actualizado", "success");
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
           this.errorr = true;
           flash(
             "Fallo la actualizacion del contenido: intentalo más tarde",
@@ -176,20 +201,27 @@ export default {
       const confirmacion = confirm(`${mensaje} ${this.title}`);
 
       if (confirmacion) {
-        axios.delete(url).then(() => {
-          if (this.actividad.num_takes >= 0) {
-            this.$store.commit("deleteteactividad", this.actividad);
-            flash("Prueba Eliminada", "info");
-          } else {
-            this.$store.commit("deleteteactividad", this.actividad.activitie);
-            flash("Actividad Eliminada", "info");
-          }
+        axios
+          .delete(url)
+          .then(() => {
+            if (this.actividad.num_takes >= 0) {
+              this.$store.commit("deleteteactividad", this.actividad);
+              flash("Prueba Eliminada", "info");
+            } else {
+              this.$store.commit("deleteteactividad", this.actividad.activitie);
+              flash("Actividad Eliminada", "info");
+            }
 
-          this.$emit("close");
-        });
+            this.$emit("close");
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              window.location.href = "login";
+            }
+          });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

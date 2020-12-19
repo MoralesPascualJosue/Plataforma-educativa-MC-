@@ -205,13 +205,18 @@ export default {
           this.actividad.works.push(response.data);
           flash("Entrega realizada", "success");
         })
-        .catch((response) => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
           this.errorr = true;
           flash("Fallo la entrega: intenta mas tarde.", "error");
         })
         .finally(() => {
           contenidoe.innerHTML = "";
-          document.getElementById("numarchivos").textContent = "0";
+          if (this.actividad.entrega < this.actividad.activitie.intentos) {
+            document.getElementById("numarchivos").textContent = "0";
+          }
           this.loading = false;
         });
     },

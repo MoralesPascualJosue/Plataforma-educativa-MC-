@@ -2,17 +2,17 @@
   <div>
     <div
       :style="{
-                height: `50px`,
-                borderRadius:`8px`,
-                backgroundColor: `${discu.colorCategoria}`
-            }"
+        height: `50px`,
+        borderRadius: `4px`,
+        backgroundColor: `${discu.colorCategoria}`,
+      }"
     ></div>
-    <h5 class="op-3">{{discu.nameCategoria}}</h5>
+    <h5 class="op-3">{{ discu.nameCategoria }}</h5>
     <!-- Contenedor Principal -->
     <div class="comments-container">
       <h1>
-        {{discu.title}}
-        <a href="javascript:void(0)">{{discu.created_at}}</a>
+        {{ discu.title }}
+        <a href="javascript:void(0)">{{ discu.created_at }}</a>
         <p v-if="comentarios.discuss == 1">
           <a href="javascript:void(0)" @click="eliminart()">Eliminar tema</a>
           <a href="javascript:void(0)" class="ml-2">
@@ -23,21 +23,25 @@
 
       <ul id="comments-list" class="comments-list">
         <li>
-          <div v-for="(comentario, indexco) in comentarios.fpost" :key="indexco">
+          <div
+            v-for="(comentario, indexco) in comentarios.fpost"
+            :key="indexco"
+          >
             <div class="comment-main-level" v-if="indexco == 0">
               <!-- Avatar -->
               <div class="comment-avatar">
                 <img class="bg-white" :src="comentario.image" alt />
-                alt
-                />
+                alt />
               </div>
               <!-- Contenedor del Comentario -->
               <div class="comment-box">
                 <div class="comment-head">
                   <h6 class="comment-name by-author">
-                    <a href="javascript:void(0)">{{comentario.usuarioName}}</a>
+                    <a href="javascript:void(0)">{{
+                      comentario.usuarioName
+                    }}</a>
                   </h6>
-                  <span>{{tiempo(comentario.created_at)}}</span>
+                  <span>{{ tiempo(comentario.created_at) }}</span>
                   <i class="fa fa-reply"></i>
                   <i class="fa fa-heart"></i>
                   <div v-if="comentario.propiedad == 1">
@@ -45,12 +49,14 @@
                       href="javascript:void(0)"
                       class="aside-link"
                       @click="editarc(comentario)"
-                    >Editar</a>
+                      >Editar</a
+                    >
                     <a
                       href="javascript:void(0)"
                       class="aside-link"
                       @click="eliminarc(comentario.id)"
-                    >Eliminar</a>
+                      >Eliminar</a
+                    >
                   </div>
                 </div>
                 <div class="comment-content" v-html="comentario.body"></div>
@@ -67,9 +73,11 @@
                 <div class="comment-box">
                   <div class="comment-head">
                     <h6 class="comment-name">
-                      <a href="javascript:void(0)">{{comentario.usuarioName}}</a>
+                      <a href="javascript:void(0)">{{
+                        comentario.usuarioName
+                      }}</a>
                     </h6>
-                    <span>{{tiempo(comentario.created_at)}}</span>
+                    <span>{{ tiempo(comentario.created_at) }}</span>
                     <i class="fa fa-reply"></i>
                     <i class="fa fa-heart"></i>
                     <div v-if="comentario.propiedad == 1">
@@ -77,12 +85,14 @@
                         href="javascript:void(0)"
                         class="aside-link"
                         @click="editarc(comentario)"
-                      >Editar</a>
+                        >Editar</a
+                      >
                       <a
                         href="javascript:void(0)"
                         class="aside-link"
                         @click="eliminarc(comentario.id)"
-                      >Eliminar</a>
+                        >Eliminar</a
+                      >
                     </div>
                   </div>
                   <div class="comment-content" v-html="comentario.body"></div>
@@ -97,7 +107,7 @@
     <div class="modal-header">
       <p>
         Respuestas:
-        <span>{{respuestas}}</span>
+        <span>{{ respuestas }}</span>
       </p>
     </div>
     <div class="row justify-content-center bg-f7">
@@ -116,7 +126,7 @@ export default {
     return {
       comentarios: [],
       respuestas: 0,
-      show: false
+      show: false,
     };
   },
   computed: {
@@ -125,18 +135,25 @@ export default {
     },
     curso() {
       return this.$store.getters.cursoview;
-    }
+    },
   },
   components: {
     FormDiscuUpdate,
     FormComentario,
-    FormComentarioUpdate
+    FormComentarioUpdate,
   },
   created() {
-    axios.get("/foro/" + this.curso.id + "/" + this.discu.id).then(res => {
-      this.comentarios = res.data;
-      this.respuestas = res.data.fpost.length;
-    });
+    axios
+      .get("/foro/" + this.curso.id + "/" + this.discu.id)
+      .then((res) => {
+        this.comentarios = res.data;
+        this.respuestas = res.data.fpost.length;
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          window.location.href = "login";
+        }
+      });
   },
   methods: {
     tiempo(fecha) {
@@ -149,7 +166,7 @@ export default {
     cerrarupdate(comentario) {
       if (comentario.comentario.id) {
         const indexcou = this.comentarios.fpost.findIndex(
-          item => item.id === comentario.comentario.id
+          (item) => item.id === comentario.comentario.id
         );
 
         this.comentarios.fpost[indexcou] = comentario.comentario;
@@ -173,15 +190,20 @@ export default {
       if (confirmacion) {
         axios
           .delete("/foro/" + this.curso.id + "/eliminarco/" + value)
-          .then(res => {
+          .then((res) => {
             const index = this.comentarios.fpost.findIndex(
-              item => item.id === value
+              (item) => item.id === value
             );
             this.comentarios.fpost.splice(index, 1);
             this.$store.getters.discuview.answered--;
             this.$store.commit("updatediscuss", this.$store.getters.discuview);
             this.respuestas--;
             flash("Comentario eliminado", "info");
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              window.location.href = "login";
+            }
           });
       }
     },
@@ -190,15 +212,20 @@ export default {
       if (confirmacion) {
         axios
           .delete("/foro/" + this.curso.id + "/eliminardis/" + this.discu.id)
-          .then(res => {
+          .then((res) => {
             this.$store.commit("deletetema", this.discu);
             flash("Discusion eliminada", "info");
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              window.location.href = "login";
+            }
           });
 
         this.$emit("close");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

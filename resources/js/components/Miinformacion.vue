@@ -5,7 +5,7 @@
     <div class="container-top">
       <div class="avatar-container">
         <div class="avatari" id="avatarImage">
-          <img :src=" user.image" width="142px" />
+          <img :src="user.image" width="142px" />
         </div>
       </div>
 
@@ -25,7 +25,13 @@
             <li class="data-row">
               <div class="data-container">
                 <span class="data-title">Imagen de perfil</span>
-                <img id="preview" alt="Imagen curso" width="230px" height="230px" :src="previewimg" />
+                <img
+                  id="preview"
+                  alt="Imagen curso"
+                  width="230px"
+                  height="230px"
+                  :src="previewimg"
+                />
                 <a class="data-value">
                   <input
                     class="file-i"
@@ -43,8 +49,16 @@
               <div class="data-container">
                 <span class="data-title">Nombre completo</span>
                 <a class="data-value">
-                  <div v-if="!editando" class="editable" id="editable-nombre">{{ user.name }}</div>
-                  <input v-else type="text" name="nameu" id="nameu" v-model="nombre" />
+                  <div v-if="!editando" class="editable" id="editable-nombre">
+                    {{ user.name }}
+                  </div>
+                  <input
+                    v-else
+                    type="text"
+                    name="nameu"
+                    id="nameu"
+                    v-model="nombre"
+                  />
                 </a>
               </div>
             </li>
@@ -53,7 +67,9 @@
               <div class="data-container">
                 <span class="data-title">Dirección de correo electrónico</span>
                 <a class="data-value">
-                  <div class="editable" id="editable-correo">{{ user.email }}</div>
+                  <div class="editable" id="editable-correo">
+                    {{ user.email }}
+                  </div>
                 </a>
               </div>
             </li>
@@ -80,7 +96,9 @@
                     v-if="!editando"
                     class="editable"
                     id="editable-nombreinstituto"
-                  >{{ perfil.institute }}</div>
+                  >
+                    {{ perfil.institute }}
+                  </div>
                   <input
                     v-else
                     type="text"
@@ -100,7 +118,9 @@
                     v-if="!editando"
                     class="editable"
                     id="editable-departamento"
-                  >{{ perfil.department }}</div>
+                  >
+                    {{ perfil.department }}
+                  </div>
                   <input
                     v-else
                     type="text"
@@ -143,7 +163,11 @@
             </li>
           </ul>
 
-          <ul class="editar-perfil" v-if="editando" @click="cancelaredicionperfil()">
+          <ul
+            class="editar-perfil"
+            v-if="editando"
+            @click="cancelaredicionperfil()"
+          >
             <li class="data-row">
               <div class="data-container">
                 <span class="data-title">Cancelar</span>
@@ -170,17 +194,24 @@ export default {
       file: "",
       nombre: "",
       institucion: "",
-      departamento: ""
+      departamento: "",
     };
   },
   created() {
-    axios.get("/perfil").then(res => {
-      this.user = res.data.user;
-      this.perfil = res.data.perfil;
-      this.nombre = res.data.user.name;
-      this.institucion = res.data.perfil.institute;
-      this.departamento = res.data.perfil.department;
-    });
+    axios
+      .get("/perfil")
+      .then((res) => {
+        this.user = res.data.user;
+        this.perfil = res.data.perfil;
+        this.nombre = res.data.user.name;
+        this.institucion = res.data.perfil.institute;
+        this.departamento = res.data.perfil.department;
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          window.location.href = "login";
+        }
+      });
   },
   methods: {
     editarperfil() {
@@ -217,24 +248,26 @@ export default {
       axios
         .post("/updatePerfil", formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
+        .then((response) => {
           this.editando = false;
           this.user = response.data.user;
           this.perfil = response.data.perfil;
           flash("Información actualizada", "success");
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
           flash(
             "Fallo la actualizacion de informacion:prueba mas tarde.",
             "error"
           );
-        })
-        .finally(() => {});
-    }
-  }
+        });
+    },
+  },
 };
 </script>
 

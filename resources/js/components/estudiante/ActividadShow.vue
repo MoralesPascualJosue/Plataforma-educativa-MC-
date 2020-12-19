@@ -2,10 +2,13 @@
   <div class="example container">
     <div v-if="!loading">
       <div class="modal-header">
-        <h3 v-if="type == 'activitie'">{{actividad.activitie.title}}</h3>
-        <h3 v-else>{{actividad.title}}</h3>
+        <h3 v-if="type == 'activitie'">{{ actividad.activitie.title }}</h3>
+        <h3 v-else>{{ actividad.title }}</h3>
       </div>
-      <Block v-if="type == 'activitie'" v-bind:contenidoinicial="actividad.task" />
+      <Block
+        v-if="type == 'activitie'"
+        v-bind:contenidoinicial="actividad.task"
+      />
       <TestShow v-else @entregas="entregas" />
     </div>
     <div v-else>
@@ -25,17 +28,17 @@ export default {
   data() {
     return {
       type: "activitie",
-      loading: true
+      loading: true,
     };
   },
   computed: {
     actividad() {
       return this.$store.getters.actividadview;
-    }
+    },
   },
   components: {
     Block,
-    TestShow
+    TestShow,
   },
   created() {
     let url = "/sactivitiec/";
@@ -47,8 +50,13 @@ export default {
 
     axios
       .get(url + this.actividad.activitie.id)
-      .then(res => {
+      .then((res) => {
         this.$store.commit("changeactividad", res.data);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          window.location.href = "login";
+        }
       })
       .finally(() => {
         this.loading = false;
@@ -57,8 +65,8 @@ export default {
   methods: {
     entregas(operacion) {
       this.$emit("entregas", operacion);
-    }
-  }
+    },
+  },
 };
 </script>
 

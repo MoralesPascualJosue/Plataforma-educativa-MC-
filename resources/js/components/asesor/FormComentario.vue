@@ -33,19 +33,19 @@ export default {
       visible: false,
       loading: false,
       comentario: [],
-      content: "<h1>Mi comentario</h1>"
+      content: "<h1>Mi comentario</h1>",
     };
   },
   computed: {
     discu() {
       return this.$store.getters.discuview;
-    }
+    },
   },
   components: {
-    VueEditor
+    VueEditor,
   },
   methods: {
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.content == "") {
@@ -61,13 +61,17 @@ export default {
 
       axios
         .post("/foro/comentar/" + this.discu.id, formData)
-        .then(response => {
+        .then((response) => {
           this.errorr = false;
           this.comentario = response.data;
           this.content = "<h1>Mi comentario</h1>";
           flash("Comentario agregado", "success");
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash("Fallo el comentario: intentalo más tarde", "error");
         })
@@ -75,8 +79,8 @@ export default {
           this.loading = false;
           this.$emit("crear-comentario", this.comentario);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

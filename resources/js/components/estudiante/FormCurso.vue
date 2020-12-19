@@ -23,7 +23,12 @@
         <form class="px-4 py-3" @submit="checkForm">
           <div class="form-group">
             <label for="namecurso">Codigo del curso</label>
-            <input type="text" class="form-control" id="namecurso" v-model="name" />
+            <input
+              type="text"
+              class="form-control"
+              id="namecurso"
+              v-model="name"
+            />
           </div>
           <button type="submit" class="btn btn-primary">Agregar</button>
         </form>
@@ -40,14 +45,14 @@ export default {
       errorr: false,
       info: "",
       loading: false,
-      curso: {}
+      curso: {},
     };
   },
   methods: {
     dropmenu() {
       $("#dLabel").dropdown();
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.name == "") {
@@ -61,13 +66,17 @@ export default {
       this.loading = true;
       axios
         .post("/matricular", formData)
-        .then(response => {
+        .then((response) => {
           $("#dLabel").dropdown("toggle");
           this.errorr = false;
           this.curso = response.data;
           flash("Curso registrado", "success");
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash("Fallo el registroo: intenta mas tarde.", "error");
         })
@@ -75,8 +84,8 @@ export default {
           this.loading = false;
           this.$emit("crear-curso", this.curso);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

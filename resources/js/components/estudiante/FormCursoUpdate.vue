@@ -23,7 +23,12 @@
         <form class="px-4 py-3" @submit="checkForm">
           <div class="form-group">
             <label for="namecursou">Nombre del curso</label>
-            <input type="text" class="form-control" id="namecursou" v-model="name" />
+            <input
+              type="text"
+              class="form-control"
+              id="namecursou"
+              v-model="name"
+            />
           </div>
           <div class="form-group">
             <label for="descripcioncursou">Descripción o mensage</label>
@@ -43,7 +48,12 @@
               ref="file"
               v-on:change="onChangeFileUpload()"
             />
-            <img id="preview" alt="Imagen curso" class="preview-img" :src="previewimg" />
+            <img
+              id="preview"
+              alt="Imagen curso"
+              class="preview-img"
+              :src="previewimg"
+            />
           </div>
           <button type="submit" class="btn btn-primary af">Editar</button>
         </form>
@@ -62,13 +72,13 @@ export default {
       file: "",
       errorr: false,
       info: "",
-      loading: false
+      loading: false,
     };
   },
   computed: {
     curso() {
       return this.$store.getters.cursoview;
-    }
+    },
   },
   created() {
     this.name = this.curso.title;
@@ -83,7 +93,7 @@ export default {
       this.file = this.$refs.file.files[0];
       this.previewimg = window.URL.createObjectURL(this.$refs.file.files[0]);
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.name == "" || this.description == "") {
@@ -103,17 +113,21 @@ export default {
       axios
         .post("/updateac/" + this.curso.id, formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
+        .then((response) => {
           $("#dLabelu").dropdown("toggle");
           this.errorr = false;
           this.$store.commit("changecurso", response.data);
           this.$store.commit("updatecurso", response.data);
           flash("Curso actualizado", "success");
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash(
             "Fallo la actualizacion del curso: revisa los campos solicitados.",
@@ -123,8 +137,8 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

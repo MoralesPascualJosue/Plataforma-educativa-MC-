@@ -51,10 +51,24 @@ class UsersExport implements FromView
         $estudiantes = $curso->estudiantes()->orderBy("name")->get();
         
         $actividades = $curso->activities()->where("visible","=",1)->get();
-$tests = $curso->tests()->where("visible","=",1)->get();        
+        $tests = $curso->tests()->where("visible","=",1)->get();        
 
         foreach ($tests as $test) { 
             $actividades[] = $test;
+        }
+
+         $cantidad_actividades = sizeof($actividades);
+        for($i = 0;$i < $cantidad_actividades - 1 ;$i++)
+        {
+            for($j = $i +1;$j < $cantidad_actividades;$j++)
+            {
+                if($actividades[$i]->fecha_final > $actividades[$j]->fecha_final)
+                {
+                    $auxiliar = $actividades[$i];
+                    $actividades[$i] = $actividades[$j];
+                    $actividades[$j] = $auxiliar;
+                }
+            }
         }
 
         $curso['participantes'] = $estudiantes->count();
@@ -112,14 +126,7 @@ $tests = $curso->tests()->where("visible","=",1)->get();
             $numero++;
         }
 
-        $actividadesa = $actividades->toArray();
-
-        usort($actividadesa,function ($a,$b) {
-            if ($a['fecha_final'] == $b['fecha_final']) {
-                return 0;
-            }
-            return ($a['fecha_final'] < $b['fecha_final']) ? -1 : 1;
-        });
+        $actividadesa = $actividades;
 
         return view('reportes.reportee', compact('estudiantes','curso','actividadesa','asesor',"periodo"));
     }

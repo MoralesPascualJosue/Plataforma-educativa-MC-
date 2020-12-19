@@ -22,11 +22,15 @@
       <div class="dropdown-menu">
         <div class="px-2 py-1">
           <div class="px-2 py-2 option">
-            <a href="javascript:void(0)" @click="createactividad()">Agregar Actividad</a>
+            <a href="javascript:void(0)" @click="createactividad()"
+              >Agregar Actividad</a
+            >
           </div>
           <div class="px-2 py-2 option">
             <div>
-              <a href="javascript:void(0)" @click="createtest()">Agregar prueba</a>
+              <a href="javascript:void(0)" @click="createtest()"
+                >Agregar prueba</a
+              >
             </div>
           </div>
         </div>
@@ -41,13 +45,13 @@ export default {
     return {
       errorr: false,
       info: "",
-      loading: false
+      loading: false,
     };
   },
   computed: {
     curso() {
       return this.$store.getters.cursoview;
-    }
+    },
   },
   methods: {
     dropmenu() {
@@ -57,12 +61,16 @@ export default {
       this.loading = true;
       axios
         .post("/storeaa/" + this.curso.id)
-        .then(response => {
+        .then((response) => {
           this.errorr = false;
           flash("Actividad creada", "success");
           this.$emit("crear-actividad", response.data);
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash(
             "Fallo la creacion del la actividad:prueba mas tarde.",
@@ -77,7 +85,7 @@ export default {
       this.loading = true;
       axios
         .post("/test/create/" + this.curso.id)
-        .then(response => {
+        .then((response) => {
           let actividad = {
             id: response.data.id,
             visible: response.data.visible,
@@ -86,21 +94,25 @@ export default {
             fecha_final: response.data.fecha_final,
             entregas: 0,
             num_takes: 1,
-            type: "test"
+            type: "test",
           };
           this.errorr = false;
           flash("Prueba creada", "success");
           this.$emit("crear-actividad", actividad);
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash("Fallo la creacion del la prueba:Intenta mas tarde.", "error");
         })
         .finally(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

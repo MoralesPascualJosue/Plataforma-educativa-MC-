@@ -117,7 +117,11 @@ export default {
           this.curso = response.data;
           flash("Curso creado", "success");
         })
-        .catch((response) => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash(
             "Fallo la creacion del curso: revisa los campos solicitados.",
@@ -134,6 +138,11 @@ export default {
 </script>
 
 <style>
+#dLabel {
+  width: 100%;
+  height: 3rem;
+}
+
 .block-d {
   display: block;
 }

@@ -14,8 +14,8 @@ export default {
     close() {
       // close disabled modal from component
       this.$xmodal.close();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -33,6 +33,7 @@ export default {
 }
 
 .backbtn {
+  z-index: 1;
   border-radius: 100%;
   position: absolute;
   left: 0;

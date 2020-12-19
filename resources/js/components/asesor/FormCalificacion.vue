@@ -22,11 +22,18 @@
       <form class="px-4 py-3" @submit="checkForm">
         <div class="form-group">
           <label for="calificacion">Calificación</label>
-          <input type="number" class="form-control" id="calificacion" v-model="calificacion" />
+          <input
+            type="number"
+            class="form-control"
+            id="calificacion"
+            v-model="calificacion"
+          />
         </div>
         <button type="submit" class="btn btn-primary af">Calificar</button>
       </form>
-      <button class="btn btn-warning btn-af" @click="closeformqc()">Cancelar</button>
+      <button class="btn btn-warning btn-af" @click="closeformqc()">
+        Cancelar
+      </button>
     </div>
   </div>
 </template>
@@ -35,18 +42,18 @@
 export default {
   props: {
     estudiante: {
-      id: 0
+      id: 0,
     },
     activitie: {
       type: Number,
-      default: -1
-    }
+      default: -1,
+    },
   },
   data() {
     return {
       calificacion: this.estudiante.qualificationqualification,
       errorrc: false,
-      loadingc: false
+      loadingc: false,
     };
   },
   methods: {
@@ -56,7 +63,7 @@ export default {
     dropmenuqc() {
       $("#dLabelqc").dropdown();
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.calificacion == "") {
@@ -72,14 +79,18 @@ export default {
       this.loading = true;
       axios
         .post("/updateaw/" + this.activitie, formData)
-        .then(response => {
+        .then((response) => {
           $("#dLabelqc").dropdown("toggle");
           this.errorrc = false;
           flash("Calificacion actualizada", "success");
 
           this.$emit("asignar-calificacion", response.data);
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorrc = true;
           flash(
             "Fallo la asignacion de calificacion: intenta mas tarde.",
@@ -89,8 +100,8 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

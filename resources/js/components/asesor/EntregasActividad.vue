@@ -235,13 +235,20 @@ export default {
       url = "/test/trabajos/";
     }
 
-    axios.get(url + this.actividad.activitie.id).then((res) => {
-      this.estudiantes = res.data.estudiantes;
-      this.numeromatriculados = res.data.estudiantes.length;
-      this.numerodeentregas = res.data.numeroentregas;
-      this.porrevisar = res.data.enrevision;
-      this.type = res.data.type;
-    });
+    axios
+      .get(url + this.actividad.activitie.id)
+      .then((res) => {
+        this.estudiantes = res.data.estudiantes;
+        this.numeromatriculados = res.data.estudiantes.length;
+        this.numerodeentregas = res.data.numeroentregas;
+        this.porrevisar = res.data.enrevision;
+        this.type = res.data.type;
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          window.location.href = "login";
+        }
+      });
   },
   methods: {
     guardarpuntajes() {
@@ -267,7 +274,10 @@ export default {
 
           flash("Puntajes guardados", "success");
         })
-        .catch((res) => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
           flash("Fallo el guardar puntajes: intenta mas tarde", "error");
         });
     },
@@ -316,7 +326,10 @@ export default {
             this.loading = false;
             this.contenidos = res.data;
           })
-          .catch((res) => {
+          .catch((error) => {
+            if (error.response.status === 401) {
+              window.location.href = "login";
+            }
             this.loading = false;
           });
       } else {
@@ -340,7 +353,10 @@ export default {
               this.puntajes.push(respu);
             });
           })
-          .catch((res) => {
+          .catch((error) => {
+            if (error.response.status === 401) {
+              window.location.href = "login";
+            }
             this.loading = false;
           });
       }

@@ -4,7 +4,12 @@
       <form class="px-4 py-3" @submit="checkForm">
         <div class="form-group">
           <label for="asuntomensaje">Asunto</label>
-          <input type="text" class="form-control" id="asuntomensaje" v-model="asunto" />
+          <input
+            type="text"
+            class="form-control"
+            id="asuntomensaje"
+            v-model="asunto"
+          />
         </div>
         <div class="form-group">
           <label for="destino">Para:</label>
@@ -12,7 +17,7 @@
             multiple
             label="name"
             placeholder="Enviar a.."
-            :reduce="contact => contact.user.id"
+            :reduce="(contact) => contact.user.id"
             :options="contactosdefault"
             :closeOnSelect="false"
             v-model="destino"
@@ -54,14 +59,14 @@ export default {
   props: {
     shownm: {
       type: Boolean,
-      default: false
+      default: false,
     },
     contactosdefault: {
       type: Array,
       default() {
         return [{ name: "Sin contactos" }];
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -71,14 +76,14 @@ export default {
       info: "",
       loading: false,
       mensaje: [],
-      destino: []
+      destino: [],
     };
   },
   methods: {
-    close: function() {
+    close: function () {
       this.$emit("crear-mensaje", { mensaje: [], cerrar: false });
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.asunto == "" || this.contenido == "") {
@@ -96,14 +101,19 @@ export default {
         .post("/sendmensaje/" + this.$store.getters.cursoview.id, {
           destino: this.destino,
           asunto: this.asunto,
-          body: this.contenido
+          body: this.contenido,
         })
-        .then(response => {
+        .then((response) => {
           this.errorr = false;
           this.mensaje = response.data;
           flash("Mensaje enviado", "success");
         })
-        .catch(response => {
+
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash("Fallo el envio: intenta más tarde", "error");
         })
@@ -111,8 +121,8 @@ export default {
           this.loading = false;
           this.$emit("crear-mensaje", { mensaje: this.mensaje, cerrar: false });
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

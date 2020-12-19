@@ -452,7 +452,9 @@ export default {
               "<img src='" + data + "' alt='img'class='wm-100'>";
           },
           error: function (data) {
-            console.log(data);
+            if (data.status == 401 || 419) {
+              window.location.href = "login";
+            }
           },
         });
       });
@@ -520,9 +522,12 @@ export default {
               "'></video>";
           },
           error: function (data) {
+            if (data.status == 401 || 419) {
+              window.location.href = "login";
+            }
+
             bar.textContent = "";
             bar.classList.remove("complete");
-            console.log(data);
           },
         });
       });
@@ -590,9 +595,11 @@ export default {
               "' frameborder='0'></iframe>";
           },
           error: function (data) {
+            if (data.status == 401 || 419) {
+              window.location.href = "login";
+            }
             bar.textContent = "";
             bar.classList.remove("complete");
-            console.log(data);
           },
         });
       });
@@ -675,6 +682,10 @@ export default {
             this.parentElement.children[0].children[0].append(nuevob);
           },
           error: function (data) {
+            if (data.status == 401 || 419) {
+              window.location.href = "login";
+            }
+
             bar.textContent = "";
             bar.classList.remove("complete");
           },
@@ -866,10 +877,6 @@ export default {
           this.parentElement.parentElement.previousElementSibling.children[0].style.fontSize =
             sizef + "px";
         }
-      });
-
-      $(".addtextblock").on("click", function (e) {
-        console.log("add text block");
       });
 
       $(".newblock").off("click");
@@ -1100,7 +1107,9 @@ export default {
               "<img src='" + data + "' alt='img'class='wm-100'>";
           },
           error: function (data) {
-            console.log(data);
+            if (data.status == 401 || 419) {
+              window.location.href = "login";
+            }
           },
         });
       });
@@ -1168,9 +1177,12 @@ export default {
               "'></video>";
           },
           error: function (data) {
+            if (data.status == 401 || 419) {
+              window.location.href = "login";
+            }
+
             bar.textContent = "";
             bar.classList.remove("complete");
-            console.log(data);
           },
         });
       });
@@ -1238,9 +1250,12 @@ export default {
               "' frameborder='0'></iframe>";
           },
           error: function (data) {
+            if (data.status == 401 || 419) {
+              window.location.href = "login";
+            }
+
             bar.textContent = "";
             bar.classList.remove("complete");
-            console.log(data);
           },
         });
       });
@@ -1323,6 +1338,10 @@ export default {
             this.parentElement.children[0].children[0].append(nuevob);
           },
           error: function (data) {
+            if (data.status == 401 || 419) {
+              window.location.href = "login";
+            }
+
             bar.textContent = "";
             bar.classList.remove("complete");
           },
@@ -1360,6 +1379,10 @@ export default {
           flash("Contenido guardado", "success");
         })
         .fail(function (data) {
+          if (data.status == 401 || 419) {
+            window.location.href = "login";
+          }
+
           flash(
             "Fallo el guardado del contenido: intentalo mas tarde.",
             "error"

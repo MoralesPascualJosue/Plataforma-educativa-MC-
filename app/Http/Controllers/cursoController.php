@@ -312,6 +312,20 @@ class cursoController extends Controller
 
         foreach ($tests as $test) { 
             $actividades[] = $test;
+        }        
+
+        $cantidad_actividades = sizeof($actividades);
+        for($i = 0;$i < $cantidad_actividades - 1 ;$i++)
+        {
+            for($j = $i +1;$j < $cantidad_actividades;$j++)
+            {
+                if($actividades[$i]->fecha_final > $actividades[$j]->fecha_final)
+                {
+                    $auxiliar = $actividades[$i];
+                    $actividades[$i] = $actividades[$j];
+                    $actividades[$j] = $auxiliar;
+                }
+            }
         }
         
         $curso['participantes'] = $estudiantes->count();
@@ -368,20 +382,11 @@ class cursoController extends Controller
 
             $estudi["calificaciones"] = $calificacionescontenedor;  
         }        
-       
-        $actividadesa = $actividades->toArray();
-
-        usort($actividadesa,function ($a,$b) {
-            if ($a['fecha_final'] == $b['fecha_final']) {
-                return 0;
-            }
-            return ($a['fecha_final'] < $b['fecha_final']) ? -1 : 1;
-        });
         
         if($request->ajax()){
             $data["estudiantes"] = $estudiantes;
             $data["curso"] = $curso;
-            $data["actividades"] = $actividadesa;
+            $data["actividades"] = $actividades;
             return $data;
         }
 
@@ -417,7 +422,21 @@ class cursoController extends Controller
             $actividades[] = $test;
         }
 
-        $curso['participantes'] = $estudiantes->count();
+        $cantidad_actividades = sizeof($actividades);
+        for($i = 0;$i < $cantidad_actividades - 1 ;$i++)
+        {
+            for($j = $i +1;$j < $cantidad_actividades;$j++)
+            {
+                if($actividades[$i]->fecha_final > $actividades[$j]->fecha_final)
+                {
+                    $auxiliar = $actividades[$i];
+                    $actividades[$i] = $actividades[$j];
+                    $actividades[$j] = $auxiliar;
+                }
+            }
+        }
+
+        $curso['participantes'] = $estudiantes->count();        
 
         $numero = 1;
         foreach ($estudiantes as $estudi) {   
@@ -471,15 +490,7 @@ class cursoController extends Controller
                 $estudi["numero"] = $numero;                            
             $numero++;
         }
-
-        $actividadesa = $actividades->toArray();
-
-        usort($actividadesa,function ($a,$b) {
-            if ($a['fecha_final'] == $b['fecha_final']) {
-                return 0;
-            }
-            return ($a['fecha_final'] < $b['fecha_final']) ? -1 : 1;
-        });
+        $actividadesa = $actividades;
 
         $pdf = PDF::loadView('reportes.reportelista',compact('estudiantes','curso','actividadesa','asesor',"periodo"));
         return $pdf->stream('invoice.pdf');
@@ -580,5 +591,5 @@ class cursoController extends Controller
         
         return $data;
     }
-}
 
+}

@@ -12,6 +12,7 @@
         </div>
       </div>
       <div>
+        <p class="t-j">{{ curso.review }}</p>
         <div class="aside-header">Detalles y acciones</div>
         <a href="javascript:void(0)" @click="eliminarCurso">
           <div class="aside-link">Salir del curso</div>
@@ -26,14 +27,14 @@
         <div class="col-md-5">
           <span class="text-muted">
             Actividades para la semana:
-            <b>{{actividadessemana}}</b>
+            <b>{{ actividadessemana }}</b>
           </span>
         </div>
         <div class="col-md-4">
           <div class="pull-right">
             <span class="text-muted">
               Actividades para hoy:
-              <b>{{actividadeshoy}}</b>
+              <b>{{ actividadeshoy }}</b>
             </span>
           </div>
         </div>
@@ -45,11 +46,11 @@
             <transition-group name="list-complete" tag="p" mode="out-in">
               <div
                 v-for="activitie in actividades.data"
-                v-bind:key="activitie.type+activitie.id"
+                v-bind:key="activitie.type + activitie.id"
                 class="actividad list-complete-item"
               >
                 <Actividad
-                  :alt="'A'+activitie.id"
+                  :alt="'A' + activitie.id"
                   v-bind:activitie="activitie"
                   @pop-image="togglePopup"
                 />
@@ -74,7 +75,7 @@ export default {
       loading: false,
       errorr: false,
       actividadeshoy: 0,
-      actividadessemana: 0
+      actividadessemana: 0,
     };
   },
   computed: {
@@ -94,40 +95,47 @@ export default {
     },
     actividades() {
       return this.$store.getters.actividadesview;
-    }
+    },
   },
   components: {
     Actividades,
-    Actividad
+    Actividad,
   },
   created() {
-    axios.get("/scursoc/" + this.curso.id).then(res => {
-      Array.prototype.push.apply(
-        res.data.actividades.data,
-        res.data.tests.data
-      );
-      res.data.actividades.data.sort(function(a, b) {
-        if (a.created_at < b.created_at) {
-          return 1;
+    axios
+      .get("/scursoc/" + this.curso.id)
+      .then((res) => {
+        Array.prototype.push.apply(
+          res.data.actividades.data,
+          res.data.tests.data
+        );
+        res.data.actividades.data.sort(function (a, b) {
+          if (a.created_at < b.created_at) {
+            return 1;
+          }
+          if (a.created_at > b.created_at) {
+            return -1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+
+        this.asesor = res.data.curso.asesor;
+        this.actividadeshoy = res.data.actividadeshoy;
+        this.actividadessemana = res.data.actividadessemana;
+        this.$store.commit("changeactividades", res.data.actividades);
+
+        if (res.data.actividades.next_page_url) {
+          this.actividades.next_page_url = res.data.actividades.next_page_url;
+        } else {
+          this.actividades.next_page_url = res.data.tests.next_page_url;
         }
-        if (a.created_at > b.created_at) {
-          return -1;
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          window.location.href = "login";
         }
-        // a must be equal to b
-        return 0;
       });
-
-      this.asesor = res.data.curso.asesor;
-      this.actividadeshoy = res.data.actividadeshoy;
-      this.actividadessemana = res.data.actividadessemana;
-      this.$store.commit("changeactividades", res.data.actividades);
-
-      if (res.data.actividades.next_page_url) {
-        this.actividades.next_page_url = res.data.actividades.next_page_url;
-      } else {
-        this.actividades.next_page_url = res.data.tests.next_page_url;
-      }
-    });
   },
   methods: {
     eliminarCurso() {
@@ -135,50 +143,67 @@ export default {
         `Deseas salir del curso:  ${this.curso.title}`
       );
       if (confirmacion) {
-        axios.post(`/desmatricular/${this.curso.id}`).then(() => {
-          this.$store.commit("deletecurso", this.curso);
-          this.$xmodal.close();
-          flash("Has salido del curso", "info");
-        });
+        axios
+          .post(`/desmatricular/${this.curso.id}`)
+          .then(() => {
+            this.$store.commit("deletecurso", this.curso);
+            this.$xmodal.close();
+            flash("Has salido del curso", "info");
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              window.location.href = "login";
+            }
+          });
       }
     },
     nextpage() {
       let posy = window.scrollY;
-      axios.get(this.actividades.next_page_url).then(res => {
-        Array.prototype.push.apply(
-          res.data.actividades.data,
-          res.data.tests.data
-        );
-        res.data.actividades.data.sort(function(a, b) {
-          if (a.fecha_final < b.fecha_final) {
-            return 1;
-          }
-          if (a.fecha_final > b.fecha_final) {
-            return -1;
-          }
-          // a must be equal to b
-          return 0;
-        });
+      axios
+        .get(this.actividades.next_page_url)
+        .then((res) => {
+          Array.prototype.push.apply(
+            res.data.actividades.data,
+            res.data.tests.data
+          );
+          res.data.actividades.data.sort(function (a, b) {
+            if (a.fecha_final < b.fecha_final) {
+              return 1;
+            }
+            if (a.fecha_final > b.fecha_final) {
+              return -1;
+            }
+            // a must be equal to b
+            return 0;
+          });
 
-        res.data.actividades.data.forEach(element => {
-          this.actividades.data.push(element);
-        });
+          res.data.actividades.data.forEach((element) => {
+            this.actividades.data.push(element);
+          });
 
-        if (res.data.actividades.next_page_url) {
-          this.actividades.next_page_url = res.data.actividades.next_page_url;
-        } else {
-          this.actividades.next_page_url = res.data.tests.next_page_url;
-        }
-        setTimeout(function() {
-          window.scrollBy(0, -(window.scrollY - posy));
-        }, 200);
-      });
-    }
-  }
+          if (res.data.actividades.next_page_url) {
+            this.actividades.next_page_url = res.data.actividades.next_page_url;
+          } else {
+            this.actividades.next_page_url = res.data.tests.next_page_url;
+          }
+          setTimeout(function () {
+            window.scrollBy(0, -(window.scrollY - posy));
+          }, 200);
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+        });
+    },
+  },
 };
 </script>
 
 <style>
+.t-j {
+  text-align: justify;
+}
 .page-tab {
   position: relative;
   padding: 20px;

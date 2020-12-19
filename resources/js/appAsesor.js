@@ -44,6 +44,9 @@ Vue.component("v-select", vSelect);
 
 const store = new Vuex.Store({
     state: {
+        login: {
+            session: "a"
+        },
         cursos: {
             next_page_url: ""
         },

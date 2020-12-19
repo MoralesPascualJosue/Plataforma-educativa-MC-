@@ -67,9 +67,16 @@ export default {
     };
   },
   created() {
-    axios.get("/notificaciones").then((res) => {
-      this.notificaciones = res.data;
-    });
+    axios
+      .get("/notificaciones")
+      .then((res) => {
+        this.notificaciones = res.data;
+      })
+      .catch((response) => {
+        if (res.response.status === 401) {
+          window.location.href = "login";
+        }
+      });
   },
   mounted() {
     // Echo.channel("channel-activities").listen("ActivitieEvent", e => {
@@ -103,11 +110,18 @@ export default {
       $("#dLabelnoti").dropdown();
     },
     marcarleidas() {
-      axios.get("/leernotificaciones").then((res) => {
-        this.notificaciones.notificaciones = [];
-        this.notificaciones.notificacionesnum = 0;
-        flash("Notificaciones leidas", "info");
-      });
+      axios
+        .get("/leernotificaciones")
+        .then((res) => {
+          this.notificaciones.notificaciones = [];
+          this.notificaciones.notificacionesnum = 0;
+          flash("Notificaciones leidas", "info");
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+        });
     },
   },
 };

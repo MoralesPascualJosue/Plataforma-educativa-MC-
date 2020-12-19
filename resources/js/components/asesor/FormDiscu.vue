@@ -23,7 +23,12 @@
         <form class="px-4 py-3" @submit="checkForm">
           <div class="form-group">
             <label for="exampleDropdownFormEmail1">Tema</label>
-            <input type="text" class="form-control" id="exampleDropdownFormEmail1" v-model="name" />
+            <input
+              type="text"
+              class="form-control"
+              id="exampleDropdownFormEmail1"
+              v-model="name"
+            />
           </div>
           <div class="form-group">
             <label for="exampleDropdownFormPassword1">categoria</label>
@@ -33,7 +38,9 @@
                 v-for="(categoria, indexcaf) in categorias"
                 :key="indexcaf"
                 :value="categoria.id"
-              >{{categoria.name}}</option>
+              >
+                {{ categoria.name }}
+              </option>
             </select>
           </div>
           <div class="form-group">
@@ -42,7 +49,12 @@
           </div>
           <div class="form-group" v-if="nuevacategoria">
             <label for="namecategoria">Nombre categoria</label>
-            <input type="text" class="form-control" id="namecategoria" v-model="namecategoria" />
+            <input
+              type="text"
+              class="form-control"
+              id="namecategoria"
+              v-model="namecategoria"
+            />
             <label for="colorcategoria">Color:</label>
             <input type="color" name="colorcategoria" v-model="color" />
           </div>
@@ -65,7 +77,7 @@ export default {
       categoria: 0,
       nuevacategoria: false,
       namecategoria: "",
-      color: "#b12525"
+      color: "#b12525",
     };
   },
   computed: {
@@ -74,7 +86,7 @@ export default {
     },
     categorias() {
       return this.$store.getters.categoriasview;
-    }
+    },
   },
   methods: {
     dropmenu() {
@@ -84,7 +96,7 @@ export default {
       this.file = this.$refs.file.files[0];
       this.previewimg = window.URL.createObjectURL(this.$refs.file.files[0]);
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.name == "") {
@@ -117,13 +129,17 @@ export default {
       this.loading = true;
       axios
         .post("foro/" + this.curso.id + "/creartema", formData)
-        .then(response => {
+        .then((response) => {
           $("#dLabeldis").dropdown("toggle");
           this.errorr = false;
           this.discu = response.data;
           flash("Discusión creada", "success");
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash(
             "Fallo la creacion de la discusión: intenta mas tarde.",
@@ -134,11 +150,11 @@ export default {
           this.loading = false;
           this.$emit("crear-d", {
             discusion: this.discu,
-            nuevac: this.nuevacategoria
+            nuevac: this.nuevacategoria,
           });
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

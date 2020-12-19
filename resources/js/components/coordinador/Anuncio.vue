@@ -9,7 +9,9 @@
         v-model="nota.anuncio"
       />
       <button class="btn btn-warning" type="submit">Editar</button>
-      <button class="btn btn-danger" type="submit" @click="cancelarEdicion">Cancelar</button>
+      <button class="btn btn-danger" type="submit" @click="cancelarEdicion">
+        Cancelar
+      </button>
     </form>
     <form @submit.prevent="agregar" v-else>
       <h3>Agregar anuncio</h3>
@@ -25,11 +27,17 @@
     <h3>Lista de anuncios:</h3>
     <ul class="list-group">
       <li class="list-group-item" v-for="(item, index) in notas" :key="index">
-        <span class="badge badge-primary float-right">{{item.updated_at}}</span>
-        <p>{{item.anuncio}}</p>
+        <span class="badge badge-primary float-right">{{
+          item.updated_at
+        }}</span>
+        <p>{{ item.anuncio }}</p>
         <p class="btn-group btn-group-sm">
-          <button class="btn btn-warning" @click="editarFormulario(item)">Editar</button>
-          <button class="btn btn-danger" @click="eliminarNota(item, index)">Eliminar</button>
+          <button class="btn btn-warning" @click="editarFormulario(item)">
+            Editar
+          </button>
+          <button class="btn btn-danger" @click="eliminarNota(item, index)">
+            Eliminar
+          </button>
         </p>
       </li>
     </ul>
@@ -42,13 +50,20 @@ export default {
     return {
       notas: [],
       modoEditar: false,
-      nota: { anuncio: "" }
+      nota: { anuncio: "" },
     };
   },
   created() {
-    axios.get("/home").then(res => {
-      this.notas = res.data;
-    });
+    axios
+      .get("/home")
+      .then((res) => {
+        this.notas = res.data;
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          window.location.href = "login";
+        }
+      });
   },
   methods: {
     agregar() {
@@ -58,10 +73,17 @@ export default {
       }
       const notaNueva = this.nota;
       this.nota = { anuncio: "" };
-      axios.post("/storea", notaNueva).then(res => {
-        const notaServidor = res.data;
-        this.notas.unshift(notaServidor);
-      });
+      axios
+        .post("/storea", notaNueva)
+        .then((res) => {
+          const notaServidor = res.data;
+          this.notas.unshift(notaServidor);
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+        });
     },
     editarFormulario(item) {
       this.nota.anuncio = item.anuncio;
@@ -70,24 +92,38 @@ export default {
     },
     editarNota(nota) {
       const params = { anuncio: nota.anuncio };
-      axios.put(`/updatea/${nota.id}`, params).then(res => {
-        this.modoEditar = false;
-        const index = this.notas.findIndex(item => item.id === nota.id);
-        this.notas[index] = res.data;
-      });
+      axios
+        .put(`/updatea/${nota.id}`, params)
+        .then((res) => {
+          this.modoEditar = false;
+          const index = this.notas.findIndex((item) => item.id === nota.id);
+          this.notas[index] = res.data;
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+        });
     },
     eliminarNota(nota, index) {
       const confirmacion = confirm(`Eliminar anuncio ${nota.anuncio}`);
       if (confirmacion) {
-        axios.delete(`/destroya/${nota.id}`).then(() => {
-          this.notas.splice(index, 1);
-        });
+        axios
+          .delete(`/destroya/${nota.id}`)
+          .then(() => {
+            this.notas.splice(index, 1);
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              window.location.href = "login";
+            }
+          });
       }
     },
     cancelarEdicion() {
       this.modoEditar = false;
       this.nota = { anuncio: "" };
-    }
-  }
+    },
+  },
 };
 </script>

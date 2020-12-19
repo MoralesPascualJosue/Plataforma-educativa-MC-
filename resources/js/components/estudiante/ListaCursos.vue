@@ -1,19 +1,21 @@
 <template>
   <div class="example">
-    <FormCurso @crear-curso="createcurso" />
     <UncoverList>
       <template slot-scope="{ togglePopup }">
         <transition-group name="list-complete" tag="div" class="list">
-          <div v-for="curso in cursos.data" v-bind:key="curso.id" class="card list-complete-item">
-            <h1>{{ curso.title }}</h1>
-
+          <FormCurso @crear-curso="createcurso" v-bind:key="-1" />
+          <div
+            v-for="curso in cursos.data"
+            v-bind:key="curso.id"
+            class="card list-complete-item"
+          >
             <UncoverImage
               alt="example"
-              v-bind:height="168"
+              v-bind:height="220"
               v-bind:curso="curso"
               @pop-image="togglePopup"
             />
-            <div class="content">{{ curso.review }}</div>
+            <h1>{{ curso.title }}</h1>
           </div>
         </transition-group>
       </template>
@@ -32,7 +34,7 @@ export default {
   components: {
     UncoverList,
     UncoverImage,
-    FormCurso
+    FormCurso,
   },
   computed: {
     more() {
@@ -43,12 +45,19 @@ export default {
     },
     cursos() {
       return this.$store.getters.cursosview;
-    }
+    },
   },
   created() {
-    axios.get("/inicio").then(res => {
-      this.$store.commit("changecursos", res.data);
-    });
+    axios
+      .get("/inicio")
+      .then((res) => {
+        this.$store.commit("changecursos", res.data);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          window.location.href = "login";
+        }
+      });
   },
   methods: {
     createcurso(curso) {
@@ -58,17 +67,24 @@ export default {
     },
     nextpage() {
       let posy = window.scrollY;
-      axios.get(this.cursos.next_page_url).then(res => {
-        res.data.data.forEach(element => {
-          this.cursos.data.push(element);
+      axios
+        .get(this.cursos.next_page_url)
+        .then((res) => {
+          res.data.data.forEach((element) => {
+            this.cursos.data.push(element);
+          });
+          this.cursos.next_page_url = res.data.next_page_url;
+          setTimeout(function () {
+            window.scrollBy(0, -(window.scrollY - posy));
+          }, 200);
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
         });
-        this.cursos.next_page_url = res.data.next_page_url;
-        setTimeout(function() {
-          window.scrollBy(0, -(window.scrollY - posy));
-        }, 200);
-      });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -101,19 +117,23 @@ body {
 }
 .card {
   position: initial;
-  padding: 20px 0;
   border: 1px solid #eee;
-  margin-bottom: 20px;
   border-radius: 4px;
+  height: 300px;
+  overflow: hidden;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
 .content {
-  padding: 20px;
   text-align: justify;
+  padding: 0 11px;
+  font-size: 12px;
 }
 h1 {
+  color: #000000;
   text-align: left;
-  font-size: 22px;
-  padding: 0 20px;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 5px 15px;
 }
 .bottom {
   margin-bottom: 20px;

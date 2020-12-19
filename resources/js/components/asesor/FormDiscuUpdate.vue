@@ -23,7 +23,12 @@
         <form class="px-4 py-3" @submit="checkForm">
           <div class="form-group">
             <label for="exampleDropdownFormEmail1">Tema</label>
-            <input type="text" class="form-control" id="exampleDropdownFormEmail1" v-model="name" />
+            <input
+              type="text"
+              class="form-control"
+              id="exampleDropdownFormEmail1"
+              v-model="name"
+            />
           </div>
           <div class="form-group">
             <label for="exampleDropdownFormPassword1">categoria</label>
@@ -33,12 +38,18 @@
                 v-for="(categoria, indexcaf) in categorias"
                 :key="indexcaf"
                 :value="categoria.id"
-              >{{categoria.name}}</option>
+              >
+                {{ categoria.name }}
+              </option>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary btnig">Editar tema</button>
+          <button type="submit" class="btn btn-primary btnig">
+            Editar tema
+          </button>
         </form>
-        <button class="btn btn-warning btn-af btnig" @click="closeformut()">Cancelar</button>
+        <button class="btn btn-warning btn-af btnig" @click="closeformut()">
+          Cancelar
+        </button>
       </div>
     </div>
   </div>
@@ -56,7 +67,7 @@ export default {
       categoria: 0,
       nuevacategoria: false,
       namecategoria: "",
-      color: ""
+      color: "",
     };
   },
   computed: {
@@ -68,7 +79,7 @@ export default {
     },
     discusion() {
       return this.$store.getters.discuview;
-    }
+    },
   },
   created() {
     this.name = this.discusion.title;
@@ -76,7 +87,7 @@ export default {
     this.color = this.discusion.colorCategoria;
 
     const indexa = this.categorias.findIndex(
-      item => item.id === this.discusion.fcategoria
+      (item) => item.id === this.discusion.fcategoria
     );
     this.categoria = this.categorias.length - indexa;
   },
@@ -91,7 +102,7 @@ export default {
       this.file = this.$refs.file.files[0];
       this.previewimg = window.URL.createObjectURL(this.$refs.file.files[0]);
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.name == "") {
@@ -125,17 +136,21 @@ export default {
       axios
         .post("/foro/update/" + this.discusion.id, formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
+        .then((response) => {
           $("#dLabelut").dropdown("toggle");
           this.errorr = false;
           this.$store.commit("changediscu", response.data);
           this.$store.commit("updatediscuss", response.data);
           flash("tema actualizado", "success");
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash(
             "Fallo la actualizacion del tema: revisa los campos solicitados.",
@@ -145,8 +160,8 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

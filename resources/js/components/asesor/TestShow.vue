@@ -233,14 +233,16 @@ export default {
           this.modelgenerator.values = [];
           flash("Pregunta creada", "success");
         })
-        .catch((response) => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
           this.errorr = true;
           flash(
             "Fallo la creacion de la pregunta: revisa los campos solicitados.",
             "error"
           );
-        })
-        .finally(() => {});
+        });
     },
   },
 };

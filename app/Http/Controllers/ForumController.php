@@ -78,6 +78,7 @@ class ForumController extends Controller
 
         $fdiscusion = $this->fdiscusionRepository->create($input);
         $fdiscusion->colorCategoria = $cate->color;
+        $fdiscusion->nameCategoria = $cate->name;
 
         if($request->ajax()){        
             $data["discusion"] = $fdiscusion;

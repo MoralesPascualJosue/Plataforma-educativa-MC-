@@ -33,18 +33,18 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       body: "Mi comentario",
       visible: false,
-      loading: false
+      loading: false,
     };
   },
   components: {
-    VueEditor
+    VueEditor,
   },
   computed: {
     discu() {
@@ -52,7 +52,7 @@ export default {
     },
     comentario() {
       return this.$store.getters.comentarioview;
-    }
+    },
   },
   created() {
     this.content = this.comentario.body;
@@ -61,10 +61,10 @@ export default {
     dropmenu() {
       $("#dLabelcomu").dropdown();
     },
-    close: function() {
+    close: function () {
       this.$emit("close", { comentario: [], cerrar: false });
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
 
       if (this.body == "") {
@@ -80,20 +80,23 @@ export default {
 
       axios
         .post("/foro/modificarco/" + this.comentario.id, formData)
-        .then(response => {
+        .then((response) => {
           this.errorr = false;
           flash("Comentario actualizado", "success");
           this.$emit("close", { comentario: response.data, cerrar: false });
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
           this.errorr = true;
           flash("Fallo el comentario: intentalo más tarde", "error");
         })
         .finally(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

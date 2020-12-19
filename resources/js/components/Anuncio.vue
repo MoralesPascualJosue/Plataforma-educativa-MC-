@@ -5,9 +5,7 @@
     <ul class="list-group">
       <li class="list-group-item" v-for="(item, index) in notas" :key="index">
         <span class="badge badge-primary float-right">
-          {{
-          item.updated_at
-          }}
+          {{ item.updated_at }}
         </span>
         <p>{{ item.anuncio }}</p>
       </li>
@@ -19,13 +17,20 @@
 export default {
   data() {
     return {
-      notas: []
+      notas: [],
     };
   },
   created() {
-    axios.get("/home").then(res => {
-      this.notas = res.data;
-    });
-  }
+    axios
+      .get("/home")
+      .then((res) => {
+        this.notas = res.data;
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          window.location.href = "login";
+        }
+      });
+  },
 };
 </script>

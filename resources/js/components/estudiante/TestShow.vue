@@ -2,11 +2,17 @@
   <div class="panel panel-default">
     <div class="panel-heading">Contenido</div>
     <div class="panel-body">
-      <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+      <vue-form-generator
+        :schema="schema"
+        :model="model"
+        :options="formOptions"
+      ></vue-form-generator>
     </div>
     <hr />
     <div class="footer" v-if="!this.actividad.estado">
-      <button class="btn btn-primary" @click="responder">Registrar respuestas</button>
+      <button class="btn btn-primary" @click="responder">
+        Registrar respuestas
+      </button>
     </div>
   </div>
 </template>
@@ -17,7 +23,7 @@ import "vue-form-generator/dist/vfg.css";
 
 export default {
   components: {
-    "vue-form-generator": VueFormGenerator.component
+    "vue-form-generator": VueFormGenerator.component,
   },
   data() {
     return {
@@ -25,34 +31,34 @@ export default {
       model: {},
       schema: {
         fields: [],
-        groups: []
+        groups: [],
       },
       formOptions: {
         validateAfterLoad: true,
-        validateAfterChanged: true
-      }
+        validateAfterChanged: true,
+      },
     };
   },
   computed: {
     actividad() {
       return this.$store.getters.actividadview;
-    }
+    },
   },
   created() {
     if (this.actividad.estado) {
-      this.actividad.questions.forEach(element => {
+      this.actividad.questions.forEach((element) => {
         let questiongroup = {
           legend: element.question,
-          fields: []
+          fields: [],
         };
 
         let options = [];
-        element.respuesta.forEach(opt => {
+        element.respuesta.forEach((opt) => {
           let option = {
             type: "label",
             label: opt.answer,
             model: opt.answer,
-            listBox: true
+            listBox: true,
           };
 
           questiongroup.fields.push(option);
@@ -62,23 +68,23 @@ export default {
         this.numpreguntas++;
       });
     } else {
-      this.actividad.questions.forEach(element => {
+      this.actividad.questions.forEach((element) => {
         let question = {
           inputType: "text",
           type: element.type,
           label: element.question,
           model: element.id + "",
-          listBox: true
+          listBox: true,
         };
 
         let options = [];
-        element.options.forEach(opt => {
+        element.options.forEach((opt) => {
           let option;
           if (question.type == "checklist") {
             option = {
               name: opt.option,
               value: opt.option,
-              respuesta: "no"
+              respuesta: "no",
             };
           }
 
@@ -86,7 +92,7 @@ export default {
             option = {
               name: opt.option,
               id: opt.option,
-              respuesta: "no"
+              respuesta: "no",
             };
           }
 
@@ -104,7 +110,7 @@ export default {
     responder() {
       const propertyValues = Object.values(this.model);
       let status = true;
-      propertyValues.forEach(element => {
+      propertyValues.forEach((element) => {
         if (element == null || element.length == 0) {
           status = false;
         }
@@ -117,9 +123,9 @@ export default {
       axios
         .post("/test/result/" + this.actividad.id, {
           respuestas: this.model,
-          preguntas: Object.keys(this.model)
+          preguntas: Object.keys(this.model),
         })
-        .then(response => {
+        .then((response) => {
           let actividad = this.actividad;
           actividad.result = [response.data];
           actividad.estado = true;
@@ -127,16 +133,19 @@ export default {
           this.$emit("entregas", true);
           flash("Respuestas registradas", "success");
         })
-        .catch(response => {
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+
           this.errorr = true;
           flash(
             "Fallo el registro de respuestas: revisa los campos solicitados.",
             "error"
           );
-        })
-        .finally(() => {});
-    }
-  }
+        });
+    },
+  },
 };
 </script>
 

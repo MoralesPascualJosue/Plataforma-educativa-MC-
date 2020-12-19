@@ -1,7 +1,8 @@
 <template>
   <div class="contentfiles">
     <div class="top">
-      Carga tus archivos aqui: <span id="numarchivos">0</span> archivos
+      Carga tus archivos aqui:
+      <span id="numarchivos">0</span> archivos
     </div>
     <vue-dropzone
       ref="myVueDropzone"
@@ -89,18 +90,22 @@ export default {
                 })
                 .then((response) => {
                   this.parentElement.remove();
-                  numarchivos = document.getElementById("numarchivos")
-                    .textContent;
-                  numarchivos--;
                   document.getElementById(
                     "numarchivos"
-                  ).textContent = numarchivos;
+                  ).textContent = document.getElementById(
+                    "tbe"
+                  ).childElementCount;
                 })
-                .catch((response) => {
+                .catch((error) => {
+                  if (
+                    error.response.status === 401 ||
+                    error.response.status === 419
+                  ) {
+                    window.location.href = "login";
+                  }
                   this.errorr = true;
                   flash("Error: intenta más tarde", "error");
-                })
-                .finally(() => {});
+                });
             });
 
             elementotr.append(elementotd);
@@ -109,8 +114,9 @@ export default {
             elementotr.append(elementotddata);
 
             $("#tbe").append(elementotr);
-            numarchivos++;
-            document.getElementById("numarchivos").textContent = numarchivos;
+            document.getElementById(
+              "numarchivos"
+            ).textContent = document.getElementById("tbe").childElementCount;
           });
         },
       },

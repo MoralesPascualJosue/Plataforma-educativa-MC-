@@ -2,21 +2,18 @@
   <div
     ref="imageWrapper"
     class="UncoverImage"
-    @click="
-            $emit('pop-image', objeto)
-        "
+    @click="$emit('pop-image', objeto)"
   >
     <div
       v-if="objeto.colorCategoria"
       ref="image"
       class="categoria"
       :style="{
-                height: `${height}px`,
-                borderLeft: `10px solid ${objeto.colorCategoria}`
-            }"
+        height: `${height}px`,
+      }"
     >
-      <span class="badge badge-light float-right stb">Respuestas: {{objeto.answered}}</span>
-      <h3>{{objeto.title}}</h3>
+      <h3>{{ objeto.title }}</h3>
+      <span class="stb">Respuestas: {{ objeto.answered }}</span>
     </div>
   </div>
 </template>
@@ -25,13 +22,13 @@
 export default {
   props: {
     objeto: {
-      type: Object
+      type: Object,
     },
     height: {
       type: Number,
-      default: 100
-    }
-  }
+      default: 100,
+    },
+  },
 };
 </script>
 
