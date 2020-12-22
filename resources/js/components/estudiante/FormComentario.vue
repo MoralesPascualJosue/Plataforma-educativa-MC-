@@ -33,7 +33,7 @@ export default {
       visible: false,
       loading: false,
       comentario: [],
-      content: "<h1>Mi comentario</h1>",
+      content: "<p>Mi comentario</p>",
     };
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="dropdown m-3">
+    <div class="dropdown">
       <button
         id="dLabelnoti"
         type="button"

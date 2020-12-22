@@ -1,25 +1,29 @@
 <template>
   <div>
-    <div
-      :style="{
-        height: `50px`,
-        borderRadius: `4px`,
-        backgroundColor: `${discu.colorCategoria}`,
-      }"
-    ></div>
-    <h5 class="op-3">{{ discu.nameCategoria }}</h5>
     <!-- Contenedor Principal -->
     <div class="comments-container">
-      <h1>
-        {{ discu.title }}
-        <a href="javascript:void(0)">{{ discu.created_at }}</a>
-        <p v-if="comentarios.discuss == 1">
-          <a href="javascript:void(0)" @click="eliminart()">Eliminar tema</a>
-          <a href="javascript:void(0)" class="ml-2">
-            <FormDiscuUpdate />
-          </a>
-        </p>
-      </h1>
+      <div
+        :style="{
+          backgroundColor: `${discu.colorCategoria}`,
+        }"
+        class="header-discu"
+      >
+        <div class="detalles-discu">
+          <h5 class="op-3">{{ discu.nameCategoria }}</h5>
+          <a href="javascript:void(0)">{{ discu.created_at }}</a>
+          <p v-if="comentarios.discuss == 1">
+            <a href="javascript:void(0)" @click="eliminart()">Eliminar tema</a>
+            <a href="javascript:void(0)" class="ml-2">
+              <FormDiscuUpdate />
+            </a>
+          </p>
+        </div>
+        <div class="tema-discu">
+          <h1>
+            {{ discu.title }}
+          </h1>
+        </div>
+      </div>
 
       <ul id="comments-list" class="comments-list">
         <li>
@@ -30,8 +34,7 @@
             <div class="comment-main-level" v-if="indexco == 0">
               <!-- Avatar -->
               <div class="comment-avatar">
-                <img class="bg-white" :src="comentario.image" alt />
-                alt />
+                <img class="bg-white" :src="comentario.image" />
               </div>
               <!-- Contenedor del Comentario -->
               <div class="comment-box">
@@ -230,6 +233,20 @@ export default {
 </script>
 
 <style>
+.tema-discu {
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  min-height: 5rem;
+  text-align: left;
+  padding: 10px;
+}
+.header-discu {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  border-radius: 4px;
+}
+
 .op-3 {
   opacity: 0.3;
 }
@@ -256,8 +273,8 @@ ul {
  * Lista de Comentarios
  =======================*/
 .comments-container {
-  margin: 60px auto 15px;
-  width: 768px;
+  max-width: 768px;
+  margin: 6px auto 15px;
 }
 
 .comments-container h1 {
@@ -266,9 +283,10 @@ ul {
   font-weight: 400;
 }
 
-.comments-container h1 a {
+.detalles-discu a {
   font-size: 18px;
   font-weight: 700;
+  text-align: right;
 }
 
 .comments-list {
@@ -378,9 +396,9 @@ ul {
   width: 680px;
   float: right;
   position: relative;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 1px rgb(180 172 172 / 39%);
+  -webkit-box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
 .comments-list .comment-box:before,
@@ -493,6 +511,10 @@ ul {
 
   .reply-list .comment-box {
     width: 320px;
+  }
+
+  .header-discu {
+    display: inherit;
   }
 }
 </style>

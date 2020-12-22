@@ -1,43 +1,48 @@
 <template>
   <div>
-    <div class="dropdown m-3">
+    <div class="menuadddiscu">
       <button
         id="dLabeldis"
         type="button"
-        data-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
-        @click="dropmenu()"
-        class="btn btn-primary"
+        @click="dropmenuadddiscu()"
+        class="buttonmenuadddiscu"
       >
-        <p class="line-d" v-if="!loading">Crear discusión</p>
+        <p class="line-d creardiscu" v-if="!loading">Crear discusión</p>
         <span
           class="spinner-border spinner-border-sm"
           role="status"
           aria-hidden="true"
           v-if="loading"
         ></span>
-        <p class="line-d" v-if="loading">Creando...</p>
+        <p class="line-d creardiscu" v-if="loading">Creando...</p>
       </button>
-      <div class="dropdown-menu">
-        <form class="px-4 py-3" @submit="checkForm">
+      <div
+        id="add-discus"
+        class="display-n list-complete-item-f"
+        :style="{
+          backgroundColor: `${categoria.color}`,
+        }"
+      >
+        <form class="px-4 py-3 discu-content" @submit="checkForm">
           <div class="form-group">
-            <label for="exampleDropdownFormEmail1">Tema</label>
+            <label for="newnamediscus">Tema</label>
             <input
               type="text"
               class="form-control"
-              id="exampleDropdownFormEmail1"
+              id="newnamediscus"
               v-model="name"
             />
           </div>
           <div class="form-group">
-            <label for="exampleDropdownFormPassword1">categoria</label>
+            <label>categoria</label>
             <select v-model="categoria">
               <option disabled value>Selecciona una categoria</option>
               <option
                 v-for="(categoria, indexcaf) in categorias"
                 :key="indexcaf"
-                :value="categoria.id"
+                :value="categoria"
               >
                 {{ categoria.name }}
               </option>
@@ -48,15 +53,19 @@
             <label for="checkbox">crear categoria</label>
           </div>
           <div class="form-group" v-if="nuevacategoria">
-            <label for="namecategoria">Nombre categoria</label>
+            <label for="namecategoriai">Nombre categoria</label>
             <input
               type="text"
               class="form-control"
-              id="namecategoria"
+              id="namecategoriai"
               v-model="namecategoria"
             />
             <label for="colorcategoria">Color:</label>
-            <input type="color" name="colorcategoria" v-model="color" />
+            <input
+              type="color"
+              name="colorcategoria"
+              v-model="categoria.color"
+            />
           </div>
           <button type="submit" class="btn btn-primary">Crear</button>
         </form>
@@ -74,10 +83,13 @@ export default {
       info: "",
       loading: false,
       discu: [],
-      categoria: 0,
+      categoria: {
+        id: -1,
+        color: "#b12525",
+        name: "categoria",
+      },
       nuevacategoria: false,
       namecategoria: "",
-      color: "#b12525",
     };
   },
   computed: {
@@ -89,8 +101,8 @@ export default {
     },
   },
   methods: {
-    dropmenu() {
-      $("#dLabeldis").dropdown();
+    dropmenuadddiscu() {
+      $("#add-discus").toggleClass("display-n");
     },
     onChangeFileUpload() {
       this.file = this.$refs.file.files[0];
@@ -120,9 +132,9 @@ export default {
       if (this.nuevacategoria) {
         formData.append("nuevacategoria", "nuevasi");
         formData.append("categoria", this.namecategoria);
-        formData.append("color", this.color);
+        formData.append("color", this.categoria.color);
       } else {
-        formData.append("fcategoria", this.categoria);
+        formData.append("fcategoria", this.categoria.id);
         formData.append("nuevacategoria", "nuevano");
       }
 
@@ -130,13 +142,13 @@ export default {
       axios
         .post("foro/" + this.curso.id + "/creartema", formData)
         .then((response) => {
-          $("#dLabeldis").dropdown("toggle");
+          this.dropmenuadddiscu();
           this.errorr = false;
           this.discu = response.data;
           flash("Discusión creada", "success");
         })
         .catch((error) => {
-          if (error.response.status === 401) {
+          if (error.response.status == 401 || error.response.status == 419) {
             window.location.href = "login";
           }
 
@@ -159,4 +171,43 @@ export default {
 </script>
 
 <style>
+#newnamediscus {
+  display: inline-block;
+  width: 88%;
+  line-height: 1.5;
+  border: 1px solid #3490dc;
+}
+.menuadddiscu {
+  margin: 0 0 1rem;
+  background-color: white;
+  width: 100%;
+  min-height: 1rem;
+}
+.buttonmenuadddiscu {
+  width: 100%;
+  height: 0.1rem;
+  border: 8px solid #3490dc;
+  background-color: #3490dc;
+  border-radius: 4px;
+}
+.display-n {
+  display: none;
+}
+
+#add-discus {
+  text-align: left;
+}
+
+.creardiscu {
+  flex-grow: 1;
+  margin-top: -0.5rem;
+  display: block;
+  background-color: #3490dc;
+  max-width: 8rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+  padding: 10px;
+}
 </style>

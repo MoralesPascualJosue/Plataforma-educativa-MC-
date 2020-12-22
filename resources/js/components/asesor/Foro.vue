@@ -1,7 +1,6 @@
 <template>
   <div class="example container">
     <flash />
-    <FormDiscu @crear-d="creatediscuss" />
     <div class="row">
       <div class="col-3">
         <h2>Categorias</h2>
@@ -35,6 +34,7 @@
       <UncoverList class="col-8">
         <template slot-scope="{ togglePopup }">
           <transition-group name="list-complete" tag="div" class="d-content">
+            <FormDiscu @crear-d="creatediscuss" v-bind:key="-1" />
             <blockquote
               v-for="discu in discuss.discuss"
               v-bind:key="discu.id"

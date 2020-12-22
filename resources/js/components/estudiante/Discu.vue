@@ -9,7 +9,7 @@
       ref="image"
       class="categoria"
       :style="{
-        height: `${height}px`,
+        minHeight: `${height}px`,
       }"
     >
       <h3>{{ objeto.title }}</h3>
@@ -36,7 +36,6 @@ export default {
 .categoria {
   background-position: center;
   background-size: cover;
-  height: 100px;
   cursor: zoom-in;
 }
 .stb {
