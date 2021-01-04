@@ -20,6 +20,7 @@ body {
 .right-container {
     background-color: #ffa500;
     margin-left: 10%;
+    margin-top: 5%;
     height: 65vh;
     padding: 3rem;
     display: grid;
@@ -30,20 +31,21 @@ body {
     background: url("../resources/welcome1.jpg") no-repeat;
     background-size: cover;
     background-color: #405a68;
-    width: 30rem;
-    height: 40rem;
+    width: 23rem;
+    height: 33rem;
+    border-radius: 27px;
     filter: grayscale(80%) saturate(11);
 }
 
 .book-tittle {
-    background-color: #0000ff5e;
+    background-color: #5b9cdc94;
     color: white;
     font-size: 3.4286rem;
     line-height: 3.4286rem;
     font-weight: lighter;
     padding-bottom: 0.75rem;
     font-family: "Noto Serif", sans-serif;
-    margin-top: 25rem;
+    margin-top: 18rem;
 }
 
 .information-container {
@@ -57,7 +59,7 @@ body {
     line-height: 3.4286rem;
     padding-bottom: 0.75rem;
     color: white;
-    padding-top: 13rem;
+    padding-top: 15rem;
 }
 
 .informacion-content {
@@ -85,10 +87,9 @@ a:hover {
 
 .floating-header {
     height: 2.357rem;
-    width: 86%;
+    width: 98.7%;
     position: fixed;
     top: 1rem;
-    margin-left: 11%;
 }
 
 .floating-header .float-left,
@@ -102,20 +103,20 @@ a:hover {
 }
 
 .logo {
-    width: 1.643rem;
+    width: 6.643rem;
     margin-top: 0.1rem;
 }
 
 .header-logo-subtitle {
-    height: 1.214rem;
-    font-family: "Gotham-Book", serif;
-    font-size: 1rem;
-    color: #ffffff;
+    font-family: Poppins-Regular, sans-serif;
+    font-size: 2rem;
+    display: inline;
+    color: #ffa500;
     text-align: left;
 }
 
 .footer {
-    height: 5.929rem;
+    height: 1.929rem;
     background-color: #ffffff;
     font-size: 0.8571rem;
     padding-top: 1.429rem;
@@ -128,8 +129,8 @@ a:hover {
 
 .copyright,
 .footer-links {
-    color: #666666;
-    line-height: 2.143rem;
+    color: #b3b0b0;
+    line-height: 1.143rem;
 }
 
 .footer .float-right {
@@ -210,18 +211,19 @@ a.header-button:active {
     }
     .information-header {
         font-size: 5rem;
+        padding-top: 25rem;
     }
     .informacion-content {
         font-size: 20px;
     }
     .book-container {
-        width: 40rem;
-        height: 60rem;
+        width: 30rem;
+        height: 45rem;
     }
     .book-tittle {
-        font-size: 5.4286rem;
-        line-height: 5.4286rem;
-        margin-top: 32rem;
+        font-size: 4.4286rem;
+        line-height: 4.4286rem;
+        margin-top: 25rem;
     }
     .copyright {
         font-size: large;

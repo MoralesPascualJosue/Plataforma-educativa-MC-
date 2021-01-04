@@ -145,6 +145,10 @@ export default {
           this.dropmenuadddiscu();
           this.errorr = false;
           this.discu = response.data;
+          this.$emit("crear-d", {
+            discusion: this.discu,
+            nuevac: this.nuevacategoria,
+          });
           flash("Discusión creada", "success");
         })
         .catch((error) => {
@@ -160,10 +164,6 @@ export default {
         })
         .finally(() => {
           this.loading = false;
-          this.$emit("crear-d", {
-            discusion: this.discu,
-            nuevac: this.nuevacategoria,
-          });
         });
     },
   },

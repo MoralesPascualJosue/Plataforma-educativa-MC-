@@ -39,11 +39,10 @@ Vue.use(Toast, {
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-import HomeLayout from "./components/HomeLayout";
+import HomeLayout from "./components/estudiante/HomeLayout";
 import Miinformacion from "./components/Miinformacion";
 import ListaCursos from "./components/estudiante/ListaCursos";
 import App from "./components/estudiante/App";
-import Notificaciones from "./components/Notificaciones";
 import Flash from "./components/Flash";
 
 Vue.component("v-select", vSelect);
@@ -200,7 +199,7 @@ const router = new VueRouter({
 
 const app = new Vue({
     //el: "#app",
-    components: { App, Notificaciones, Flash },
+    components: { App, Flash },
     store: store,
     router
 }).$mount("#app");

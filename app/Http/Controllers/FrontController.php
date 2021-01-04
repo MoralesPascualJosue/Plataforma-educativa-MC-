@@ -93,4 +93,13 @@ class FrontController extends Controller
         return "Notificaciones leidas";
     }
 
+    public function leernotificacion(Request $request)
+    {
+        $notificacion = $request->all();
+        $miusuario = Auth::user()->estudiante()->get()[0];
+        $marcar = $miusuario->unreadNotifications->where("id",$notificacion["id"])->first();
+        $marcar->update(['read_at' => now()]);
+        return $marcar;
+    }
+
 }

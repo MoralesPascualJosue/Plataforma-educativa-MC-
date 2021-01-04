@@ -17,15 +17,20 @@ class AppController extends Controller
 
     public function index(Request $request)
     {
-        $anuncios = [];
-        $perfil = Auth::user()->roles()->pluck('name')['0'];
-        $anuncios = Anuncio::orderBy('updated_at','DESC')->get();
+        $perfil = Auth::user()->roles()->pluck('name')['0'];        
 
         if($request->ajax()){
-            return $anuncios;
+            $anuncios = Anuncio::orderBy('updated_at','DESC')->get();
+            $user = Auth::user();
+            $data["anuncios"] = $anuncios;
+            $data["user"]["name"] = $user->name;
+            $data["user"]["email"] = $user->email;
+            $data["user"]["image"] = $user->image;
+
+            return $data;
         }
 
-        $view = \View::make('homevue')->with(compact('anuncios','perfil'));
+        $view = \View::make('homevue')->with(compact('perfil'));
         return $view;
     }
     

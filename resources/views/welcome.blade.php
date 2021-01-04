@@ -44,7 +44,7 @@
   <div>
     <div class="floating-header" role="banner">
       <div class="float-left">
-        <img class="logo" alt="MC en linea" src="{{ asset('resources/logo/Logo minmin white.svg') }}">
+        <img class="logo" alt="MC en linea" src="{{ asset('resources/logo/Logo minmin orange.svg') }}">
         <div class="header-logo-subtitle">DEPI</div>
       </div>
       @if (!Auth::guest())

@@ -42,7 +42,6 @@
   max-width: 25rem;
   overflow: hidden;
   margin-top: -3.2rem;
-  margin-left: 8rem;
 }
 
 .slidemenu a {

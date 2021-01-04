@@ -37,6 +37,7 @@ Route::delete('/destroya/{id}','AnuncioController@destroya')->name('destroya');
 Route::get('/perfil', 'FrontController@perfil')->name('perfil');
 Route::post('/updatePerfil','FrontController@updatePerfil')->name('updatePerfil');
 Route::get('/leernotificaciones', 'FrontController@leernotificaciones')->name('leernotificaciones');
+Route::post('/leernotificacion', 'FrontController@leernotificacion')->name('leernotificacion');
 //________[END Perfil routes]__________
 
 

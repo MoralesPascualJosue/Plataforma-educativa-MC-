@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Anuncios</p>
+    <p class="pt-1">Anuncios</p>
     <hr />
     <ul class="list-group">
       <li class="list-group-item" v-for="(item, index) in notas" :key="index">
@@ -24,7 +24,9 @@ export default {
     axios
       .get("/home")
       .then((res) => {
-        this.notas = res.data;
+        this.notas = res.data.anuncios;
+
+        this.$emit("updateuserdata", res.data.user);
       })
       .catch((error) => {
         if (error.response.status === 401) {

@@ -1,26 +1,36 @@
 <template>
   <div class="course-actividad">
-    <a :href="ruta" @click="
-            $emit('pop-image', activitie)
-        ">
+    <a :href="ruta" @click="$emit('pop-image', activitie)">
       <div class="course-link-icon">
-        <img :src="icon" alt="grupos" />
+        <img
+          v-if="activitie.type != 'activitie'"
+          :src="iconprueba"
+          alt="Prueba"
+        />
+        <img v-else :src="iconactividad" alt="Actividad" />
       </div>
 
       <div v-if="activitie.type != 'activitie'" class="course-link-details">
-        <div class="course-link-name">{{ activitie.title }} {{ activitie.fecha_inicio }}</div>
-        <div class="course-link-content">Fecha de vencimiento: {{ activitie.fecha_final }}</div>
+        <div class="course-link-name">
+          {{ activitie.title }} {{ activitie.fecha_inicio }}
+        </div>
+        <div class="course-link-content">
+          Fecha de vencimiento: {{ activitie.fecha_final }}
+        </div>
       </div>
 
       <div v-else class="course-link-details">
         <div class="course-link-name">
           {{ activitie.title }} {{ activitie.fecha_inicio }}
           <span
-            v-if="activitie.entregas>0"
+            v-if="activitie.entregas > 0"
             class="badge badge-primary float-right fontct"
-          >Pendientes: {{activitie.entregas}}</span>
+            >Pendientes: {{ activitie.entregas }}</span
+          >
         </div>
-        <div class="course-link-content">Fecha de vencimiento: {{ activitie.fecha_final }}</div>
+        <div class="course-link-content">
+          Fecha de vencimiento: {{ activitie.fecha_final }}
+        </div>
       </div>
     </a>
   </div>
@@ -30,17 +40,18 @@
 export default {
   data() {
     return {
-      icon: "../resources/icons/home-work-c.svg"
+      iconactividad: "../resources/icons/home-work-c.svg",
+      iconprueba: "../resources/icons/test.svg",
     };
   },
   props: {
-    activitie: Object
+    activitie: Object,
   },
   computed: {
     ruta() {
       return "javascript:void(0)";
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

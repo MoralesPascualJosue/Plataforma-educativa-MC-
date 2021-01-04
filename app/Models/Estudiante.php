@@ -13,7 +13,6 @@ use Illuminate\Notifications\Notifiable;
  *
  * @property string name
  * @property string bio
- * @property string image
  * @property string institute
  * @property string department
  * @property interger telephone

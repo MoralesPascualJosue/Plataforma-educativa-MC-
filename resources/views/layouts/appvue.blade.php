@@ -25,9 +25,6 @@
                 <div class="navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        @cannot('edit cursos')
-                        <Notificaciones />
-                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->

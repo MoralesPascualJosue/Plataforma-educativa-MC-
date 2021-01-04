@@ -62,7 +62,6 @@ export default {
       errorr: false,
       info: "",
       loading: false,
-      curso: {},
       notificaciones: [],
     };
   },

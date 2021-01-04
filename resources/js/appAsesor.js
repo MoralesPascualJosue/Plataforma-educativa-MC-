@@ -29,7 +29,7 @@ Vue.use(xmodal);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-import HomeLayout from "./components/HomeLayout";
+import HomeLayout from "./components/asesor/HomeLayout";
 import Miinformacion from "./components/Miinformacion";
 import ListaCursos from "./components/asesor/ListaCursos";
 import App from "./components/asesor/App";
