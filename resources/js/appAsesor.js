@@ -31,7 +31,7 @@ Vue.use(xmodal);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 import HomeLayout from "./components/asesor/HomeLayout";
 import Miinformacion from "./components/Miinformacion";
-import ListaCursos from "./components/asesor/ListaCursos";
+import ListaCursos from "./components/asesor/Curso/ListaCursos";
 import App from "./components/asesor/App";
 import Flash from "./components/Flash";
 

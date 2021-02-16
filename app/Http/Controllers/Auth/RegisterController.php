@@ -11,6 +11,10 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use DB;
+use Exception;
+use PDOException;
+
 class RegisterController extends Controller
 {
     /*
@@ -40,7 +44,14 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+	 $this->middleware('guest');
+	 // Handle offline database
+        try {
+            DB::connection()
+                ->getPdo();
+        } catch (Exception $e) {
+            abort($e instanceof PDOException ? 503 : 500);
+        }
     }
 
     /**

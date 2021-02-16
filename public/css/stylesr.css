@@ -45,7 +45,8 @@ html {
 }
 
 .wrap {
-    width: 1170px;
+    border-radius: 20px;
+    width: 90%;
     height: 95vh;
     background: #fff;
     overflow: hidden;

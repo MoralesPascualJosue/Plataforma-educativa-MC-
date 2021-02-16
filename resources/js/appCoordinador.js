@@ -23,7 +23,7 @@ Vue.use(VueRouter);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 import HomeLayout from "./components/coordinador/HomeLayout";
-
+import Flash from "./components/Flash";
 import Anuncio from "./components/coordinador/Anuncio";
 import App from "./components/coordinador/App";
 /**
@@ -50,7 +50,7 @@ const router = new VueRouter({
 
 const app = new Vue({
     //el: "#app",
-    components: { App },
+    components: { App,Flash },
     router
 }).$mount("#app");
 

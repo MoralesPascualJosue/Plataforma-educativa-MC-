@@ -103,6 +103,7 @@ class ChatController extends Controller
      public function chatC($cur,$u,Request $request)
     {
         $message = Message::withUser()->orderby("id","DESC")->where("id",$u)->get(); 
+	$marcarleido = null;
 
         if(empty($message[0])){
             abort(404,'Contenido no disponible');
@@ -113,7 +114,10 @@ class ChatController extends Controller
 
         $input["news"] = 0;        
         $marcarleido = user_message::where('user_id',Auth::user()->id)->where('message_id',$u);
-
+	if ($marcarleido) {
+	   return $message[0];
+	}
+	
         if ($marcarleido->get()[0]->news != 0) {
             $marcarleido->update($input);            
             $message[0]["leido"] = true;

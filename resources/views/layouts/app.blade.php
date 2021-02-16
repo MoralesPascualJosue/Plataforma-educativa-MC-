@@ -28,7 +28,7 @@
     <div class="limiter">
         @if (!Auth::guest())
         <div class="container100">
-            @include('layouts.sidebar')
+            <!-- @include('layouts.sidebar') -->
 
             <div id="wrap100" class="wrap100">
                 <!-- page content -->

@@ -4,8 +4,19 @@
 
     <div class="container-top">
       <div class="avatar-container">
-        <div class="avatari" id="avatarImage">
-          <img :src="user.image" width="142px" />
+        <div class="avatari" id="avatarImage" :style="{
+                backgroundImage: `url(${user.image})`,
+                backgroundSize: `cover`,
+                backgroundPosition: `center`,
+               }">
+		<input
+	      ref="filecover"
+              class="formcurso-file"
+              type="file"
+              id="filecover"
+              v-on:change="onChangeFileUpload()"
+            />
+             <label v-if="editando" for="filecover">Cambiar</label>
         </div>
       </div>
 
@@ -21,30 +32,7 @@
       <div class="column user-information">
         <section>
           <h2>Información básica</h2>
-          <ul v-if="editando">
-            <li class="data-row">
-              <div class="data-container">
-                <span class="data-title">Imagen de perfil</span>
-                <img
-                  id="preview"
-                  alt="Imagen curso"
-                  width="230px"
-                  height="230px"
-                  :src="previewimg"
-                />
-                <a class="data-value">
-                  <input
-                    class="file-i"
-                    type="file"
-                    id="Filecover"
-                    ref="filecover"
-                    v-on:change="onChangeFileUpload()"
-                  />
-                </a>
-              </div>
-            </li>
-          </ul>
-          <ul>
+	<ul>
             <li class="data-row">
               <div class="data-container">
                 <span class="data-title">Nombre completo</span>
@@ -142,8 +130,8 @@
 
         <section>
           <br />
-          <ul class="editar-perfil" v-if="!editando">
-            <li class="data-row" @click="editarperfil()">
+          <ul class="editar-perfil" v-if="!editando" @click="editarperfil()">
+            <li class="data-row" >
               <div class="data-container">
                 <span class="data-title">Editar mi perfil</span>
                 <a class="data-value">
@@ -206,6 +194,7 @@ export default {
         this.nombre = res.data.user.name;
         this.institucion = res.data.perfil.institute;
         this.departamento = res.data.perfil.department;
+	this.previewimg = this.user.image;
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -215,14 +204,15 @@ export default {
   },
   methods: {
     editarperfil() {
-      this.editando = true;
+       this.editando = true;
     },
     cancelaredicionperfil() {
       this.editando = false;
+      this.user.image = this.previewimg;
     },
     onChangeFileUpload() {
       this.file = this.$refs.filecover.files[0];
-      this.previewimg = window.URL.createObjectURL(
+      this.user.image = window.URL.createObjectURL(
         this.$refs.filecover.files[0]
       );
     },
@@ -299,18 +289,12 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  background-color: #fdc770;
+  box-shadow: 0 0 0 0.3125rem #ffffff;
 }
 
-.avatari:hover img {
-  border: 3px solid orange;
-}
-
-.avatari img {
-  width: 100%;
-  height: 100%;
-  background-color: orange;
-  border-radius: 50%;
-  box-shadow: 0 0 0 0.3125rem #f8f8f8;
+.avatari label{
+  padding: 0.5rem;
 }
 
 .user-name-container {
@@ -334,7 +318,7 @@ export default {
 }
 
 .user-information {
-  border-right: solid 0.0625rem #cdcdcd;
+  border-right: solid 0.0625rem #fdc770;
 }
 
 h2 {
@@ -346,12 +330,11 @@ h2 {
 .data-row {
   padding: 1.25rem 0;
   align-items: center;
-  background-color: #fff;
+  background-color: #fdc770;
   color: #262626;
   display: flex;
   padding: 0.9375rem 0;
   position: relative;
-  border: solid 0.0625rem #cdcdcd;
 }
 
 .data-container {
@@ -379,6 +362,16 @@ h2 {
   color: #1b396a;
 }
 
+.data-value input {
+  background-color: #fdc770;
+  border: none;
+  padding: 0.2rem;
+  border-bottom: 2px solid #266fae;
+}
+
+.data-value input:focus {
+  background-color: #fcb036;
+}
 /*------------------------------------------------------------------
 [ Responsive columns]*/
 

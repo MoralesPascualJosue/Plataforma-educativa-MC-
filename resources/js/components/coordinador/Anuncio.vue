@@ -57,7 +57,7 @@ export default {
     axios
       .get("/home")
       .then((res) => {
-        this.notas = res.data;
+        this.notas = res.data.anuncios;
       })
       .catch((error) => {
         if (error.response.status === 401) {

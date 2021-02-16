@@ -1,27 +1,25 @@
 <template>
-  <div class="row movil">
-    <div class="col-4">
-      <div class="info-user">
-        <div class="container-top">
-          <div class="avatar-container">
-            <div class="avatari" id="avatarImage">
-              <img :src="user.image" width="142px" />
-            </div>
+  <div class="home-layout">
+    <div class="colum-left">
+      <div class="home-infouser">
+          <div class="home-avatarcontainer">
+              <img :src="user.image" />
           </div>
-
-          <div class="user-name-container">
-            <span id="name-u">{{ user.name }}</span>
-          </div>
-          <div class="username-container">
+          <div class="home-userdetails">
+            <h2>{{ user.name }}</h2
             <span>{{ user.email }}</span>
           </div>
-        </div>
       </div>
-      <div class="image-h">
+      <div class="home-imagehome">
         <div class="background"></div>
       </div>
     </div>
-    <div class="col-8"><Anuncio @updateuserdata="updateuser" /></div>
+    <div class="colum-right">
+     <div class="home-date">
+     	<div class="dia">{{ fecha }}</div>
+     </div>
+     <Anuncio @updateuserdata="updateuser" />
+    </div>
   </div>
 </template>
 
@@ -40,6 +38,11 @@ export default {
       },
     };
   },
+computed:{
+    fecha(){	
+	return new Date().toDateString();
+	},
+ },
   methods: {
     updateuser(data) {
       this.user = data;
@@ -49,24 +52,65 @@ export default {
 </script>
 
 <style>
-.image-h {
-  border-radius: 4px;
+.home-layout{
+ display: grid;
+ grid-template-columns: 39% 59%;
+ padding: 1rem;
+ min-height: 100%;
+}
+
+.home-infouser {
+ height: 6rem;
+ background-color: #fdc770;
+ border-radius: 20px;
+ padding: 0.5rem;
+}
+
+.home-avatarcontainer {
+ width: 5rem;
+ height: 5rem;
+ border-radius: 50%;
+ float: left;
+ overflow: hidden;
+}
+
+.home-avatarcontainer img{
+ width: 100%;
+ height: 100%;
+}
+
+.home-userdetails {
+ padding-top: 1rem;
+ padding-left: 6rem;
+ max-width: 367px;
+}
+
+.home-userdetails h2 {
+ font-weight: bold;
+}
+
+.home-imagehome {
+  border-radius: 20px;
   overflow: hidden;
   height: 10.6875rem;
   margin-top: 1rem;
+  border: 1px solid #fdc770;
 }
+
+.home-date {
+ height: 6rem;
+ font-size: 30px;
+ text-align: end;
+ color: white;
+}
+
 @media (max-width: 1050px) {
-  .info-user {
+ .home-layout {
+ display: inherit;
+ }
+
+  .home-infouser {
     display: none;
-  }
-  .movil {
-    display: inline;
-    margin: inherit;
-  }
-  .movil div {
-    padding-left: inherit;
-    padding-right: inherit;
-    max-width: inherit;
   }
 }
 </style>

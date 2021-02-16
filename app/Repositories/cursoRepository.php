@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\curso;
+use App\Models\Curso;
 use App\Repositories\BaseRepository;
 
 /**
