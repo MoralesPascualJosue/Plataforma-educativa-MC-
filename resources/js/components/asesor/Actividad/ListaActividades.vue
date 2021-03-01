@@ -1,19 +1,26 @@
 <template>
   <div class="lista-actividades-layout">
     <div class="lista-actividades-cursoinfo">
-      <h1 :id="curso.id" class="lista-actividades-cursoinfo-title">{{ curso.title }}</h1>
-      <div class="lista-actividades-cursoinfo-imgheader" :style="cursoimg"></div>
+      <h1 :id="curso.id" class="lista-actividades-cursoinfo-title">
+        {{ curso.title }}
+      </h1>
+      <div
+        class="lista-actividades-cursoinfo-imgheader"
+        :style="cursoimg"
+      ></div>
       <div class="lista-actividades-cursoinfo-textheader">
         <div class="lista-actividades-cursoinfo-textheader-username">
           {{ asesor.name }}
         </div>
-        <div class="lista-actividades-cursoinfo-textheader-account">
-          Asesor
+        <div class="lista-actividades-cursoinfo-textheader-account">Asesor</div>
+        <div class="lista-actividades-cursoinfo-textheader-review">
+          {{ curso.review }}
         </div>
-       <div class="lista-actividades-cursoinfo-textheader-review">{{ curso.review }}</div>
       </div>
       <div class="lista-actividades-cursooptions">
-        <div class="lista-actividades-cursooptions-textheader">Detalles y acciones</div>
+        <div class="lista-actividades-cursooptions-textheader">
+          Detalles y acciones
+        </div>
         <FormCursoUpdate />
         <a href="javascript:void(0)" @click="eliminarCurso">
           <div>Eliminar curso</div>
@@ -44,7 +51,9 @@
             </transition-group>
           </template>
         </Actividades>
-        <button v-if="more" class="listacursos-nextpage" @click="nextpage()">Más</button>
+        <button v-if="more" class="listacursos-nextpage" @click="nextpage()">
+          Más
+        </button>
       </div>
     </div>
   </div>
@@ -96,7 +105,7 @@ export default {
           res.data.tests.data
         );
         res.data.actividades.data.sort(function (a, b) {
-          if (a.fecha_final >  b.fecha_final) {
+          if (a.fecha_final > b.fecha_final) {
             return 1;
           }
           if (a.fecha_final < b.fecha_final) {
@@ -143,8 +152,10 @@ export default {
       this.actividades.data.unshift(contenido);
     },
     nextpage() {
-      axios.get(this.actividades.next_page_url).then((res) => {
-        Array.prototype.push.apply(
+      axios
+        .get(this.actividades.next_page_url)
+        .then((res) => {
+          Array.prototype.push.apply(
             res.data.actividades.data,
             res.data.tests.data
           );
@@ -159,20 +170,21 @@ export default {
             return 0;
           });
 
-	res.data.actividades.data.forEach((element) => {
-          this.actividades.data.push(element);
-        });
-
-        if (res.data.actividades.next_page_url) {
-          this.actividades.next_page_url = res.data.actividades.next_page_url;
-        } else {
-          this.actividades.next_page_url = res.data.tests.next_page_url;
-        }
-      }).catch((error) => {
-            if (error.response.status === 401) {
-              window.location.href = "login";
-            }
+          res.data.actividades.data.forEach((element) => {
+            this.actividades.data.push(element);
           });
+
+          if (res.data.actividades.next_page_url) {
+            this.actividades.next_page_url = res.data.actividades.next_page_url;
+          } else {
+            this.actividades.next_page_url = res.data.tests.next_page_url;
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+        });
     },
   },
 };
@@ -188,10 +200,6 @@ export default {
   grid-gap: 1rem;
   grid-template-columns: 39% 59%;
   justify-content: center;
-}
-.lista-actividades-cursoinfo {
-}
-.lista-actividades-listaactividades {
 }
 @media (max-width: 1050px) {
   .lista-actividades-layout {
@@ -221,7 +229,7 @@ export default {
   margin-left: 50%;
 }
 .lista-actividades-cursoinfo-textheader-review {
-  padding: 0.5rem; 
+  padding: 0.5rem;
   text-align: justify;
 }
 .lista-actividades-cursooptions a {

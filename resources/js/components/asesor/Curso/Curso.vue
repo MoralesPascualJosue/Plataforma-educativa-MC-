@@ -1,22 +1,24 @@
 <template>
-<div>
-    <div v-if="curso.cover" class="curso-image"
+  <div>
+    <div
+      v-if="curso.cover"
+      class="curso-image"
       :style="{
         height: `${height}px`,
         backgroundImage: `url(${curso.cover})`,
-      }" @click="openCurse"
+      }"
+      @click="openCurse"
     >
-	    <span v-if="curso.entregas > 0" class="curso-status">
-		 <img src="resources/icons/apilar.svg" alt=""/> 
-		 <span class="curso-status-text">{{ curso.entregas }}</span>
-	    </span>
+      <span v-if="curso.entregas > 0" class="curso-status">
+        <img src="resources/icons/apilar.svg" alt="" />
+        <span class="curso-status-text">{{ curso.entregas }}</span>
+      </span>
     </div>
-    
-	<div v-if="show" class="curso-tabs-content" id="curso-tabs-content">  
-		<TabsCurso @closetabs="closeCurse" />
-	 </div>
-   </div>
-</div>
+
+    <div v-if="show" class="curso-tabs-content" id="curso-tabs-content">
+      <TabsCurso @closetabs="closeCurse" />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -33,17 +35,19 @@ export default {
       type: Number,
       default: 168,
     },
-  },data(){
-	return {
-		show: false,
-	};
-  },methods: {
-     openCurse(){
-       this.show = true;
-       this.$store.commit("changecurso", this.curso);
-     },
-    closeCurse(){
-	this.show = false;
+  },
+  data() {
+    return {
+      show: false,
+    };
+  },
+  methods: {
+    openCurse() {
+      this.show = true;
+      this.$store.commit("changecurso", this.curso);
+    },
+    closeCurse() {
+      this.show = false;
     },
   },
 };
@@ -58,7 +62,7 @@ export default {
 }
 .curso-status {
   background-color: #fdc770;
-  padding: 1rem;  
+  padding: 1rem;
   line-height: 3rem;
 }
 .curso-status img {
@@ -71,21 +75,21 @@ export default {
   top: 0;
   padding: 1rem;
   animation-name: stretch;
-  animation-duration: 0.5s; 
-  animation-timing-function: ease-out; 
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
   animation-fill-mode: forwards;
 }
 @keyframes stretch {
   from {
-    width:0%;
+    width: 0%;
     height: 100%;
   }
- to {
+  to {
     width: 100%;
     height: 100%;
   }
 }
 .curso-status-text {
- font-size: 14px;
+  font-size: 14px;
 }
 </style>

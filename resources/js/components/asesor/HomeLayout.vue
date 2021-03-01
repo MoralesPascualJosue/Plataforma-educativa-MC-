@@ -2,23 +2,23 @@
   <div class="home-layout">
     <div class="colum-left">
       <div class="home-infouser">
-          <div class="home-avatarcontainer">
-              <img :src="user.image" />
-          </div>
-          <div class="home-userdetails">
-            <h2>{{ user.name }}</h2
-            <span>{{ user.email }}</span>
-          </div>
+        <div class="home-avatarcontainer">
+          <img :src="user.image" />
+        </div>
+        <div class="home-userdetails">
+          <h2>{{ user.name }}</h2>
+          <span>{{ user.email }}</span>
+        </div>
       </div>
       <div class="home-imagehome">
         <div class="background"></div>
       </div>
     </div>
     <div class="colum-right">
-     <div class="home-date">
-     	<div class="dia">{{ fecha }}</div>
-     </div>
-     <Anuncio @updateuserdata="updateuser" />
+      <div class="home-date">
+        <div class="dia">{{ fecha }}</div>
+      </div>
+      <Anuncio @updateuserdata="updateuser" />
     </div>
   </div>
 </template>
@@ -38,11 +38,11 @@ export default {
       },
     };
   },
-computed:{
-    fecha(){	
-	return new Date().toDateString();
-	},
- },
+  computed: {
+    fecha() {
+      return new Date().toDateString();
+    },
+  },
   methods: {
     updateuser(data) {
       this.user = data;
@@ -52,41 +52,41 @@ computed:{
 </script>
 
 <style>
-.home-layout{
- display: grid;
- grid-template-columns: 39% 59%;
- padding: 1rem;
- min-height: 100%;
+.home-layout {
+  display: grid;
+  grid-template-columns: 39% 59%;
+  padding: 1rem;
+  min-height: 100%;
 }
 
 .home-infouser {
- height: 6rem;
- background-color: #fdc770;
- border-radius: 20px;
- padding: 0.5rem;
+  height: 6rem;
+  background-color: #fdc770;
+  border-radius: 20px;
+  padding: 0.5rem;
 }
 
 .home-avatarcontainer {
- width: 5rem;
- height: 5rem;
- border-radius: 50%;
- float: left;
- overflow: hidden;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  float: left;
+  overflow: hidden;
 }
 
-.home-avatarcontainer img{
- width: 100%;
- height: 100%;
+.home-avatarcontainer img {
+  width: 100%;
+  height: 100%;
 }
 
 .home-userdetails {
- padding-top: 1rem;
- padding-left: 6rem;
- max-width: 367px;
+  padding-top: 1rem;
+  padding-left: 6rem;
+  max-width: 367px;
 }
 
 .home-userdetails h2 {
- font-weight: bold;
+  font-weight: bold;
 }
 
 .home-imagehome {
@@ -98,16 +98,16 @@ computed:{
 }
 
 .home-date {
- height: 6rem;
- font-size: 30px;
- text-align: end;
- color: white;
+  height: 6rem;
+  font-size: 30px;
+  text-align: end;
+  color: white;
 }
 
 @media (max-width: 1050px) {
- .home-layout {
- display: inherit;
- }
+  .home-layout {
+    display: inherit;
+  }
 
   .home-infouser {
     display: none;

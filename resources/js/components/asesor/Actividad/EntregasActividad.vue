@@ -143,8 +143,10 @@
                   :key="indexq"
                 >
                   <th scope="row">{{ indexq + 1 }}</th>
-                  <td colspan="3">
+                  <td colspan="2">
                     <h4>{{ question.question }}</h4>
+                  </td>
+                  <td>
                     <div
                       class="actividad-entregas-contenttable-respuestas"
                       v-for="(respuesta, indexr) in question.respuesta"
@@ -377,22 +379,23 @@ export default {
   text-align: end;
 }
 .actividad-entregas-contenttable {
-  width: 100%; 
+  width: 100%;
 }
 .actividad-entregas-contenttable th {
   text-align: left;
-  background-color:#fcd770;
-  padding:0.5rem;
+  background-color: #fcd770;
+  padding: 0.5rem;
 }
 .actividad-entregas-contenttable tbody tr:hover {
   background-color: #fcb036;
 }
 .actividad-entregas-contenttable tbody td {
-  padding:0.2rem;
+  padding: 0.2rem;
 }
 .actividad-entregas-contenttable-respuestas {
- padding: 0.5rem;
- display: inline-block;
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: auto;
 }
 .vistaa {
   background-color: blue;
@@ -413,7 +416,7 @@ export default {
 
 .backtolist:hover {
   font-weight: bold;
-  background-color:white;   
+  background-color: white;
 }
 
 @media only screen and (max-width: 1050px) {
@@ -526,5 +529,4 @@ export default {
   height: 10px;
   padding: 10px;
 }
-
 </style>

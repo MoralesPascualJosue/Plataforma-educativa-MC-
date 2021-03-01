@@ -1,25 +1,25 @@
 <template>
   <div class="listacursos-layout">
     <FormCurso @crear-curso="createcurso" v-bind:key="-1" />
-<!--    <Cursos>
+    <!--    <Cursos>
       <template slot-scope="{ togglePopup }">-->
-        <transition-group name="list-complete" tag="div" class="list">
-          <div
-            v-for="curso in cursos.data"
-            v-bind:key="curso.id"
-            class="card list-complete-item"
-          >
-            <Curso
-              alt="curso"
-              v-bind:height="200"
-              v-bind:curso="curso"
-            />
-            <p class="listacursos-layout-listacursos-curso-title">{{ curso.title }}</p>
-          </div>
-        </transition-group>
-     <!-- </template>
+    <transition-group name="list-complete" tag="div" class="list">
+      <div
+        v-for="curso in cursos.data"
+        v-bind:key="curso.id"
+        class="card list-complete-item"
+      >
+        <Curso alt="curso" v-bind:height="200" v-bind:curso="curso" />
+        <p class="listacursos-layout-listacursos-curso-title">
+          {{ curso.title }}
+        </p>
+      </div>
+    </transition-group>
+    <!-- </template>
     /Cursos>-->
-    <button v-if="more" class="listacursos-nextpage" @click="nextpage()">Más</button>
+    <button v-if="more" class="listacursos-nextpage" @click="nextpage()">
+      Más
+    </button>
   </div>
 </template>
 
@@ -30,7 +30,7 @@ import FormCurso from "./FormCurso";
 
 export default {
   components: {
-//    Cursos,
+    //    Cursos,
     Curso,
     FormCurso,
   },
@@ -72,7 +72,7 @@ export default {
             this.cursos.data.push(element);
           });
           this.cursos.next_page_url = res.data.next_page_url;
-/*          setTimeout(function () {
+          /*          setTimeout(function () {
             window.scrollBy(0, -(window.scrollY - posy));
           }, 200);*/
         })
@@ -88,7 +88,7 @@ export default {
 
 <style>
 .listacursos-layout {
- padding: 0.5rem;
+  padding: 0.5rem;
 }
 .list {
   position: relative;
@@ -142,9 +142,6 @@ export default {
 }
 .fade-leave-active {
   transition: opacity 0.25s;
-  .cover-close {
-    display: none;
-  }
 }
 .fade-enter,
 .fade-leave-to {

@@ -189,7 +189,7 @@ export default {
   margin-bottom: 0.5rem;
 }
 .list-complete-item-f:hover {
- padding-left:0;
+ padding-left:15%;
 }
 #add-discus{
  padding-left:20% !important;

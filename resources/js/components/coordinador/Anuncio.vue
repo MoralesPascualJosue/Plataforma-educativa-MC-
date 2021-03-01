@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="lista-anuncios-content">
     <form @submit.prevent="editarNota(nota)" v-if="modoEditar">
       <h3>Editar anuncio</h3>
       <input
@@ -25,8 +25,12 @@
     </form>
     <hr />
     <h3>Lista de anuncios:</h3>
-    <ul class="list-group">
-      <li class="list-group-item" v-for="(item, index) in notas" :key="index">
+    <ul class="lista-anuncios">
+      <li
+        class="lista-anuncios-item"
+        v-for="(item, index) in notas"
+        :key="index"
+      >
         <span class="badge badge-primary float-right">{{
           item.updated_at
         }}</span>
@@ -127,3 +131,18 @@ export default {
   },
 };
 </script>
+<style>
+.lista-anuncios-content {
+  padding: 1rem;
+}
+
+.lista-anuncios {
+  padding: 1rem;
+}
+
+.lista-anuncios-item {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #fdc770;
+}
+</style>

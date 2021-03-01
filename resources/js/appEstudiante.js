@@ -41,7 +41,7 @@ Vue.use(Toast, {
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 import HomeLayout from "./components/estudiante/HomeLayout";
 import Miinformacion from "./components/Miinformacion";
-import ListaCursos from "./components/estudiante/ListaCursos";
+import ListaCursos from "./components/estudiante/Curso/ListaCursos";
 import App from "./components/estudiante/App";
 import Flash from "./components/Flash";
 
