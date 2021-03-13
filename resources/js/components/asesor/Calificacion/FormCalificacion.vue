@@ -1,21 +1,32 @@
 <template>
   <div class="actividad-entregas-formcalificacion-layout">
-    <a
-      href="javascript:void(0);"
-      @click="showmenu = !showmenu"
-    >
-      <p v-if="!loadingc">Calificar <span v-show="!showmenu">+</span><span v-show="showmenu">-</span></p>
+    <a href="javascript:void(0);" @click="showmenu = !showmenu">
+      <p v-if="!loadingc">
+        Calificar <span v-show="!showmenu">+</span
+        ><span v-show="showmenu">-</span>
+      </p>
       <p v-if="loadingc">Actualizando...</p>
     </a>
     <div v-show="showmenu" class="actividad-entregas-formcalificacion-menu">
-      <form class="actividad-entregas-formcalificacion-form" @submit="checkForm">
+      <form
+        class="actividad-entregas-formcalificacion-form"
+        @submit="checkForm"
+      >
         <div class="actividad-entregas-formcalificacion-formgroup">
           <label for="calificacion">Calificación</label>
-          <input type="number" id="calificacion" v-model="calificacion"/>
+          <input type="number" id="calificacion" v-model="calificacion" />
         </div>
-        <button type="submit" class="actividad-entregas-formcalificacion-form-sumitbottom">Calificar</button>
+        <button
+          type="submit"
+          class="actividad-entregas-formcalificacion-form-sumitbottom"
+        >
+          Calificar
+        </button>
       </form>
-      <button class="actividad-entregas-formcalificacion-cancelbottom" @click="showmenu = false">
+      <button
+        class="actividad-entregas-formcalificacion-cancelbottom"
+        @click="showmenu = false"
+      >
         Cancelar
       </button>
     </div>
@@ -35,7 +46,7 @@ export default {
   },
   data() {
     return {
-      showmenu: false, 
+      showmenu: false,
       calificacion: this.estudiante.qualificationqualification,
       errorrc: false,
       loadingc: false,
@@ -91,8 +102,11 @@ export default {
   padding: 0.5rem;
   border-radius: 20px;
 }
-.actividad-entregas-formcalificacion-formgroup label{
+.actividad-entregas-formcalificacion-formgroup label {
   display: block;
+}
+.actividad-entregas-formcalificacion-formgroup input {
+  padding: 0.5rem;
 }
 .actividad-entregas-formcalificacion-form-sumitbottom {
   border: none;
@@ -106,11 +120,11 @@ export default {
   background-color: #fcb036;
 }
 .actividad-entregas-formcalificacion-cancelbottom {
-  border:none;
+  border: none;
   padding: 0.5rem;
   background-color: #f0f0f0;
   width: 100%;
-  margin-top:0.2rem;
+  margin-top: 0.2rem;
   cursor: pointer;
 }
 .actividad-entregas-formcalificacion-cancelbottom:hover {

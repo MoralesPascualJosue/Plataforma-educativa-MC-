@@ -1,41 +1,47 @@
 <template>
-<div class="curso-tabs-layout" id="curso-tabs-layout">
+  <div class="curso-tabs-layout" id="curso-tabs-layout">
     <div class="curso-tabs-navegationmenu">
       <div clase="curso-tabs-options">
-        <div class="curso-tabs-closeoption" @click="closeCurse">
-	    X
-	</div>
+        <div class="curso-tabs-closeoption" @click="closeCurse">X</div>
       </div>
       <ul class="curso-tabs-nav">
         <li class="curso-tabs-nav-item">
-          <a @click.prevent="setActive('home')"
+          <a
+            @click.prevent="setActive('home')"
             :class="{ active: isActive('home') }"
             href="#home"
-            >Curso
-  	  <span v-show="isActive('resumen')">Resumen</span></a>	  
+            >Curso <span v-show="isActive('resumen')">Resumen</span></a
+          >
         </li>
         <li class="curso-tabs-nav-item">
-          <a @click.prevent="setActive('profile')"
+          <a
+            @click.prevent="setActive('profile')"
             :class="{ active: isActive('profile') }"
             href="#profile"
-            >foro</a>
+            >foro</a
+          >
         </li>
         <li class="curso-tabs-nav-item">
-          <a @click.prevent="setActive('contact')"
+          <a
+            @click.prevent="setActive('contact')"
             :class="{ active: isActive('contact') }"
-            href="#contact">
+            href="#contact"
+          >
             Mensajes
             <span
-             v-if="mensajesnuevos > 0"
+              v-if="mensajesnuevos > 0"
               class="badge badge-primary float-right fontct"
-              >{{ mensajesnuevos }}</span>
+              >{{ mensajesnuevos }}</span
+            >
           </a>
         </li>
         <li class="curso-tabs-nav-item">
-          <a @click.prevent="setActive('informacion')"
+          <a
+            @click.prevent="setActive('informacion')"
             :class="{ active: isActive('informacion') }"
             href="#informacion"
-            >Informacion</a>
+            >Informacion</a
+          >
         </li>
       </ul>
     </div>
@@ -44,7 +50,10 @@
       <div v-show="isActive('resumen')">
         <Resumen v-if="isActive('resumen')" />
       </div>
-      <ListaActividades v-show="isActive('home')"  @ver-resumen="setActive('resumen')" />
+      <ListaActividades
+        v-show="isActive('home')"
+        @ver-resumen="setActive('resumen')"
+      />
       <div v-show="isActive('profile')">
         <Foro />
       </div>
@@ -55,7 +64,7 @@
         <InformacionShow />
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -96,56 +105,61 @@ export default {
       }
     },
     closeCurse() {
-        var pos = 100;
-        var curseTabs = document.getElementById("curso-tabs-layout");
-        setTimeout(function(){ this.$emit('closetabs'); }.bind(this), 300);
-        var id = setInterval(frame,5);
-        function frame(){
-		if(pos<16) {
-			clearInterval(id);
-		}else{
-			pos-=5;
-			curseTabs.style.width = pos+'%';
-		}
-	}
-    }
+      var pos = 100;
+      var curseTabs = document.getElementById("curso-tabs-layout");
+      setTimeout(
+        function () {
+          this.$emit("closetabs");
+        }.bind(this),
+        300
+      );
+      var id = setInterval(frame, 5);
+      function frame() {
+        if (pos < 16) {
+          clearInterval(id);
+        } else {
+          pos -= 5;
+          curseTabs.style.width = pos + "%";
+        }
+      }
+    },
   },
 };
 </script>
 <style>
 .curso-tabs-layout {
- position: relative;
- background-color: #266fae;
- width: 100%;
- height: 100%;
- border-radius:20px;
- display: grid;
- grid-template-columns: 10% auto;
- overflow: hidden;
+  position: relative;
+  background-color: #266fae;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 10% auto;
+  overflow: hidden;
 }
 @media only screen and (max-width: 1080px) {
- .curso-tabs-layout {
-   display: inherit;
-  }
- .curso-tabs-closeoption{
-   float: left;
-   padding: 0.5rem;
+  .curso-tabs-layout {
+    display: inherit;
   }
 }
 .curso-tabs-closeoption {
   position: relative;
   text-align: center;
-  color: white;
+  color: #050505;
   font-size: 30px;
   cursor: pointer;
+  background-color: #fcb036;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 5px;
 }
 .curso-tabs-closeoption:hover {
- color: #fcb036;
+  color: white;
 }
 .curso-tabs-nav-item {
- margin-top: 1rem;
+  margin-top: 1rem;
 }
-.curso-tabs-nav-item a{
+.curso-tabs-nav-item a {
   display: block;
   margin: 0.2rem;
   padding: 0.5rem;
@@ -153,10 +167,10 @@ export default {
   background-color: white;
   width: 100%;
 }
-.curso-tabs-nav-item a span{
- font-size:14px;
- background-color: #fdc770;
- padding: 0.2rem;
+.curso-tabs-nav-item a span {
+  font-size: 14px;
+  background-color: #fdc770;
+  padding: 0.2rem;
 }
 .curso-tabs-nav-item a:hover {
   background-color: #fdc770;
@@ -164,24 +178,28 @@ export default {
 .curso-tabs-nav-item .active {
   background-color: #fcb036;
 }
-@media only screen and (max-width: 1080px) {
-  .curso-tabs-nav {
-   margin-bottom: -2px;
-  }
-  .curso-tabs-closeoption {
-    font-size: 20px;
-    margin-top: -3px;
-  }
-  .curso-tabs-nav-item {
-    margin: inherit;
-    display: inline-block;
-  } 
-}
 .curso-tabs-contentpane {
   background-color: #fcb036;
   border-radius: 20px;
   overflow-y: auto;
   height: 100%;
 }
-
+@media only screen and (max-width: 1080px) {
+  .curso-tabs-nav {
+    margin-bottom: -2px;
+  }
+  .curso-tabs-closeoption {
+    font-size: 25px;
+    margin: inherit;
+    padding: inherit;
+  }
+  .curso-tabs-nav-item {
+    margin: inherit;
+    display: inline-block;
+    width: 22.5%;
+  }
+  .curso-tabs-contentpane {
+    height: 89.5%;
+  }
+}
 </style>

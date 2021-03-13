@@ -12,7 +12,7 @@
       </a>
       <div v-if="showmenu" class="formdiscuupdate-menucontent">
         <form class="px-4 py-3" @submit="checkForm">
-          <div class="form-group">
+          <div class="formcommentupdate-formgroup">
             <label for="exampleDropdownFormEmail1">Tema</label>
             <input
               type="text"
@@ -21,7 +21,7 @@
               v-model="name"
             />
           </div>
-          <div class="form-group">
+          <div class="formcommentupdate-formgroup">
             <label for="exampleDropdownFormPassword1">categoria</label>
             <select v-model="categoria">
               <option disabled value>Selecciona una categoria</option>
@@ -34,11 +34,11 @@
               </option>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary btnig">
+          <button type="submit" class="formcommentupdate-editar">
             Editar tema
           </button>
         </form>
-        <button class="btn btn-warning btn-af btnig" @click="closeformut()">
+        <button class="formcommentupdate-cancelar" @click="closeformut()">
           Cancelar
         </button>
       </div>
@@ -130,7 +130,7 @@ export default {
         })
         .then((response) => {
           this.errorr = false;
- 	  this.showmenu = false;
+          this.showmenu = false;
           this.$store.commit("changediscu", response.data);
           this.$store.commit("updatediscuss", response.data);
           flash("tema actualizado", "success");
@@ -155,8 +155,41 @@ export default {
 </script>
 
 <style>
-.formdiscuupdate-menucontent {
- 
+.formcommentupdate-formgroup {
+  margin-bottom: 0.5rem;
+}
+.formcommentupdate-formgroup label {
+  display: block;
+}
+.formcommentupdate-formgroup input {
+  padding: 0.5rem;
+  width: 100%;
+}
+.formcommentupdate-formgroup select {
+  padding: 0.5rem;
+  width: 100%;
+}
+.formcommentupdate-editar {
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: #fdc770;
+  width: 7rem;
+}
+.formcommentupdate-editar:hover {
+  background-color: #fcb036;
+}
+.formcommentupdate-cancelar {
+  width: 7rem;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: #e0e0e2;
+}
+.formcommentupdate-cancelar:hover {
+  background-color: #fcb036;
 }
 .btnig {
   width: 100px;

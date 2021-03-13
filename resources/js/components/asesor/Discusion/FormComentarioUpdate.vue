@@ -1,14 +1,16 @@
 <template>
-  <div v-show="show" class="poscu">
-    <div class="m-3">
+  <div v-show="show" class="formcomentarioupdate-layout">
+    <div class="formcomentarioupdate-header">
+      <label>Mi comentario</label>
+    </div>
+    <div class="formcomentarioupdate-body">
       <div>
         <form @submit="checkForm">
           <div class="col">
             <div class="form-group">
-              <label for="bodycom">Mi comentario</label>
               <vue-editor v-model="content"></vue-editor>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="formcomentarioupdate-actualizar">
               <p class="line-d" v-if="!loading">Actualizar</p>
               <span
                 class="spinner-border spinner-border-sm"
@@ -18,7 +20,7 @@
               ></span>
               <p class="line-d" v-if="loading">Comentando...</p>
             </button>
-            <a class="btn btn-warning m-l-1" @click="close">Cancelar</a>
+            <a class="formcomentarioupdate-cancelar" @click="close">Cancelar</a>
           </div>
         </form>
       </div>
@@ -101,19 +103,57 @@ export default {
 };
 </script>
 <style>
-.poscu {
+.formcomentarioupdate-layout {
   z-index: 1;
+  padding: 0.5rem;
   position: fixed;
   background-color: white;
-  border: 1px solid blue;
   width: 500px;
   border-radius: 4px;
   top: 10%;
   left: 2%;
   overflow-y: scroll;
   max-height: 85%;
+  border: 1px solid #7f7f7f;
+}
+.formcomentarioupdate-header {
+  background-color: #e0e0e2;
+  width: 100%;
+  height: 2rem;
+  padding: 0.5rem;
+}
+.formcomentarioupdate-header label {
+  font-weight: bold;
+}
+.formcomentarioupdate-actualizar {
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: #fdc770;
+  width: 7rem;
+}
+.formcomentarioupdate-actualizar:hover {
+  background-color: #fcb036;
+}
+.formcomentarioupdate-cancelar {
+  width: 7rem;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: #e0e0e2;
+}
+.formcomentarioupdate-cancelar:hover {
+  background-color: #fcb036;
 }
 #bodycom {
   min-height: 130px;
+}
+
+@media only screen and (max-width: 766px) {
+  .formcomentarioupdate-layout {
+    width: 100%;
+  }
 }
 </style>

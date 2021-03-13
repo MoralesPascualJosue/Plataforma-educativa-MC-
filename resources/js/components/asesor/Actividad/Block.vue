@@ -1,14 +1,14 @@
 <template>
   <div>
     <button id="guardarcontenido" @click="guardarcontenido">
-      <p class="line-d" v-if="!loading">Guardar contenido</p>
+      <p v-if="!loading">Guardar contenido</p>
       <span
         class="spinner-border spinner-border-sm"
         role="status"
         aria-hidden="true"
         v-if="loading"
       ></span>
-      <p class="line-d" v-if="loading">Guardando...</p>
+      <p v-if="loading">Guardando...</p>
     </button>
     <div id="taskcontenido" v-html="contenido"></div>
     <div class="newblock">Agregar bloque</div>
@@ -1847,12 +1847,12 @@ div.menu-options ul li.move a {
 /**/
 
 .newblock {
-background-color: #fcd770;
-text-align: center;
-cursor: pointer;
-padding: 10px;
-border: none;
-margin: 1rem;
+  background-color: #fcd770;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  margin: 1rem;
 }
 
 .newblock:hover {
@@ -2039,20 +2039,23 @@ margin: 1rem;
 }
 
 #guardarcontenido {
-background-color: #fcd770;
-position: absolute;
-right: 2rem;
-top: 4rem;
-border: none;
-cursor: pointer;
-color: #1b7497;
+  position: absolute;
+  right: 2rem;
+  top: 4rem;
+  cursor: pointer;
+  background-color: #fcd770;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  margin: 1rem;
 }
 #guardarcontenido:hover {
-background-color: #fcb036;
+  background-color: #fcb036;
 }
 @media (max-width: 1050px) {
   #guardarcontenido {
-    position:inherit;
+    position: inherit;
   }
 }
 </style>

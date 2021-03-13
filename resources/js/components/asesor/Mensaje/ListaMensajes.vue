@@ -11,7 +11,7 @@
           </div>
           <div class="col-sm-9 col-md-10">
             <div class="pull-right">
-	      Mensajes 
+              Mensajes
               <span class="text-muted">
                 <b v-if="activetab == 'home'">{{ recibidos }}</b>
                 <b v-else>{{ enviados }}</b>
@@ -19,10 +19,8 @@
                 <b>{{ allmensajes }}</b>
               </span>
               <div class="btn-group btn-group-sm">
-                <button type="button" class="btn btn-default">
-                </button>
-                <button type="button" class="">
-                </button>
+                <button type="button" class="btn btn-default"></button>
+                <button type="button" class=""></button>
               </div>
             </div>
           </div>
@@ -45,7 +43,6 @@
               @crear-mensaje="createmensaje"
               v-bind:contactosdefault="mensajes.contacts"
             />
-            <hr />
             <!-- Nav tabs -->
             <ul class="listamensajes-layout-menu">
               <li>
@@ -80,7 +77,7 @@
             <!-- Tab panes -->
             <div class="tab-content">
               <div
-		v-show="activetab == 'home'"
+                v-show="activetab == 'home'"
                 class="tab-pane"
                 id="inbox"
                 v-bind:class="{ active: activetab == 'home' }"
@@ -113,7 +110,7 @@
                 </div>
               </div>
               <div
-		v-show="activetab == 'enviados'"
+                v-show="activetab == 'enviados'"
                 class="tab-pane"
                 id="enviados"
                 v-bind:class="{ active: activetab == 'enviados' }"
@@ -152,7 +149,7 @@
         <div @click="regresaralista" class="backtolist">Regresar</div>
         <hr />
         <div class="listamensajes-layout-listamensajes">
-          <div class="col-sm-3 col-md-2">
+          <div class="listamensajes-detalles">
             <a href="javascript:void(0)" class="h4 d-block">Detalles:</a>
             Enviado:
             <p>{{ mensaje.created_at }}</p>
@@ -160,7 +157,7 @@
               >Eliminar</a
             >
           </div>
-          <div class="col-sm-9 col-md-10">
+          <div class="listamensajes-body">
             <div class="text-left">
               <img :src="mensaje.user.image" class="avatar" />
               De:
@@ -179,7 +176,10 @@
             <h3>{{ mensaje.asunto }}</h3>
             <hr />
             <div class="container">
-              <div class="listamensajes-mensaje-body" v-html="mensaje.body"></div>
+              <div
+                class="listamensajes-mensaje-body"
+                v-html="mensaje.body"
+              ></div>
             </div>
           </div>
         </div>
@@ -312,19 +312,29 @@ export default {
 
 <style>
 .listamensajes-layout {
- padding: 1rem;
+  padding: 1rem;
 }
 .listamensajes-layout-header {
- display: grid;
- grid-template-columns: auto auto;
+  display: grid;
+  grid-template-columns: auto auto;
 }
 .listamensajes-layout-sendbottom {
- border: none;
- padding: 1rem;
- cursor: pointer;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+}
+.listamensajes-detalles {
+  background-color: #fdc770;
+  padding: 0.5rem;
+}
+.listamensajes-body {
+  padding: 0.5rem;
+}
+.listamensajes-detalles a {
+  display: block;
 }
 .listamensajes-layout-sendbottom:hover {
- background-color: white;
+  background-color: white;
 }
 .listamensajes-layout-listamensajes {
   display: grid;
@@ -341,13 +351,13 @@ export default {
   padding: 0.5rem;
 }
 .listamensajes-mensaje-body {
-    padding: 1rem;
-    background-color: #fdc770;
+  padding: 1rem;
+  background-color: #fdc770;
 }
-@media only screen and (max-width:1050px){
- .listamensajes-layout-listamensajes {
-  grid-template-columns: 100%;
- }
+@media only screen and (max-width: 1050px) {
+  .listamensajes-layout-listamensajes {
+    grid-template-columns: 100%;
+  }
 }
 .checkbox {
   display: inline-block;

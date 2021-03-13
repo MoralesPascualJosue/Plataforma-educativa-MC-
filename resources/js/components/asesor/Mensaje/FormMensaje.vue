@@ -1,7 +1,8 @@
 <template>
-  <div class="formmensaje-layout" v-show="shownm">
-    <div class="tama">
-      <form class="px-4 py-3" @submit="checkForm">
+  <div class="formmensaje-content" v-show="shownm">
+    <div class="formmensaje-layout">
+      <div class="formmensaje-header"></div>
+      <form class="formmensaje-body" @submit="checkForm">
         <div class="formmensaje-form-group">
           <label for="asuntomensaje">Asunto</label>
           <input
@@ -37,18 +38,18 @@
           type="sumit"
           aria-haspopup="true"
           aria-expanded="false"
-          class="btn btn-primary"
+          class="formmensaje-enviar"
         >
-          <p class="line-d" v-if="!loading">Enviar</p>
+          <p v-if="!loading">Enviar</p>
           <span
             class="spinner-border spinner-border-sm"
             role="status"
             aria-hidden="true"
             v-if="loading"
           ></span>
-          <p class="line-d" v-if="loading">Enviando...</p>
+          <p v-if="loading">Enviando...</p>
         </button>
-        <a class="btn btn-warning m-l-1" @click="close">Cancelar</a>
+        <a class="formmensaje-cancelar" @click="close">Cancelar</a>
       </form>
     </div>
   </div>
@@ -125,27 +126,67 @@ export default {
 </script>
 
 <style>
-.formmensaje-layout {
- z-index: 1;
- position: fixed;
- background-color: #fdc770;
- border: 1px solid white;
- max-width: 800px;
- border-radius: 4px;
- overflow-y: auto;
- max-height: 85%;
- padding: 1rem;
- left: 0;
- top: 3rem;
+.formmensaje-content {
+  z-index: 1;
+  position: fixed;
+  background-color: #fdc770;
+  border: 1px solid white;
+  width: 50%;
+  height: 50%;
+  border-radius: 4px;
+  overflow-y: auto;
+  right: 1rem;
+  top: 1rem;
 }
-.formmensaje-form-group label{
-  display: block;
+.formmensaje-layout {
+  padding: 0.5rem;
+}
+.formmensaje-header {
+  background-color: #266fae;
+  width: 100%;
+  height: 2rem;
+}
+.formmensaje-body {
+  padding: 0.5rem;
+}
+.formmensaje-form-group {
   margin-bottom: 0.5rem;
 }
+.formmensaje-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
 .formmensaje-form-group input {
- width: 100%;
+  width: 100%;
+  padding: 0.5rem;
 }
 .formmensaje-form-group textarea {
- width: 100%;
+  width: 100%;
+  padding: 0.5rem;
+  min-height: 5rem;
+}
+.formmensaje-enviar {
+  padding: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+.formmensaje-enviar:hover {
+  background-color: #fcb036;
+}
+.formmensaje-cancelar {
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+.formmensaje-cancelar:hover {
+  background-color: #fcb036;
+}
+
+@media (max-width: 1050px) {
+  .formmensaje-content {
+    width: 88%;
+    height: 77%;
+  }
 }
 </style>

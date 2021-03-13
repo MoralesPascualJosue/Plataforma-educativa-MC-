@@ -43,7 +43,6 @@
               @crear-mensaje="createmensaje"
               v-bind:contactosdefault="mensajes.contacts"
             />
-            <hr />
             <!-- Nav tabs -->
             <ul class="listamensajes-layout-menu">
               <li>
@@ -147,10 +146,10 @@
         </div>
       </div>
       <div v-else key="viewmensaje">
-        <div @click="regresaralista" class="backtolist">Regresar</div>
+        <div @click="regresaralista" class="listamensajes-showre">Regresar</div>
         <hr />
         <div class="listamensajes-layout-listamensajes">
-          <div class="col-sm-3 col-md-2">
+          <div class="listamensajes-detalles">
             <a href="javascript:void(0)" class="h4 d-block">Detalles:</a>
             Enviado:
             <p>{{ mensaje.created_at }}</p>
@@ -158,7 +157,7 @@
               >Eliminar</a
             >
           </div>
-          <div class="col-sm-9 col-md-10">
+          <div class="listamensajes-body">
             <div class="text-left">
               <img :src="mensaje.user.image" class="avatar" />
               De:
@@ -252,7 +251,6 @@ export default {
         .then((res) => {
           this.mensaje = res.data;
           this.showmensaje = true;
-
           if (res.data.leido) {
             const index = this.mensajes.chats.findIndex(
               (item) => item.id === m.id
@@ -324,12 +322,22 @@ export default {
   padding: 1rem;
   cursor: pointer;
 }
+.listamensajes-detalles {
+  background-color: #fdc770;
+  padding: 0.5rem;
+}
+.listamensajes-body {
+  padding: 0.5rem;
+}
+.listamensajes-detalles a {
+  display: block;
+}
 .listamensajes-layout-sendbottom:hover {
   background-color: white;
 }
 .listamensajes-layout-listamensajes {
   display: grid;
-  grid-template-columns: 15% auto;
+  grid-template-columns: 20% auto;
   padding: 1rem;
 }
 .list-group-item {
@@ -337,6 +345,9 @@ export default {
   padding: 1rem;
   background-color: #fdc770;
   margin: 0.5rem;
+}
+.list-group-item:hover {
+  background-color: white;
 }
 .listamensajes-layout-menu {
   padding: 0.5rem;
@@ -376,5 +387,20 @@ export default {
   color: blue;
   font-size: 20px;
   font-weight: bolder;
+}
+.listamensajes-showre {
+  background-color: #fcd770;
+  padding: 0.5rem;
+  float: right;
+  border: 2px solid #fcd770;
+  cursor: pointer;
+}
+.listamensajes-showre:hover {
+  background-color: white;
+}
+@media only screen and (max-width: 1050px) {
+  .listamensajes-showre {
+    float: inherit;
+  }
 }
 </style>

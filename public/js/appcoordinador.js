@@ -2375,24 +2375,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     titleText: {
       type: String,
-      "default": 'Default title'
+      "default": "Default title"
     },
     cancelText: {
       type: String,
-      "default": 'Default cancel text'
+      "default": "Default cancel text"
     },
     confirmText: {
       type: String,
-      "default": 'Default confirm text'
+      "default": "Default confirm text"
     },
     confirmSuccessText: {
       type: String,
-      "default": 'Sucess'
+      "default": "Sucess"
     }
   },
   components: {
@@ -2404,9 +2411,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     status: function status(value) {
       if (value) {
-        this.$emit('status', true);
+        this.$emit("status", true);
       } else {
-        this.$emit('status', false);
+        this.$emit("status", false);
       }
     }
   }
@@ -7212,7 +7219,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.confirmationcomponent-content {\n\theight: 100%;\n\twidth: 100%;\n\tposition: fixed;\n\tleft: 0;\n\ttop: 0;\n\tz-index: 1;\n}\n.confirmationcomponent-layout {\n\tborder-radius: 20px;\n\twidth: 15rem;\n\tbackground: #266fae;\n\theight: 12rem;\n\tposition: absolute;\n        top:50%;\n        left: 50%;           \n        margin-top: -7.5rem; \n        margin-left: -7.5rem;\n}\n.confirmationcomponent-title {\n\ttext-align: center;\n\tmargin: 1rem;\n\tfont-size: 20px;\n\tcolor: black;\n}\n.confirmationcomponent-options {\n\tpadding: 1rem;\n}\n.confirmationcomponent-option p {\n\tbackground-color: #fcd770;\n\tpadding: 0.5rem;\n\tborder-radius: 20px;\n\ttext-align: center;\n\tcursor: pointer;\n\tmargin-bottom: 0.5rem;\n}\n.confirmationcomponent-option p:hover {\n\tbackground-color: #fcb036;\n}\n", ""]);
+exports.push([module.i, "\n.confirmationcomponent-content {\n  height: 100%;\n  width: 100%;\n  position: fixed;\n  left: 0;\n  top: 0;\n  z-index: 1;\n  background-color: #0000005c;\n}\n.confirmationcomponent-layout {\n  border-radius: 20px;\n  width: 15rem;\n  background: #266fae;\n  height: 12rem;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  margin-top: -7.5rem;\n  margin-left: -7.5rem;\n}\n.confirmationcomponent-title {\n  text-align: center;\n  margin: 1rem;\n  font-size: 20px;\n  color: black;\n}\n.confirmationcomponent-options {\n  padding: 1rem;\n}\n.confirmationcomponent-option p {\n  background-color: #fcd770;\n  padding: 0.5rem;\n  border-radius: 20px;\n  text-align: center;\n  cursor: pointer;\n  margin-bottom: 0.5rem;\n}\n.confirmationcomponent-option p:hover {\n  background-color: #fcb036;\n}\n", ""]);
 
 // exports
 
@@ -39564,7 +39571,7 @@ var render = function() {
   return _c("div", { staticClass: "confirmationcomponent-content" }, [
     _c("div", { staticClass: "confirmationcomponent-layout" }, [
       _c("div", { staticClass: "confirmationcomponent-title" }, [
-        _vm._v("\t\t\t\n\t\t\t" + _vm._s(_vm.titleText) + "\n\t\t")
+        _vm._v("\n      " + _vm._s(_vm.titleText) + "\n    ")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "confirmationcomponent-options" }, [

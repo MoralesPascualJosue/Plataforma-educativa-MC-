@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <h3>Lista de actividades del curso</h3>
-    <div class="table-responsive">
-      <table class="table table-hover">
+  <div class="resumen-content">
+    <div class="resumen-conten-header">
+      <h3>Lista de actividades del curso</h3>
+    </div>
+
+    <div class="resumen-content-tablecontent">
+      <table class="resumen-table">
         <thead>
           <tr>
             <th scope="col"># Actividad</th>
@@ -21,7 +24,7 @@
               <p
                 v-else
                 :class="{
-                  'bg-warning': estadocalificacion(
+                  nacolor: estadocalificacion(
                     calificaciones[index].qualification
                   ),
                   nacolor: calificaciones[index].qualification < 70,
@@ -78,8 +81,36 @@ export default {
 </script>
 
 <style>
-.b-color {
+.resumen-content {
+  padding: 1rem;
+}
+.resumen-content-header {
+  background-color: #fdc770;
+  padding: 0.5rem;
+}
+.resumen-content-tablecontent {
+  width: 100%;
+}
+.resumen-table {
+  width: 100%;
+}
+
+.resumen-table th {
+  text-align: left;
+  background-color: #fdc770;
+  padding: 0.5rem;
+}
+
+.resumen-table tbody tr:hover {
+  background-color: white;
+}
+.resumen-table tbody td {
+  padding: 0.2rem;
+}
+
+.resumen-table-status-revision {
   background-color: #c1d3d9;
+  padding: 0.5rem;
 }
 
 .nacolor {
@@ -88,5 +119,7 @@ export default {
 
 .tb-lc td:last-child {
   background-color: #c1d3d9;
+  text-align: center;
+  font-size: 25px;
 }
 </style>

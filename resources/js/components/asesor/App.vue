@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <div class="app-navegationmenu">
-	<div class="navegationmenu-logocontent"> 
-	 <img src="/resources/logo/Logo minmin white.svg" alt="PDEPI"/>
-	</div>
+      <div class="navegationmenu-logocontent">
+        <img src="/resources/logo/Logo minmin white.svg" alt="PDEPI" />
+      </div>
       <router-link :to="{ name: 'Inicio' }">
         <p class="icon">🏠</p>
         <span class="icontext">Inicio</span></router-link
@@ -18,10 +18,19 @@
       >
 
       <div>
-	<li v-if="isLoggedIn">
-          <a id="logout-link" href="#" @click.prevent="isLogOut = true">Salir</a> 
-	  <ConfirmationComponent v-if="isLogOut"  @status='logout'  cancelText="Cancelar" titleText="Seguro de salir ?" confirmText="Salir" confirmSuccessText="Saliendo"/>
-        </li>
+        <div v-if="isLoggedIn">
+          <a id="logout-link" href="#" @click.prevent="isLogOut = true"
+            >Salir</a
+          >
+          <ConfirmationComponent
+            v-if="isLogOut"
+            @status="logout"
+            cancelText="Cancelar"
+            titleText="Seguro de salir ?"
+            confirmText="Salir"
+            confirmSuccessText="Saliendo"
+          />
+        </div>
       </div>
     </div>
 
@@ -33,12 +42,12 @@
   </div>
 </template>
 <script>
-import  ConfirmationComponent from "../subcomponents/ConfirmationComponent";
+import ConfirmationComponent from "../subcomponents/ConfirmationComponent";
 
 export default {
   components: {
-	ConfirmationComponent
-},
+    ConfirmationComponent,
+  },
   data() {
     return {
       isLoggedIn: true,
@@ -50,68 +59,68 @@ export default {
       return this.$store.getters.actividadview;
     },
   },
- methods: {
-     logout(evt) {
-//       if(confirm("Are you sure you want to log out?")) {
-       if(evt) {
-         axios.post('/logout').then(response => {
-          localStorage.removeItem('auth_token');
-          // remove any other authenticated user data you put in local storage
-          // Assuming that you set this earlier for subsequent Ajax request at some point like so:
-          // axios.defaults.headers.common['Authorization'] = 'Bearer ' + auth_token ;
-          delete axios.defaults.headers.common['Authorization'];
-          // If using 'vue-router' redirect to login page
-          this.$router.go('/login');
-        })
-        .catch(error => {
-          // If the api request failed then you still might want to remove
-          // the same data from localStorage anyways
-          // perhaps this code should go in a finally method instead of then and catch
-          // methods to avoid duplication.
-          localStorage.removeItem('auth_token');
-          delete axios.defaults.headers.common['Authorization'];
-          this.$router.go('/login');
-        });       
-       }else{
-	  this.isLogOut = false;
-	}
-     }
-   } 
+  methods: {
+    logout(evt) {
+      if (evt) {
+        axios
+          .post("/logout")
+          .then((response) => {
+            localStorage.removeItem("auth_token");
+            // remove any other authenticated user data you put in local storage
+            // Assuming that you set this earlier for subsequent Ajax request at some point like so:
+            // axios.defaults.headers.common['Authorization'] = 'Bearer ' + auth_token ;
+            delete axios.defaults.headers.common["Authorization"];
+            // If using 'vue-router' redirect to login page
+            this.$router.go("/login");
+          })
+          .catch((error) => {
+            // If the api request failed then you still might want to remove
+            // the same data from localStorage anyways
+            // perhaps this code should go in a finally method instead of then and catch
+            // methods to avoid duplication.
+            localStorage.removeItem("auth_token");
+            delete axios.defaults.headers.common["Authorization"];
+            this.$router.go("/login");
+          });
+      } else {
+        this.isLogOut = false;
+      }
+    },
+  },
 };
 </script>
 <style>
-
 body {
- height: 100vh;
- background-color: white;
- padding: 1rem; 
+  height: 100vh;
+  background-color: white;
+  padding: 1rem;
 }
 
 .app-container {
- display: grid;
- grid-template-columns: 15% auto;
- height: 95vh;
- border-radius: 20px;
- overflow: hidden;
+  display: grid;
+  grid-template-columns: 15% auto;
+  height: 95vh;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .app-navegationmenu {
- background-color: #266fae;
+  background-color: #266fae;
 }
 
-.app-navegationmenu a{
- background-color: #fcb036;
- opacity: 0.5;
- display: block;
- height: 3rem;
- margin-top: 1rem;
- line-height: 3rem;
- text-align: center;
+.app-navegationmenu a {
+  background-color: #fcb036;
+  opacity: 0.5;
+  display: block;
+  height: 3rem;
+  margin-top: 1rem;
+  line-height: 3rem;
+  text-align: center;
 }
 
 .app-containertabs {
- background-color: #fcb036;
- overflow-y: auto;
+  background-color: #fcb036;
+  overflow-y: auto;
 }
 
 .fade-enter-active,
@@ -144,18 +153,18 @@ body {
 }
 
 .navegationmenu-logocontent {
- padding: 0.5rem;
+  padding: 0.5rem;
 }
 
-.navegationmenu-logocontent img{
- width:100%;
+.navegationmenu-logocontent img {
+  width: 100%;
 }
 
 #logout-link:hover {
- opacity: 1;
- background-color: #fcb036;
- font-weight: bold;
- color: red;
+  opacity: 1;
+  background-color: #fcb036;
+  font-weight: bold;
+  color: red;
 }
 
 /*Animations*/

@@ -1,64 +1,64 @@
 <template>
   <div class="foro-layout">
-      <div class="foro-layout-categorias">
-        <h2>Categorias</h2>
-        <p class="foro-layout-categorias-item" v-bind:key="-1">
-          <a href="javascript:void(0)" @click="categoriasea('Todo')">
-            Todo
-            <span
-              :style="{
-                backgroundColor: 'black',
-              }"
-              class="circlecolor"
-            ></span>
-          </a>
-        </p>
-        <p
-          class="foro-layout-categorias-item"
-          v-for="(categoria, indexc) in categorias"
-          :key="indexc" 
-        >
-          <a href="javascript:void(0)" @click="categoriasea(categoria.name)">
-            {{ categoria.name }}
-            <span
-              :style="{
-                backgroundColor: categoria.color,
-              }"
-              class="circlecolor"
-            ></span>
-          </a>
-        </p>
-      </div>
-      <UncoverList class="foro-layout-discuss">
-        <template slot-scope="{ togglePopup }">
-          <transition-group name="list-complete" tag="div" class="d-content">
-            <FormDiscu @crear-d="creatediscuss" v-bind:key="-1" />
-            <blockquote
-              v-for="discu in discuss.discuss"
-              v-bind:key="discu.id"
-              class="list-complete-item-f"
-              :style="{
-                backgroundColor: `${discu.colorCategoria}`,
-              }"
-              v-show="discu.nameCategoria == categoria || categoria == 'Todo'"
-            >
-              <div class="discu-content">
-                <UncoverImage
-                  alt="example"
-                  v-bind:height="50"
-                  v-bind:objeto="discu"
-                  @pop-image="togglePopup"
-                />
-                <footer class="blockquote-footer l-t">
-                  Propuesto por:
-                  <cite title="Source Title">{{ discu.usuarioName }}</cite>
-                </footer>
-              </div>
-            </blockquote>
-          </transition-group>
-        </template>
-      </UncoverList>
-      <button v-if="more" class="page-title" @click="nextpage()">Más</button>
+    <div class="foro-layout-categorias">
+      <h2>Categorias</h2>
+      <p class="foro-layout-categorias-item" v-bind:key="-1">
+        <a href="javascript:void(0)" @click="categoriasea('Todo')">
+          Todo
+          <span
+            :style="{
+              backgroundColor: 'black',
+            }"
+            class="circlecolor"
+          ></span>
+        </a>
+      </p>
+      <p
+        class="foro-layout-categorias-item"
+        v-for="(categoria, indexc) in categorias"
+        :key="indexc"
+      >
+        <a href="javascript:void(0)" @click="categoriasea(categoria.name)">
+          {{ categoria.name }}
+          <span
+            :style="{
+              backgroundColor: categoria.color,
+            }"
+            class="circlecolor"
+          ></span>
+        </a>
+      </p>
+    </div>
+    <UncoverList class="foro-layout-discuss">
+      <template slot-scope="{ togglePopup }">
+        <transition-group name="list-complete" tag="div" class="d-content">
+          <FormDiscu @crear-d="creatediscuss" v-bind:key="-1" />
+          <blockquote
+            v-for="discu in discuss.discuss"
+            v-bind:key="discu.id"
+            class="list-complete-item-f"
+            :style="{
+              backgroundColor: `${discu.colorCategoria}`,
+            }"
+            v-show="discu.nameCategoria == categoria || categoria == 'Todo'"
+          >
+            <div class="discu-content">
+              <UncoverImage
+                alt="example"
+                v-bind:height="50"
+                v-bind:objeto="discu"
+                @pop-image="togglePopup"
+              />
+              <footer class="blockquote-footer l-t">
+                Propuesto por:
+                <cite title="Source Title">{{ discu.usuarioName }}</cite>
+              </footer>
+            </div>
+          </blockquote>
+        </transition-group>
+      </template>
+    </UncoverList>
+    <button v-if="more" class="page-title" @click="nextpage()">Más</button>
   </div>
 </template>
 
@@ -143,20 +143,20 @@ export default {
 
 <style>
 .foro-layout {
- display: grid;
- grid-template-columns: 25% auto;
- padding: 1rem;
- height: 100%;
- overflow-y: auto;
+  display: grid;
+  grid-template-columns: 25% auto;
+  padding: 1rem;
+  height: 100%;
+  overflow-y: auto;
 }
 .foro-layout-categorias-item {
- display: inline-flex;
- padding: 0.2rem;
- line-height: 2rem;
+  display: inline-flex;
+  padding: 0.2rem;
+  line-height: 2rem;
 }
 .foro-layout-categorias-item a {
- background-color: #fdc770;
- padding:0.2rem;
+  background-color: #fdc770;
+  padding: 0.2rem;
 }
 .l-t {
   text-align: right;
@@ -189,10 +189,10 @@ export default {
   margin-bottom: 0.5rem;
 }
 .list-complete-item-f:hover {
- padding-left:15%;
+  padding-left: 18%;
 }
-#add-discus{
- padding-left:20% !important;
+#add-discus {
+  padding-left: 20% !important;
 }
 .list-complete-enter, .list-complete-leave-to
 /* .list-complete-leave-active for <2.1.8 */ {
@@ -207,8 +207,11 @@ export default {
 }
 
 @media (max-width: 1050px) {
- .foro-layout{
+  .foro-layout {
     grid-template-columns: 100%;
-  }  
+  }
+  .foro-layout-categorias {
+    display: none;
+  }
 }
 </style>

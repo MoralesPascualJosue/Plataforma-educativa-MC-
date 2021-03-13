@@ -1,19 +1,22 @@
 <template>
-  <div>
-    <h3>Lista de participantes del curso</h3>
-    <a
-      class="export-option"
-      :href="'/generarlista/' + curso.id"
-      rel="noopener noreferrer"
-      target="_blank"
-      >Exportar pdf</a
-    >
-    |
-    <a class="export-option" :href="'/generarexcel/' + curso.id"
-      >Exportar excel</a
-    >
-    <div class="table-responsive">
-      <table class="table table-hover">
+  <div class="resumen-content">
+    <div class="resumen-content-header">
+      <h3>Lista de participantes del curso</h3>
+      <a
+        class="export-option"
+        :href="'/generarlista/' + curso.id"
+        rel="noopener noreferrer"
+        target="_blank"
+        >Exportar pdf</a
+      >
+      |
+      <a class="export-option" :href="'/generarexcel/' + curso.id"
+        >Exportar excel</a
+      >
+    </div>
+
+    <div class="resumen-content-tablecontent">
+      <table class="resumen-table">
         <thead class="tb-h">
           <tr>
             <th scope="col">#</th>
@@ -36,14 +39,16 @@
               v-for="(calificacion, indexb) in estudiante.calificaciones"
               :key="indexb"
             >
-              <p v-if="calificacion.estado == 1" class="bg-info cur-p">
+              <p
+                v-if="calificacion.estado == 1"
+                class="resumen-table-status-revision"
+              >
                 Revision
               </p>
               <p
                 v-else
                 :class="{
-                  'bg-warning': estadocalificacion(calificacion.qualification),
-                  nacolor: calificacion.qualification < 70,
+                  nacolor: estadocalificacion(calificacion.qualification),
                 }"
               >
                 {{ calificacion.qualification }}
@@ -97,49 +102,45 @@ export default {
 </script>
 
 <style>
-.tb-h tr th {
-  padding: 0.3rem;
-  max-width: 250px;
-  max-height: 25px;
-  text-overflow: ellipsis;
-  overflow: hidden;
+.resumen-content {
+  padding: 1rem;
+}
+.resumen-content-header {
+  background-color: #fdc770;
+  padding: 0.5rem;
+}
+.resumen-content-tablecontent {
+  width: 100%;
+}
+.resumen-table {
+  width: 100%;
 }
 
-.tb-h tr th:hover {
-  color: #5b99d7;
+.resumen-table th {
+  text-align: left;
+  background-color: #fdc770;
+  padding: 0.5rem;
 }
 
-.b-color {
+.resumen-table tbody tr:hover {
+  background-color: white;
+}
+.resumen-table tbody td {
+  padding: 0.2rem;
+}
+
+.resumen-table-status-revision {
   background-color: #c1d3d9;
+  padding: 0.5rem;
 }
 
 .nacolor {
   color: red;
 }
 
-.tb-lc td {
-  padding: 0.1rem;
-}
-
 .tb-lc td:last-child {
   background-color: #c1d3d9;
-}
-.table-responsive > .fixed-column {
-  position: absolute;
-  /* display: inline-block; */
-  background-color: white;
-  width: auto;
-  border-right: 1px solid #ddd;
-}
-@media (min-width: 768px) {
-  .table-responsive > .fixed-column {
-    display: none;
-  }
-}
-
-@media (max-width: 767px) {
-  .tb-h tr th {
-    white-space: nowrap;
-  }
+  text-align: center;
+  font-size: 25px;
 }
 </style>

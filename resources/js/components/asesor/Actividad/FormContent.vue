@@ -1,22 +1,20 @@
 <template>
-<div class="formcontent-layout">
-      <button @click="showmenu = !showmenu" class="formcontent-bottom">
-        <p v-show="!loading">Agregar contenido <span v-if="!showmenu">+</span><span v-else>-</span></p>
-        <p v-show="loading">Creando...</p>
-      </button>
-      <div class="formcontent-menucontent" v-if="showmenu">
-          <div class="formcontent-menucontent-option">
-            <a href="javascript:void(0)" @click="createactividad()">
-	      Agregar Actividad
-	    </a>
-          </div>
-          <div class="formcontent-menucontent-option">
-              <a href="javascript:void(0)" @click="createtest()">
-		Agregar prueba
-	      </a>
-          </div>
+  <div class="formcontent-layout">
+    <button @click="showmenu = !showmenu" class="formcontent-bottom">
+      <p v-show="!loading">
+        Agregar contenido <span v-if="!showmenu">+</span><span v-else>-</span>
+      </p>
+      <p v-show="loading">Creando...</p>
+    </button>
+    <div class="formcontent-menucontent" v-if="showmenu">
+      <div class="formcontent-menucontent-option" @click="createactividad()">
+        Agregar Actividad
       </div>
-</div>
+      <div class="formcontent-menucontent-option" @click="createtest()">
+        Agregar prueba
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -95,27 +93,30 @@ export default {
 </script>
 
 <style>
-.formcontent-layout{
- padding-bottom: 1rem;
+.formcontent-layout {
+  padding-bottom: 1rem;
 }
 .formcontent-bottom {
- width:100%;
- border:none;
- background-color: #fdc770;
+  width: 100%;
+  border: none;
+  background-color: #fdc770;
 }
 .formcontent-bottom p {
-  height:40px;
+  height: 40px;
 }
 .formcontent-bottom span {
-  font-size:30px;
+  font-size: 30px;
 }
-.formcontent-menucontent{
-  padding:0.5rem;
+.formcontent-menucontent {
+  padding: 0.5rem;
+  background-color: #fdc770;
 }
-.formcontent-menucontent-option{
-  padding:0.5rem;
+.formcontent-menucontent-option {
+  padding: 0.5rem;
+  width: 100%;
 }
-.formcontent-menucontent-option a:hover {
+
+.formcontent-menucontent-option:hover {
   background-color: white;
   padding: 0.5rem;
 }

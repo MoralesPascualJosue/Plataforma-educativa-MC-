@@ -5,7 +5,7 @@
         <div class="home-avatarcontainer">
           <img :src="user.image" />
         </div>
-        <div class="home-usernamedetails">
+        <div class="home-userdetails">
           <h2>{{ user.name }}</h2>
           <span>{{ user.email }}</span>
         </div>

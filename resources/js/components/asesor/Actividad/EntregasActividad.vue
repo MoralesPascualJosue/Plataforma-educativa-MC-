@@ -152,8 +152,8 @@
                       v-for="(respuesta, indexr) in question.respuesta"
                       :key="indexr"
                     >
-                      <div class="col-8">{{ respuesta.answer }}</div>
-                      <div class="col-4">
+                      <div class="col-8-respuesta">{{ respuesta.answer }}</div>
+                      <div class="col-4-puntaje">
                         Puntaje:
                         <input
                           class="w-50"
@@ -167,7 +167,10 @@
                 <tr>
                   <td colspan="3"></td>
                   <td>
-                    <button class="btn btn-primary" @click="guardarpuntajes">
+                    <button
+                      class="actividad-formactividad-sumitbottom"
+                      @click="guardarpuntajes"
+                    >
                       Guardar puntajes
                     </button>
                   </td>
@@ -528,5 +531,13 @@ export default {
   width: 10px;
   height: 10px;
   padding: 10px;
+}
+
+.col-8-respuesta {
+  padding: 0.5rem;
+}
+.col-4-puntaje {
+  background-color: #c1d3d9;
+  padding: 0.5rem;
 }
 </style>

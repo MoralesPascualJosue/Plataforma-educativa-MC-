@@ -18,7 +18,7 @@
       >
 
       <div>
-        <li v-if="isLoggedIn">
+        <div v-if="isLoggedIn">
           <a id="logout-link" href="#" @click.prevent="isLogOut = true"
             >Salir</a
           >
@@ -30,7 +30,7 @@
             confirmText="Salir"
             confirmSuccessText="Saliendo"
           />
-        </li>
+        </div>
       </div>
     </div>
 
@@ -61,7 +61,6 @@ export default {
   },
   methods: {
     logout(evt) {
-      //       if(confirm("Are you sure you want to log out?")) {
       if (evt) {
         axios
           .post("/logout")

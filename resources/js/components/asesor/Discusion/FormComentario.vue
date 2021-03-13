@@ -7,7 +7,7 @@
           <div class="form-group bg-white">
             <vue-editor v-model="content"></vue-editor>
           </div>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="formcomentario-comentar">
             <p class="line-d" v-if="!loading">Comentar</p>
             <span
               class="spinner-border spinner-border-sm"
@@ -84,12 +84,23 @@ export default {
 };
 </script>
 <style>
-.bodycom{
- text-align: center;
+.bodycom {
+  text-align: center;
 }
 .contcom {
-  text-align:center;
-  width: 100%;
-  max-width: 610px;
+  text-align: center;
+  width: 80%;
+  left: 10%;
+  position: relative;
+}
+.formcomentario-comentar {
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: #e0e0e2;
+}
+.formcomentario-comentar:hover {
+  background-color: #fcb036;
 }
 </style>

@@ -1,18 +1,19 @@
 <template>
   <div>
     <!-- Contenedor Principal -->
-    <div class="comments-container"        
->
-      <div class="header-discu"	:style="{
+    <div class="comments-container">
+      <div
+        class="header-discu"
+        :style="{
           backgroundColor: `${discu.colorCategoria}`,
         }"
->
+      >
         <div class="detalles-discu">
           <h5 class="op-3">{{ discu.nameCategoria }}</h5>
           <a href="javascript:void(0)">{{ discu.created_at }}</a>
           <p v-if="comentarios.discuss == 1">
             <a href="javascript:void(0)" @click="eliminart()">Eliminar tema</a>
-            <a href="javascript:void(0)" >
+            <a href="javascript:void(0)">
               <FormDiscuUpdate />
             </a>
           </p>
@@ -112,7 +113,7 @@
         <span>{{ respuestas }}</span>
       </p>
     </div>
-    <div class="row justify-content-center bg-f7">
+    <div class="comments-comment">
       <FormComentario @crear-comentario="createcomentario" />
     </div>
     <FormComentarioUpdate v-if="show" :show="show" @close="cerrarupdate" />
@@ -247,8 +248,8 @@ export default {
   border-radius: 4px;
 }
 .detalles-discu {
- text-align: center;
- padding: 1rem;
+  text-align: center;
+  padding: 1rem;
 }
 
 .op-3 {
@@ -277,8 +278,11 @@ ul {
  * Lista de Comentarios
  =======================*/
 .comments-container {
- margin-top: 3rem;
- padding: 1rem;
+  margin-top: 3rem;
+  padding: 1rem;
+  max-width: 75%;
+  position: relative;
+  left: 11.5%;
 }
 
 .comments-container h1 {
@@ -396,7 +400,7 @@ ul {
  * Caja del Comentario
  ---------------------------*/
 .comments-list .comment-box {
-  width: 680px;
+  width: 85%;
   float: right;
   position: relative;
   -webkit-box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.075);
@@ -425,7 +429,7 @@ ul {
 }
 
 .reply-list .comment-box {
-  width: 610px;
+  width: 80%;
 }
 .comment-box .comment-head {
   background: #e0e0e2;
@@ -505,19 +509,28 @@ ul {
  ========================*/
 @media only screen and (max-width: 766px) {
   .comments-container {
-    width: 480px;
+    left: 0;
+    margin-top: inherit;
+    max-width: 100%;
   }
 
   .comments-list .comment-box {
-    width: 390px;
+    width: 100%;
   }
 
   .reply-list .comment-box {
-    width: 320px;
+    width: 100%;
   }
 
   .header-discu {
     display: inherit;
+  }
+  .reply-list {
+    padding-left: 0;
+  }
+
+  .reply-list li::before {
+    width: 0px;
   }
 }
 </style>

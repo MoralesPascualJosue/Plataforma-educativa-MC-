@@ -111,4 +111,25 @@ export default {
 .btn-agregarcurso:hover {
   background-color: white;
 }
+
+.formcurso-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.formcurso-file + label {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: black;
+  background-color: #fdc770;
+  display: inline-block;
+  border-radius: 20px;
+}
+.formcurso-file:focus + label,
+.formcurso-file + label:hover {
+  background-color: #266fae;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-<div>
+  <div>
     <div class="actividad-formactividad-layout">
       <form class="px-4 py-3 row" @submit="checkForm">
         <div class="col">
@@ -56,7 +56,10 @@
           </button>
         </div>
       </form>
-      <button class="actividad-formactividad-restaurarvaloresa" @click="restaurarvaloresa()">
+      <button
+        class="actividad-formactividad-restaurarvaloresa"
+        @click="restaurarvaloresa()"
+      >
         Restaurar valores
       </button>
     </div>
@@ -221,42 +224,44 @@ export default {
 
 <style>
 .actividad-formactividad-layout {
- background-color: #fcd770;
- padding: 1rem;
- border-radius: 20px;
+  background-color: #fcd770;
+  padding: 1rem;
+  border-radius: 20px;
 }
 .actividad-formactividad-layout form {
   display: grid;
   grid-template-columns: 50% 50%;
 }
 .actividad-formactividad-layout-formgroup {
- padding:0.5rem;
+  padding: 0.5rem;
 }
-.actividad-formactividad-layout-formgroup label{
-  display: block;  
+.actividad-formactividad-layout-formgroup label {
+  display: block;
 }
 .actividad-formactividad-layout-formgroup input {
   height: 1rem;
-  width:100%;
+  width: 100%;
+  padding: 1rem;
+  font-size: 15px;
 }
 .actividad-formactividad-sumitbottom {
-  border:none; 
+  border: none;
   background-color: #f0f0f0;
-  padding:0.5rem;
+  padding: 0.5rem;
   margin-top: 0.3rem;
-  width:100%;
+  width: 100%;
 }
 .actividad-formactividad-sumitbottom:hover {
-  background-color: #fcb036; 
+  background-color: #fcb036;
 }
 .actividad-formactividad-restaurarvaloresa {
-  border:none; 
+  border: none;
   background-color: #f0f0f0;
-  padding:0.5rem;
+  padding: 0.5rem;
   margin-top: 0.3rem;
 }
 .actividad-formactividad-restaurarvaloresa:hover {
-  background-color: #fcb036; 
+  background-color: #fcb036;
 }
 @media only screen and (max-width: 1050px) {
   .actividad-formactividad-layout form {

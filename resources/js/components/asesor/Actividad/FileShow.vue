@@ -5,9 +5,13 @@
       <div class="actividad-entregas-fileshow">
         <!-- Form fields removed for brevity -->
         <div v-if="show" class="example">
-          <div v-for="(archivo,indexa) in recursos" :key="indexa" class="sourcea">
+          <div
+            v-for="(archivo, indexa) in recursos"
+            :key="indexa"
+            class="sourcea"
+          >
             <div v-if="tipo(archivo.source) != 'otro'">
-              <h4>{{archivo.name}}</h4>
+              <h4>{{ archivo.name }}</h4>
               <iframe
                 v-if="tipo(archivo.source) == 'archivo'"
                 :src="archivo.source"
@@ -26,7 +30,7 @@
                 controls
               ></video>
             </div>
-            <a v-else :href="archivo.source">{{archivo.name}} Descargar</a>
+            <a v-else :href="archivo.source">{{ archivo.name }} Descargar</a>
           </div>
         </div>
       </div>
@@ -42,18 +46,18 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     recursos: {
       type: Array,
-      default: []
-    }
+      default: [],
+    },
   },
   components: {
-    Modal
+    Modal,
   },
   methods: {
-    close: function() {
+    close: function () {
       this.$emit("close");
     },
     tipo(origen) {
@@ -84,8 +88,8 @@ export default {
       }
 
       return llave;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -99,5 +103,15 @@ export default {
   padding: 10px;
   border: 1px solid gray;
   margin-bottom: 10px;
+  width: 60%;
+  left: 20%;
+  position: relative;
+}
+
+@media only screen and (max-width: 1050px) {
+  .sourcea {
+    width: 90%;
+    left: 5%;
+  }
 }
 </style>

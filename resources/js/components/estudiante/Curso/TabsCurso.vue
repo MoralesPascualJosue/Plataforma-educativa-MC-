@@ -35,14 +35,6 @@
             >
           </a>
         </li>
-        <li class="curso-tabs-nav-item">
-          <a
-            @click.prevent="setActive('informacion')"
-            :class="{ active: isActive('informacion') }"
-            href="#informacion"
-            >Informacion</a
-          >
-        </li>
       </ul>
     </div>
 
@@ -60,9 +52,6 @@
       <div v-show="isActive('contact')">
         <ListaMensajes @mensajes="mensajes" @set-mensajes="mensajesnuevoss" />
       </div>
-      <div v-show="isActive('informacion')">
-        <InformacionShow />
-      </div>
     </div>
   </div>
 </template>
@@ -71,7 +60,6 @@
 import ListaActividades from "../Actividad/ListaActividades";
 import Foro from "../Discusion/Foro";
 import ListaMensajes from "../Mensaje/ListaMensajes";
-import InformacionShow from "../Informacion/InformacionShow";
 import Resumen from "./Resumen";
 export default {
   data() {
@@ -84,7 +72,6 @@ export default {
     ListaActividades,
     Foro,
     ListaMensajes,
-    InformacionShow,
     Resumen,
   },
   methods: {
@@ -141,20 +128,20 @@ export default {
   .curso-tabs-layout {
     display: inherit;
   }
-  .curso-tabs-closeoption {
-    float: left;
-    padding: 0.5rem;
-  }
 }
 .curso-tabs-closeoption {
   position: relative;
   text-align: center;
-  color: white;
+  color: #050505;
   font-size: 30px;
   cursor: pointer;
+  background-color: #fcb036;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 5px;
 }
 .curso-tabs-closeoption:hover {
-  color: #fcb036;
+  color: white;
 }
 .curso-tabs-nav-item {
   margin-top: 1rem;
@@ -178,23 +165,28 @@ export default {
 .curso-tabs-nav-item .active {
   background-color: #fcb036;
 }
-@media only screen and (max-width: 1080px) {
-  .curso-tabs-nav {
-    margin-bottom: -2px;
-  }
-  .curso-tabs-closeoption {
-    font-size: 20px;
-    margin-top: -3px;
-  }
-  .curso-tabs-nav-item {
-    margin: inherit;
-    display: inline-block;
-  }
-}
 .curso-tabs-contentpane {
   background-color: #fcb036;
   border-radius: 20px;
   overflow-y: auto;
   height: 100%;
+}
+@media only screen and (max-width: 1080px) {
+  .curso-tabs-nav {
+    margin-bottom: -2px;
+  }
+  .curso-tabs-closeoption {
+    font-size: 25px;
+    margin: inherit;
+    padding: inherit;
+  }
+  .curso-tabs-nav-item {
+    margin: inherit;
+    display: inline-block;
+    width: 22.5%;
+  }
+  .curso-tabs-contentpane {
+    height: 89.5%;
+  }
 }
 </style>
