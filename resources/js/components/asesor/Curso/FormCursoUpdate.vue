@@ -1,27 +1,55 @@
 <template>
   <div class="formcursoupdate-content">
-      <a href="javascript:void(0);"@click="showmenu = !showmenu" class="formcursoupdate-botton">
-        <div v-if="!loading">Editar curso <span v-if="!showmenu">+</span><span v-else>-</span></div>
-        <div v-if="loading">Actualizando...</div>
-      </a>
-      <div class="formcursoupdate-layout" v-show="showmenu">
-        <form class="formcursoupdate-form"  @submit="checkForm">
-          <div class="formcursoupdate-formgroup">
-            <label for="namecursou">Nombre del curso</label>
-            <input class="formcursoupdate-formgroup-input" type="text" id="namecursou" v-model="name"/>
-          </div>
-          <div class="formcursoupdate-formgroup">
-            <label for="descripcioncursou">Descripción o mensage</label>
-            <input class="formcursoupdate-formgroup-input" type="text" id="descripcioncursou" v-model="description"/>
-          </div>
-          <div class="formcursoupdate-formgroup">
-            <label>Imagen del curso</label>
-            <input type="file" id="File" ref="file" v-on:change="onChangeFileUpload()"/>
-            <img id="preview" alt="Imagen curso" class="preview-img" :src="previewimg"/>
-          </div>
-          <button type="submit" class="formcursoupdate-form-submitbottom">Guardar cambios</button>
-        </form>
+    <a
+      href="javascript:void(0);"
+      @click="showmenu = !showmenu"
+      class="formcursoupdate-botton"
+    >
+      <div v-if="!loading">
+        Editar curso <span v-if="!showmenu">+</span><span v-else>-</span>
       </div>
+      <div v-if="loading">Actualizando...</div>
+    </a>
+    <div class="formcursoupdate-layout" v-show="showmenu">
+      <form class="formcursoupdate-form" @submit="checkForm">
+        <div class="formcursoupdate-formgroup">
+          <label for="namecursou">Nombre del curso</label>
+          <input
+            class="formcursoupdate-formgroup-input"
+            type="text"
+            id="namecursou"
+            v-model="name"
+          />
+        </div>
+        <div class="formcursoupdate-formgroup">
+          <label for="descripcioncursou">Descripción o mensage</label>
+          <input
+            class="formcursoupdate-formgroup-input"
+            type="text"
+            id="descripcioncursou"
+            v-model="description"
+          />
+        </div>
+        <div class="formcursoupdate-formgroup">
+          <label>Imagen del curso</label>
+          <input
+            type="file"
+            id="File"
+            ref="file"
+            v-on:change="onChangeFileUpload()"
+          />
+          <img
+            id="preview"
+            alt="Imagen curso"
+            class="preview-img"
+            :src="previewimg"
+          />
+        </div>
+        <button type="submit" class="formcursoupdate-form-submitbottom">
+          Guardar cambios
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -77,10 +105,11 @@ export default {
           },
         })
         .then((response) => {
- 	  this.showmenu = false;
+          this.showmenu = false;
           this.errorr = false;
           this.$store.commit("changecurso", response.data);
           this.$store.commit("updatecurso", response.data);
+          this.$emit("cursoupdate", response.data);
           flash("Curso actualizado", "success");
         })
         .catch((error) => {
@@ -101,14 +130,14 @@ export default {
 };
 </script>
 <style>
-.formcursoupdate-botton span{
+.formcursoupdate-botton span {
   font-size: 20px;
   font-weight: bold;
 }
 .formcursoupdate-layout {
   padding: 0.5rem;
 }
-.formcursoupdate-form-submitbottom{
+.formcursoupdate-form-submitbottom {
   background-color: #fdc770;
   padding: 0.5rem;
   width: 100%;
@@ -116,12 +145,13 @@ export default {
   border: none;
   cursor: pointer;
 }
-.formcursoupdate-formgroup label{
-   font-size: 14px; 
-   color: #a62b29;
+.formcursoupdate-formgroup label {
+  font-size: 14px;
+  color: #a62b29;
 }
-.formcursoupdate-formgroup input{
- width: 100%;
+.formcursoupdate-formgroup input {
+  width: 100%;
+  padding: 0.5rem;
 }
 .preview-img {
   width: 100%;

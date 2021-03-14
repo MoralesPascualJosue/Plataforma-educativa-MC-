@@ -53,6 +53,7 @@
       <ListaActividades
         v-show="isActive('home')"
         @ver-resumen="setActive('resumen')"
+        @updatecurso="updatecurso"
       />
       <div v-show="isActive('profile')">
         <Foro />
@@ -122,6 +123,9 @@ export default {
           curseTabs.style.width = pos + "%";
         }
       }
+    },
+    updatecurso(curso) {
+      this.$emit("updatecurso", curso);
     },
   },
 };

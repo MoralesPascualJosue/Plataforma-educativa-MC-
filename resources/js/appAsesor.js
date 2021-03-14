@@ -91,10 +91,10 @@ const store = new Vuex.Store({
             state.curso = curso;
         },
         updatecurso(state, curso) {
-            const index = state.cursos.data.findIndex(
+            const indexuc = state.cursos.data.findIndex(
                 item => item.id === curso.id
             );
-            state.cursos.data[index] = curso;
+            state.cursos.data[indexuc] = curso;
         },
         deletecurso(state, curso) {
             const index = state.cursos.data.findIndex(

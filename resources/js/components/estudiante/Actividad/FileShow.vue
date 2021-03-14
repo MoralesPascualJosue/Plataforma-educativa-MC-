@@ -2,7 +2,7 @@
   <div>
     <modal :show="show" @close="close">
       <button class="modalactividad-closebottom" @click="close()">X</button>
-      <div class="modal-body">
+      <div class="actividad-entregas-fileshow">
         <!-- Form fields removed for brevity -->
         <div v-if="show" class="example">
           <div
@@ -94,9 +94,24 @@ export default {
 </script>
 
 <style>
+.actividad-entregas-fileshow {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+}
 .sourcea {
   padding: 10px;
   border: 1px solid gray;
   margin-bottom: 10px;
+  width: 60%;
+  left: 20%;
+  position: relative;
+}
+
+@media only screen and (max-width: 1050px) {
+  .sourcea {
+    width: 90%;
+    left: 5%;
+  }
 }
 </style>

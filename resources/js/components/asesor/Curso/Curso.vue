@@ -1,22 +1,25 @@
 <template>
   <div>
     <div
-      v-if="curso.cover"
+      v-if="cursodata.cover"
       class="curso-image"
       :style="{
         height: `${height}px`,
-        backgroundImage: `url(${curso.cover})`,
+        backgroundImage: `url(${cursodata.cover})`,
       }"
       @click="openCurse"
     >
-      <span v-if="curso.entregas > 0" class="curso-status">
+      <span v-if="cursodata.entregas > 0" class="curso-status">
         <img src="resources/icons/apilar.svg" alt="" />
-        <span class="curso-status-text">{{ curso.entregas }}</span>
+        <span class="curso-status-text">{{ cursodata.entregas }}</span>
       </span>
     </div>
+    <p class="listacursos-layout-listacursos-curso-title">
+      {{ cursodata.title }}
+    </p>
 
     <div v-if="show" class="curso-tabs-content" id="curso-tabs-content">
-      <TabsCurso @closetabs="closeCurse" />
+      <TabsCurso @closetabs="closeCurse" @updatecurso="updateCurse" />
     </div>
   </div>
 </template>
@@ -39,15 +42,19 @@ export default {
   data() {
     return {
       show: false,
+      cursodata: this.curso,
     };
   },
   methods: {
     openCurse() {
       this.show = true;
-      this.$store.commit("changecurso", this.curso);
+      this.$store.commit("changecurso", this.cursodata);
     },
     closeCurse() {
       this.show = false;
+    },
+    updateCurse(curso) {
+      this.cursodata = curso;
     },
   },
 };

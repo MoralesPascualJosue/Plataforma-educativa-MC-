@@ -90,6 +90,16 @@ export default {
 };
 </script>
 <style>
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins"),
+    url(/fonts/poppins/Poppins-Regular.ttf) format("truetype");
+}
+
+html {
+  font-family: "Poppins", sans-serif;
+}
+
 body {
   height: 100vh;
   background-color: white;

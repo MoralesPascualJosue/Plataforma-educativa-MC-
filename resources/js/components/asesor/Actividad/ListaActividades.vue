@@ -21,7 +21,7 @@
         <div class="lista-actividades-cursooptions-textheader">
           Detalles y acciones
         </div>
-        <FormCursoUpdate />
+        <FormCursoUpdate @cursoupdate="cursoupdate" />
         <a href="javascript:void(0)" @click="eliminarCurso">
           <div>Eliminar curso</div>
         </a>
@@ -185,6 +185,9 @@ export default {
             window.location.href = "login";
           }
         });
+    },
+    cursoupdate(curso) {
+      this.$emit("updatecurso", curso);
     },
   },
 };

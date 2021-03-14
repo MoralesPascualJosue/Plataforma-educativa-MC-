@@ -10,9 +10,6 @@
         class="card list-complete-item"
       >
         <Curso alt="curso" v-bind:height="200" v-bind:curso="curso" />
-        <p class="listacursos-layout-listacursos-curso-title">
-          {{ curso.title }}
-        </p>
       </div>
     </transition-group>
     <!-- </template>

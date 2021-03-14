@@ -63,7 +63,7 @@ class TestController extends Controller
         $input["title"] = $request["title"];
         $input["num_takes"] = $request["intentos"];
 
-        if($request["visible"] == "true"){
+        if($request["visible"] == "true" || $request["visible"] == "1"){
             $input["visible"] = 1;
         }else{
             $input["visible"] = 0;

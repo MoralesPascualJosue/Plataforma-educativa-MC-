@@ -215,6 +215,8 @@ class cursoController extends Controller
             $path = Storage::disk('public')->put('covers',$request->file('cover'));
             $curso->fill(['cover'=>$path])->save();
         }
+        
+        $curso->entregas = 0;
 
          if($request->ajax()){
             return $curso;

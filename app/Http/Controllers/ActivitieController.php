@@ -165,7 +165,7 @@ class ActivitieController extends Controller
 
         $input["visible"] = 0;
 
-        if($request["visible"] == "true"){
+        if($request["visible"] == "true" || $request["visible"] == "1"){
             $input["visible"] = 1;
         }
 
