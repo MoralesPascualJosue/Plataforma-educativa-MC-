@@ -1,10 +1,10 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/eec828f7df93f09f03671d2df1b5760c52004dea/information/Logo%20comp%20orange.svg" width="400"></p>
 
 <p align="center">
 Maestría en construcción
 </p>
 
-## Platadorma educatiba en Laravel - vuejs
+## Plataforma educativa en Laravel - vuejs
 
 Plataforma de apoyo para la implementacion de la educacion a distancia y semi-presencial:
 
@@ -19,37 +19,37 @@ impartir todo tipo de formaciones a través de internet sin necesidad de tener c
 
 ## Base de datos
 
-Modelo entidad - relacion [ver](https://laravel.com/docs).
+Modelo entidad - relacion [ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/modelo%20er%20bd.png).
 
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/modelo%20er%20bd.png" width="400"></p>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **[mysql]
 
 ## Capturas
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Algunas capturas de pantalla.
 
--   Bienvenida **[Vehikl](https://vehikl.com/)**
+-   Bienvenida [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/welcomeview.png).
 
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/welcomeview.png" width="400"></p>
 
--   Ingreso **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+-   Ingreso [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/loginview.png).
 
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/loginview.png" width="400"></p>
 
--   Inicio **[64 Robots](https://64robots.com)**
+-   Inicio [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/inicioview.png).
 
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/inicioview.png" width="400"></p>
 
--   Clases **[Cubet Techno Labs](https://cubettech.com)**
+-   Clases [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/clasesview.png).
 
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/clasesview.png" width="400"></p>
 
--   Mis datos **[Cyber-Duck](https://cyber-duck.co.uk)**
+-   Mis datos [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/informacionview.png).
 
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/informacionview.png" width="400"></p>
 
--   **[British Software Development](https://www.britishsoftware.co)**
+
 
 ## Contributing
 
