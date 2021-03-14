@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/eec828f7df93f09f03671d2df1b5760c52004dea/information/Logo%20comp%20orange.svg" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/8721813f783dcf76b6ab35c37d88015b973d4ff3/information/Logo%20comp%20orange.svg" width="400"></p>
 
 <p align="center">
 Maestría en construcción
@@ -19,37 +19,35 @@ impartir todo tipo de formaciones a través de internet sin necesidad de tener c
 
 ## Base de datos
 
-Modelo entidad - relacion [ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/modelo%20er%20bd.png).
+Modelo entidad - relacion [ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/modelo%20er%20bd.png).
 
-<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/modelo%20er%20bd.png" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/modelo%20er%20bd.png" width="400"></p>
 
-- **[mysql]
+-   mysql
 
 ## Capturas
 
 Algunas capturas de pantalla.
 
--   Bienvenida [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/welcomeview.png).
+-   Bienvenida [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/welcomeview.png).
 
-<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/welcomeview.png" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/welcomeview.png" width="400"></p>
 
--   Ingreso [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/loginview.png).
+-   Ingreso [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/loginview.png).
 
-<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/loginview.png" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/loginview.png" width="400"></p>
 
--   Inicio [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/inicioview.png).
+-   Inicio [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/inicioview.png).
 
-<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/inicioview.png" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/inicioview.png" width="400"></p>
 
--   Clases [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/clasesview.png).
+-   Clases [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/clasesview.png).
 
-<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/clasesview.png" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/clasesview.png" width="400"></p>
 
--   Mis datos [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/informacionview.png).
+-   Mis datos [Ver](https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/informacionview.png).
 
-<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/informacionview.png" width="400"></p>
-
-
+<p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/master/information/informacionview.png" width="400"></p>
 
 ## Contributing
 
