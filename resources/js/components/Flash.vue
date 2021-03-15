@@ -1,7 +1,12 @@
 <template>
   <div class="alert-wrap" v-if="notifications.length > 0">
     <transition-group :name="transition" tag="div">
-      <div :class="item.typeObject" role="alert" :key="item.id" v-for="item in notifications">
+      <div
+        :class="item.typeObject"
+        role="alert"
+        :key="item.id"
+        v-for="item in notifications"
+      >
         <span v-if="displayIcons" :class="item.iconObject"></span>
         <span v-html="item.message"></span>
       </div>
@@ -13,11 +18,11 @@ export default {
   props: {
     timeout: {
       type: Number,
-      default: 3000
+      default: 3000,
     },
     transition: {
       type: String,
-      default: "slide-fade"
+      default: "slide-fade",
     },
     types: {
       type: Object,
@@ -26,12 +31,12 @@ export default {
         success: "alert-success",
         error: "alert-danger",
         warning: "alert-warning",
-        info: "alert-info"
-      })
+        info: "alert-info",
+      }),
     },
     displayIcons: {
       type: Boolean,
-      default: false
+      default: false,
     },
     icons: {
       type: Object,
@@ -40,12 +45,12 @@ export default {
         error: "fa-exclamation-circle",
         success: "fa-check-circle",
         info: "fa-info-circle",
-        warning: "fa-exclamation-circle"
-      })
-    }
+        warning: "fa-exclamation-circle",
+      }),
+    },
   },
   data: () => ({
-    notifications: []
+    notifications: [],
   }),
   /**
    * On creation Flash a message if a message exists otherwise listen for
@@ -64,13 +69,11 @@ export default {
      */
     flash(message, type) {
       this.notifications.push({
-        id: Math.random()
-          .toString(36)
-          .substr(2, 9),
+        id: Math.random().toString(36).substr(2, 9),
         message: message,
         type: type,
         typeObject: this.classes(this.types, type),
-        iconObject: this.classes(this.icons, type)
+        iconObject: this.classes(this.icons, type),
       });
       setTimeout(this.hide, this.timeout);
     },
@@ -97,16 +100,48 @@ export default {
     hide(item = this.notifications[0]) {
       let key = this.notifications.indexOf(item);
       this.notifications.splice(key, 1);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
 .alert-wrap {
   position: fixed;
   right: 25px;
   bottom: 25px;
   z-index: 9999;
+}
+
+.alert-danger {
+  color: #761b18;
+  background-color: #f9d6d5;
+  border-color: #f7c6c5;
+}
+
+.alert-success {
+  color: #1d643b;
+  background-color: #d7f3e3;
+  border-color: #c7eed8;
+}
+
+.alert-warning {
+  color: #857b26;
+  background-color: #fffbdb;
+  border-color: #fffacc;
+}
+
+.alert-info {
+  color: #385d7a;
+  background-color: #e2f0fb;
+  border-color: #d6e9f9;
 }
 /**
      * Fade transition styles
