@@ -524,7 +524,19 @@ class cursoController extends Controller
         }
 
         $calificacionescontenedor = [];      
-        $suma = 0;      
+	$suma = 0;     
+	$cantidad_actividades = sizeof($actividades);
+
+	for($i = 0; $i < $cantidad_actividades - 1; $i++){
+		for($j = $i+1; $j < $cantidad_actividades; $j++){
+			if($actividades[$i]->fecha_final > $actividades[$j]->fecha_final){
+				$auxiliar = $actividades[$i];
+				$actividades[$i] = $actividades[$j];
+				$actividades[$j] = $auxiliar;
+			}
+		}
+	}
+
         foreach($actividades as $acti){
 
              if ($acti['type'] == "test") {
@@ -569,26 +581,15 @@ class cursoController extends Controller
         $promedio['qualification']= 0;
         if ($actividades->count() != 0) {
             $promedio['qualification'] = round($suma/$actividades->count());   
-        }            
+	}
 
-          $actividadesa = $actividades->toArray();
-
-        usort($actividadesa,function ($a,$b) {
-            if ($a['fecha_final'] == $b['fecha_final']) {
-                return 0;
-            }
-            return ($a['fecha_final'] < $b['fecha_final']) ? -1 : 1;
-        });
-
-
-        
         $promedio['estado'] = "Promedio";
         $calificacionescontenedor[] = $promedio;        
         $promedio['title'] = "Promedio";
-        $actividadesa[] = $promedio;
+        $actividades[] = $promedio;
 
         $data["calificaciones"] = $calificacionescontenedor;
-        $data["actividades"] = $actividadesa;
+        $data["actividades"] = $actividades;
         $data["estudiante"] = $miuser->estudiante()->get()['0'];
         
         return $data;

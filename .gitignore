@@ -22,3 +22,5 @@ public/userfiles/
 public/ckfinder/userfiles/.ckfinder/cache/data/Files/
 
 public/ckfinder/userfiles/files/
+
+*.un~
