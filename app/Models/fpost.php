@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\User;
+use App\Models\fpost;
 
 /**
  * Class fpost
@@ -29,7 +30,8 @@ class fpost extends Model
 
     public $fillable = [
         'body',
-        'locked',
+	'locked',
+	'parent',
         'fdiscusion_id',
         'user_id'
     ];
@@ -43,6 +45,7 @@ class fpost extends Model
         'id' => 'integer',
         'body' => 'string',
         'locked' => 'integer',
+	'parent' => 'integer',
         'fdiscusion_id' => 'integer',
         'user_id' => 'integer'
     ];
@@ -91,5 +94,12 @@ class fpost extends Model
         }
         return 0;
     }
-    
+
+   public function childrens(){
+   	return $this->hasMany('App\Models\fpost','parent','id')->with('childrens')->withUser()->withImage();	
+   } 
+
+   public function parent(){
+   	return $this->belongsTo('App\Models\fpost','parent');
+   }
 }

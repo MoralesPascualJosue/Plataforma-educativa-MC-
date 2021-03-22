@@ -106,12 +106,14 @@ class ForumController extends Controller
         $discuss['propiedad'] = $discuss->hasPropiedad($user);
 
         $fposts = fpost::query()->withDiscuss($id)
+	->where('parent',null)
         ->withUser()
         ->withImage()
         ->get();
 
         foreach($fposts as $post){
             $post["propiedad"] =  $post->hasPropiedad($user);
+	    $post["childrens"] = $post->childrens()->withUser()->withImage()->get();
         }
 
         $categorias= $this->fcategoriaRepository->all();        
@@ -119,6 +121,7 @@ class ForumController extends Controller
         if($request->ajax()){
             $data["fpost"] = $fposts;            
             $data["discuss"] = $discuss["propiedad"];
+	    $data["permisos"] = $user;
             return $data;
         }
         
@@ -153,6 +156,7 @@ class ForumController extends Controller
 
         if($request->ajax()){
             $fcomentario["propiedad"] = 1;
+	    $fcomentario["childrens"] = [];
             return $fcomentario;
         }
 

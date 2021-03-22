@@ -18,7 +18,8 @@ class CreateFpostsTable extends Migration
             $table->text('body');
             $table->integer('locked');
             $table->integer('fdiscusion_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
+	    $table->bigInteger('user_id')->unsigned();	    
+	    $table->integer('parent')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('fdiscusion_id')->references('id')->on('fdiscusions');

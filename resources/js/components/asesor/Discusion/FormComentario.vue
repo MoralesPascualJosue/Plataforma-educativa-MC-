@@ -3,7 +3,7 @@
     <div class="container">
       <form class="px-4 py-3 row" @submit="checkForm">
         <div class="col">
-          <label for="bodycom">Mi comentario</label>
+          <label for="bodycom" class="header-com">{{ header }}</label>
           <div class="form-group bg-white">
             <vue-editor v-model="content"></vue-editor>
           </div>
@@ -28,6 +28,16 @@
 import { VueEditor } from "vue2-editor";
 
 export default {
+  props:{
+	parentc: {
+		type:Number,
+		default: -1,
+	},
+	header: {
+		type: String,
+		default: "Mi comentario",
+	},
+  },
   data() {
     return {
       visible: false,
@@ -47,18 +57,17 @@ export default {
   methods: {
     checkForm: function (e) {
       e.preventDefault();
-
       if (this.content == "") {
         flash("Comentario vacio", "warning");
         return "fail";
       }
 
       let formData = new FormData();
-
       formData.append("body", this.content);
-
-      this.loading = true;
-
+	if(this.parentc > -1){
+		formData.append("parent",this.parentc);
+	}
+      this.loading = true;	
       axios
         .post("/foro/comentar/" + this.discu.id, formData)
         .then((response) => {
@@ -84,6 +93,15 @@ export default {
 };
 </script>
 <style>
+.header-com {
+	width: 100%;
+	position: relative;
+	display: block;
+	background-color: #e0e0e2;
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-bottom: none;
+}
 .bodycom {
   text-align: center;
 }

@@ -13,7 +13,7 @@
       }"
     >
       <h3>{{ objeto.title }}</h3>
-      <span class="stb">Respuestas: {{ objeto.answered }}</span>
+      <span class="stb">Replicas: {{ objeto.answered }}</span>
     </div>
   </div>
 </template>
