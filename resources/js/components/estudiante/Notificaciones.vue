@@ -7,7 +7,7 @@
       >
     </h2>
     <div class="notificaciones-lista">
-      <transition-group name="list-complete" tag="p" mode="out-in">
+      <transition-group name="list-complete" tag="div" mode="out-in">
         <div
           class="notificaciones-notificacion list-complete-item"
           v-for="notificacion in notificaciones.notificaciones"
@@ -124,6 +124,10 @@ export default {
 </script>
 
 <style>
+.notificaciones-contenedor {
+  width: 100%;
+  height: 100%;
+}
 .list-complete-item {
   transition: all 1s;
 }
@@ -135,21 +139,14 @@ export default {
 .list-complete-leave-active {
   position: absolute;
 }
-.notificaciones-contenedor {
-  padding: 1rem;
-}
 .notificaciones-head {
   font-size: 16px;
   padding: 1rem;
 }
-.notificaciones-lista {
-  width: 100%;
-}
-
 .notificaciones-notificacion {
   text-align: left;
   margin-bottom: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: white;
   border-radius: 4px;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
@@ -207,5 +204,9 @@ export default {
 }
 .notificaciones-option:hover {
   color: red;
+}
+.notificaciones-lista {
+  overflow-y: auto;
+  height: 84%;
 }
 </style>

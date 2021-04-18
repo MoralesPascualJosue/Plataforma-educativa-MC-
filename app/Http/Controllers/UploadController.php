@@ -20,7 +20,7 @@ class UploadController extends Controller
             ]);
             $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
             $ruta = request()->fileToUpload->storeAs('images/'.$id,$fileName,'public');
-            return asset($ruta);
+            return $ruta;
         }
 
         abort(402,"Archivo no seleccionado");

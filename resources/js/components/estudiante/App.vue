@@ -96,14 +96,45 @@ export default {
     url(/fonts/poppins/Poppins-Regular.ttf) format("truetype");
 }
 
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
 html {
   font-family: "Poppins", sans-serif;
 }
-
 body {
   height: 100vh;
   background-color: white;
   padding: 1rem;
+}
+p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666666;
+  margin: 0px;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #266fae;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #262626;
 }
 
 .app-container {
@@ -131,6 +162,7 @@ body {
 .app-containertabs {
   background-color: #fcb036;
   overflow-y: auto;
+  height: 100%;
 }
 
 .fade-enter-active,

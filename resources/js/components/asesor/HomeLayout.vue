@@ -1,6 +1,6 @@
 <template>
   <div class="home-layout">
-    <div class="colum-left">
+    <div class="home-row-header">
       <div class="home-infouser">
         <div class="home-avatarcontainer">
           <img :src="user.image" />
@@ -13,21 +13,23 @@
       <div class="home-imagehome">
         <div class="background"></div>
       </div>
-    </div>
-    <div class="colum-right">
       <div class="home-date">
         <div class="dia">{{ fecha }}</div>
       </div>
-      <Anuncio @updateuserdata="updateuser" />
+    </div>
+    <div class="home-row-container">
+      <Anuncios @updateuserdata="updateuser" />
     </div>
   </div>
 </template>
 
 <script>
 import Anuncio from "../Anuncio";
+import Anuncios from "../anuncio/Anuncios";
 export default {
   components: {
     Anuncio,
+    Anuncios,
   },
   data() {
     return {
@@ -54,21 +56,26 @@ export default {
 <style>
 .home-layout {
   display: grid;
-  grid-template-columns: 39% 59%;
+  grid-template-rows: 10% 90%;
   padding: 1rem;
-  min-height: 100%;
+  height: 100%;
+}
+.home-row-header {
+  display: flex;
 }
 
 .home-infouser {
-  height: 6rem;
+  height: 100%;
+  width: 100%;
   background-color: #fdc770;
   border-radius: 20px;
   padding: 0.5rem;
+  overflow: hidden;
 }
 
 .home-avatarcontainer {
-  width: 5rem;
-  height: 5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   float: left;
   overflow: hidden;
@@ -80,20 +87,20 @@ export default {
 }
 
 .home-userdetails {
-  padding-top: 1rem;
-  padding-left: 6rem;
+  padding-left: 5rem;
   max-width: 367px;
 }
 
 .home-userdetails h2 {
   font-weight: bold;
+  font-size: 14px;
 }
 
 .home-imagehome {
   border-radius: 20px;
   overflow: hidden;
-  height: 10.6875rem;
-  margin-top: 1rem;
+  height: 100%;
+  width: 100%;
   border: 1px solid #fdc770;
 }
 
@@ -102,15 +109,26 @@ export default {
   font-size: 30px;
   text-align: end;
   color: white;
+  width: 100%;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 980px) {
   .home-layout {
     display: inherit;
   }
 
   .home-infouser {
     display: none;
+  }
+  .home-date {
+    font-size: 18px;
+    height: 3rem;
+  }
+  .home-imagehome {
+    height: 3rem;
+  }
+  .home-row-container {
+    height: 86%;
   }
 }
 </style>

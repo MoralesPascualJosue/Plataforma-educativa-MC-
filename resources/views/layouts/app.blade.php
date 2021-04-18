@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -44,6 +43,10 @@
         @yield('invitado')
         @endif
 
+    </div>
+    <div id="app">
+        <app></app>
+        <flash />
     </div>
 
     <script src="{{ asset('js/appmanager.js') }}"> </script>

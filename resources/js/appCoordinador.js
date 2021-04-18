@@ -7,9 +7,6 @@
 import VueRouter from "vue-router";
 
 require("./bootstrap");
-
-window.Vue = require("vue");
-
 Vue.use(VueRouter);
 /**
  * The following block of code may be used to automatically register your
@@ -22,10 +19,11 @@ Vue.use(VueRouter);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-import HomeLayout from "./components/coordinador/HomeLayout";
 import Flash from "./components/Flash";
-import Anuncio from "./components/coordinador/Anuncio";
 import App from "./components/coordinador/App";
+import HomeLayout from "./components/coordinador/HomeLayout";
+import Anuncios from "./components/coordinador/Anuncio/Anuncios";
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -43,18 +41,12 @@ const router = new VueRouter({
         {
             path: "/avisos",
             name: "Avisos",
-            component: Anuncio
+            component: Anuncios
         }
     ]
 });
 
 const app = new Vue({
-    //el: "#app",
-    components: { App,Flash },
+    components: { App, Flash },
     router
 }).$mount("#app");
-
-$("#myList a").on("click", function(e) {
-    e.preventDefault();
-    $(this).tab("show");
-});

@@ -4,19 +4,23 @@
 
     <div class="container-top">
       <div class="avatar-container">
-        <div class="avatari" id="avatarImage" :style="{
-                backgroundImage: `url(${user.image})`,
-                backgroundSize: `cover`,
-                backgroundPosition: `center`,
-               }">
-		<input
-	      ref="filecover"
-              class="formcurso-file"
-              type="file"
-              id="filecover"
-              v-on:change="onChangeFileUpload()"
-            />
-             <label v-if="editando" for="filecover">Cambiar</label>
+        <div
+          class="avatari"
+          id="avatarImage"
+          :style="{
+            backgroundImage: `url(${user.image})`,
+            backgroundSize: `cover`,
+            backgroundPosition: `center`,
+          }"
+        >
+          <input
+            ref="filecover"
+            class="formcurso-file"
+            type="file"
+            id="filecover"
+            v-on:change="onChangeFileUpload()"
+          />
+          <label v-if="editando" for="filecover">Cambiar</label>
         </div>
       </div>
 
@@ -32,7 +36,7 @@
       <div class="column user-information">
         <section>
           <h2>Información básica</h2>
-	<ul>
+          <ul>
             <li class="data-row">
               <div class="data-container">
                 <span class="data-title">Nombre completo</span>
@@ -131,7 +135,7 @@
         <section>
           <br />
           <ul class="editar-perfil" v-if="!editando" @click="editarperfil()">
-            <li class="data-row" >
+            <li class="data-row">
               <div class="data-container">
                 <span class="data-title">Editar mi perfil</span>
                 <a class="data-value">
@@ -194,7 +198,7 @@ export default {
         this.nombre = res.data.user.name;
         this.institucion = res.data.perfil.institute;
         this.departamento = res.data.perfil.department;
-	this.previewimg = this.user.image;
+        this.previewimg = this.user.image;
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -204,7 +208,7 @@ export default {
   },
   methods: {
     editarperfil() {
-       this.editando = true;
+      this.editando = true;
     },
     cancelaredicionperfil() {
       this.editando = false;
@@ -293,7 +297,7 @@ export default {
   box-shadow: 0 0 0 0.3125rem #ffffff;
 }
 
-.avatari label{
+.avatari label {
   padding: 0.5rem;
 }
 

@@ -26,6 +26,9 @@ class Anuncio extends Model
 
     public $fillable = [
         'anuncio',
+        'widthblock',
+        'heigthblock',
+        'anuncioblock',
         'user_id'
     ];
 
@@ -37,6 +40,9 @@ class Anuncio extends Model
     protected $casts = [
         'id' => 'integer',
         'anuncio' => 'string',
+        'widthblock' => 'integer',
+        'heigthblock'=>'integer',
+        'anuncioblock' => 'array',
         'user_id' => 'integer',
         'updated_at' => 'date:Y-m-d'
     ];

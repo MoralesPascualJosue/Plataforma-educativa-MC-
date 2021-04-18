@@ -1,5 +1,5 @@
 <template>
-  <div class="lista-anuncios-content">
+  <div class="listaanuncios-layout">
     <form @submit.prevent="editarNota(nota)" v-if="modoEditar">
       <h3>Editar anuncio</h3>
       <input
@@ -95,7 +95,9 @@ export default {
       this.modoEditar = true;
     },
     editarNota(nota) {
-      const params = { anuncio: nota.anuncio };
+      const params = {
+        anuncio: nota.anuncio,
+      };
       axios
         .put(`/updatea/${nota.id}`, params)
         .then((res) => {
@@ -132,8 +134,13 @@ export default {
 };
 </script>
 <style>
-.lista-anuncios-content {
-  padding: 1rem;
+.listaanuncios-layout {
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background-color: #266fae;
+  overflow-y: auto;
+  margin: 4rem 4rem 4rem 0rem;
+  border-radius: 30px;
+  width: 100%;
 }
 
 .lista-anuncios {

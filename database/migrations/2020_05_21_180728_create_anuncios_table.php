@@ -15,7 +15,10 @@ class CreateAnunciosTable extends Migration
     {
         Schema::create('anuncios', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('anuncio');
+            $table->text('anuncio');
+            $table->integer('widthblock');
+            $table->integer('heigthblock');
+            $table->json('anuncioblock')->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
