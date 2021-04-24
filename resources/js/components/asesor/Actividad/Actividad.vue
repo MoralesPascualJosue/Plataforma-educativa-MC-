@@ -1,22 +1,28 @@
 <template>
-<div class="actividad-item">
+  <div class="actividad-item">
     <a href="javascript:void(0);" @click="$emit('pop-image', activitie)">
       <div class="actividad-item-icon">
-        <img v-if="activitie.type != 'activitie'" :src="iconprueba" alt="Prueba" />
+        <img
+          v-if="activitie.type != 'activitie'"
+          :src="iconprueba"
+          alt="Prueba"
+        />
         <img v-else :src="iconactividad" alt="Actividad" />
       </div>
 
       <div class="actividad-item-details">
         <div class="actividad-item-details-name">
           {{ activitie.title }} {{ activitie.fecha_inicio }}
-          <span v-if="activitie.entregas > 0">Pendientes: {{ activitie.entregas }}</span>
+          <span v-if="activitie.entregas > 0"
+            >Pendientes: {{ activitie.entregas }}</span
+          >
         </div>
         <div class="actividad-item-details-fechalimit">
           Fecha de vencimiento: {{ activitie.fecha_final }}
         </div>
       </div>
     </a>
-</div>
+  </div>
 </template>
 
 <script>
@@ -34,12 +40,14 @@ export default {
 </script>
 <style>
 .actividad-item {
-  background-color: #fdc770;
+  background-color: #fcb036;
   width: 100%;
   height: 100px;
   padding-left: 1rem;
   padding-top: 1rem;
   margin-bottom: 1rem;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+  border-radius: 10px;
 }
 .actividad-item:hover {
   border-bottom: orange solid 2px;

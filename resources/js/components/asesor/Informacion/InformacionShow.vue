@@ -79,7 +79,7 @@ export default {
         datasets: [
           {
             label: "Entregas por actividad",
-            backgroundColor: ["rgba(253, 199, 112, 1)"],
+            backgroundColor: ["rgba(252, 176, 54, 1)"],
             pointBackgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -96,7 +96,7 @@ export default {
         datasets: [
           {
             label: "Aprovechamiento",
-            backgroundColor: ["rgba(253, 199, 112, 1)"],
+            backgroundColor: ["rgba(252, 176, 54, 1)"],
             pointBackgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -214,7 +214,6 @@ export default {
 
 <style>
 .containeri {
-  background-color: #fcb036;
   min-height: 84vh;
   display: grid;
   grid-template-columns: auto auto auto;
@@ -276,12 +275,13 @@ export default {
   text-align: center;
   border-radius: 8px;
   position: relative;
-  background: #fdc770;
+  background: #fcb036;
   min-width: 200px;
   height: 150px;
   margin: 0 auto;
   margin-top: 10px;
   max-width: 90%;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 
 .info-content-top {
@@ -320,8 +320,9 @@ export default {
 }
 
 .border-b img {
-  border: 10px solid #fdc770;
+  border: 10px solid #fcb036;
   border-radius: 8px;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 
 @media (max-width: 1050px) {

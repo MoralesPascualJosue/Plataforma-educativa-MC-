@@ -1,9 +1,6 @@
 <template>
   <div class="lista-actividades-layout">
     <div class="lista-actividades-cursoinfo">
-      <h1 :id="curso.id" class="lista-actividades-cursoinfo-title">
-        {{ curso.title }}
-      </h1>
       <div
         class="lista-actividades-cursoinfo-imgheader"
         :style="cursoimg"

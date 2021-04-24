@@ -28,15 +28,15 @@
 import { VueEditor } from "vue2-editor";
 
 export default {
-  props:{
-	parentc: {
-		type:Number,
-		default: -1,
-	},
-	header: {
-		type: String,
-		default: "Mi comentario",
-	},
+  props: {
+    parentc: {
+      type: Number,
+      default: -1,
+    },
+    header: {
+      type: String,
+      default: "Mi comentario",
+    },
   },
   data() {
     return {
@@ -64,10 +64,10 @@ export default {
 
       let formData = new FormData();
       formData.append("body", this.content);
-	if(this.parentc > -1){
-		formData.append("parent",this.parentc);
-	}
-      this.loading = true;	
+      if (this.parentc > -1) {
+        formData.append("parent", this.parentc);
+      }
+      this.loading = true;
       axios
         .post("/foro/comentar/" + this.discu.id, formData)
         .then((response) => {
@@ -94,13 +94,13 @@ export default {
 </script>
 <style>
 .header-com {
-	width: 100%;
-	position: relative;
-	display: block;
-	background-color: #e0e0e2;
-	padding: 0.5rem;
-	border: 1px solid #ccc;
-	border-bottom: none;
+  width: 100%;
+  position: relative;
+  display: block;
+  background-color: #e0e0e2;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-bottom: none;
 }
 .bodycom {
   text-align: center;
@@ -109,7 +109,9 @@ export default {
   text-align: center;
   width: 80%;
   left: 10%;
+  height: 30%;
   position: relative;
+  margin-bottom: 13rem;
 }
 .formcomentario-comentar {
   border: none;
@@ -120,5 +122,12 @@ export default {
 }
 .formcomentario-comentar:hover {
   background-color: #fcb036;
+}
+@media (max-width: 1050px) {
+  .contcom {
+    margin-bottom: 22rem;
+    width: 100%;
+    left: 0%;
+  }
 }
 </style>

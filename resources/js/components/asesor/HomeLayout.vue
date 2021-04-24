@@ -48,6 +48,7 @@ export default {
   methods: {
     updateuser(data) {
       this.user = data;
+      this.$emit("updateuserdata", data);
     },
   },
 };
@@ -67,10 +68,11 @@ export default {
 .home-infouser {
   height: 100%;
   width: 100%;
-  background-color: #fdc770;
+  background-color: #fcb036;
   border-radius: 20px;
   padding: 0.5rem;
   overflow: hidden;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 
 .home-avatarcontainer {
@@ -115,6 +117,8 @@ export default {
 @media (max-width: 980px) {
   .home-layout {
     display: inherit;
+    margin: 0rem;
+    height: 100%;
   }
 
   .home-infouser {

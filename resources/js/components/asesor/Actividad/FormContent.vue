@@ -4,16 +4,18 @@
       <p v-show="!loading">
         Agregar contenido <span v-if="!showmenu">+</span><span v-else>-</span>
       </p>
-      <p v-show="loading">Creando...</p>
+      <p v-show="loading">Creando <span>...</span></p>
     </button>
-    <div class="formcontent-menucontent" v-if="showmenu">
-      <div class="formcontent-menucontent-option" @click="createactividad()">
-        Agregar Actividad
+    <transition name="menuslidedown">
+      <div class="formcontent-menucontent" v-if="showmenu">
+        <div class="formcontent-menucontent-option" @click="createactividad()">
+          Agregar Actividad
+        </div>
+        <div class="formcontent-menucontent-option" @click="createtest()">
+          Agregar prueba
+        </div>
       </div>
-      <div class="formcontent-menucontent-option" @click="createtest()">
-        Agregar prueba
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -97,27 +99,50 @@ export default {
   padding-bottom: 1rem;
 }
 .formcontent-bottom {
-  width: 100%;
+  width: 50%;
   border: none;
-  background-color: #fdc770;
+  background-color: #fcb036;
 }
 .formcontent-bottom p {
-  height: 40px;
+  font-weight: bold;
 }
 .formcontent-bottom span {
   font-size: 30px;
 }
+.formcontent-bottom:hover {
+  background-color: white;
+}
+
 .formcontent-menucontent {
   padding: 0.5rem;
-  background-color: #fdc770;
+  background-color: white;
+  position: absolute;
+  overflow: hidden;
+  z-index: 1;
 }
 .formcontent-menucontent-option {
   padding: 0.5rem;
   width: 100%;
+  cursor: pointer;
 }
 
 .formcontent-menucontent-option:hover {
-  background-color: white;
+  background-color: #266fae;
   padding: 0.5rem;
+}
+
+.menuslidedown-enter-active {
+  animation: menuslidedown 0.3s ease-out forwards;
+}
+.menuslidedown-leave-active {
+  animation: menuslidedown 0.3s ease-out forwards reverse;
+}
+@keyframes menuslidedown {
+  from {
+    height: 0rem;
+  }
+  to {
+    height: 6rem;
+  }
 }
 </style>

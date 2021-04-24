@@ -109,7 +109,9 @@ export default {
   text-align: center;
   width: 80%;
   left: 10%;
+  height: 30%;
   position: relative;
+  margin-bottom: 13rem;
 }
 .formcomentario-comentar {
   border: none;
@@ -120,5 +122,12 @@ export default {
 }
 .formcomentario-comentar:hover {
   background-color: #fcb036;
+}
+@media (max-width: 1050px) {
+  .contcom {
+    margin-bottom: 22rem;
+    width: 100%;
+    left: 0%;
+  }
 }
 </style>

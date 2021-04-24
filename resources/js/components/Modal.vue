@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-mask" @click="close" v-show="show">
+  <div class="modal-mask" @click="close" v-if="show">
     <div class="modal-container" @click.stop>
       <slot></slot>
     </div>
@@ -29,30 +29,26 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  transition: opacity 0.5s ease;
   z-index: 9998;
+  animation: stretchm 0.5s ease-out;
 }
 
 .modal-container {
+  position: relative;
   overflow: hidden;
   height: 95%;
   margin: 1rem;
   padding: 1rem;
   background-color: #fff;
   border-radius: 20px;
-  transition: all 1s linear;
-  font-family: Helvetica, Arial, sans-serif;
 }
-.modal-enter {
-  opacity: 0;
-}
-.modal-leave-active {
-  opacity: 0;
-}
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+
+@keyframes stretchm {
+  from {
+    top: -100%;
+  }
+  to {
+    top: 0%;
+  }
 }
 </style>

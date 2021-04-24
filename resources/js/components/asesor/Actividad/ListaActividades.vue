@@ -1,9 +1,6 @@
 <template>
   <div class="lista-actividades-layout">
     <div class="lista-actividades-cursoinfo">
-      <h1 :id="curso.id" class="lista-actividades-cursoinfo-title">
-        {{ curso.title }}
-      </h1>
       <div
         class="lista-actividades-cursoinfo-imgheader"
         :style="cursoimg"
@@ -202,6 +199,7 @@ export default {
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: 39% 59%;
+  grid-template-rows: 6% 94%;
   justify-content: center;
 }
 @media (max-width: 1050px) {

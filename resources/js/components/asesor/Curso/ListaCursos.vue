@@ -91,18 +91,17 @@ export default {
   position: relative;
   width: 100%;
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: 1rem 0.5rem;
   grid-template-columns: repeat(4, 24%);
   justify-content: center;
 }
 .card {
   position: initial;
-  border: 1px solid #fdc770;
   border-radius: 1rem;
   height: 265px;
   overflow: hidden;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-  background-color: #fdc770;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+  background-color: #fcb036;
 }
 .listacursos-layout-listacursos-curso-title {
   font-size: 16px;
@@ -162,6 +161,17 @@ export default {
   margin-top: 1rem;
   border: none;
   cursor: pointer;
+}
+.btn-nextpage {
+  margin-top: 1rem;
+  width: 100%;
+  border: none;
+  padding: 0.5rem;
+  background-color: #fdc770;
+}
+
+.btn-nextpage:hover {
+  background-color: white;
 }
 </style>
 

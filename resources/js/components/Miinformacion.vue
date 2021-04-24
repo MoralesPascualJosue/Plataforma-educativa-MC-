@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="miinformacion-layout">
     <div class="background"></div>
 
     <div class="container-top">
@@ -266,6 +266,9 @@ export default {
 </script>
 
 <style>
+.miinformacion-layout {
+  padding: 1rem;
+}
 .background {
   background: url("/resources/welcome1.jpg") no-repeat;
   background-position: 0;
@@ -276,6 +279,8 @@ export default {
   margin-bottom: -6.6875rem;
   padding: 0;
   width: 100%;
+  border-radius: 30px;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 
 .container-top {
@@ -294,11 +299,13 @@ export default {
   height: 100%;
   border-radius: 50%;
   background-color: #fdc770;
-  box-shadow: 0 0 0 0.3125rem #ffffff;
+  border: 0.3125rem #fcb036 solid;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 
 .avatari label {
   padding: 0.5rem;
+  background-color: #fcb036 !important;
 }
 
 .user-name-container {
@@ -324,6 +331,12 @@ export default {
 .user-information {
   border-right: solid 0.0625rem #fdc770;
 }
+.user-information ul {
+  background-color: #fcb036;
+  border-radius: 30px;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+  overflow: hidden;
+}
 
 h2 {
   font-size: 1.125rem;
@@ -334,7 +347,7 @@ h2 {
 .data-row {
   padding: 1.25rem 0;
   align-items: center;
-  background-color: #fdc770;
+  background-color: #fcb036;
   color: #262626;
   display: flex;
   padding: 0.9375rem 0;

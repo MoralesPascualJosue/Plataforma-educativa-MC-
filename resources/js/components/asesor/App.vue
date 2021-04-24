@@ -2,23 +2,36 @@
   <div class="app-container">
     <div class="app-navegationmenu">
       <div class="navegationmenu-logocontent">
-        <img src="/resources/logo/Logo minmin white.svg" alt="PDEPI" />
+        <p>PDEPI</p>
+        <img src="/resources/logo/Logo comp orange.svg" alt="PDEPI" />
       </div>
-      <router-link :to="{ name: 'Inicio' }">
-        <p class="icon">🏠</p>
-        <span class="icontext">Inicio</span></router-link
-      >
-      <router-link :to="{ name: 'Clases' }">
-        <p class="icon">✍</p>
-        <span class="icontext">Clases</span></router-link
-      >
-      <router-link :to="{ name: 'Miinformacion' }"
-        ><p class="icon">🎓</p>
-        <span class="icontext">Mi información</span></router-link
-      >
-
-      <div>
-        <div v-if="isLoggedIn">
+      <div class="navegationmenu-user">
+        <div class="navegationmenu-user-image">
+          <img :src="user.image" alt="Coordinador" />
+        </div>
+        <p>{{ user.name }}</p>
+        <span>Asesor</span>
+      </div>
+      <div class="navegationmenu-menu" :class="showMenu">
+        <div class="navegationmenu-menu-row">
+          <router-link :to="{ name: 'Inicio' }">
+            <p class="icon">🏠</p>
+            <span class="icontext">Inicio</span></router-link
+          >
+          <router-link :to="{ name: 'Clases' }">
+            <p class="icon">✍</p>
+            <span class="icontext">Clases</span></router-link
+          >
+        </div>
+        <div class="navegationmenu-menu-row">
+          <router-link :to="{ name: 'Miinformacion' }"
+            ><p class="icon">🎓</p>
+            <span class="icontext">Mi información</span></router-link
+          >
+        </div>
+      </div>
+      <div class="navegationmenu-options" :class="showMenu">
+        <li v-if="isLoggedIn">
           <a id="logout-link" href="#" @click.prevent="isLogOut = true"
             >Salir</a
           >
@@ -30,13 +43,16 @@
             confirmText="Salir"
             confirmSuccessText="Saliendo"
           />
-        </div>
+        </li>
+      </div>
+      <div class="navegationmenu-openmenu">
+        <div class="navegationmenu-openmenu-bottom" @click="openmenu">X</div>
       </div>
     </div>
 
     <div class="app-containertabs">
       <transition name="fade" mode="out-in">
-        <router-view></router-view>
+        <router-view @updateuserdata="updateuser"></router-view>
       </transition>
     </div>
   </div>
@@ -50,16 +66,35 @@ export default {
   },
   data() {
     return {
+      user: {
+        name: "Default name",
+        email: "default@email.com",
+        image: "resources/users/user-default.svg",
+      },
       isLoggedIn: true,
       isLogOut: false,
+      open: false,
     };
   },
   computed: {
+    showMenu() {
+      if (this.open) {
+        return "navegationmenu-showmenu";
+      } else {
+        return "navegationmenu-closemenu";
+      }
+    },
     actividad() {
       return this.$store.getters.actividadview;
     },
   },
   methods: {
+    updateuser(data) {
+      this.user = data;
+    },
+    openmenu() {
+      this.open = !this.open;
+    },
     logout(evt) {
       if (evt) {
         axios
@@ -103,11 +138,7 @@ export default {
 }
 html {
   font-family: "Poppins", sans-serif;
-}
-body {
-  height: 100vh;
-  background-color: white;
-  padding: 1rem;
+  background-color: #fdc770;
 }
 p {
   font-size: 14px;
@@ -138,30 +169,105 @@ p {
   background: #262626;
 }
 
+#app {
+  background-color: #fdc770;
+}
+
 .app-container {
   display: grid;
-  grid-template-columns: 15% auto;
-  height: 95vh;
-  border-radius: 20px;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: 20% auto;
   overflow: hidden;
 }
 
 .app-navegationmenu {
-  background-color: #266fae;
+  padding: 1rem;
 }
 
-.app-navegationmenu a {
+.navegationmenu-user {
+  text-align: center;
+}
+.navegationmenu-user-image {
+  width: 70%;
+  display: flex;
+  border: 5px solid #fcb036;
+  border-radius: 50%;
+  overflow: hidden;
+  left: 15%;
+  position: relative;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+}
+.navegationmenu-user-image img {
+  width: 100%;
+  height: 100%;
+}
+.navegationmenu-user p {
+  font-size: 14px;
+  margin-bottom: inherit;
+}
+.navegationmenu-user span {
+  font-size: 12px;
+  color: #595959;
+}
+
+.navegationmenu-menu {
+  margin-top: 0.5rem;
+  border: 1px solid #fcb036;
+}
+.navegationmenu-menu-row {
+  display: flex;
+  justify-content: center;
+}
+.navegationmenu-menu-row a {
+  cursor: pointer;
   background-color: #fcb036;
   opacity: 0.5;
   display: block;
-  height: 3rem;
-  margin-top: 1rem;
-  line-height: 3rem;
   text-align: center;
+  width: 100%;
+  padding: 0.5rem;
+}
+.navegationmenu-menu-row a .icon {
+  font-size: 20px;
+  border: solid 2px #3490dc;
+  height: 30px;
+  width: 30px;
+  display: block;
+  margin: 0 auto;
+  line-height: 28px;
+  border-radius: 50%;
+}
+.navegationmenu-options {
+  list-style: none;
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.navegationmenu-options li {
+  padding: 0.5rem;
+  background-color: #fcb036;
+}
+.navegationmenu-openmenu {
+  display: none;
+  height: 2rem;
+}
+.navegationmenu-showmenu {
+  display: block;
+}
+.navegationmenu-openmenu-bottom {
+  padding: 0.3rem;
+  float: right;
+  line-height: 1.5rem;
+  font-size: 16px;
+  font-weight: bold;
+  width: 2rem;
+  text-align: center;
+  background-color: #fcb036;
+  cursor: pointer;
 }
 
 .app-containertabs {
-  background-color: #fcb036;
   overflow-y: auto;
   height: 100%;
 }
@@ -178,29 +284,19 @@ p {
   opacity: 0;
 }
 
-.app-navegationmenu a:hover {
-  cursor: pointer;
-  color: #666;
-}
-
-.app-navegationmenu a .icon {
-  font-size: 20px;
-  border: solid 2px #3490dc;
-  height: 30px;
-  width: 30px;
-  display: block;
-  margin: 0 auto;
-  line-height: 28px;
-  border-radius: 50%;
-  display: inline;
-}
-
 .navegationmenu-logocontent {
   padding: 0.5rem;
 }
 
 .navegationmenu-logocontent img {
-  width: 100%;
+  width: 30%;
+}
+
+.navegationmenu-logocontent p {
+  position: absolute;
+  font-size: 1rem;
+  color: #266fae;
+  font-weight: bold;
 }
 
 #logout-link:hover {
@@ -220,11 +316,41 @@ p {
 /*Toggle*/
 .app-navegationmenu .router-link-active {
   opacity: 1;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1050px) {
+  #app {
+    min-height: 100%;
+  }
   .icontext {
     display: none;
+  }
+  .navegationmenu-user {
+    display: none;
+  }
+  .app-container {
+    display: inline;
+  }
+  .navegationmenu-menu,
+  .navegationmenu-options,
+  .navegationmenu-logocontent img {
+    display: none;
+  }
+  .navegationmenu-menu-row a {
+    padding: inherit;
+  }
+  .app-containertabs {
+    margin: inherit;
+    padding: 0.5rem;
+    height: 90%;
+  }
+  .navegationmenu-openmenu,
+  .navegationmenu-showmenu {
+    display: block;
+  }
+  .app-navegationmenu {
+    padding-top: 0rem;
   }
 }
 </style>

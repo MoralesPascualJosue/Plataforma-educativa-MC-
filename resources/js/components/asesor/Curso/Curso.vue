@@ -17,10 +17,11 @@
     <p class="listacursos-layout-listacursos-curso-title">
       {{ cursodata.title }}
     </p>
-
-    <div v-if="show" class="curso-tabs-content" id="curso-tabs-content">
-      <TabsCurso @closetabs="closeCurse" @updatecurso="updateCurse" />
-    </div>
+    <transition name="stretch">
+      <div v-if="show" class="curso-tabs-content" id="curso-tabs-content">
+        <TabsCurso @closetabs="closeCurse" @updatecurso="updateCurse" />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -49,9 +50,13 @@ export default {
     openCurse() {
       this.show = true;
       this.$store.commit("changecurso", this.cursodata);
+      let principalpane = document.getElementsByClassName("app-container")[0];
+      principalpane.style.left = "-100%";
     },
     closeCurse() {
       this.show = false;
+      let principalpane = document.getElementsByClassName("app-container")[0];
+      principalpane.style.left = "0%";
     },
     updateCurse(curso) {
       this.cursodata = curso;
@@ -60,6 +65,11 @@ export default {
 };
 </script>
 <style>
+.app-container {
+  position: relative;
+  transition: left 0.5s ease-out;
+  left: 0%;
+}
 .curso-image {
   background-position: center;
   background-size: cover;
@@ -76,27 +86,33 @@ export default {
   width: 1.5rem;
   height: 1.5rem;
 }
+.curso-status-text {
+  font-size: 14px;
+}
 .curso-tabs-content {
   position: fixed;
   left: 0;
   top: 0;
-  padding: 1rem;
-  animation-name: stretch;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
+  padding: 0.5rem;
+  width: 100%;
+  height: 100%;
+}
+.stretch-enter-active {
+  animation: stretch 0.5s ease-out;
+}
+.stretch-leave-active {
+  animation: stretch 0.5s reverse ease-in;
 }
 @keyframes stretch {
   from {
-    width: 0%;
-    height: 100%;
-  }
-  to {
+    left: 100%;
     width: 100%;
     height: 100%;
   }
-}
-.curso-status-text {
-  font-size: 14px;
+  to {
+    left: 0%;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

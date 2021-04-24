@@ -1543,6 +1543,9 @@ function closeMenu(ele) {
 </script>
 
 <style>
+#taskcontenido {
+  display: grid;
+}
 .block-s {
   margin: 2.5%;
   min-height: 300px;

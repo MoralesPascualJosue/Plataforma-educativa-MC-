@@ -51,6 +51,7 @@ export default {
   border-radius: 30px;
   height: 100%;
   width: 100%;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 .img-decoration {
   width: 100%;

@@ -31,6 +31,9 @@ export default {
 </script>
 
 <style>
+#taskcontenido {
+  display: grid;
+}
 .block-s {
   margin-left: 2.5%;
   min-height: 300px;

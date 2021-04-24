@@ -197,6 +197,7 @@ export default {
   border-radius: 30px;
   padding: 0.5rem;
   cursor: pointer;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 .anuncios-toolbar p:hover {
   background-color: white;
@@ -225,6 +226,7 @@ export default {
   text-align: center;
   font-weight: bold;
   line-height: 2rem;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 .anuncios-list p:hover {
   background-color: #266fae;
@@ -239,5 +241,6 @@ export default {
   margin-top: 0.5rem;
   border-radius: 30px;
   padding: 1rem;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 </style>

@@ -99,12 +99,11 @@ export default {
 }
 .card {
   position: initial;
-  border: 1px solid #fdc770;
   border-radius: 1rem;
   height: 265px;
   overflow: hidden;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-  background-color: #fdc770;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+  background-color: #fcb036;
 }
 .listacursos-layout-listacursos-curso-title {
   font-size: 16px;

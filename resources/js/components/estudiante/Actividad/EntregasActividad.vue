@@ -264,7 +264,8 @@ export default {
 }
 
 .entregasactividad-header {
-  padding: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
 }
 
 .entregasactividad-header .leftcontent {

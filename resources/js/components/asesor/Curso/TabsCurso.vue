@@ -1,27 +1,36 @@
 <template>
   <div class="curso-tabs-layout" id="curso-tabs-layout">
+    <div class="curso-tabs-navegationinfo">
+      <div class="curso-tabs-closeoption" @click="closeCurse">
+        <img src="resources/icons/navegation-back-button.svg" alt="X" />
+      </div>
+      <div class="curso-tabs-cursetitle">
+        <p>{{ curso.title }}</p>
+      </div>
+    </div>
     <div class="curso-tabs-navegationmenu">
-      <div clase="curso-tabs-options">
-        <div class="curso-tabs-closeoption" @click="closeCurse">X</div>
+      <div class="navegationmenu-logocontent">
+        <p>PDEPI</p>
+        <img src="/resources/logo/Logo comp orange.svg" alt="PDEPI" />
       </div>
       <ul class="curso-tabs-nav">
-        <li class="curso-tabs-nav-item">
+        <div class="curso-tabs-nav-item">
           <a
             @click.prevent="setActive('home')"
             :class="{ active: isActive('home') }"
             href="#home"
             >Curso <span v-show="isActive('resumen')">Resumen</span></a
           >
-        </li>
-        <li class="curso-tabs-nav-item">
+        </div>
+        <div class="curso-tabs-nav-item">
           <a
             @click.prevent="setActive('profile')"
             :class="{ active: isActive('profile') }"
             href="#profile"
             >foro</a
           >
-        </li>
-        <li class="curso-tabs-nav-item">
+        </div>
+        <div class="curso-tabs-nav-item">
           <a
             @click.prevent="setActive('contact')"
             :class="{ active: isActive('contact') }"
@@ -34,15 +43,15 @@
               >{{ mensajesnuevos }}</span
             >
           </a>
-        </li>
-        <li class="curso-tabs-nav-item">
+        </div>
+        <div class="curso-tabs-nav-item">
           <a
             @click.prevent="setActive('informacion')"
             :class="{ active: isActive('informacion') }"
             href="#informacion"
             >Informacion</a
           >
-        </li>
+        </div>
       </ul>
     </div>
 
@@ -88,6 +97,11 @@ export default {
     InformacionShow,
     Resumen,
   },
+  computed: {
+    curso() {
+      return this.$store.getters.cursoview;
+    },
+  },
   methods: {
     isActive(menuItem) {
       return this.activeItem === menuItem;
@@ -106,23 +120,7 @@ export default {
       }
     },
     closeCurse() {
-      var pos = 100;
-      var curseTabs = document.getElementById("curso-tabs-layout");
-      setTimeout(
-        function () {
-          this.$emit("closetabs");
-        }.bind(this),
-        300
-      );
-      var id = setInterval(frame, 5);
-      function frame() {
-        if (pos < 16) {
-          clearInterval(id);
-        } else {
-          pos -= 5;
-          curseTabs.style.width = pos + "%";
-        }
-      }
+      this.$emit("closetabs");
     },
     updatecurso(curso) {
       this.$emit("updatecurso", curso);
@@ -133,12 +131,11 @@ export default {
 <style>
 .curso-tabs-layout {
   position: relative;
-  background-color: #266fae;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
   display: grid;
-  grid-template-columns: 10% auto;
+  grid-template-columns: 15% auto;
+  grid-template-rows: 10% 90%;
   overflow: hidden;
 }
 @media only screen and (max-width: 1080px) {
@@ -146,45 +143,66 @@ export default {
     display: inherit;
   }
 }
+.curso-tabs-navegationinfo {
+  grid-column-end: span 2;
+  display: grid;
+  grid-template-columns: 15% auto;
+}
 .curso-tabs-closeoption {
   position: relative;
   text-align: center;
-  color: #050505;
-  font-size: 30px;
   cursor: pointer;
   background-color: #fcb036;
-  border-radius: 8px;
-  padding: 8px;
-  margin: 5px;
+  border-radius: 50%;
+  margin: 8px;
+  height: 40px;
+  width: 40px;
+}
+.curso-tabs-cursetitle {
+  margin-bottom: 0.5rem;
+  background-color: #fcb036;
+  border-radius: 20px;
+  padding: 0.5rem;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+}
+.curso-tabs-cursetitle p {
+  padding: 0.4rem;
 }
 .curso-tabs-closeoption:hover {
-  color: white;
+  background-color: #266fae;
+}
+
+.curso-tabs-navegationmenu {
+  padding: 1rem;
+}
+.curso-tabs-nav {
+  margin-top: 0.5rem;
+  border: 1px solid #fcb036;
 }
 .curso-tabs-nav-item {
-  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
 }
 .curso-tabs-nav-item a {
+  cursor: pointer;
+  background-color: #fcb036;
+  opacity: 0.5;
   display: block;
-  margin: 0.2rem;
-  padding: 0.5rem;
-  padding-left: 0.1rem;
-  background-color: white;
+  text-align: center;
   width: 100%;
+  padding: 0.5rem;
 }
 .curso-tabs-nav-item a span {
   font-size: 14px;
   background-color: #fdc770;
   padding: 0.2rem;
 }
-.curso-tabs-nav-item a:hover {
-  background-color: #fdc770;
-}
 .curso-tabs-nav-item .active {
   background-color: #fcb036;
+  opacity: 1;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 .curso-tabs-contentpane {
-  background-color: #fcb036;
-  border-radius: 20px;
   overflow-y: auto;
   height: 100%;
 }
@@ -197,10 +215,17 @@ export default {
     margin: inherit;
     padding: inherit;
   }
+  .curso-tabs-navegationmenu {
+    padding: inherit;
+  }
   .curso-tabs-nav-item {
     margin: inherit;
     display: inline-block;
     width: 22.5%;
+    overflow: hidden;
+  }
+  .curso-tabs-nav-item a {
+    display: inline-block;
   }
   .curso-tabs-contentpane {
     height: 89.5%;

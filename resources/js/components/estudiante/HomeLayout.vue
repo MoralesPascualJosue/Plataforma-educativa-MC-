@@ -46,6 +46,7 @@ export default {
   methods: {
     updateuser(data) {
       this.user = data;
+      this.$emit("updateuserdata", data);
     },
   },
 };
@@ -65,7 +66,7 @@ export default {
 .home-infouser {
   height: 100%;
   width: 100%;
-  background-color: #fdc770;
+  background-color: #fcb036;
   border-radius: 20px;
   padding: 0.5rem;
   overflow: hidden;

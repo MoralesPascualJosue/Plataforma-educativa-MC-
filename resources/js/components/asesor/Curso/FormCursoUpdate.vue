@@ -10,46 +10,48 @@
       </div>
       <div v-if="loading">Actualizando...</div>
     </a>
-    <div class="formcursoupdate-layout" v-show="showmenu">
-      <form class="formcursoupdate-form" @submit="checkForm">
-        <div class="formcursoupdate-formgroup">
-          <label for="namecursou">Nombre del curso</label>
-          <input
-            class="formcursoupdate-formgroup-input"
-            type="text"
-            id="namecursou"
-            v-model="name"
-          />
-        </div>
-        <div class="formcursoupdate-formgroup">
-          <label for="descripcioncursou">Descripción o mensage</label>
-          <input
-            class="formcursoupdate-formgroup-input"
-            type="text"
-            id="descripcioncursou"
-            v-model="description"
-          />
-        </div>
-        <div class="formcursoupdate-formgroup">
-          <label>Imagen del curso</label>
-          <input
-            type="file"
-            id="File"
-            ref="file"
-            v-on:change="onChangeFileUpload()"
-          />
-          <img
-            id="preview"
-            alt="Imagen curso"
-            class="preview-img"
-            :src="previewimg"
-          />
-        </div>
-        <button type="submit" class="formcursoupdate-form-submitbottom">
-          Guardar cambios
-        </button>
-      </form>
-    </div>
+    <transition name="menuslidedownfcu">
+      <div class="formcursoupdate-layout" v-show="showmenu">
+        <form class="formcursoupdate-form" @submit="checkForm">
+          <div class="formcursoupdate-formgroup">
+            <label for="namecursou">Nombre del curso</label>
+            <input
+              class="formcursoupdate-formgroup-input"
+              type="text"
+              id="namecursou"
+              v-model="name"
+            />
+          </div>
+          <div class="formcursoupdate-formgroup">
+            <label for="descripcioncursou">Descripción o mensage</label>
+            <input
+              class="formcursoupdate-formgroup-input"
+              type="text"
+              id="descripcioncursou"
+              v-model="description"
+            />
+          </div>
+          <div class="formcursoupdate-formgroup">
+            <label>Imagen del curso</label>
+            <input
+              type="file"
+              id="File"
+              ref="file"
+              v-on:change="onChangeFileUpload()"
+            />
+            <img
+              id="preview"
+              alt="Imagen curso"
+              class="preview-img"
+              :src="previewimg"
+            />
+          </div>
+          <button type="submit" class="formcursoupdate-form-submitbottom">
+            Guardar cambios
+          </button>
+        </form>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -130,20 +132,27 @@ export default {
 };
 </script>
 <style>
+.formcursoupdate-content {
+  overflow: hidden;
+}
 .formcursoupdate-botton span {
   font-size: 20px;
   font-weight: bold;
 }
 .formcursoupdate-layout {
   padding: 0.5rem;
+  background-color: #fcb036;
 }
 .formcursoupdate-form-submitbottom {
-  background-color: #fdc770;
+  background-color: #266fae;
   padding: 0.5rem;
   width: 100%;
   margin-top: 1rem;
   border: none;
   cursor: pointer;
+}
+.formcursoupdate-form-submitbottom:hover {
+  background-color: white;
 }
 .formcursoupdate-formgroup label {
   font-size: 14px;
@@ -159,5 +168,19 @@ export default {
   border-radius: 8px;
   display: block;
   margin-top: 5px;
+}
+.menuslidedownfcu-enter-active {
+  animation: menuslidedownfcu 0.3s ease-out forwards;
+}
+.menuslidedownfcu-leave-active {
+  animation: menuslidedownfcu 0.3s ease-out forwards reverse;
+}
+@keyframes menuslidedownfcu {
+  from {
+    height: 0rem;
+  }
+  to {
+    height: 21rem;
+  }
 }
 </style>

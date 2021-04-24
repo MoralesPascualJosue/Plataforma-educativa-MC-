@@ -175,6 +175,7 @@ p {
   overflow: hidden;
   left: 15%;
   position: relative;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 .navegationmenu-user-image img {
   width: 100%;
