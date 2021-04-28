@@ -155,12 +155,15 @@ export default {
   }
 }
 .listacursos-nextpage {
-  background-color: #fdc770;
+  background-color: #fcb036;
   padding: 0.5rem;
   width: 100%;
   margin-top: 1rem;
   border: none;
   cursor: pointer;
+}
+.listacursos-nextpage:hover {
+  background-color: white;
 }
 .btn-nextpage {
   margin-top: 1rem;

@@ -12,8 +12,8 @@ $factory->define(Curso::class, function (Faker $faker) {
         'review' => $faker->text,
         'cover' => $faker->word,
         'password' => $faker->word,
-        'asesor_id' => $faker->numberBetween(1,5),
-        'created_at' => $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-2 years', $timezone = null),
-        'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
+        'asesor_id' => $faker->numberBetween(1,1000),
+        'created_at' => $faker->date('Y-m-d H:i:s'),
+        'updated_at' => $faker->date('Y-m-d H:i:s')
     ];
 });

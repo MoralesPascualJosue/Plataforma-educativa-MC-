@@ -35,57 +35,57 @@ class PermissionsSeeder extends Seeder
         $role4 = Role::create(['name' => 'super-admin']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
 
-        // create demo users
-        $user = Factory(App\User::class)->create([
+                // create demo users
+        $user = App\User::create([
             'name' => 'Example asesor user',
             'image' => 'resources/users/user-default.svg',
-            'email' => 'asesor@example.com',
+            'email' => 'asesor@plataformamc.com',
             'password' => Hash::make('asesor213'),
         ]);
         $user->assignRole($role1);
 
-         $user = Factory(App\User::class)->create([
+         $user = App\User::create([
             'name' => 'Example2 asesor2 user2',
             'image' => 'resources/users/user-default.svg',
-            'email' => 'asesor2@example.com',
+            'email' => 'asesor2@plataformamc.com',
             'password' => Hash::make('asesor2213'),
         ]);
         $user->assignRole($role1);
 
-        $user = Factory(App\User::class)->create([
+        $user = App\User::create([
             'name' => 'Example estudiante User',
             'image' => 'resources/users/user-default.svg',
-            'email' => 'estudiante@example.com',
+            'email' => 'estudiante@plataformamc.com',
             'password' => Hash::make('estudiante213'),
         ]);
         $user->assignRole($role2);
 
-        $user = Factory(App\User::class)->create([
+        $user = App\User::create([
             'name' => 'Example2 estudiante2 User2',
             'image' => 'resources/users/user-default.svg',
-            'email' => 'estudiante2@example.com',
+            'email' => 'estudiante2@plataformamc.com',
             'password' => Hash::make('estudiante2213'),
         ]);
         $user->assignRole($role2);
 
-        $user = Factory(App\User::class)->create([
+        $user = App\User::create([
             'name' => 'Example Coornidador User',
             'image' => 'resources/users/user-default.svg',
-            'email' => 'coordinador@example.com',
+            'email' => 'coordinador@plataformamc.com',
             'password' => Hash::make('coordinador213'),
         ]);
         $user->assignRole($role3);
 
-        $user = Factory(App\User::class)->create([
+        $user = App\User::create([
             'name' => 'Example Super-Admin User',
             'image' => 'resources/users/user-default.svg',
-            'email' => 'superadmin@example.com',
+            'email' => 'superadmin@plataformamc.com',
             'password' => Hash::make('superadmin213'),
         ]);
         $user->assignRole($role4);
 
-         Factory(App\Models\Asesor::class)->create([
-              'user_id'=> 1,
+         App\Models\Asesor::create([
+            'user_id'=> 1,
             'name' => Str::random(10),
             'bio' => Str::random(10).'--bio',
             'institute' => 'Instituto Tecnologico de Oaxaca',
@@ -93,8 +93,8 @@ class PermissionsSeeder extends Seeder
             'telephone' => '9511782851'
         ]);
 
-        Factory(App\Models\Asesor::class)->create([
-                        'user_id'=> 2,
+        App\Models\Asesor::create([
+            'user_id'=> 2,
             'name' => Str::random(10),
             'bio' => Str::random(10).'--bio',
             'institute' => 'Instituto Tecnologico de Oaxaca',
@@ -102,7 +102,7 @@ class PermissionsSeeder extends Seeder
             'telephone' => '9511782852'
         ]);
 
-        Factory(App\Models\Estudiante::class)->create([
+        App\Models\Estudiante::create([
            'user_id'=> 3,
             'name' => Str::random(10),
             'bio' => Str::random(10).'--bio',
@@ -111,7 +111,7 @@ class PermissionsSeeder extends Seeder
             'telephone' => '9511782833'
         ]);
 
-        Factory(App\Models\Estudiante::class)->create([
+        App\Models\Estudiante::create([
             'user_id'=> 4,
             'name' => Str::random(10),
             'bio' => Str::random(10).'--bio',
@@ -120,7 +120,7 @@ class PermissionsSeeder extends Seeder
             'telephone' => '9511782854'
         ]);
 
-        Factory(App\Models\Asesor::class)->create([
+        App\Models\Asesor::create([
            'user_id'=> 5,
             'name' => Str::random(10),
             'bio' => Str::random(10).'--bio',
@@ -129,7 +129,7 @@ class PermissionsSeeder extends Seeder
             'telephone' => '9521782833'
         ]);
 
-        Factory(App\Models\Asesor::class)->create([
+        App\Models\Asesor::create([
             'user_id'=> 6,
             'name' => Str::random(10),
             'bio' => Str::random(10).'--bio',

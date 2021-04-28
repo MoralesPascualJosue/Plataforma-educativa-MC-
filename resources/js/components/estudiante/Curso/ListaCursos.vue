@@ -170,7 +170,7 @@ export default {
   width: 100%;
   border: none;
   padding: 0.5rem;
-  background-color: #fdc770;
+  background-color: #fcb036;
 }
 
 .btn-nextpage:hover {

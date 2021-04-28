@@ -11,7 +11,8 @@ $factory->define(fpost::class, function (Faker $faker) {
         'body' => $faker->text,
         'locked' => $faker->randomDigitNotNull,
         'fdiscusion_id' => $faker->numberBetween(1,1000),
-        'user_id' => $faker->numberBetween(1,60),   
+        'user_id' => $faker->numberBetween(1,1000),   
+        'parent' => $faker->$faker->numberBetween(1,3000),
         'created_at' => $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-2 years', $timezone = null),
         'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
     ];
