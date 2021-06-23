@@ -36,12 +36,12 @@
             :class="{ active: isActive('contact') }"
             href="#contact"
           >
-            Mensajes
             <span
               v-if="mensajesnuevos > 0"
               class="badge badge-primary float-right fontct"
               >{{ mensajesnuevos }}</span
             >
+            Mensajes
           </a>
         </div>
       </ul>
@@ -118,7 +118,7 @@ export default {
   height: 100%;
   display: grid;
   grid-template-columns: 15% auto;
-  grid-template-rows: 10% 90%;
+  grid-template-rows: 5% 90%;
   overflow: hidden;
 }
 @media only screen and (max-width: 1080px) {
@@ -176,8 +176,11 @@ export default {
 }
 .curso-tabs-nav-item a span {
   font-size: 14px;
-  background-color: #fdc770;
-  padding: 0.2rem;
+  background-color: white;
+  position: absolute;
+  margin-top: -1rem;
+  border-radius: 50%;
+  width: 1.5rem;
 }
 .curso-tabs-nav-item .active {
   background-color: #fcb036;
@@ -206,8 +209,14 @@ export default {
     width: 22.5%;
     overflow: hidden;
   }
+  .curso-tabs-navegationinfo {
+    display: flex;
+  }
+  .curso-tabs-cursetitle {
+    padding: 0.2rem;
+  }
   .curso-tabs-contentpane {
-    height: 89.5%;
+    height: 79.5%;
   }
 }
 </style>

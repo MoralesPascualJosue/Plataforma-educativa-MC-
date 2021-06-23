@@ -129,20 +129,20 @@ export default {
 .formmensaje-content {
   z-index: 1;
   position: fixed;
-  background-color: #fdc770;
+  background-color: #fcb036;
   border: 1px solid white;
   width: 50%;
-  height: 50%;
+  height: 95%;
   border-radius: 4px;
   overflow-y: auto;
   right: 1rem;
   top: 1rem;
+  border-radius: 20px;
 }
 .formmensaje-layout {
   padding: 0.5rem;
 }
 .formmensaje-header {
-  background-color: #266fae;
   width: 100%;
   height: 2rem;
 }
@@ -165,11 +165,15 @@ export default {
   width: 100%;
   padding: 0.5rem;
   min-height: 5rem;
+  height: 55%;
+  max-width: 100%;
+  min-width: 100%;
 }
 .formmensaje-enviar {
   padding: 0.5rem;
   border: none;
   cursor: pointer;
+  width: 7rem;
 }
 .formmensaje-enviar:hover {
   background-color: #fcb036;
@@ -184,9 +188,15 @@ export default {
 }
 
 @media (max-width: 1050px) {
-  .formmensaje-content {
-    width: 88%;
-    height: 77%;
+  .formmensaje-enviar {
+    width: 5rem;
   }
+  .formmensaje-content {
+    width: 80%;
+  }
+}
+
+.vs__dropdown-toggle {
+  background-color: white;
 }
 </style>

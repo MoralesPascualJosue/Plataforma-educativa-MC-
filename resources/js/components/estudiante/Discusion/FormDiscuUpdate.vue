@@ -77,11 +77,7 @@ export default {
     this.name = this.discusion.title;
     this.namecategoria = this.discusion.nameCategoria;
     this.color = this.discusion.colorCategoria;
-
-    const indexa = this.categorias.findIndex(
-      (item) => item.id === this.discusion.fcategoria
-    );
-    this.categoria = this.categorias.length - indexa;
+    this.categoria = this.discusion.fcategoria;
   },
   methods: {
     closeformut() {

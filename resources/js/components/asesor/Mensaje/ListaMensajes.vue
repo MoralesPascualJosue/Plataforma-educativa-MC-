@@ -37,12 +37,14 @@
             >
               Enviar mensaje
             </button>
-            <FormMensaje
-              v-if="shownm"
-              :shownm="shownm"
-              @crear-mensaje="createmensaje"
-              v-bind:contactosdefault="mensajes.contacts"
-            />
+            <transition name="enterformmsg">
+              <FormMensaje
+                v-if="shownm"
+                :shownm="shownm"
+                @crear-mensaje="createmensaje"
+                v-bind:contactosdefault="mensajes.contacts"
+              />
+            </transition>
             <!-- Nav tabs -->
             <ul class="listamensajes-layout-menu">
               <li>
@@ -344,7 +346,7 @@ export default {
 .list-group-item {
   display: block;
   padding: 1rem;
-  background-color: #fdc770;
+  background-color: #fcb036;
   margin: 0.5rem;
 }
 .listamensajes-layout-menu {
@@ -385,5 +387,46 @@ export default {
   color: blue;
   font-size: 20px;
   font-weight: bolder;
+}
+
+.enterformmsg-enter-active {
+  animation: enterformmsg 0.5s ease-out;
+}
+.enterformmsg-leave-active {
+  animation: enterformmsg 0.5s reverse ease-in;
+}
+@keyframes enterformmsg {
+  from {
+    left: 100%;
+    width: 50%;
+    height: 95%;
+  }
+  to {
+    left: 50%;
+    width: 50%;
+    height: 95%;
+  }
+}
+
+@keyframes enterformmsgmovil {
+  from {
+    left: 100%;
+    width: 80%;
+    height: 95%;
+  }
+  to {
+    left: 20%;
+    width: 80%;
+    height: 95%;
+  }
+}
+
+@media (max-width: 1050px) {
+  .enterformmsg-enter-active {
+    animation: enterformmsgmovil 0.5s ease-out;
+  }
+  .enterformmsg-leave-active {
+    animation: enterformmsgmovil 0.5s reverse ease-in;
+  }
 }
 </style>

@@ -155,6 +155,9 @@ export default {
   .list {
     grid-template-columns: repeat(1, 100%);
   }
+  .card {
+    margin-top: 0.5rem;
+  }
 }
 .listacursos-nextpage {
   background-color: #fdc770;
