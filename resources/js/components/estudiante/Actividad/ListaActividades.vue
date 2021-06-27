@@ -91,7 +91,7 @@ export default {
     },
     cursoimg() {
       return (
-        "background: url(../" + this.curso.cover + "); background-size: contain"
+        "background: url(../" + this.curso.cover + "); background-size: cover"
       );
     },
     actividades() {

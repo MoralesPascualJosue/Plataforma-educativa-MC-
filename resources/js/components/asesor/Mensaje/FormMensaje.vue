@@ -133,7 +133,6 @@ export default {
   border: 1px solid white;
   width: 50%;
   height: 95%;
-  border-radius: 4px;
   overflow-y: auto;
   right: 1rem;
   top: 1rem;

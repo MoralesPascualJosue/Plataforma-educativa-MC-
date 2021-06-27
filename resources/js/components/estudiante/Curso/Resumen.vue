@@ -93,6 +93,7 @@ export default {
 }
 .resumen-table {
   width: 100%;
+  background-color: white;
 }
 
 .resumen-table th {

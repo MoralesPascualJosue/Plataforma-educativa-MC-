@@ -38,6 +38,7 @@ Route::get('/perfil', 'FrontController@perfil')->name('perfil');
 Route::post('/updatePerfil','FrontController@updatePerfil')->name('updatePerfil');
 Route::get('/leernotificaciones', 'FrontController@leernotificaciones')->name('leernotificaciones');
 Route::post('/leernotificacion', 'FrontController@leernotificacion')->name('leernotificacion');
+Route::get('/homework', 'HomeworkController@homework')->name('homework');
 //________[END Perfil routes]__________
 
 

@@ -112,6 +112,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 62px;
+  color: black;
 }
 .list-complete-item {
   transition: all 0.5s;

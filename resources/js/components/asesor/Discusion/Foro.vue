@@ -146,6 +146,7 @@ export default {
   display: grid;
   grid-template-columns: 25% auto;
   padding: 1rem;
+  padding-top: 2rem;
   height: 100%;
   overflow-y: auto;
 }

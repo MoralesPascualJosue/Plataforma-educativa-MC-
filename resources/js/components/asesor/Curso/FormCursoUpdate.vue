@@ -15,38 +15,34 @@
         <form class="formcursoupdate-form" @submit="checkForm">
           <div class="formcursoupdate-formgroup">
             <label for="namecursou">Nombre del curso</label>
-            <input
-              class="formcursoupdate-formgroup-input"
-              type="text"
-              id="namecursou"
-              v-model="name"
-            />
+            <input type="text" id="namecursou" v-model="name" />
           </div>
           <div class="formcursoupdate-formgroup">
             <label for="descripcioncursou">Descripción o mensage</label>
-            <input
-              class="formcursoupdate-formgroup-input"
-              type="text"
-              id="descripcioncursou"
-              v-model="description"
-            />
+            <input type="text" id="descripcioncursou" v-model="description" />
           </div>
-          <div class="formcursoupdate-formgroup">
-            <label>Imagen del curso</label>
+          <div
+            class="formcursoupdate-formgroup"
+            :style="{
+              backgroundImage: `url(${previewimg})`,
+              backgroundSize: `contain`,
+              backgroundPosition: `center`,
+              height: `60%`,
+              backgroundRepeat: `no-repeat`,
+              paddingTop: `1rem`,
+            }"
+          >
+            <label>Imagen del curso 4mb max.</label>
             <input
               type="file"
-              id="File"
+              id="file"
               ref="file"
+              class="formcursoupdate-file"
               v-on:change="onChangeFileUpload()"
             />
-            <img
-              id="preview"
-              alt="Imagen curso"
-              class="preview-img"
-              :src="previewimg"
-            />
+            <label for="file">Elegir</label>
           </div>
-          <button type="submit" class="formcursoupdate-form-submitbottom">
+          <button type="submit" class="formcursoupdate-sumit">
             Guardar cambios
           </button>
         </form>
@@ -140,47 +136,120 @@ export default {
   font-weight: bold;
 }
 .formcursoupdate-layout {
-  padding: 0.5rem;
+  z-index: 1;
+  position: fixed;
+  width: 50%;
+  height: 95%;
+  right: 1rem;
+  top: 1rem;
+  border-radius: 20px;
+  overflow-y: auto;
   background-color: #fcb036;
+  border: 1px solid white;
+  padding: 1rem;
 }
-.formcursoupdate-form-submitbottom {
-  background-color: #266fae;
-  padding: 0.5rem;
+.formcursoupdate-form {
+  position: relative;
+}
+.formcursoupdate-formgroup {
+  float: left;
+  margin: 0.5rem;
+  padding: 0.1rem;
+  border-bottom: 0.2rem solid #266fae;
+  min-width: 220px;
   width: 100%;
-  margin-top: 1rem;
-  border: none;
-  cursor: pointer;
-}
-.formcursoupdate-form-submitbottom:hover {
-  background-color: white;
 }
 .formcursoupdate-formgroup label {
+  display: block;
+  padding: 0.1rem;
   font-size: 14px;
-  color: #a62b29;
 }
 .formcursoupdate-formgroup input {
+  background: none;
+  padding: 0.3rem;
+  border: none;
   width: 100%;
+  font-size: 16px;
+  background-color: white;
+}
+.formcursoupdate-formgroup input:focus {
+  background-color: #fcb036;
+}
+.formcursoupdate-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.formcursoupdate-file + label {
+  font-size: 2.25em;
+  font-weight: 700;
+  color: black;
+  background-color: #fdc770;
+  border-radius: 20px;
+}
+.formcursoupdate-file:focus + label,
+.formcursoupdate-file + label:hover {
+  background-color: #266fae;
+}
+
+.formcursoupdate-sumit {
+  background-color: #266fae;
   padding: 0.5rem;
+  border: none;
+  border-radius: 20px;
+  color: #fbfbfb;
+  letter-spacing: 1px;
+  font-size: 2rem;
 }
-.preview-img {
-  width: 100%;
-  height: 100px;
-  border-radius: 8px;
-  display: block;
-  margin-top: 5px;
+.formcursoupdate-sumit:hover {
+  border: 1px solid #266fae;
+  background-color: #fdc770;
 }
+
 .menuslidedownfcu-enter-active {
-  animation: menuslidedownfcu 0.3s ease-out forwards;
+  animation: menuslidedownfcu 0.5s ease-out;
 }
 .menuslidedownfcu-leave-active {
-  animation: menuslidedownfcu 0.3s ease-out forwards reverse;
+  animation: menuslidedownfcu 0.5s reverse ease-in;
 }
 @keyframes menuslidedownfcu {
   from {
-    height: 0rem;
+    left: 100%;
+    width: 50%;
+    height: 95%;
   }
   to {
-    height: 21rem;
+    left: 50%;
+    width: 50%;
+    height: 95%;
+  }
+}
+
+@keyframes menuslidedownfcumovil {
+  from {
+    left: 100%;
+    width: 80%;
+    height: 95%;
+  }
+  to {
+    left: 20%;
+    width: 80%;
+    height: 95%;
+  }
+}
+
+@media (max-width: 1050px) {
+  .menuslidedownfcumovil-enter-active {
+    animation: enterformmsgmovil 0.5s ease-out;
+  }
+  .menuslidedownfcumovil-leave-active {
+    animation: enterformmsgmovil 0.5s reverse ease-in;
+  }
+  .formcursoupdate-layout {
+    width: 80%;
   }
 }
 </style>

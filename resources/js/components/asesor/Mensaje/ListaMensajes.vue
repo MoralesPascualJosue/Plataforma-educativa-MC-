@@ -315,6 +315,7 @@ export default {
 <style>
 .listamensajes-layout {
   padding: 1rem;
+  margin-top: 1rem;
 }
 .listamensajes-layout-header {
   display: grid;

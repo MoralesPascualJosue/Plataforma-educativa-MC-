@@ -42,6 +42,7 @@ Vue.use(Toast, {
 import HomeLayout from "./components/estudiante/HomeLayout";
 import Miinformacion from "./components/Miinformacion";
 import ListaCursos from "./components/estudiante/Curso/ListaCursos";
+import Homeworks from "./components/estudiante/Curso/Homeworks";
 import App from "./components/estudiante/App";
 import Flash from "./components/Flash";
 
@@ -192,6 +193,11 @@ const router = new VueRouter({
             path: "/Miinformacion",
             name: "Miinformacion",
             component: Miinformacion
+        },
+        {
+            path: "/Homeworks",
+            name: "Homeworks",
+            component: Homeworks
         },
         { path: "*", redirect: { name: "Inicio" } }
     ]

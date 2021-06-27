@@ -19,7 +19,13 @@
             @click.prevent="setActive('home')"
             :class="{ active: isActive('home') }"
             href="#home"
-            >Curso <span v-show="isActive('resumen')">Resumen</span></a
+            >Curso</a
+          >
+          <a
+            v-show="isActive('resumen')"
+            @click.prevent="setActive('home')"
+            :class="{ active: isActive('resumen') }"
+            >◀ Volver a curso</a
           >
         </div>
         <div class="curso-tabs-nav-item">

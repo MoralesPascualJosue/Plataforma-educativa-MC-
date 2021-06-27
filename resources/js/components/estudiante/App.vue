@@ -29,6 +29,12 @@
             <span class="icontext">Mi información</span></router-link
           >
         </div>
+        <div class="navegationmenu-menu-row">
+          <router-link :to="{ name: 'Homeworks' }"
+            ><p class="icon">🎒</p>
+            <span class="icontext">Trabajos</span></router-link
+          >
+        </div>
       </div>
       <div class="navegationmenu-options" :class="showMenu">
         <li v-if="isLoggedIn">

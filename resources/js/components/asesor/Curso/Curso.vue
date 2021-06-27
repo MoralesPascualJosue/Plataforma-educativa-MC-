@@ -78,7 +78,7 @@ export default {
   overflow: hidden;
 }
 .curso-status {
-  background-color: #fdc770;
+  background-color: white;
   padding: 1rem;
   line-height: 3rem;
 }

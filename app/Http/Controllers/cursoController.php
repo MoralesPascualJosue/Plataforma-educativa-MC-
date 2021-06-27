@@ -60,7 +60,7 @@ class cursoController extends Controller
                 }
              }
         }else{
-            $cursos = Auth::user()->estudiante()->get()['0']->cursos()->where("matriculados.deleted_at",null)->orderBy("pivot_updated_at","DESC")->paginate($this->elementos);            
+            $cursos = Auth::user()->estudiante()->get()['0']->cursos()->where("matriculados.deleted_at",null)->orderBy("pivot_updated_at","DESC")->paginate($this->elementos);
         } 
 
         if($request->ajax()){

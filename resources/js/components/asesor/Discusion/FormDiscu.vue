@@ -67,7 +67,7 @@
               v-model="categoria.color"
             />
           </div>
-          <button type="submit" class="btn btn-primary">Crear</button>
+          <button type="submit" class="btn-newdiscu">Crear discusión</button>
         </form>
       </div>
     </div>
@@ -171,12 +171,6 @@ export default {
 </script>
 
 <style>
-#newnamediscus {
-  display: inline-block;
-  width: 88%;
-  line-height: 1.5;
-  border: 1px solid #3490dc;
-}
 .menuadddiscu {
   margin: 0 0 1rem;
   width: 100%;
@@ -209,5 +203,37 @@ export default {
   font-size: 15px;
   color: #ffffff;
   padding: 10px;
+}
+
+.discu-content .form-group input {
+  padding: 0.3rem;
+  border: none;
+  border-bottom: 1px solid blue;
+  height: 2rem;
+}
+
+.discu-content .form-group select {
+  padding: 0.3rem;
+  border: none;
+  border-bottom: 1px solid blue;
+  height: 2rem;
+}
+
+#newnamediscus {
+  width: 85%;
+}
+
+.btn-newdiscu {
+  background-color: #3490dc;
+  font-size: 16px;
+  color: black;
+  font-weight: 800;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 20px;
+}
+.btn-newdiscu:hover {
+  background-color: #fcb036;
+  border: 1px solid blue;
 }
 </style>
