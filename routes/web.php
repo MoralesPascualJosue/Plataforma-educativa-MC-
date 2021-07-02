@@ -132,5 +132,6 @@ Route::post('test/puntajes/{act}/{est}','TestController@puntajes')->name('puntaj
 //________[END Test routes]__________
 
 Route::post('remove/{id}','UploadController@remove');
+Route::get('/help', 'HelpController@help')->name('help');
 
 Route::get('/{catchall?}', 'AppController@index');

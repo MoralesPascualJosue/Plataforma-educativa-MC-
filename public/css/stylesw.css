@@ -164,7 +164,7 @@ a.header-button:visited {
     width: 5.587rem;
     margin-top: 0.2rem;
     margin-left: 0.2rem;
-    border: 1px solid #ffffff5e;
+    border: 1px solid #fdc770;
 }
 
 .header-button:hover,
@@ -243,6 +243,10 @@ a.header-button:active {
     }
     .copyright {
         font-size: x-small;
+    }
+    .floating-header {
+        height: inherit;
+        background-color: white;
     }
 }
 

@@ -1,4 +1,5 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,7 +54,7 @@
       <div class="float-right">
         <a href="{{ url('/register') }}" class="button header-button" id="register-link">Registrarse</a>
         <a href="{{ route('login') }}" class="button header-button" id="signinLink">Ingresar</a>
-        <a href="" class="button header-button help-button">Ayuda?</a>
+        <a href="{{ url('/help')}}" class="button header-button help-button">Ayuda?</a>
       </div>
       @endif
     </div>
