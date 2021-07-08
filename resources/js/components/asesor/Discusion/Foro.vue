@@ -29,7 +29,7 @@
         </a>
       </p>
     </div>
-    <UncoverList class="foro-layout-discuss">
+    <Listadiscusions class="foro-layout-discuss">
       <template slot-scope="{ togglePopup }">
         <transition-group name="list-complete" tag="div" class="d-content">
           <FormDiscu @crear-d="creatediscuss" v-bind:key="-1" />
@@ -43,7 +43,7 @@
             v-show="discu.nameCategoria == categoria || categoria == 'Todo'"
           >
             <div class="discu-content">
-              <UncoverImage
+              <Discusion
                 alt="example"
                 v-bind:height="50"
                 v-bind:objeto="discu"
@@ -57,14 +57,14 @@
           </blockquote>
         </transition-group>
       </template>
-    </UncoverList>
+    </Listadiscusions>
     <button v-if="more" class="page-title" @click="nextpage()">Más</button>
   </div>
 </template>
 
 <script>
-import UncoverList from "./Discuss";
-import UncoverImage from "./Discu";
+import Listadiscusions from "./Discuss";
+import Discusion from "./Discu";
 import FormDiscu from "./FormDiscu";
 
 export default {
@@ -74,8 +74,8 @@ export default {
     };
   },
   components: {
-    UncoverList,
-    UncoverImage,
+    Listadiscusions,
+    Discusion,
     FormDiscu,
   },
   computed: {

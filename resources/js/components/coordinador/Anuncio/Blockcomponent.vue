@@ -28,6 +28,7 @@
       <p class="blockcomponent-fecha-dia">{{ dia[2] }}</p>
     </div>
     <div
+      id="blockcomponent-layout-grid"
       class="blockcomponent-layout-grid"
       :style="{
         gridTemplateColumns: `repeat(${anuncio.widthblock},${
@@ -40,6 +41,7 @@
     >
       <div
         v-for="(block, indexblock) in anuncio.anuncioblock"
+        class="blockcomponent-componentlayout"
         :key="indexblock"
         :style="{
           gridColumnEnd: `span ${block.width}`,
@@ -223,6 +225,10 @@ export default {
   display: grid;
   height: 100%;
   width: 100%;
+}
+.blockcomponent-componentlayout {
+  border: 5px dashed #fcb036;
+  margin: -2px;
 }
 .blockcomponent-options-toolbar p {
   display: inline-block;

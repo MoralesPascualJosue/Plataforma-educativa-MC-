@@ -94,6 +94,7 @@ export default {
   width: 100%;
 }
 .blockcomponent-fecha {
+  z-index: 1;
   right: 0;
   position: absolute;
   margin: 2.5rem;
@@ -120,6 +121,6 @@ export default {
   .blockcomponent-layout-grid {
     display: inherit;
     overflow-y: auto;
-  }  
+  }
 }
 </style>

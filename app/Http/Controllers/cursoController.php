@@ -33,6 +33,7 @@ class cursoController extends Controller
     private $activitieRepository;
     private $mesesN;
     private $elementos;
+    private $contenidos;
 
     public function __construct(cursoRepository $cursoRepo,MatriculadoRepository $matriculadoRepo,ActivitieRepository $activitieRepo)
     {
@@ -41,7 +42,8 @@ class cursoController extends Controller
         $this->cursoRepository = $cursoRepo;
         $this->matriculadoRepository = $matriculadoRepo;
         $this->activitieRepository = $activitieRepo;
-        $this->elementos = 12;
+        $this->elementos = 120;
+        $this->contenidos = 25;
         $this->middleware('auth');
     }
 
@@ -109,8 +111,8 @@ class cursoController extends Controller
             if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
                 abort(404,"Curso no disponible");
             }    
-            $actividades = $curso->activities()->orderBy("activities.fecha_final","DESC")->paginate($this->elementos);            
-            $tests = $curso->tests()->orderBy("tests.fecha_final","DESC")->paginate($this->elementos);
+            $actividades = $curso->activities()->orderBy("activities.fecha_final","DESC")->paginate($this->contenidos);            
+            $tests = $curso->tests()->orderBy("tests.fecha_final","DESC")->paginate($this->contenidos);
                       
             foreach ($actividades as $actividad) {                
                 $actividad['entregas'] = Qualification::where('activitie_id',$actividad->id)->where("estado",1)->count();
@@ -125,8 +127,8 @@ class cursoController extends Controller
                 abort(404,"Curso no disponible");
             }               
 
-             $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_final","DESC")->paginate($this->elementos);
-             $tests = $curso->tests()->where("visible",1)->orderBy("tests.fecha_final","DESC")->paginate($this->elementos);
+             $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_final","DESC")->paginate($this->contenidos);
+             $tests = $curso->tests()->where("visible",1)->orderBy("tests.fecha_final","DESC")->paginate($this->contenidos);
              foreach ($actividades as $actividad) {
                  $actividad['entregas'] = Work::where("estudiante_id",$miusuario->id)
                  ->where("activitie_id",$actividad->id)

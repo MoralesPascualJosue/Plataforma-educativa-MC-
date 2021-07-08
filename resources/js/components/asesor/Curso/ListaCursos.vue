@@ -1,33 +1,40 @@
 <template>
   <div class="listacursos-layout">
-    <FormCurso @crear-curso="createcurso" v-bind:key="-1" />
-    <!--    <Cursos>
-      <template slot-scope="{ togglePopup }">-->
+    <div class="listacursos-toolsbar">
+      <FormCurso @crear-curso="createcurso" v-bind:key="-1" />
+      <div class="listacursos-toolsbar-right">
+        <div class="search-clear" v-if="search != ''" @click="search = ''">
+          X
+        </div>
+        <input type="text" v-model="search" placeholder="Buscar curso.." />
+      </div>
+    </div>
     <transition-group name="list-complete" tag="div" class="list">
       <div
-        v-for="curso in cursos.data"
+        v-for="curso in filteredList"
         v-bind:key="curso.id"
         class="card list-complete-item"
       >
         <Curso alt="curso" v-bind:height="200" v-bind:curso="curso" />
       </div>
     </transition-group>
-    <!-- </template>
-    /Cursos>-->
-    <button v-if="more" class="listacursos-nextpage" @click="nextpage()">
+
+    <button
+      v-if="more && search == ''"
+      class="listacursos-nextpage"
+      @click="nextpage()"
+    >
       Más
     </button>
   </div>
 </template>
 
 <script>
-//import Cursos from "./Cursos";
 import Curso from "./Curso";
 import FormCurso from "./FormCurso";
 
 export default {
   components: {
-    //    Cursos,
     Curso,
     FormCurso,
   },
@@ -41,6 +48,16 @@ export default {
     cursos() {
       return this.$store.getters.cursosview;
     },
+    filteredList() {
+      return this.cursos.data.filter((curso) => {
+        return curso.title.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
+  },
+  data() {
+    return {
+      search: "",
+    };
   },
   created() {
     axios
@@ -69,9 +86,6 @@ export default {
             this.cursos.data.push(element);
           });
           this.cursos.next_page_url = res.data.next_page_url;
-          /*          setTimeout(function () {
-            window.scrollBy(0, -(window.scrollY - posy));
-          }, 200);*/
         })
         .catch((error) => {
           if (error.response.status === 401) {
@@ -92,8 +106,8 @@ export default {
   width: 100%;
   display: grid;
   grid-gap: 1rem 0.5rem;
-  grid-template-columns: repeat(4, 24%);
   justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 .card {
   position: initial;
@@ -113,6 +127,42 @@ export default {
   width: 100%;
   height: 62px;
   color: black;
+}
+.listacursos-toolsbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fcb036;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+}
+.listacursos-toolsbar-right {
+  padding: 0.2rem;
+}
+.listacursos-toolsbar-right input {
+  padding: 0.4rem;
+  font-size: 1.3rem;
+  background-color: #fdc770;
+  border: none;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+.search-clear {
+  color: #666666;
+  font-weight: 700;
+  display: inline-block;
+  font-size: 1.3rem;
+  margin-right: 0.5rem;
+  background-color: #fdc770;
+  border-radius: 50%;
+  width: 2rem;
+  text-align: center;
+  cursor: pointer;
+}
+.search-clear:hover {
+  border: 2px solid #266fae;
+  padding: 0.1rem;
+  width: 2.1rem;
 }
 .list-complete-item {
   transition: all 0.5s;
@@ -145,15 +195,7 @@ export default {
   opacity: 0;
 }
 
-@media (max-width: 1050px) {
-  .list {
-    grid-template-columns: repeat(3, 33%);
-  }
-}
 @media (max-width: 800px) {
-  .list {
-    grid-template-columns: repeat(1, 100%);
-  }
   .card {
     margin-top: 0.5rem;
   }

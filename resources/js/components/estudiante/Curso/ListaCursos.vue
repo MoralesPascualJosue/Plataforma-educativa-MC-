@@ -1,11 +1,21 @@
 <template>
   <div class="listacursos-layout">
-    <!--    <Cursos>
-      <template slot-scope="{ togglePopup }">-->
+    <div class="listacursos-toolsbar">
+      <div class="listacursos-toolsbar-right">
+        <div class="search-clear" v-if="search != ''" @click="search = ''">
+          X
+        </div>
+        <input type="text" v-model="search" placeholder="Buscar curso.." />
+      </div>
+    </div>
     <transition-group name="list-complete" tag="div" class="list">
-      <FormCurso @crear-curso="createcurso" v-bind:key="-1" />
+      <FormCurso
+        v-if="search == ''"
+        @crear-curso="createcurso"
+        v-bind:key="-1"
+      />
       <div
-        v-for="curso in cursos.data"
+        v-for="curso in filteredList"
         v-bind:key="curso.id"
         class="card list-complete-item"
       >
@@ -15,21 +25,23 @@
         </p>
       </div>
     </transition-group>
-    <!--  </template>
-    </Cursos>-->
-    <button v-if="more" class="btn-nextpage" @click="nextpage()">Más</button>
+    <button
+      v-if="more && search == ''"
+      class="btn-nextpage"
+      @click="nextpage()"
+    >
+      Más
+    </button>
     <div class="bottom">Maestria en contruccion 2020</div>
   </div>
 </template>
 
 <script>
-//import Cursos from "./Cursos";
 import Curso from "./Curso";
 import FormCurso from "./FormCurso";
 
 export default {
   components: {
-    //    Cursos,
     Curso,
     FormCurso,
   },
@@ -43,6 +55,14 @@ export default {
     cursos() {
       return this.$store.getters.cursosview;
     },
+    filteredList() {
+      return this.cursos.data.filter((curso) => {
+        return curso.title.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
+  },
+  data() {
+    return { search: "" };
   },
   created() {
     axios
@@ -94,8 +114,8 @@ export default {
   width: 100%;
   display: grid;
   grid-gap: 0.5rem;
-  grid-template-columns: repeat(4, 24%);
   justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 .card {
   position: initial;
@@ -115,6 +135,42 @@ export default {
   width: 100%;
   height: 62px;
   color: black;
+}
+.listacursos-toolsbar {
+  display: flex;
+  justify-content: flex-end;
+  background-color: #fcb036;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+}
+.listacursos-toolsbar-right {
+  padding: 0.2rem;
+}
+.listacursos-toolsbar-right input {
+  padding: 0.4rem;
+  font-size: 1.3rem;
+  background-color: #fdc770;
+  border: none;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+.search-clear {
+  color: #666666;
+  font-weight: 700;
+  display: inline-block;
+  font-size: 1.3rem;
+  margin-right: 0.5rem;
+  background-color: #fdc770;
+  border-radius: 50%;
+  width: 2rem;
+  text-align: center;
+  cursor: pointer;
+}
+.search-clear:hover {
+  border: 2px solid #266fae;
+  padding: 0.1rem;
+  width: 2.1rem;
 }
 .list-complete-item {
   transition: all 0.5s;
@@ -146,16 +202,7 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
-
-@media (max-width: 1050px) {
-  .list {
-    grid-template-columns: repeat(3, 33%);
-  }
-}
 @media (max-width: 800px) {
-  .list {
-    grid-template-columns: repeat(1, 100%);
-  }
   .card {
     margin-top: 0.5rem;
   }

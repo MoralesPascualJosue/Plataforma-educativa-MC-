@@ -138,10 +138,7 @@ export default {
 
 <style>
 .formcurso-layout {
-  margin-bottom: 0.5rem;
-  background-color: #fcb036;
   border-radius: 20px;
-  box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
   overflow: hidden;
 }
 .formcurso-menubuttom {

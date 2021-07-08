@@ -56,6 +56,7 @@ Vue.component("v-select", vSelect);
 const store = new Vuex.Store({
     state: {
         cursos: {
+            data: [],
             next_page_url: ""
         },
         actividades: {},

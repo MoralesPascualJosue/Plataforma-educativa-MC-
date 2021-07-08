@@ -27,7 +27,6 @@
         </a>
       </div>
     </div>
-
     <div class="lista-actividades-listaactividades">
       <div class="lista-actividades-listaactividades-layout">
         <FormContent @crear-actividad="createactividad" />

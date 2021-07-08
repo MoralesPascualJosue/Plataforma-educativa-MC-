@@ -115,7 +115,7 @@ export default {
         let elemento =
           " <form class='input-areavideo' action='/uploadfilev' method='post' enctype='multipart/form-data'>" +
           "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
-          "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 300MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
+          "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 99MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
         let content = this.parentElement.parentElement.nextElementSibling;
         content.innerHTML = elemento;
 
@@ -296,7 +296,7 @@ export default {
             let elemento =
               " <form class='input-areavideo' action='/uploadfilev' method='post' enctype='multipart/form-data'>" +
               "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
-              "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 300MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
+              "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 99MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
             let content = this.parentElement.parentElement.nextElementSibling;
             content.innerHTML = elemento;
 
@@ -420,7 +420,6 @@ export default {
       });
 
       /*eventos sumit */
-      //$(document).off("submit", ".input-areaimage");
       $(document).off("submit");
       $(document).on("submit", ".input-areaimage", function (e) {
         e.preventDefault();
@@ -444,8 +443,14 @@ export default {
               "<img src='" + data + "' alt='img'class='wm-100'>";
           },
           error: function (data) {
-            if (data.status == 401 || 419) {
+            if (data.status == 401 || data.status == 419) {
               window.location.href = "login";
+            } else if (data.status == 413) {
+              bar.textContent = "Error: se ha excedido el limite de tamaño.";
+              bar.classList.remove("complete");
+            } else {
+              bar.textContent = "";
+              bar.classList.remove("complete");
             }
           },
         });
@@ -508,18 +513,21 @@ export default {
             bar.classList.add("hide");
             bar.classList.remove("complete");
             this.parentElement.innerHTML =
-              "<video id='preview-player_html5_api' preload='auto' controls class='vjs-tech wm-100' playsinline='playsinline' tabindex='-1' poster=''" +
+              "<video preload='auto' controls class='video-js wm-100' data-setup='{}'" +
               "src='" +
               data +
               "'></video>";
           },
           error: function (data) {
-            if (data.status == 401 || 419) {
+            if (data.status == 401 || data.status == 419) {
               window.location.href = "login";
+            } else if (data.status == 413) {
+              bar.textContent = "Error: se ha excedido el limite de tamaño.";
+              bar.classList.remove("complete");
+            } else {
+              bar.textContent = "";
+              bar.classList.remove("complete");
             }
-
-            bar.textContent = "";
-            bar.classList.remove("complete");
           },
         });
       });
@@ -587,11 +595,15 @@ export default {
               "' frameborder='0'></iframe>";
           },
           error: function (data) {
-            if (data.status == 401 || 419) {
+            if (data.status == 401 || data.status == 419) {
               window.location.href = "login";
+            } else if (data.status == 413) {
+              bar.textContent = "Error: se ha excedido el limite de tamaño.";
+              bar.classList.remove("complete");
+            } else {
+              bar.textContent = "";
+              bar.classList.remove("complete");
             }
-            bar.textContent = "";
-            bar.classList.remove("complete");
           },
         });
       });
@@ -674,12 +686,15 @@ export default {
             this.parentElement.children[0].children[0].append(nuevob);
           },
           error: function (data) {
-            if (data.status == 401 || 419) {
+            if (data.status == 401 || data.status == 419) {
               window.location.href = "login";
+            } else if (data.status == 413) {
+              bar.textContent = "Error: se ha excedido el limite de tamaño.";
+              bar.classList.remove("complete");
+            } else {
+              bar.textContent = "";
+              bar.classList.remove("complete");
             }
-
-            bar.textContent = "";
-            bar.classList.remove("complete");
           },
         });
       });
@@ -774,7 +789,7 @@ export default {
         let elemento =
           " <form class='input-areavideo' action='/uploadfilev' method='post' enctype='multipart/form-data'>" +
           "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
-          "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 300MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
+          "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 99MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
         let content = this.parentElement.parentElement.nextElementSibling;
         content.innerHTML = elemento;
 
@@ -951,7 +966,7 @@ export default {
             let elemento =
               " <form class='input-areavideo' action='/uploadfilev' method='post' enctype='multipart/form-data'>" +
               "<div class='form-group'><input type='file' class='form-control-file' name='fileToUpload' id='exampleInputFile'aria-describedby='fileHelp'>" +
-              "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 300MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
+              "<small id='fileHelp' class='form-text text-muted'>Selecciona un video Tamaño máximo 99MB</small><button type='submit' class='btn-block'>Submit</button><div class='progress'></div></div></form>";
             let content = this.parentElement.parentElement.nextElementSibling;
             content.innerHTML = elemento;
 

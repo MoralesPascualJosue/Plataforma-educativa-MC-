@@ -29,9 +29,9 @@ class UploadController extends Controller
 
     public function uploadFilevideo(Request $request){
         if ($files = $request->file('fileToUpload')) {
-             $id = Auth::user()->id;
+            $id = Auth::user()->id;
             request()->validate([
-                'fileToUpload' => 'required|mimes:mpeg,mp4,webm,mov,flv,avi,wmv|max:307200'
+                'fileToUpload' => 'required|mimes:mpeg,mp4,webm,mov,flv,avi,wmv|max:100000'
             ]);
             $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
             $ruta = request()->fileToUpload->storeAs('media/'.$id,$fileName,'public');
@@ -46,7 +46,7 @@ class UploadController extends Controller
         if ($files = $request->file('fileToUpload')) {
              $id = Auth::user()->id;
             request()->validate([
-                'fileToUpload' => 'required|mimes:pdf|max:30720'
+                'fileToUpload' => 'required|mimes:pdf|max:100000'
             ]);
             $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
             $ruta = request()->fileToUpload->storeAs('archivos/'.$id,$fileName,'public');

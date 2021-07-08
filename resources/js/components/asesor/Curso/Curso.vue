@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="cursodata.cover"
+    <div v-if="cursodata.cover"
       class="curso-image"
       :style="{
         height: `${height}px`,
@@ -116,3 +115,4 @@ export default {
   }
 }
 </style>
+

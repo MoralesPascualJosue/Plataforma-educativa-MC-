@@ -189,22 +189,29 @@ p {
   text-align: center;
 }
 .navegationmenu-user-image {
-  width: 70%;
   display: flex;
   border: 5px solid #fcb036;
   border-radius: 50%;
   overflow: hidden;
-  left: 15%;
-  position: relative;
   box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+  width: 100%;
+  padding-top: 97%;
+  position: relative;
 }
 .navegationmenu-user-image img {
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  right: 0;
 }
 .navegationmenu-user p {
-  font-size: 14px;
+  margin-top: 0.5rem;
+  font-size: 1rem;
   margin-bottom: inherit;
+  font-weight: 600;
 }
 .navegationmenu-user span {
   font-size: 12px;

@@ -48,6 +48,7 @@ const store = new Vuex.Store({
             session: "a"
         },
         cursos: {
+            data: [],
             next_page_url: ""
         },
         actividades: {},

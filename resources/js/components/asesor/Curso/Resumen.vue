@@ -56,6 +56,9 @@
             </td>
           </tr>
         </tbody>
+        <thead v-if="cargando">
+          <h3>Cargando ...</h3>
+        </thead>
       </table>
     </div>
   </div>
@@ -73,6 +76,7 @@ export default {
       actividades: [],
       estudiantes: [],
       cursoi: [],
+      cargando: true,
     };
   },
   created() {
@@ -82,6 +86,7 @@ export default {
         this.actividades = res.data.actividades;
         this.estudiantes = res.data.estudiantes;
         this.cursoi = res.data.curso;
+        this.cargando = false;
       })
       .catch((error) => {
         if (error.response.status === 401) {
