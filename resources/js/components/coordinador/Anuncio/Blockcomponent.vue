@@ -30,6 +30,7 @@
     <div
       id="blockcomponent-layout-grid"
       class="blockcomponent-layout-grid"
+      :class="{ 'blockcomponent-layout-grid-edit': statusshow }"
       :style="{
         gridTemplateColumns: `repeat(${anuncio.widthblock},${
           100 / anuncio.widthblock
@@ -122,16 +123,24 @@ export default {
       this.$emit("changesn", true);
     },
     deleteColumn() {
-      this.anuncio.widthblock--;
-      this.$emit("changesn", true);
+      if (this.anuncio.widthblock > 1) {
+        this.anuncio.widthblock--;
+        this.$emit("changesn", true);
+      } else {
+        flash("limite alcanzado", "warning");
+      }
     },
     addRow() {
       this.anuncio.heigthblock++;
       this.$emit("changesn", true);
     },
     deleteRow() {
-      this.anuncio.heigthblock--;
-      this.$emit("changesn", true);
+      if (this.anuncio.heigthblock > 1) {
+        this.anuncio.heigthblock--;
+        this.$emit("changesn", true);
+      } else {
+        flash("limite alcanzado", "warning");
+      }
     },
     addComponent(value) {
       let nextblock = Object.keys(this.anuncio.anuncioblock).length;
@@ -225,6 +234,10 @@ export default {
   display: grid;
   height: 100%;
   width: 100%;
+  padding: 0.5rem;
+}
+.blockcomponent-layout-grid-edit {
+  padding: 2rem;
 }
 .blockcomponent-componentlayout {
   border: 5px dashed #fcb036;

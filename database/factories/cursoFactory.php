@@ -4,6 +4,7 @@
 
 use App\Models\Curso;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 $factory->define(Curso::class, function (Faker $faker) {
 
@@ -13,6 +14,6 @@ $factory->define(Curso::class, function (Faker $faker) {
         'cover' => $faker->word,
         'password' => Str::random(10),
         'created_at' => $faker->date('Y-m-d H:i:s'),
-        'updated_at' => $faker->date('Y-m-d H:i:s')
+        'updated_at' => $faker->date('Y-m-d H:i:s'),
     ];
 });

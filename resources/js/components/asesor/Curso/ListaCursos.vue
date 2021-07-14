@@ -105,7 +105,7 @@ export default {
   position: relative;
   width: 100%;
   display: grid;
-  grid-gap: 1rem 0.5rem;
+  grid-gap: 1.5rem;
   justify-content: center;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
