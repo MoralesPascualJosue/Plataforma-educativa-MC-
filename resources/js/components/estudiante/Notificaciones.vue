@@ -147,7 +147,7 @@ export default {
   text-align: left;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
-  background-color: #fdc770 !important;
+  background-color: #f0f0f0 !important;
 }
 
 .notificaciones-icon {

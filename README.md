@@ -23,8 +23,6 @@ Modelo entidad - relacion [ver](https://raw.githubusercontent.com/MoralesPascual
 
 <p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/modelo%20er%20bd.png" width="400"></p>
 
-- **[mysql]
-
 ## Capturas
 
 Algunas capturas de pantalla.
@@ -49,11 +47,9 @@ Algunas capturas de pantalla.
 
 <p align="center"><img src="https://raw.githubusercontent.com/MoralesPascualJosue/Plataforma-educativa-MC-/interfaz-preview/information/informacionview.png" width="400"></p>
 
-
-
 ## Contributing
 
--- ...
+-   Documentación [Descargar](https://github.com/MoralesPascualJosue/Plataforma-educativa-MC-/raw/interfaz-preview/information/documentacion.pdf).
 
 ## License
 

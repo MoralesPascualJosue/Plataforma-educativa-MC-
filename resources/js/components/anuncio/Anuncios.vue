@@ -154,7 +154,7 @@ export default {
   cursor: pointer;
   height: 2rem;
   width: 2rem;
-  background-color: white;
+  background-color: #f0f0f0;
   margin-top: 1rem;
   border-radius: 4px;
   text-align: center;
@@ -171,7 +171,7 @@ export default {
 .anuncios-container {
   height: 100%;
   width: 100%;
-  background-color: #fdc770;
+  background-color: #f0f0f0;
   margin-top: 0.5rem;
   border-radius: 30px;
   padding: 1rem;

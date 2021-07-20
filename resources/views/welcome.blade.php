@@ -31,7 +31,8 @@
       <div class="footer">
         <div class="float-right">
           <div class="footer-links">
-            <a href="">Acerca de nosotros</a>
+            <a href="https://github.com/MoralesPascualJosue/Plataforma-educativa-MC-/tree/interfaz-preview">Acerca de
+              nosotros</a>
           </div>
           <div class="copyright">Copyright © 2020. Maestria en Contrucción. Todos los derechos reservados.</div>
         </div>
