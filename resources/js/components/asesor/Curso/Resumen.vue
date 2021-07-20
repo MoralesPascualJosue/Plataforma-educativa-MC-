@@ -129,7 +129,7 @@ export default {
 }
 
 .resumen-table tbody tr:hover {
-  background-color: white;
+  background-color: #fcb036;
 }
 .resumen-table tbody td {
   padding: 0.2rem;

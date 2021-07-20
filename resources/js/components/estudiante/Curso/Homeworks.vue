@@ -82,7 +82,7 @@ export default {
 <style>
 .homeworks-title {
   margin: 0.5rem;
-  background-color: #fcb036;
+  background-color: #fdc770;
   border-radius: 20px;
   padding: 0.5rem;
   box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
@@ -98,7 +98,7 @@ export default {
 .card-activitie {
   display: grid;
   grid-template-columns: auto 15%;
-  background-color: white;
+  background-color: #fdc770;
   margin: 0.5rem;
   width: 48%;
   box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);

@@ -40,7 +40,7 @@ export default {
 </script>
 <style>
 .actividad-item {
-  background-color: #fcb036;
+  background-color: #fdc770;
   width: 100%;
   height: 100px;
   padding-left: 1rem;
@@ -50,8 +50,8 @@ export default {
   border-radius: 10px;
 }
 .actividad-item:hover {
-  border-bottom: orange solid 2px;
-  background-color: #f8f8f8;
+  background-color: #fcb036;
+  padding: 1.5rem;
 }
 .actividad-item a {
   position: relative;

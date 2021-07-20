@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="{{ asset('css/stylesr.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 
     <title>Crear cuenta</title>
 </head>
@@ -140,7 +140,7 @@
 
     <script src="{{asset('js/jquery/jquery-3.2.1.min.js')}}"> </script>
     <script src="{{asset('js/jquery/jqueryeasing.min.js')}}"> </script>
-    <script src="{{asset('js/mainr.js')}}"> </script>
+    <script src="{{asset('js/register.js')}}"> </script>
 
 </body>
 

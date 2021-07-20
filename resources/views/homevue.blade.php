@@ -9,8 +9,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app'.$perfil.'.js') }}" defer></script>
-    <!-- Styles -->
-    <!--  <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 
 </head>
 

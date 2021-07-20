@@ -346,11 +346,12 @@ export default {
 .list-group-item {
   display: block;
   padding: 1rem;
-  background-color: #fcb036;
+  background-color: #fdc770;
   margin: 0.5rem;
 }
 .list-group-item:hover {
-  background-color: white;
+  background-color: #fcb036;
+  text-align: center;
 }
 .listamensajes-layout-menu {
   padding: 0.5rem;

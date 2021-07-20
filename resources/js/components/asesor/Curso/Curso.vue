@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="cursodata.cover"
+    <div
+      v-if="cursodata.cover"
       class="curso-image"
       :style="{
         height: `${height}px`,
@@ -77,9 +78,10 @@ export default {
   overflow: hidden;
 }
 .curso-status {
-  background-color: white;
+  background-color: #fcb036;
   padding: 1rem;
   line-height: 3rem;
+  border-radius: 20px;
 }
 .curso-status img {
   width: 1.5rem;

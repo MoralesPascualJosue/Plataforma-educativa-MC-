@@ -147,9 +147,7 @@ export default {
   text-align: left;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
-  background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  background-color: #fdc770 !important;
 }
 
 .notificaciones-icon {
@@ -163,7 +161,6 @@ export default {
   padding: 0.5rem;
 }
 .notificaciones-detalles {
-  background-color: white;
   padding: 0.5rem;
 }
 .notificacion-detalles-head {

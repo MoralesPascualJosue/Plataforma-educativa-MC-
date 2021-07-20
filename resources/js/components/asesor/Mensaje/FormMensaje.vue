@@ -173,9 +173,10 @@ export default {
   border: none;
   cursor: pointer;
   width: 7rem;
+  background-color: #fdc770;
 }
 .formmensaje-enviar:hover {
-  background-color: #fcb036;
+  border: 2px solid #266fae;
 }
 .formmensaje-cancelar {
   padding: 0.5rem;
@@ -183,7 +184,7 @@ export default {
   background-color: #ffffff;
 }
 .formmensaje-cancelar:hover {
-  background-color: #fcb036;
+  border: 2px solid #266fae;
 }
 
 @media (max-width: 1050px) {

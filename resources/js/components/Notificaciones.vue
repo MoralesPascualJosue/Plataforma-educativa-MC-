@@ -56,6 +56,7 @@
 </template>
 
 <script>
+//ejemplo de websockets channel
 export default {
   data() {
     return {

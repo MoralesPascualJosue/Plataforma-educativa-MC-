@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/util.css') }}">
+    <script src="{{asset('js/passwordreset.js')}}"> </script>
 </head>
 
 <body>
@@ -90,10 +91,6 @@
 
         </div>
     </div>
-
-
-    {{-- <script src="{{asset('js/jquery/jquery-3.2.1.min.js')}}"> </script> --}}
-    <script src="{{asset('js/main.js')}}"> </script>
 
 </body>
 

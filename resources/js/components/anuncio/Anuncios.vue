@@ -127,7 +127,7 @@ export default {
 }
 .anuncios-toolbar p {
   display: inline-block;
-  background-color: #fcb036;
+  background-color: #fdc770;
   border-radius: 30px;
   padding: 0.4rem;
   cursor: pointer;
@@ -171,7 +171,7 @@ export default {
 .anuncios-container {
   height: 100%;
   width: 100%;
-  background-color: white;
+  background-color: #fdc770;
   margin-top: 0.5rem;
   border-radius: 30px;
   padding: 1rem;

@@ -15,5 +15,4 @@ mix.sass("resources/sass/app.scss", "public/css");
 mix.js("resources/js/appCoordinador.js", "public/js");
 mix.js("resources/js/appAsesor.js", "public/js");
 mix.js("resources/js/appEstudiante.js", "public/js");
-mix.js("resources/js/appTest.js", "public/js");
 mix.js("resources/js/appHelp.js", "public/js");

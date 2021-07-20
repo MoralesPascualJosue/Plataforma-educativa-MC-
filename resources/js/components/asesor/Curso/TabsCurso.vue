@@ -141,7 +141,7 @@ export default {
   height: 100%;
   display: grid;
   grid-template-columns: 15% auto;
-  grid-template-rows: 5% 90%;
+  grid-template-rows: 5% 95%;
   overflow: hidden;
 }
 @media only screen and (max-width: 1080px) {
@@ -166,7 +166,7 @@ export default {
 }
 .curso-tabs-cursetitle {
   margin-bottom: 0.5rem;
-  background-color: #fcb036;
+  background-color: #fdc770;
   border-radius: 20px;
   padding: 0.5rem;
   box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
@@ -180,6 +180,10 @@ export default {
 
 .curso-tabs-navegationmenu {
   padding: 1rem;
+  background-color: #fdc770;
+  border-radius: 20px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 .curso-tabs-nav {
   margin-top: 0.5rem;
@@ -213,7 +217,9 @@ export default {
 }
 .curso-tabs-contentpane {
   overflow-y: auto;
-  height: 100%;
+  background-color: white;
+  margin: 1rem;
+  border-radius: 20px;
 }
 @media only screen and (max-width: 1080px) {
   .curso-tabs-nav {

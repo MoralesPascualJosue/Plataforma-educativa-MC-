@@ -347,7 +347,7 @@ h2 {
 .data-row {
   padding: 1.25rem 0;
   align-items: center;
-  background-color: #fcb036;
+  background-color: #fdc770;
   color: #262626;
   display: flex;
   padding: 0.9375rem 0;

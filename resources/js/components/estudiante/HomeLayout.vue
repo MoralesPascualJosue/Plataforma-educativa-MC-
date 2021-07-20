@@ -66,7 +66,7 @@ export default {
 .home-infouser {
   height: 100%;
   width: 100%;
-  background-color: #fcb036;
+  background-color: #fdc770;
   border-radius: 20px;
   padding: 0.5rem;
   overflow: hidden;

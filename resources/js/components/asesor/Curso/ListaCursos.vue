@@ -115,7 +115,7 @@ export default {
   height: 265px;
   overflow: hidden;
   box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
-  background-color: #fcb036;
+  background-color: #fdc770;
 }
 .listacursos-layout-listacursos-curso-title {
   font-size: 16px;
@@ -131,7 +131,7 @@ export default {
 .listacursos-toolsbar {
   display: flex;
   justify-content: space-between;
-  background-color: #fcb036;
+  background-color: #fdc770;
   border-radius: 20px;
   margin-bottom: 0.5rem;
   box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
@@ -142,7 +142,7 @@ export default {
 .listacursos-toolsbar-right input {
   padding: 0.4rem;
   font-size: 1.3rem;
-  background-color: #fdc770;
+  background-color: #fcb036;
   border: none;
   display: inline-block;
   margin-right: 0.5rem;
@@ -153,7 +153,7 @@ export default {
   display: inline-block;
   font-size: 1.3rem;
   margin-right: 0.5rem;
-  background-color: #fdc770;
+  background-color: #fcb036;
   border-radius: 50%;
   width: 2rem;
   text-align: center;

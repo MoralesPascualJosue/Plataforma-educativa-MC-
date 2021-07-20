@@ -110,7 +110,7 @@ export default {
   font-size: 30px;
 }
 .formcontent-bottom:hover {
-  background-color: white;
+  border: 2px solid #266fae;
 }
 
 .formcontent-menucontent {

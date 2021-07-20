@@ -3,6 +3,5 @@
     "/js/appCoordinador.js": "/js/appCoordinador.js",
     "/css/app.css": "/css/app.css",
     "/js/appEstudiante.js": "/js/appEstudiante.js",
-    "/js/appHelp.js": "/js/appHelp.js",
-    "/js/appTest.js": "/js/appTest.js"
+    "/js/appHelp.js": "/js/appHelp.js"
 }

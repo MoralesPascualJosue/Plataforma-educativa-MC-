@@ -14,7 +14,6 @@
 </div>
 
 <div class="right">
-    {{-- <P class="info-materia-r">GRUPO: <span class="info-materia-r-data">ISB</span></P> --}}
     <P class="info-materia-r">ALUMNOS: <span class="info-materia-r-data">{{$curso->participantes}}</span>
     </P>
 </div>

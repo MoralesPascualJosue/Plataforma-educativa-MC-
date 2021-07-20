@@ -33,6 +33,7 @@ export default {
   height: 100%;
   width: 100%;
   cursor: pointer;
+  background-color: white;
 }
 .descriptioncomponent-body {
   height: 100%;
