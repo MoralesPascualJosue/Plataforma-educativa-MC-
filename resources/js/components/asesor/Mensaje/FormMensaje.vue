@@ -13,7 +13,16 @@
           />
         </div>
         <div class="formmensaje-form-group">
-          <label for="destino">Para:</label>
+          <span class="send-right">
+            <input
+              type="checkbox"
+              name="markall"
+              id="markall"
+              v-model="markall"
+            />
+            Enviar a todos</span
+          >
+          <label for="destino">Para: </label>
           <v-select
             multiple
             label="name"
@@ -21,17 +30,17 @@
             :reduce="(contact) => contact.user.id"
             :options="contactosdefault"
             :closeOnSelect="false"
+            :disabled="markall"
             v-model="destino"
           ></v-select>
         </div>
-        <div class="formmensaje-form-group">
+        <div class="formmensaje-form-group form-content-msg">
           <label for="contenidomensaje">Contenido</label>
-          <textarea
-            type="text"
-            class="form-control block-d"
+          <vue-editor
+            class="form-control block-d contentmsg"
             id="contenidomensaje"
             v-model="contenido"
-          />
+          ></vue-editor>
         </div>
         <button
           id="dLabelms"
@@ -56,6 +65,8 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
+
 export default {
   props: {
     shownm: {
@@ -78,7 +89,12 @@ export default {
       loading: false,
       mensaje: [],
       destino: [],
+      customToolbar: [[]],
+      markall: false,
     };
+  },
+  components: {
+    VueEditor,
   },
   methods: {
     close: function () {
@@ -87,12 +103,19 @@ export default {
     checkForm: function (e) {
       e.preventDefault();
 
+      let sendContacts;
       if (this.asunto == "" || this.contenido == "") {
         flash("Campos vacios", "warning");
         return "fail";
       }
 
-      if (this.destino.length == 0) {
+      if (this.markall && this.contactosdefault[0].name) {
+        sendContacts = this.contactosdefault.map((c) => c.user_id);
+      } else {
+        sendContacts = this.destino;
+      }
+
+      if (sendContacts.length == 0) {
         flash("Mensaje sin  destino", "warning");
         return "fail";
       }
@@ -100,7 +123,7 @@ export default {
       this.loading = true;
       axios
         .post("/sendmensaje/" + this.$store.getters.cursoview.id, {
-          destino: this.destino,
+          destino: sendContacts,
           asunto: this.asunto,
           body: this.contenido,
         })
@@ -168,6 +191,17 @@ export default {
   max-width: 100%;
   min-width: 100%;
 }
+.send-right {
+  float: right;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+}
+.send-right input {
+  height: 1.4rem;
+  width: 1.4rem;
+  margin-right: 0.3rem;
+}
 .formmensaje-enviar {
   padding: 0.5rem;
   border: none;
@@ -185,6 +219,17 @@ export default {
 }
 .formmensaje-cancelar:hover {
   border: 2px solid #266fae;
+}
+.contentmsg {
+  background-color: white;
+}
+.contentmsg p {
+  font-size: inherit;
+  color: inherit;
+}
+.form-content-msg {
+  padding-bottom: 7.5rem;
+  height: 69%;
 }
 
 @media (max-width: 1050px) {

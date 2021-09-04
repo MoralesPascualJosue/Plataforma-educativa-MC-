@@ -175,13 +175,14 @@
                 >
               </p>
             </div>
-            <h3>{{ mensaje.asunto }}</h3>
-            <hr />
+            <h3 class="msgasunto">{{ mensaje.asunto }}</h3>
             <div class="container">
-              <div
-                class="listamensajes-mensaje-body"
-                v-html="mensaje.body"
-              ></div>
+              <vue-editor
+                class="listamensajes-mensaje-body contentmsg"
+                v-model="mensaje.body"
+                :disabled="true"
+                :editor-toolbar="customToolbar"
+              ></vue-editor>
             </div>
           </div>
         </div>
@@ -191,6 +192,7 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
 import FormMensaje from "./FormMensaje";
 export default {
   data() {
@@ -204,6 +206,7 @@ export default {
       recibidos: 0,
       shownm: false,
       nuevos: 0,
+      customToolbar: [[]],
     };
   },
   computed: {
@@ -213,6 +216,7 @@ export default {
   },
   components: {
     FormMensaje,
+    VueEditor,
   },
   created() {
     axios
@@ -329,6 +333,8 @@ export default {
 .listamensajes-detalles {
   background-color: #fdc770;
   padding: 0.5rem;
+  border-radius: 8px;
+  height: 100%;
 }
 .listamensajes-body {
   padding: 0.5rem;
@@ -392,6 +398,20 @@ export default {
   color: blue;
   font-size: 20px;
   font-weight: bolder;
+}
+.contentmsg {
+  background-color: white;
+}
+.contentmsg p {
+  font-size: inherit;
+  color: inherit;
+}
+.msgasunto {
+  margin-left: 4.5rem;
+}
+.ql-editor {
+  font-size: 1rem;
+  font-family: "Poppins";
 }
 
 .enterformmsg-enter-active {

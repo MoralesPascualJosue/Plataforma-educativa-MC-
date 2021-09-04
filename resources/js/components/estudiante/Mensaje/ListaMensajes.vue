@@ -148,7 +148,7 @@
         </div>
       </div>
       <div v-else key="viewmensaje">
-        <div @click="regresaralista" class="listamensajes-showre">Regresar</div>
+        <div @click="regresaralista" class="backtolist">Regresar</div>
         <hr />
         <div class="listamensajes-layout-listamensajes">
           <div class="listamensajes-detalles">
@@ -175,13 +175,14 @@
                 >
               </p>
             </div>
-            <h3>{{ mensaje.asunto }}</h3>
-            <hr />
+            <h3 class="msgasunto">{{ mensaje.asunto }}</h3>
             <div class="container">
-              <div
-                class="listamensajes-mensaje-body"
-                v-html="mensaje.body"
-              ></div>
+              <vue-editor
+                class="listamensajes-mensaje-body contentmsg"
+                v-model="mensaje.body"
+                :disabled="true"
+                :editor-toolbar="customToolbar"
+              ></vue-editor>
             </div>
           </div>
         </div>
@@ -191,6 +192,7 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
 import FormMensaje from "./FormMensaje";
 export default {
   data() {
@@ -204,6 +206,7 @@ export default {
       recibidos: 0,
       shownm: false,
       nuevos: 0,
+      customToolbar: [[]],
     };
   },
   computed: {
@@ -213,6 +216,7 @@ export default {
   },
   components: {
     FormMensaje,
+    VueEditor,
   },
   created() {
     axios
@@ -253,6 +257,7 @@ export default {
         .then((res) => {
           this.mensaje = res.data;
           this.showmensaje = true;
+
           if (res.data.leido) {
             const index = this.mensajes.chats.findIndex(
               (item) => item.id === m.id
@@ -328,6 +333,8 @@ export default {
 .listamensajes-detalles {
   background-color: #fdc770;
   padding: 0.5rem;
+  border-radius: 8px;
+  height: 100%;
 }
 .listamensajes-body {
   padding: 0.5rem;
@@ -336,11 +343,11 @@ export default {
   display: block;
 }
 .listamensajes-layout-sendbottom:hover {
-  background-color: white;
+  background-color: #fcb036;
 }
 .listamensajes-layout-listamensajes {
   display: grid;
-  grid-template-columns: 20% auto;
+  grid-template-columns: 15% auto;
   padding: 1rem;
 }
 .list-group-item {
@@ -392,21 +399,21 @@ export default {
   font-size: 20px;
   font-weight: bolder;
 }
-.listamensajes-showre {
-  background-color: #fcd770;
-  padding: 0.5rem;
-  float: right;
-  border: 2px solid #fcd770;
-  cursor: pointer;
-}
-.listamensajes-showre:hover {
+.contentmsg {
   background-color: white;
 }
-@media only screen and (max-width: 1050px) {
-  .listamensajes-showre {
-    float: inherit;
-  }
+.contentmsg p {
+  font-size: inherit;
+  color: inherit;
 }
+.msgasunto {
+  margin-left: 4.5rem;
+}
+.ql-editor {
+  font-size: 1rem;
+  font-family: "Poppins";
+}
+
 .enterformmsg-enter-active {
   animation: enterformmsg 0.5s ease-out;
 }

@@ -19,7 +19,11 @@
           </div>
           <div class="formcursoupdate-formgroup">
             <label for="descripcioncursou">Descripción o mensage</label>
-            <input type="text" id="descripcioncursou" v-model="description" />
+            <textarea
+              name="descripcioncursou"
+              id="descripcioncursou"
+              v-model="description"
+            ></textarea>
           </div>
           <div
             class="formcursoupdate-formgroup"
@@ -29,10 +33,10 @@
               backgroundPosition: `center`,
               height: `60%`,
               backgroundRepeat: `no-repeat`,
-              paddingTop: `1rem`,
+              marginTop: `2rem`,
             }"
           >
-            <label>Imagen del curso 4mb max.</label>
+            <label class="label-filecover">Imagen del curso 4mb max.</label>
             <input
               type="file"
               id="file"
@@ -166,14 +170,27 @@ export default {
 }
 .formcursoupdate-formgroup input {
   background: none;
-  padding: 0.3rem;
+  padding: 0.5rem;
   border: none;
   width: 100%;
-  font-size: 16px;
-  background-color: white;
+  font-size: x-large;
+  background-color: #fdc770;
+}
+.formcursoupdate-formgroup textarea {
+  font-size: 1.2rem;
+  margin: 0px;
+  width: 100%;
+  height: 8rem;
+  background-color: #fdc770;
+  padding: 0.5rem;
+  font-family: "Poppins";
+  resize: none;
 }
 .formcursoupdate-formgroup input:focus {
-  background-color: #fcb036;
+  background-color: #fdc770;
+}
+.label-filecover {
+  margin-top: -1.5rem;
 }
 .formcursoupdate-file {
   width: 0.1px;
@@ -189,6 +206,7 @@ export default {
   color: black;
   background-color: #fdc770;
   border-radius: 20px;
+  width: 7rem;
 }
 .formcursoupdate-file:focus + label,
 .formcursoupdate-file + label:hover {
