@@ -5,7 +5,10 @@
         <h3 v-if="type == 'activitie'">{{ actividad.activitie.title }}</h3>
         <h3 v-else>{{ actividad.title }}</h3>
       </div>
-      <Block v-if="type == 'activitie'" v-bind:contenidoinicial="actividad.task"/>
+      <activitie-editor
+        v-if="type == 'activitie'"
+        :contenidoinicial="actividad.task"
+      />
       <TestShow v-else />
     </div>
     <div v-else>
@@ -15,7 +18,7 @@
 </template>
 
 <script>
-import Block from "./Block";
+import ActivitieEditor from "./Editor/ActivitieEditor.vue";
 import TestShow from "../Prueba/TestShow";
 export default {
   data() {
@@ -30,7 +33,7 @@ export default {
     },
   },
   components: {
-    Block,
+    ActivitieEditor,
     TestShow,
   },
   created() {
@@ -60,7 +63,10 @@ export default {
 
 <style>
 .actividadshow-header {
- padding: 0.5rem;
- margin-bottom: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+.wm-100 {
+  max-width: 100%;
 }
 </style>

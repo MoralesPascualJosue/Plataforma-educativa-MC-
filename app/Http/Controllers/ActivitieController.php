@@ -58,7 +58,15 @@ class ActivitieController extends Controller
         $contenido['activitie_id'] = $activitie->id;
         $contenido['curso_id'] = $id;
 
-        $task["contenido"] =     "Contenido";
+        $task["contenido"] =  [
+            'propsPage' => [ 
+                'textColor' => '#f0f0f0',
+                'backgroundColor' => '#f2f2f2',
+                'widthPage' => 600,
+                'alignPage' => 'center',
+            ],
+            'rows' => []
+        ];
         $task['asesor_id'] =  $miusuario->id;
         $task['activitie_id'] = $activitie->id;        
         

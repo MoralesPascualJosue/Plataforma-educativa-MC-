@@ -13,14 +13,18 @@ class UploadController extends Controller
     }
 
     public function uploadFileimage(Request $request){
-        if ($files = $request->file('fileToUpload')) {
+        if ($files = $request->file('file')) {
              $id = Auth::user()->id;
             request()->validate([
-                'fileToUpload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             ]);
-            $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
-            $ruta = request()->fileToUpload->storeAs('images/'.$id,$fileName,'public');
-            return $ruta;
+            $fileName = "fileName".time().'.'.request()->file->getClientOriginalExtension();
+            $ruta = request()->file->storeAs('images/'.$id,$fileName,'public');
+            $rutalocal = asset($ruta);
+            
+            return response()->json([
+                'filelink' => $rutalocal,                
+            ]);
         }
 
         abort(402,"Archivo no seleccionado");
@@ -35,7 +39,9 @@ class UploadController extends Controller
             ]);
             $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
             $ruta = request()->fileToUpload->storeAs('media/'.$id,$fileName,'public');
-            return asset($ruta);
+            return response()->json([
+                'filelink' => asset($ruta),                
+            ]);
         }
 
         abort(402,"Archivo no seleccionado");
@@ -50,7 +56,9 @@ class UploadController extends Controller
             ]);
             $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
             $ruta = request()->fileToUpload->storeAs('archivos/'.$id,$fileName,'public');
-            return asset($ruta);
+            return response()->json([
+                'filelink' => asset($ruta),                
+            ]);
         }
 
         abort(402,"Archivo no seleccionado");
@@ -67,11 +75,12 @@ class UploadController extends Controller
             $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
             $ruta = request()->fileToUpload->storeAs('archivos/'.$id,$fileName,'public');            
 
-            $data['url'] = asset($ruta);
-            $data['type'] = request()->fileToUpload->getClientOriginalExtension();
-            $data['name'] = request()->fileToUpload->getClientOriginalName();
-            $data['icon'] = "../resources/icons/work.svg";
-            return $data;
+            return response()->json([
+                'filelink' => asset($ruta),         
+                'type' => request()->fileToUpload->getClientOriginalExtension(),
+                'name' => request()->fileToUpload->getClientOriginalName(),
+                'icon' => "../resources/icons/work.svg",
+            ]); 
         }
 
         abort(402,"Archivo no seleccionado");

@@ -37,7 +37,7 @@ class Task extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'contenido' => 'string',
+        'contenido' => 'array',
         'asesor_id' => 'integer',
         'activitie_id' => 'integer'
     ];
