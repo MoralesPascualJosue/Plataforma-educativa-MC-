@@ -8,9 +8,9 @@ use Faker\Generator as Faker;
 $factory->define(Qualification::class, function (Faker $faker) {
 
     return [
-        'qualification' => $faker->numberBetween(0,100),
+        'qualification' => $faker->numberBetween(60,100),
         'observaciones' => $faker->text,
-        'estado' => $faker->numberBetween(1,3),
+        'estado' => $faker->numberBetween(1,2),
         'activitie_id' => $faker->numberBetween(1,50),
         'curso_id' => $faker->numberBetween(1,50),
         'estudiante_id' => $faker->numberBetween(1,50),

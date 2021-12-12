@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Activitie::class, function (Faker $faker,$id) {
 
     return [
-        'title' => $faker->word,
+        'title' => $faker->catchPhrase,
         'visible' => '1',        
         'intentos' => $faker->numberBetween(1,5),
         'type' => "activitie",

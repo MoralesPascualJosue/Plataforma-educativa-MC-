@@ -24,7 +24,11 @@ class CursedataSeeder extends Seeder
         factory(App\User::class, 10)->create()->each(function ($user) {
             $role = Role::findByName('Asesor');
             $user->assignRole($role);
-            $asesor = $user->asesor()->save(factory(App\Models\Asesor::class)->make());
+            $asesor = $user->asesor()->save(factory(App\Models\Asesor::class)->make(
+                [
+                    'name' => $user->name
+                ]
+            ));
             $asesor->cursos()->createMany(
                 factory(App\Models\Curso::class, 10)->make()->toArray()
             );
@@ -34,7 +38,11 @@ class CursedataSeeder extends Seeder
         factory(App\User::class, 40)->create()->each(function ($user) {
             $role = Role::findByName('Estudiante');
             $user->assignRole($role);
-            $estudiante = $user->estudiante()->save(factory(App\Models\Estudiante::class)->make());     
+            $estudiante = $user->estudiante()->save(factory(App\Models\Estudiante::class)->make(
+                [
+                    'name' => $user->name
+                ]
+            ));     
             $cursos = Curso::all();
             foreach ($cursos as $curso ) {
                 Matriculado::create([
@@ -88,23 +96,10 @@ class CursedataSeeder extends Seeder
                 }         
             }
         }
-        
-        /*
-        Factory(App\Models\Asesor::class,10)->create();
-        Factory(App\Models\Estudiante::class,40)->create();
-        Factory(App\Models\Curso::class,20)->create();
-        Factory(App\Models\Matriculado::class,800)->create();        
-        Factory(App\Models\Activitie::class,400)->create();
 
-        Factory(App\Models\Contenido::class,400)->create();
-        Factory(App\Models\Work::class,400)->create();
-        Factory(App\Models\Task::class,4500)->create();
-        Factory(App\Models\Qualification::class,4500)->create();
-
+        Factory(App\Models\Anuncio::class,4)->create();
         Factory(App\Models\fcategoria::class,50)->create();       
-        Factory(App\Models\fdiscusion::class,800)->create();
-        Factory(App\Models\fpost::class,4500)->create();
-        Factory(App\Models\user_fdiscusion::class,4500)->create();**/
+        Factory(App\Models\fdiscusion::class,800)->create();        
 
     }
 

@@ -73,7 +73,7 @@ export default {
       this.file = event.target.files[0];
       this.loading = true;
       if (this.file != "") {
-        formData.append("fileToUpload", this.file);
+        formData.append("file", this.file);
       }
 
       axios
@@ -84,7 +84,7 @@ export default {
         })
         .then((response) => {
           this.loading = false;
-          this.block.source = response.data;
+          this.block.source = response.data.filelink;
           this.$emit("onchange");
           flash("Imagen actualizada", "success");
         })
