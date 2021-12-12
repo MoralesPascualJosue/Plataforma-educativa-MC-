@@ -40,7 +40,6 @@ class Curso extends Model
      * @var array
      */
     protected $hidden = [
-        'password',
     ];
 
     /**
@@ -53,6 +52,7 @@ class Curso extends Model
         'title' => 'string',
         'review' => 'string',
         'cover' => 'string',
+        'password' => 'string',
         'asesor_id' => 'integer',
         'created_at' => 'date:Y-m-d',
     ];

@@ -35,10 +35,11 @@ $factory->define(Curso::class, function (Faker $faker) {
 
     return [        
         'title' => $faker->bothify('??####-#'),
+        'asesor_id' => $faker->numberBetween(2,10),
         'review' => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
         'cover' => $covers[$fakenumber],
         'password' => $faker->bothify('??####-#???'),
-                'created_at' => $faker->date('Y-m-d H:i:s'),
+        'created_at' => $faker->date('Y-m-d H:i:s'),
         'updated_at' => $faker->date('Y-m-d H:i:s'),
     ];
 });
