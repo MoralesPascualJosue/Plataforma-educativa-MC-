@@ -12,7 +12,7 @@ $factory->define(Anuncio::class, function (Faker $faker) {
                         "type"=>"image",
                         "heigth"=>1,
                         "width"=>1,
-                        "source"=>'http://localhost:8000/images/5/fileName1639282183.png'
+                        "source"=>'/resources/default/info1.png'
                     ],
                     [
                         "type"=>"description",
@@ -25,7 +25,7 @@ $factory->define(Anuncio::class, function (Faker $faker) {
                     ],
                     [
                         "type"=>"image",
-                        "source"=>"http://localhost:8000/images/5/fileName1639282190.jpg",
+                        "source"=>'/resources/default/info2.png',
                         "heigth"=>1,
                         "width"=>1
                     ],
@@ -45,7 +45,7 @@ $factory->define(Anuncio::class, function (Faker $faker) {
                         "type"=>"image",
                         "heigth"=>2,
                         "width"=>3,
-                        "source"=>'/images/5/fileName1639282717.jpg'
+                        "source"=>'/resources/default/info3.png'
                     ],
                     [
                         "type"=>"description",
