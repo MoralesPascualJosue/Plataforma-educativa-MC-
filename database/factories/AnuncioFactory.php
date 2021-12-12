@@ -45,7 +45,7 @@ $factory->define(Anuncio::class, function (Faker $faker) {
                         "type"=>"image",
                         "heigth"=>2,
                         "width"=>3,
-                        "source"=>'http://localhost:8000/images/5/fileName1639282717.jpg'
+                        "source"=>'/images/5/fileName1639282717.jpg'
                     ],
                     [
                         "type"=>"description",
