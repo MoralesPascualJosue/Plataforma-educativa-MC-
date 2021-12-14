@@ -61,6 +61,21 @@ export default {
   },
   created() {
     axios
+      .get("/perfil")
+      .then((res) => {
+        this.$store.commit("changelogin", {
+          email: res.data.user.email,
+          image: res.data.user.image,
+          name: res.data.user.name,
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          window.location.href = "login";
+        }
+      });
+
+    axios
       .get("/inicio")
       .then((res) => {
         this.$store.commit("changecursos", res.data);

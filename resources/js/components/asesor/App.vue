@@ -66,17 +66,15 @@ export default {
   },
   data() {
     return {
-      user: {
-        name: "Default name",
-        email: "default@email.com",
-        image: "resources/users/user-default.svg",
-      },
       isLoggedIn: true,
       isLogOut: false,
       open: false,
     };
   },
   computed: {
+    user() {
+      return this.$store.getters.loginview;
+    },
     showMenu() {
       if (this.open) {
         return "navegationmenu-showmenu";
@@ -90,7 +88,7 @@ export default {
   },
   methods: {
     updateuser(data) {
-      this.user = data;
+      this.$store.commit("changelogin", data);
     },
     openmenu() {
       this.open = !this.open;

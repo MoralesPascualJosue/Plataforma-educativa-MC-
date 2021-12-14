@@ -74,7 +74,7 @@
         <Foro />
       </div>
       <div v-show="isActive('contact')">
-        <ListaMensajes @mensajes="mensajes" @set-mensajes="mensajesnuevoss" />
+        <HomeMensajes @mensajes="mensajes" @set-mensajes="mensajesnuevoss" />
       </div>
       <div v-show="isActive('informacion')">
         <InformacionShow />
@@ -86,7 +86,7 @@
 <script>
 import ListaActividades from "../Actividad/ListaActividades";
 import Foro from "../Discusion/Foro";
-import ListaMensajes from "../Mensaje/ListaMensajes";
+import HomeMensajes from "../Mensaje/Home.vue";
 import InformacionShow from "../Informacion/InformacionShow";
 import Resumen from "./Resumen";
 export default {
@@ -99,7 +99,7 @@ export default {
   components: {
     ListaActividades,
     Foro,
-    ListaMensajes,
+    HomeMensajes,
     InformacionShow,
     Resumen,
   },

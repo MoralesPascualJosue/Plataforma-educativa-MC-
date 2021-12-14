@@ -55,6 +55,11 @@ Vue.component("v-select", vSelect);
 
 const store = new Vuex.Store({
     state: {
+        login: {
+            name: "Default name",
+            email: "default@email.com",
+            image: "resources/users/user-default.svg"
+        },
         cursos: {
             data: [],
             next_page_url: ""
@@ -81,6 +86,9 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
+        changelogin(state, user) {
+            state.login = user;
+        },
         changecomentario(state, coment) {
             state.comentario = coment;
         },
@@ -146,6 +154,9 @@ const store = new Vuex.Store({
     },
     actions: {},
     getters: {
+        loginview(state) {
+            return state.login;
+        },
         //retornar datos procesados,
         comentarioview(state) {
             return state.comentario;

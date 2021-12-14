@@ -199,6 +199,12 @@ export default {
         this.institucion = res.data.perfil.institute;
         this.departamento = res.data.perfil.department;
         this.previewimg = this.user.image;
+
+        this.updateuser({
+          email: this.user.email,
+          image: this.user.image,
+          name: this.user.name,
+        });
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -207,6 +213,9 @@ export default {
       });
   },
   methods: {
+    updateuser(data) {
+      this.$store.commit("changelogin", data);
+    },
     editarperfil() {
       this.editando = true;
     },
@@ -249,6 +258,12 @@ export default {
           this.editando = false;
           this.user = response.data.user;
           this.perfil = response.data.perfil;
+
+          this.updateuser({
+            email: this.user.email,
+            image: this.user.image,
+            name: this.user.name,
+          });
           flash("Información actualizada", "success");
         })
         .catch((error) => {
