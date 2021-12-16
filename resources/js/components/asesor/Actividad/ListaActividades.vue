@@ -1,19 +1,6 @@
 <template>
   <div class="lista-actividades-layout">
     <div class="lista-actividades-cursoinfo">
-      <div
-        class="lista-actividades-cursoinfo-imgheader"
-        :style="cursoimg"
-      ></div>
-      <div class="lista-actividades-cursoinfo-textheader">
-        <div class="lista-actividades-cursoinfo-textheader-username">
-          {{ asesor.name }}
-        </div>
-        <div class="lista-actividades-cursoinfo-textheader-account">Asesor</div>
-        <div class="lista-actividades-cursoinfo-textheader-review">
-          {{ curso.review }}
-        </div>
-      </div>
       <div class="lista-actividades-cursooptions">
         <div class="lista-actividades-cursooptions-textheader">
           Detalles y acciones
@@ -26,10 +13,30 @@
           <div>Resumen curso</div>
         </a>
       </div>
+      <div class="lista-actividades-cursoinfo-imgheader" :style="cursoimg">
+        <div class="lista-actividades-cursoinfo-textheader">
+          <div class="lista-actividades-cursoinfo-textheader-username">
+            {{ asesor.name }}
+          </div>
+          <div class="lista-actividades-cursoinfo-textheader-account">
+            Asesor
+          </div>
+          <div class="lista-actividades-cursoinfo-textheader-review">
+            {{ curso.review }}
+          </div>
+        </div>
+      </div>
     </div>
     <div class="lista-actividades-listaactividades">
       <div class="lista-actividades-listaactividades-layout">
-        <FormContent @crear-actividad="createactividad" />
+        <div class="lista-actividades-listaactividades-layout-head">
+          <FormContent @crear-actividad="createactividad" />
+          <div class="actividadescolor">
+            <div>actividades:</div>
+            <span class="diacolor">Día</span>
+            <span class="weekcolor">Semana</span>
+          </div>
+        </div>
         <Actividades>
           <template slot-scope="{ togglePopup }">
             <transition-group name="list-complete" tag="div" mode="out-in">
@@ -42,6 +49,7 @@
                   :alt="'A' + activitie.id"
                   v-bind:activitie="activitie"
                   @pop-image="togglePopup"
+                  v-bind:month="monthgroup(activitie.fecha_inicio, 'long')"
                 />
               </div>
             </transition-group>
@@ -79,7 +87,7 @@ export default {
     },
     cursoimg() {
       return (
-        "background: url(../" + this.curso.cover + "); background-size: cover"
+        "background: url(" + this.curso.cover + "); background-size: cover"
       );
     },
     actividades() {
@@ -93,6 +101,7 @@ export default {
     FormContent,
   },
   created() {
+    this.lastmonth = -1;
     axios
       .get("/scursoc/" + this.curso.id)
       .then((res) => {
@@ -101,10 +110,10 @@ export default {
           res.data.tests.data
         );
         res.data.actividades.data.sort(function (a, b) {
-          if (a.fecha_final > b.fecha_final) {
+          if (a.fecha_inicio < b.fecha_inicio) {
             return 1;
           }
-          if (a.fecha_final < b.fecha_final) {
+          if (a.fecha_inicio > b.fecha_inicio) {
             return -1;
           }
           // a must be equal to b
@@ -127,6 +136,21 @@ export default {
       });
   },
   methods: {
+    monthgroup(fechai, mformat) {
+      var dateg = fechai.split("-");
+      var dategm = new Date(`${dateg[0]}/${dateg[1]}/${dateg[2]}`);
+
+      if (this.lastmonth == dategm.getMonth()) {
+        return " ";
+      } else {
+        this.lastmonth = dategm.getMonth();
+      }
+
+      return dategm.toLocaleString("default", {
+        month: mformat,
+        year: "numeric",
+      });
+    },
     eliminarCurso() {
       const confirmacion = confirm(`Eliminar curso: "${this.curso.title}"`);
       if (confirmacion) {
@@ -156,10 +180,10 @@ export default {
             res.data.tests.data
           );
           res.data.actividades.data.sort(function (a, b) {
-            if (a.fecha_final > b.fecha_final) {
+            if (a.fecha_inicio < b.fecha_inicio) {
               return 1;
             }
-            if (a.fecha_final < b.fecha_final) {
+            if (a.fecha_inicio > b.fecha_inicio) {
               return -1;
             }
             // a must be equal to b
@@ -192,32 +216,33 @@ export default {
 <style>
 .lista-actividades-layout {
   position: relative;
-  padding: 1rem;
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 39% 59%;
-  grid-template-rows: 6% 94%;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
 }
-@media (max-width: 1050px) {
-  .lista-actividades-layout {
-    grid-template-columns: repeat(1, 100%);
-    grid-template-rows: inherit;
-  }
+
+.lista-actividades-cursoinfo {
+  display: flex;
+  padding: 0.5rem;
 }
 .lista-actividades-cursoinfo-imgheader {
-  height: 8.6875rem;
+  height: 12.6875rem;
   position: relative;
-  padding: 0;
   width: 100%;
   border-radius: 8px;
+  display: flex;
+  align-items: flex-end;
 }
 .lista-actividades-cursoinfo-textheader {
+  width: 100%;
+  top: 1rem;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 20px;
+  margin-left: 5rem;
   position: relative;
-  display: block;
-  margin-left: 5%;
 }
 .lista-actividades-cursoinfo-textheader-username {
   font-size: 1.5rem;
@@ -226,12 +251,17 @@ export default {
   padding-left: 1rem;
 }
 .lista-actividades-cursoinfo-textheader-account {
-  margin-left: 50%;
+  padding-left: 1rem;
 }
 .lista-actividades-cursoinfo-textheader-review {
-  padding: 0.5rem;
+  padding: 1rem;
   text-align: justify;
 }
+
+.lista-actividades-listaactividades {
+  padding: 1rem;
+}
+
 .lista-actividades-cursooptions a {
   text-align: left;
   width: max-content;
@@ -247,5 +277,33 @@ export default {
 }
 .list-complete-leave-active {
   position: absolute;
+}
+.lista-actividades-listaactividades-layout-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.actividadescolor {
+  padding-bottom: 1rem;
+}
+.diacolor {
+  padding: 0.5rem;
+  background-color: #84b145;
+}
+.weekcolor {
+  padding: 0.5rem;
+  background-color: #ffff00;
+}
+.actividadescolor div {
+  display: inline;
+}
+
+@media only screen and (max-width: 1050px) {
+  .lista-actividades-cursoinfo-textheader {
+    margin-left: 0rem;
+  }
+  .actividadescolor div {
+    display: none;
+  }
 }
 </style>

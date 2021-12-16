@@ -97,38 +97,44 @@ export default {
 <style>
 .formcontent-layout {
   padding-bottom: 1rem;
+  width: 50%;
 }
 .formcontent-bottom {
-  width: 50%;
+  width: 100%;
   border: none;
-  background-color: #fcb036;
+  background-color: #f1f1f1;
 }
 .formcontent-bottom p {
   font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 .formcontent-bottom span {
   font-size: 30px;
 }
 .formcontent-bottom:hover {
-  border: 2px solid #266fae;
+  background-color: #fcb036;
 }
 
 .formcontent-menucontent {
   padding: 0.5rem;
-  background-color: white;
+  background-color: #fdc770;
   position: absolute;
   overflow: hidden;
   z-index: 1;
 }
 .formcontent-menucontent-option {
-  padding: 0.5rem;
+  padding: 0.6rem;
   width: 100%;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .formcontent-menucontent-option:hover {
-  background-color: #266fae;
-  padding: 0.5rem;
+  background-color: #fcb036;
+  color: #fff;
 }
 
 .menuslidedown-enter-active {

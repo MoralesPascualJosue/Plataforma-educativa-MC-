@@ -34,7 +34,7 @@
 export default {};
 </script>
 
-<style scoped>
+<style>
 .buttonmessage-icon .a {
   fill: #fff;
 }
@@ -73,5 +73,11 @@ export default {};
 }
 .buttonmessage-name {
   margin-left: 0.5rem;
+}
+
+@media only screen and (max-width: 1050px) {
+  .buttonmessage-name {
+    display: none;
+  }
 }
 </style>

@@ -166,7 +166,7 @@
               mensaje-layout-container-paneltool-item-details-inbox
             "
           >
-            <p>recibidos</p>
+            <p>Recibidos</p>
             <span>Ver mensajes pendientes</span>
           </div>
         </div>
@@ -607,7 +607,6 @@ export default {
 }
 .mensaje-layout-container-paneltool-item-icon {
   width: 5rem;
-  height: 2.5rem;
 }
 .mensaje-layout-container-paneltool-item-details {
   display: flex;
@@ -728,5 +727,14 @@ export default {
   background: lightblue;
   border-radius: 1rem;
   display: inline-block;
+}
+
+@media only screen and (max-width: 1050px) {
+  .mensaje-layout-container-paneltool-item {
+    overflow: hidden;
+  }
+  .mensaje-layout-container-paneltool-item-details {
+    display: none;
+  }
 }
 </style>

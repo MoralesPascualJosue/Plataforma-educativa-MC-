@@ -31,7 +31,12 @@
         <div class="messageitem-details-matter">{{ mensaje.asunto }}</div>
       </div>
     </div>
-    <div class="messageitem-date">{{ mensaje.created_at }}</div>
+    <div
+      class="messageitem-date"
+      v-bind:class="{ 'messageitem-date-news-p': !news }"
+    >
+      {{ mensaje.created_at }}
+    </div>
   </div>
 </template>
 
@@ -125,6 +130,22 @@ export default {
   width: 100%;
 }
 .messageitem-details-username {
-  font-size: 18px;
+  font-size: 16px;
+}
+.messageitem-details-matter {
+  font-size: 14px;
+}
+.messageitem-date-news-p {
+  position: relative;
+}
+.messageitem-date-news-p:before {
+  content: "";
+  position: absolute;
+  background: #84b145;
+  bottom: 21%;
+  left: -20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
 }
 </style>

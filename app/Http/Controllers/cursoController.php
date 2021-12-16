@@ -111,8 +111,8 @@ class cursoController extends Controller
             if(!$curso->hasPropiedad(Auth::user()->asesor()->get()['0']->id)){
                 abort(404,"Curso no disponible");
             }    
-            $actividades = $curso->activities()->orderBy("activities.fecha_final","DESC")->paginate($this->contenidos);            
-            $tests = $curso->tests()->orderBy("tests.fecha_final","DESC")->paginate($this->contenidos);
+            $actividades = $curso->activities()->orderBy("activities.fecha_inicio","DESC")->paginate($this->contenidos);            
+            $tests = $curso->tests()->orderBy("tests.fecha_inicio","DESC")->paginate($this->contenidos);
                       
             foreach ($actividades as $actividad) {                
                 $actividad['entregas'] = Qualification::where('activitie_id',$actividad->id)->where("estado",1)->count();
@@ -127,8 +127,8 @@ class cursoController extends Controller
                 abort(404,"Curso no disponible");
             }               
 
-             $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_final","DESC")->paginate($this->contenidos);
-             $tests = $curso->tests()->where("visible",1)->orderBy("tests.fecha_final","DESC")->paginate($this->contenidos);
+             $actividades = $curso->activities()->where("visible","=",1)->orderBy("activities.fecha_inicio","DESC")->paginate($this->contenidos);
+             $tests = $curso->tests()->where("visible",1)->orderBy("tests.fecha_inicio","DESC")->paginate($this->contenidos);
              foreach ($actividades as $actividad) {
                  $actividad['entregas'] = Work::where("estudiante_id",$miusuario->id)
                  ->where("activitie_id",$actividad->id)
