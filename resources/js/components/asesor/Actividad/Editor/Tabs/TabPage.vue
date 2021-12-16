@@ -331,6 +331,8 @@ export default {
 .tab-pane-row-section-card-body {
   padding: 15px 20px !important;
   flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 .tab-pane-row-section-card-body-item {
   padding: 15px 0px;

@@ -795,7 +795,7 @@ export default {
 }
 .activitieeditor-toolsmenu-pane-contenttabs-pane-tools {
   width: 100%;
-  height: 94.4%;
+  height: 93%;
   top: 46px;
   bottom: 0px;
   right: 0px;
@@ -933,7 +933,7 @@ export default {
 .activitieeditor-workspace {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 95%;
   position: relative;
 }
 .activitieeditor-tools {
@@ -954,8 +954,8 @@ export default {
   background: #fcd770;
 }
 .activitieeditor-container {
-  min-height: 100%;
-  height: 100%;
+  min-height: 87%;
+  height: 87%;
   width: 100%;
   border: 0px;
 }
