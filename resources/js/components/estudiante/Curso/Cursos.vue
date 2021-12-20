@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     openPopup(curso) {
-      this.$store.commit("changecurso", curso);
+      this.$store.commit("cursos/changecurso", curso);
       this.ismodalOpen = true;
     },
   },

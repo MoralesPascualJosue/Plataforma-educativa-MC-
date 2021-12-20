@@ -49,7 +49,7 @@ export default {
   methods: {
     openCurse() {
       this.show = true;
-      this.$store.commit("changecurso", this.cursodata);
+      this.$store.commit("cursos/changecurso", this.cursodata);
       let principalpane = document.getElementsByClassName("app-container")[0];
       principalpane.style.left = "-100%";
     },

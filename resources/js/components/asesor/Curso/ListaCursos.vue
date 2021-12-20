@@ -46,7 +46,7 @@ export default {
       return false;
     },
     cursos() {
-      return this.$store.getters.cursosview;
+      return this.$store.getters["cursos/cursosview"];
     },
     filteredList() {
       return this.cursos.data.filter((curso) => {
@@ -78,7 +78,7 @@ export default {
     axios
       .get("/inicio")
       .then((res) => {
-        this.$store.commit("changecursos", res.data);
+        this.$store.commit("cursos/changecursos", res.data);
       })
       .catch((error) => {
         if (error.response.status === 401) {

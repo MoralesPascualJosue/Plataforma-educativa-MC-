@@ -94,10 +94,10 @@ export default {
   },
   computed: {
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
     categorias() {
-      return this.$store.getters.categoriasview;
+      return this.$store.getters["foro/categoriasview"];
     },
   },
   methods: {

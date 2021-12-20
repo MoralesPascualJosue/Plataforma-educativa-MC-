@@ -64,13 +64,13 @@ export default {
   },
   computed: {
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
     categorias() {
-      return this.$store.getters.categoriasview;
+      return this.$store.getters["foro/categoriasview"];
     },
     discusion() {
-      return this.$store.getters.discuview;
+      return this.$store.getters["foro/discuview"];
     },
   },
   created() {
@@ -127,8 +127,8 @@ export default {
         .then((response) => {
           this.errorr = false;
           this.showmenu = false;
-          this.$store.commit("changediscu", response.data);
-          this.$store.commit("updatediscuss", response.data);
+          this.$store.commit("foro/changediscu", response.data);
+          this.$store.commit("foro/updatediscuss", response.data);
           flash("tema actualizado", "success");
         })
         .catch((error) => {

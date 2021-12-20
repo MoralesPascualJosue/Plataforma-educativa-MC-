@@ -86,21 +86,21 @@ export default {
       return false;
     },
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
     categorias() {
-      return this.$store.getters.categoriasview;
+      return this.$store.getters["foro/categoriasview"];
     },
     discuss() {
-      return this.$store.getters.discussview;
+      return this.$store.getters["foro/discussview"];
     },
   },
   created() {
     axios
       .get("/foro/" + this.curso.id)
       .then((res) => {
-        this.$store.commit("changecategorias", res.data.categorias);
-        this.$store.commit("changediscuss", res.data);
+        this.$store.commit("foro/changecategorias", res.data.categorias);
+        this.$store.commit("foro/changediscuss", res.data);
       })
       .catch((error) => {
         if (error.response.status === 401) {

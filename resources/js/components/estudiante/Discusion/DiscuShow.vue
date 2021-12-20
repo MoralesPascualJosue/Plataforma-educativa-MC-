@@ -20,8 +20,8 @@
       </div>
 
       <div
-        v-for="(comentario, indexco) in comentarios"
-        :key="indexco"
+        v-for="(comentario, indexcomd) in comentarios"
+        :key="indexcomd"
         class="espacio"
       >
         <Comentario
@@ -51,18 +51,21 @@ import FormComentario from "./FormComentario";
 export default {
   data() {
     return {
-      editable: 0,
       comentarios: [],
+      editable: 0,
       respuestas: 0,
       show: false,
     };
   },
   computed: {
     discu() {
-      return this.$store.getters.discuview;
+      return this.$store.getters["foro/discuview"];
     },
+    // comentarios() {
+    //   return this.$store.getters["foro/comentariosview"];
+    // },
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
   },
   components: {
@@ -74,6 +77,7 @@ export default {
     axios
       .get("/foro/" + this.curso.id + "/" + this.discu.id)
       .then((res) => {
+        //this.$store.commit("foro/changecomentarios", res.data.fpost);
         this.comentarios = res.data.fpost;
         this.editable = {
           editabled: res.data.discuss,
@@ -92,8 +96,11 @@ export default {
       if (comentario.id) {
         this.comentarios.push(comentario);
         this.respuestas++;
-        this.$store.getters.discuview.answered++;
-        this.$store.commit("updatediscuss", this.$store.getters.discuview);
+        this.$store.getters["foro/discuview"].answered++;
+        this.$store.commit(
+          "foro/updatediscuss",
+          this.$store.getters["foro/discuview"]
+        );
       }
     },
     eliminart() {
@@ -102,7 +109,7 @@ export default {
         axios
           .delete("/foro/" + this.curso.id + "/eliminardis/" + this.discu.id)
           .then((res) => {
-            this.$store.commit("deletetema", this.discu);
+            this.$store.commit("foro/deletetema", this.discu);
             flash("Discusion eliminada", "info");
           })
           .catch((error) => {
@@ -127,9 +134,9 @@ export default {
       axios
         .delete("/foro/" + this.curso.id + "/eliminarco/" + value)
         .then((res) => {
-          this.$store.getters.discuview.answered--;
-          this.$store.commit("updatediscuss", this.$store.getters.discuview);
-          this.respuestas--;
+          // const index = this.comentarios.findIndex((item) => item.id === value);
+          // this.comentarios.splice(index, 1);
+
           flash("Comentario eliminado", "info");
         })
         .catch((error) => {

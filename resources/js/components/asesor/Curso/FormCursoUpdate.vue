@@ -71,7 +71,7 @@ export default {
   },
   computed: {
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
   },
   created() {
@@ -109,8 +109,8 @@ export default {
         .then((response) => {
           this.showmenu = false;
           this.errorr = false;
-          this.$store.commit("changecurso", response.data);
-          this.$store.commit("updatecurso", response.data);
+          this.$store.commit("cursos/changecurso", response.data);
+          this.$store.commit("cursos/updatecurso", response.data);
           this.$emit("cursoupdate", response.data);
           flash("Curso actualizado", "success");
         })

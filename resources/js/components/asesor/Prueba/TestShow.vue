@@ -8,7 +8,7 @@
         :options="formOptions"
       ></vue-form-generator>
     </div>
-    
+
     <div class="footer">
       <h3>Genera tus preguntas</h3>
       <vue-form-generator
@@ -16,7 +16,11 @@
         :model="modelgenerator"
         :options="formOptionsgenerator"
       ></vue-form-generator>
-      <div v-for="item in modelgenerator.values" :key="item.name" class="testshow-generator-option">
+      <div
+        v-for="item in modelgenerator.values"
+        :key="item.name"
+        class="testshow-generator-option"
+      >
         {{ item.name }}
       </div>
       <br />
@@ -143,7 +147,7 @@ export default {
   },
   computed: {
     actividad() {
-      return this.$store.getters.actividadview;
+      return this.$store.getters["activities/actividadview"];
     },
   },
   created() {
@@ -256,7 +260,7 @@ export default {
   border: none;
   border-radius: 20px;
 }
-.panel-body .vue-form-generator fieldset  .form-group{
+.panel-body .vue-form-generator fieldset .form-group {
   padding: 1rem;
 }
 .form-group.field-input {
@@ -297,14 +301,14 @@ export default {
   cursor: pointer;
 }
 .testshow-generator-addbottom:hover {
-  background-color:#fcd770;
+  background-color: #fcd770;
 }
 @media only screen and (max-width: 1050px) {
   .panel-body .vue-form-generator fieldset {
     display: inherit;
   }
-   .footer .vue-form-generator .field-wrap {
-    display:block;
+  .footer .vue-form-generator .field-wrap {
+    display: block;
   }
 }
 </style>

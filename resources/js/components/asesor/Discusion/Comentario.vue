@@ -1,82 +1,123 @@
 <template>
-<div>
-<div id="comments-list" class="comments-list" v-if="comentario.id">
- <div>
-<div class="comment-main-level" v-if="comentario.parent == null">
-    <!-- Avatar -->
- 	<div class="tooltip"> 
-  	<div class="comment-avatar" @click="replicar = !replicar">
-	        <img class="bg-white" :src="comentario.image" />
-	</div>
-	  <span class="tooltiptext">Replicar comentario</span>
-	</div> 
-    <!-- Contenedor del Comentario -->
-       <div class="comment-box">
-		<div class="comment-head">
-			<h6 class="comment-name by-author">
-	                	<a href="javascript:void(0)">{{ comentario.usuarioName }}</a>
-                  	</h6>
-	                <span>{{ tiempo(comentario.created_at) }}</span>
-                 	<i class="fa fa-reply"></i>
-			<i class="fa fa-heart"></i>
-                  	<div v-if="comentario.propiedad == 1">
-		                <a href="javascript:void(0)" class="aside-link" @click="editarc(comentario)">Editar</a>
-                  		<a href="javascript:void(0)" class="aside-link" @click="eliminarc(comentario.id)">Eliminar</a>
-                	</div>
-		</div>
-        	<div class="comment-content" v-html="comentario.body"></div>
-	</div>	
-	<div v-for="(comentarioch, indexch) in comentario.childrens" :key="indexch"  class="childrens-c">		
-		<Comentario :initialComentario="comentarioch" :initialEditable="initialEditable" @eliminarc="eliminarc"/>	
-	</div>	
+  <div>
+    <div id="comments-list" class="comments-list" v-if="comentario.id">
+      <div>
+        <div class="comment-main-level" v-if="comentario.parent == null">
+          <!-- Avatar -->
+          <div class="tooltip">
+            <div class="comment-avatar" @click="replicar = !replicar">
+              <img class="bg-white" :src="comentario.image" />
+            </div>
+            <span class="tooltiptext">Replicar comentario</span>
+          </div>
+          <!-- Contenedor del Comentario -->
+          <div class="comment-box">
+            <div class="comment-head">
+              <h6 class="comment-name by-author">
+                <a href="javascript:void(0)">{{ comentario.usuarioName }}</a>
+              </h6>
+              <span>{{ tiempo(comentario.created_at) }}</span>
+              <i class="fa fa-reply"></i>
+              <i class="fa fa-heart"></i>
+              <div v-if="comentario.propiedad == 1">
+                <a
+                  href="javascript:void(0)"
+                  class="aside-link"
+                  @click="editarc(comentario)"
+                  >Editar</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  class="aside-link"
+                  @click="eliminarc(comentario.id)"
+                  >Eliminar</a
+                >
+              </div>
+            </div>
+            <div class="comment-content" v-html="comentario.body"></div>
+          </div>
+          <div
+            v-for="(comentarioch, indexch) in comentario.childrens"
+            :key="indexch"
+            class="childrens-c"
+          >
+            <Comentario
+              :initialComentario="comentarioch"
+              :initialEditable="initialEditable"
+              @eliminarc="eliminarc"
+            />
+          </div>
+        </div>
 
- </div>
-
-<!-- Respuestas de los comentarios -->
-<!--<ul class="comments-list reply-list" v-else>
+        <!-- Respuestas de los comentarios -->
+        <!--<ul class="comments-list reply-list" v-else>
 	<li>-->
-<ul class="comments-list reply-list" v-else>
-<li>
-        <!-- Avatar -->
-	<div class="tooltip">
-		<div class="comment-avatar" @click="replicar = !replicar">
-			<img class="bg-white" :src="comentario.image" />
+        <ul class="comments-list reply-list" v-else>
+          <li>
+            <!-- Avatar -->
+            <div class="tooltip">
+              <div class="comment-avatar" @click="replicar = !replicar">
+                <img class="bg-white" :src="comentario.image" />
+              </div>
+              <span class="tooltiptext">Replicar comentario</span>
+            </div>
+            <!-- Contenedor del Comentario -->
+            <div class="comment-box">
+              <div class="comment-head">
+                <h6 class="comment-name">
+                  <a href="javascript:void(0)">{{ comentario.usuarioName }}</a>
+                </h6>
+                <span>{{ tiempo(comentario.created_at) }}</span>
+                <i class="fa fa-reply"></i>
+                <i class="fa fa-heart"></i>
+                <div v-if="comentario.user_id == initialEditable">
+                  <a
+                    href="javascript:void(0)"
+                    class="aside-link"
+                    @click="editarc(comentario)"
+                    >Editar</a
+                  >
+                  <a
+                    href="javascript:void(0)"
+                    class="aside-link"
+                    @click="eliminarc(comentario.id)"
+                    >Eliminar</a
+                  >
                 </div>
-	  <span class="tooltiptext">Replicar comentario</span>
-	</div> 
-	<!-- Contenedor del Comentario -->
-                <div class="comment-box">
-                  	<div class="comment-head">
-                    		<h6 class="comment-name">
-                      			<a href="javascript:void(0)">{{ comentario.usuarioName }}</a>
-	                    	</h6>
-	                	<span>{{ tiempo(comentario.created_at) }}</span>
-	        	        <i class="fa fa-reply"></i>
-        	        	<i class="fa fa-heart"></i>
-                	    	<div v-if="comentario.user_id == initialEditable">
-	                	      <a href="javascript:void(0)" class="aside-link" @click="editarc(comentario)">Editar</a>
-	        	              <a href="javascript:void(0)" class="aside-link" @click="eliminarc(comentario.id)">Eliminar</a>
-        	        	</div>
-			</div>
-                	<div class="comment-content" v-html="comentario.body"></div>
-                </div>
-		<div v-for="(comentarioch, indexch) in comentario.childrens" :key="indexch" class="childrens-c">		
-			<Comentario :initialComentario="comentarioch" :initialEditable="initialEditable" @eliminarc="eliminarc"/>	
-		</div>	
-</li>
-</ul>
+              </div>
+              <div class="comment-content" v-html="comentario.body"></div>
+            </div>
+            <div
+              v-for="(comentarioch, indexch) in comentario.childrens"
+              :key="indexch"
+              class="childrens-c"
+            >
+              <Comentario
+                :initialComentario="comentarioch"
+                :initialEditable="initialEditable"
+                @eliminarc="eliminarc"
+              />
+            </div>
+          </li>
+        </ul>
 
-<!--	</li>
+        <!--	</li>
  </ul>-->
-	<FormComentarioUpdate v-if="updatecomentario" :show="updatecomentario" @close="cerrarupdate" />
-	<div class="comments-comment" v-show="replicar">
-		<FormComentario @crear-comentario="createcomentario" :parentc="comentario.id" :header="replicara"/>
-	</div>
-
- </div>
-</div>
-
-</div>
+        <FormComentarioUpdate
+          v-if="updatecomentario"
+          :show="updatecomentario"
+          @close="cerrarupdate"
+        />
+        <div class="comments-comment" v-show="replicar">
+          <FormComentario
+            @crear-comentario="createcomentario"
+            :parentc="comentario.id"
+            :header="replicara"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -84,91 +125,87 @@ import Comentario from "./Comentario";
 import FormComentarioUpdate from "./FormComentarioUpdate";
 import FormComentario from "./FormComentario";
 export default {
-	name: "Comentario",
-	components:{
-		Comentario,
-		FormComentarioUpdate,
-		FormComentario,
-	},
-	props: {
-		initialComentario: Object,
-		initialEditable: Number,
-	},
-	data(){
-		return {
-			comentario: this.initialComentario,
-			updatecomentario: false,
-			replicar: false,						
-		};
-	},
-	computed: {
-		curso() {
-			return this.$store.getters.cursoview;
-		},
-		replicara() {
-			return "Replicar a:  " + this.comentario.usuarioName;
-		},
-		dicus() {
-			return this.$store.getters.discuview;
-		},		
-	},
-	methods: {
-		   createcomentario(comentario) {
-		      if (comentario.id) {
-		        this.comentario.childrens.push(comentario);
-		        this.respuestas++;
-		        this.$store.getters.discuview.answered++;
-		        this.$store.commit("updatediscuss", this.$store.getters.discuview);
-			this.replicar = false;
-		      }
-			
-		 },
-		tiempo(fecha) {
-			let fecha1 = new Date(fecha);
-		        let fecha2 = new Date();
-		        let resta = fecha2.getTime() - fecha1.getTime();
-		        return "hace " + Math.round(resta / (1000 * 60 * 60 * 24)) + " dias";
-		},
-		cerrarupdate(comentario) {
-		      comentario.comentario.childrens = this.initialComentario.childrens;
-		      if (comentario.comentario.id) {
-		        this.comentario = comentario.comentario;
-		      }
-		      this.updatecomentario = comentario.cerrar;
-		      this.$emit("close", { comentario: comentario, cerrar: false });
-	    	},
-		editarc(value) {
-		      this.$store.commit("changecomentario", value);
-		      this.updatecomentario = true;
-		},
-	    eliminarc(value) {
-	      if(this.comentario.id == value){
-		       const confirmacion = confirm(`Eliminar comentario`);
-		      if (confirmacion) {
-				this.comentario = {};
-				this.$emit("eliminarc", value );
-			}
-		}else{		     
-		        axios
-	        	  .delete("/foro/" + this.curso.id + "/eliminarco/" + value)
-		          .then((res) => {
-				const index = this.comentario.childrens.findIndex(
-		        	      (item) => item.id === value 
-		        	);
-				this.comentario.childrens.splice(index, 1);
-  		      		this.$store.getters.discuview.answered--;
-			        this.$store.commit("updatediscuss", this.$store.getters.discuview);
-				flash("Comentario eliminado", "info");
-		          })
-		          .catch((error) => {
-	        	    if (error.response.status === 401) {
-		              window.location.href = "login";
-		            }
-	        	  });
-		 }
-	    },
-	},
-}
+  name: "Comentario",
+  components: {
+    Comentario,
+    FormComentarioUpdate,
+    FormComentario,
+  },
+  props: {
+    initialComentario: Object,
+    initialEditable: Number,
+  },
+  data() {
+    return {
+      comentario: this.initialComentario,
+      updatecomentario: false,
+      replicar: false,
+    };
+  },
+  computed: {
+    curso() {
+      return this.$store.getters["cursos/cursoview"];
+    },
+    replicara() {
+      return "Replicar a:  " + this.comentario.usuarioName;
+    },
+    dicus() {
+      return this.$store.getters["foro/discuview"];
+    },
+  },
+  methods: {
+    createcomentario(comentario) {
+      if (comentario.id) {
+        this.comentario.childrens.push(comentario);
+        this.respuestas++;
+        this.$store.getters["foro/discuview"].answered++;
+        this.$store.commit(
+          "foro/updatediscuss",
+          this.$store.getters["foro/discuview"]
+        );
+        this.replicar = false;
+      }
+    },
+    tiempo(fecha) {
+      let fecha1 = new Date(fecha);
+      let fecha2 = new Date();
+      let resta = fecha2.getTime() - fecha1.getTime();
+      return "hace " + Math.round(resta / (1000 * 60 * 60 * 24)) + " dias";
+    },
+    cerrarupdate(comentario) {
+      comentario.comentario.childrens = this.initialComentario.childrens;
+      if (comentario.comentario.id) {
+        this.comentario = comentario.comentario;
+      }
+      this.updatecomentario = comentario.cerrar;
+      this.$emit("close", { comentario: comentario, cerrar: false });
+    },
+    editarc(value) {
+      this.$store.commit("foro/changecomentario", value);
+      this.updatecomentario = true;
+    },
+    eliminarc(value) {
+      if (this.comentario.id == value) {
+        const confirmacion = confirm(`Eliminar comentario`);
+        if (confirmacion) {
+          this.comentario = {};
+          this.$emit("eliminarc", value);
+        }
+      } else {
+        axios
+          .delete("/foro/" + this.curso.id + "/eliminarco/" + value)
+          .then((res) => {
+            flash("Comentario eliminado", "info");
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              window.location.href = "login";
+            }
+          });
+      }
+    },
+  },
+};
 </script>
 
 <style>
@@ -264,17 +301,17 @@ export default {
 .reply-list .comment-avatar {
   width: 50px;
   height: 50px;
-  cursor: pointer;	
+  cursor: pointer;
 }
- .reply-list .comment-avatar:hover {
-	border:2px solid #03658c;
+.reply-list .comment-avatar:hover {
+  border: 2px solid #03658c;
 }
 .comment-main-level .comment-avatar {
-cursor:pointer;
+  cursor: pointer;
 }
 .comment-main-level .comment-avatar:hover {
-	border: 2px solid #03658c;
-} 
+  border: 2px solid #03658c;
+}
 .comment-main-level:after {
   content: "";
   width: 0;
@@ -390,9 +427,9 @@ cursor:pointer;
   border-radius: 3px;
 }
 .childrens-c {
- position:relative;
- float: left;
- width: 100%;
+  position: relative;
+  float: left;
+  width: 100%;
 }
 /* Tooltip container */
 .tooltip {
@@ -418,7 +455,7 @@ cursor:pointer;
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
-  visibility:visible;
+  visibility: visible;
 }
 /*arrot left*/
 .tooltip .tooltiptext::after {
@@ -432,7 +469,7 @@ cursor:pointer;
   border-color: transparent black transparent transparent;
 }
 .comments-comment {
-	padding-top: 1rem;
+  padding-top: 1rem;
 }
 /** =====================
  * Responsive

@@ -11,18 +11,18 @@ export default {
   data() {
     return {
       isPopoutCoverActive: false,
-      showModal: false
+      showModal: false,
     };
   },
   components: {
-    ModalDiscu
+    ModalDiscu,
   },
   methods: {
     openPopup(discu) {
-      this.$store.commit("changediscu", discu);
+      this.$store.commit("foro/changediscu", discu);
       this.showModal = true;
-    }
-  }
+    },
+  },
 };
 </script>
 

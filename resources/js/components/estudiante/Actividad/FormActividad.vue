@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     actividad() {
-      return this.$store.getters.actividadview;
+      return this.$store.getters["activities/actividadview"];
     },
   },
   created() {

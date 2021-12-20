@@ -17,16 +17,16 @@ export default {
         component: ModalCurso,
         backgroundColor: "rgb(169 194 203)",
         opacity: "0.7",
-        animation: "scaleIn"
-      }
+        animation: "scaleIn",
+      },
     };
   },
   methods: {
     openPopup(curso) {
-      this.$store.commit("changecurso", curso);
+      this.$store.commit("cursos/changecurso", curso);
       this.ismodalOpen = true;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -84,7 +84,7 @@ export default {
       return false;
     },
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
     cursoimg() {
       return (
@@ -92,7 +92,7 @@ export default {
       );
     },
     actividades() {
-      return this.$store.getters.actividadesview;
+      return this.$store.getters["activities/actividadesview"];
     },
   },
   components: {
@@ -122,7 +122,10 @@ export default {
         this.asesor = res.data.curso.asesor;
         this.actividadeshoy = res.data.actividadeshoy;
         this.actividadessemana = res.data.actividadessemana;
-        this.$store.commit("changeactividades", res.data.actividades);
+        this.$store.commit(
+          "activities/changeactividades",
+          res.data.actividades
+        );
 
         if (res.data.actividades.next_page_url) {
           this.actividades.next_page_url = res.data.actividades.next_page_url;
@@ -160,7 +163,7 @@ export default {
         axios
           .post(`/desmatricular/${this.curso.id}`)
           .then(() => {
-            this.$store.commit("deletecurso", this.curso);
+            this.$store.commit("cursos/deletecurso", this.curso);
             this.$xmodal.close();
             flash("Has salido del curso", "info");
           })

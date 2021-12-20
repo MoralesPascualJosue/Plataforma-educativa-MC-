@@ -15,16 +15,18 @@ export default {
   data() {
     return {
       isPopoutCoverActiveA: false,
-      showModal: false
+      showModal: false,
     };
   },
   components: { ModalActividad },
   methods: {
     openPopup(actividad) {
-      this.$store.commit("changeactividad", { activitie: actividad });
+      this.$store.commit("activities/changeactividad", {
+        activitie: actividad,
+      });
       this.showModal = true;
-    }
-  }
+    },
+  },
 };
 </script>
 

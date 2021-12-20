@@ -42,53 +42,23 @@ Vue.component("v-select", vSelect);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const store = new Vuex.Store({
-    state: {
-        login: {
-            name: "Default name",
-            email: "default@email.com",
-            image: "resources/users/user-default.svg"
-        },
+const moduleCursos = {
+    namespaced: true,
+    state: () => ({
+        inUse: false,
         cursos: {
             data: [],
             next_page_url: ""
         },
-        actividades: {},
         curso: {
             id: 0,
             title: "0"
-        },
-        actividad: {
-            id: 0,
-            activitie: {
-                title: "0"
-            }
-        },
-        categorias: {},
-        discuss: {},
-        discu: {
-            id: 0
-        },
-        comentario: {
-            id: -1,
-            body: "mi comentario"
         }
-    },
+    }),
     mutations: {
-        changelogin(state, user) {
-            state.login = user;
-        },
-        changecomentario(state, coment) {
-            state.comentario = coment;
-        },
-        changediscuss(state, discuss) {
-            state.discuss = discuss;
-        },
-        changecategorias(state, categorias) {
-            state.categorias = categorias;
-        },
-        changediscu(state, discu) {
-            state.discu = discu;
+        changeInUse(state) {
+            const use = state.inUse;
+            state.inUse = !use;
         },
         changecursos(state, cursos) {
             state.cursos = cursos;
@@ -97,22 +67,51 @@ const store = new Vuex.Store({
             state.curso = curso;
         },
         updatecurso(state, curso) {
-            const indexuc = state.cursos.data.findIndex(
+            const index = state.cursos.data.findIndex(
                 item => item.id === curso.id
             );
-            state.cursos.data[indexuc] = curso;
+            state.cursos.data[index] = curso;
         },
         deletecurso(state, curso) {
             const index = state.cursos.data.findIndex(
                 item => item.id === curso.id
             );
             state.cursos.data.splice(index, 1);
+        }
+    },
+    actions: {},
+    getters: {
+        inUseview(state) {
+            return state.inUse;
         },
-        deletetema(state, discu) {
-            const index = state.discuss.discuss.findIndex(
-                item => item.id === discu.id
-            );
-            state.discuss.discuss.splice(index, 1);
+        cursosview(state) {
+            return state.cursos;
+        },
+        cursoview(state) {
+            return state.curso;
+        },
+        cursosviewindex: state => index => {
+            return state.cursos.data[index];
+        }
+    }
+};
+
+const moduleActivities = {
+    namespaced: true,
+    state: () => ({
+        inUse: false,
+        actividades: {},
+        actividad: {
+            id: 0,
+            activitie: {
+                title: "0"
+            }
+        }
+    }),
+    mutations: {
+        changeInUse(state) {
+            const use = state.inUse;
+            state.inUse = !use;
         },
         deleteteactividad(state, actividad) {
             const index = state.actividades.data.findIndex(
@@ -127,20 +126,68 @@ const store = new Vuex.Store({
             state.actividad = actividad;
         },
         updateactividad(state, actividad) {
-            let title = "";
-            if (actividad.type == "activitie") {
-                title = state.actividad.activitie.title;
-                state.actividad.activitie = actividad;
-            } else {
-                title = state.actividad.title;
-                state.actividad = actividad;
-            }
+            state.actividad.activitie = actividad;
 
             const indexa = state.actividades.data.findIndex(
-                item => item.title === title
+                item => item.id === actividad.id
             );
-
             state.actividades.data[indexa] = actividad;
+        }
+    },
+    actions: {},
+    getters: {
+        inUseview(state) {
+            return state.inUse;
+        },
+        actividadesview(state) {
+            return state.actividades;
+        },
+        actividadview(state) {
+            return state.actividad;
+        }
+    }
+};
+
+const moduleForo = {
+    namespaced: true,
+    state: () => ({
+        inUse: false,
+        categorias: {},
+        discuss: {},
+        discu: {
+            id: 0
+        },
+        comentarios: [],
+        comentario: {
+            id: -1,
+            body: "mi comentario"
+        }
+    }),
+    mutations: {
+        changeInUse(state) {
+            const use = state.inUse;
+            state.inUse = !use;
+        },
+        changecomentario(state, coment) {
+            state.comentario = coment;
+        },
+        changecomentarios(state, comentarios) {
+            state.comentarios = comentarios;
+        },
+        changediscuss(state, discuss) {
+            state.discuss = discuss;
+        },
+        changecategorias(state, categorias) {
+            state.categorias = categorias;
+        },
+        changediscu(state, discu) {
+            state.discu = discu;
+        },
+        deletetema(state, discu) {
+            const index = state.discuss.discuss.findIndex(
+                item => item.id === discu.id
+            );
+            state.discuss.discuss.splice(index, 1);
         },
         updatediscuss(state, discu) {
             const index = state.discuss.discuss.findIndex(
@@ -151,30 +198,17 @@ const store = new Vuex.Store({
     },
     actions: {},
     getters: {
-        loginview(state) {
-            return state.login;
+        inUseview(state) {
+            return state.inUse;
         },
-        //retornar datos procesados,
         comentarioview(state) {
             return state.comentario;
         },
+        comentariosview(state) {
+            return state.comentarios;
+        },
         discuview(state) {
             return state.discu;
-        },
-        cursosview(state) {
-            return state.cursos;
-        },
-        cursoview(state) {
-            return state.curso;
-        },
-        actividadesview(state) {
-            return state.actividades;
-        },
-        actividadview(state) {
-            return state.actividad;
-        },
-        cursosviewindex: state => index => {
-            return state.cursos.data[index];
         },
         categoriasview(state) {
             return state.categorias;
@@ -182,6 +216,61 @@ const store = new Vuex.Store({
         discussview(state) {
             return state.discuss;
         }
+    }
+};
+
+const moduleMensajes = {
+    namespaced: true,
+    state: () => ({
+        inUse: false,
+        notifications: {
+            data: []
+        }
+    }),
+    mutations: {
+        changeInUse(state) {
+            const use = state.inUse;
+            state.inUse = !use;
+        },
+        updateNotifications(state, notifications) {
+            state.notifications = notifications;
+        }
+    },
+    actions: {},
+    getters: {
+        inUseview(state) {
+            return state.inUse;
+        },
+        notificationsview(state) {
+            return state.notifications;
+        }
+    }
+};
+
+const store = new Vuex.Store({
+    state: {
+        login: {
+            name: "Default name",
+            email: "default@email.com",
+            image: "resources/users/user-default.svg"
+        }
+    },
+    mutations: {
+        changelogin(state, logindata) {
+            state.login = logindata;
+        }
+    },
+    actions: {},
+    getters: {
+        loginview(state) {
+            return state.login;
+        }
+    },
+    modules: {
+        cursos: moduleCursos,
+        activities: moduleActivities,
+        foro: moduleForo,
+        mensajes: moduleMensajes
     }
 });
 

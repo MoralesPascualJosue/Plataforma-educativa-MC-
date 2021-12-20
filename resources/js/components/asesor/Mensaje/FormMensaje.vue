@@ -122,7 +122,7 @@ export default {
 
       this.loading = true;
       axios
-        .post("/sendmensaje/" + this.$store.getters.cursoview.id, {
+        .post("/sendmensaje/" + this.$store.getters["cursos/cursoview"].id, {
           destino: sendContacts,
           asunto: this.asunto,
           body: this.contenido,

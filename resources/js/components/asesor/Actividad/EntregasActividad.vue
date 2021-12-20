@@ -215,10 +215,10 @@ export default {
       return suma;
     },
     actividad() {
-      return this.$store.getters.actividadview;
+      return this.$store.getters["activities/actividadview"];
     },
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
   },
   components: {
@@ -266,7 +266,7 @@ export default {
           this.estudiantes[index] = estudiante;
           this.actividad.entregas--;
           this.porrevisar--;
-          this.$store.commit("updateactividad", this.actividad);
+          this.$store.commit("activities/updateactividad", this.actividad);
           this.curso.entregas--;
 
           flash("Puntajes guardados", "success");
@@ -303,7 +303,10 @@ export default {
       this.estudiantes[indexe].qualificationestado = value.estado;
       this.porrevisar--;
       this.actividad.activitie.entregas--;
-      this.$store.commit("updateactividad", this.actividad.activitie);
+      this.$store.commit(
+        "activities/updateactividad",
+        this.actividad.activitie
+      );
       this.curso.entregas--;
     },
     calificar(value) {

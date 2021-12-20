@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     actividad() {
-      return this.$store.getters.actividadview;
+      return this.$store.getters["activities/actividadview"];
     },
   },
   created() {
@@ -167,7 +167,7 @@ export default {
         })
         .then((response) => {
           this.errorr = false;
-          this.$store.commit("updateactividad", response.data);
+          this.$store.commit("activities/updateactividad", response.data);
           flash("Contenido actualizado", "success");
         })
         .catch((error) => {
@@ -202,10 +202,16 @@ export default {
           .delete(url)
           .then(() => {
             if (this.actividad.num_takes >= 0) {
-              this.$store.commit("deleteteactividad", this.actividad);
+              this.$store.commit(
+                "activities/deleteteactividad",
+                this.actividad
+              );
               flash("Prueba Eliminada", "info");
             } else {
-              this.$store.commit("deleteteactividad", this.actividad.activitie);
+              this.$store.commit(
+                "activities/deleteteactividad",
+                this.actividad.activitie
+              );
               flash("Actividad Eliminada", "info");
             }
 

@@ -1,33 +1,47 @@
 <template>
-<div>
-<!-- Contenedor Principal -->
-	<div class="comments-container">
-		<div class="header-discu" :style="{ backgroundColor: `${discu.colorCategoria}`, }">
-			<div class="detalles-discu">
-				<h5 class="op-3">{{ discu.nameCategoria }}</h5>
-				<a href="javascript:void(0)">{{ discu.created_at }}</a>
-				<p v-if="editable.editabled == 1">
-					<a href="javascript:void(0)" @click="eliminart()">Eliminar tema</a>
-					<a href="javascript:void(0)"> <FormDiscuUpdate /> </a>
-				</p>
-			</div>
-			<div class="tema-discu">
-				<h1> {{ discu.title }} </h1>
-			</div>
-		</div>
+  <div>
+    <!-- Contenedor Principal -->
+    <div class="comments-container">
+      <div
+        class="header-discu"
+        :style="{ backgroundColor: `${discu.colorCategoria}` }"
+      >
+        <div class="detalles-discu">
+          <h5 class="op-3">{{ discu.nameCategoria }}</h5>
+          <a href="javascript:void(0)">{{ discu.created_at }}</a>
+          <p v-if="editable.editabled == 1">
+            <a href="javascript:void(0)" @click="eliminart()">Eliminar tema</a>
+            <a href="javascript:void(0)"> <FormDiscuUpdate /> </a>
+          </p>
+        </div>
+        <div class="tema-discu">
+          <h1>{{ discu.title }}</h1>
+        </div>
+      </div>
 
-		<div v-for="(comentario, indexco) in comentarios" :key="indexco" class="espacio">
-			<Comentario :initialComentario="comentario" :initialEditable="editable.editablec" @cerrarupdate="cerrarupdate" @eliminarc="eliminarc"/>
-		</div>
-	</div>
+      <div
+        v-for="(comentario, indexco) in comentarios"
+        :key="indexco"
+        class="espacio"
+      >
+        <Comentario
+          :initialComentario="comentario"
+          :initialEditable="editable.editablec"
+          @cerrarupdate="cerrarupdate"
+          @eliminarc="eliminarc"
+        />
+      </div>
+    </div>
 
-	<div class="modal-header">
-		<p>Respuestas:<span>{{ respuestas }}</span></p>
-	</div>
-	<div class="comments-comment">
-		<FormComentario @crear-comentario="createcomentario" />
-	</div>
-</div>
+    <div class="modal-header">
+      <p>
+        Respuestas:<span>{{ respuestas }}</span>
+      </p>
+    </div>
+    <div class="comments-comment">
+      <FormComentario @crear-comentario="createcomentario" />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -45,10 +59,10 @@ export default {
   },
   computed: {
     discu() {
-      return this.$store.getters.discuview;
+      return this.$store.getters["foro/discuview"];
     },
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
   },
   components: {
@@ -61,7 +75,10 @@ export default {
       .get("/foro/" + this.curso.id + "/" + this.discu.id)
       .then((res) => {
         this.comentarios = res.data.fpost;
-	this.editable = { editabled: res.data.discuss, editablec: res.data.permisos };
+        this.editable = {
+          editabled: res.data.discuss,
+          editablec: res.data.permisos,
+        };
         this.respuestas = res.data.fpost.length;
       })
       .catch((error) => {
@@ -71,12 +88,15 @@ export default {
       });
   },
   methods: {
-   createcomentario(comentario) {
+    createcomentario(comentario) {
       if (comentario.id) {
         this.comentarios.push(comentario);
         this.respuestas++;
-        this.$store.getters.discuview.answered++;
-        this.$store.commit("updatediscuss", this.$store.getters.discuview);
+        this.$store.getters["foro/discuview"].answered++;
+        this.$store.commit(
+          "foro/updatediscuss",
+          this.$store.getters["foro/discuview"]
+        );
       }
     },
     eliminart() {
@@ -85,7 +105,7 @@ export default {
         axios
           .delete("/foro/" + this.curso.id + "/eliminardis/" + this.discu.id)
           .then((res) => {
-            this.$store.commit("deletetema", this.discu);
+            this.$store.commit("foro/deletetema", this.discu);
             flash("Discusion eliminada", "info");
           })
           .catch((error) => {
@@ -97,29 +117,26 @@ export default {
         this.$emit("close");
       }
     },
-	cerrarupdate(comentario) {
-	      if (comentario.comentario.id) {
-	        const indexcou = this.comentarios.findIndex(
-	          (item) => item.id === comentario.comentario.id
-	        );
-        	this.comentarios[indexcou] = comentario.comentario;
-	      }
-	      this.show = comentario.cerrar;
-    	},
+    cerrarupdate(comentario) {
+      if (comentario.comentario.id) {
+        const indexcou = this.comentarios.findIndex(
+          (item) => item.id === comentario.comentario.id
+        );
+        this.comentarios[indexcou] = comentario.comentario;
+      }
+      this.show = comentario.cerrar;
+    },
     eliminarc(value) {
-			        axios
-	        		  .delete("/foro/" + this.curso.id + "/eliminarco/" + value)
-			          .then((res) => {
-	        		    this.$store.getters.discuview.answered--;
-			            this.$store.commit("updatediscuss", this.$store.getters.discuview);
-	        		    this.respuestas--;
-				    flash("Comentario eliminado", "info");
-	        		  })
-			          .catch((error) => {
-			            if (error.response.status === 401) {
-	        		      window.location.href = "login";
-			            }
-	        		  });
+      axios
+        .delete("/foro/" + this.curso.id + "/eliminarco/" + value)
+        .then((res) => {
+          flash("Comentario eliminado", "info");
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+        });
     },
   },
 };
@@ -185,7 +202,7 @@ ul {
   font-weight: 700;
 }
 
-.espacio{
+.espacio {
   margin-bottom: 2rem;
 }
 

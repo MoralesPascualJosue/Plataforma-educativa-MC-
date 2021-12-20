@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     actividad() {
-      return this.$store.getters.actividadview;
+      return this.$store.getters["activities/actividadview"];
     },
   },
   created() {
@@ -132,7 +132,7 @@ export default {
           let actividad = this.actividad;
           actividad.result = [response.data];
           actividad.estado = true;
-          this.$store.commit("changeactividad", actividad);
+          this.$store.commit("activities/changeactividad", actividad);
           this.$emit("entregas", true);
           flash("Respuestas registradas", "success");
         })
@@ -228,7 +228,7 @@ export default {
 
 .btn-registrarrespuestas {
   border: none;
-  padding: 0.5rem;  
+  padding: 0.5rem;
 }
 
 .btn-registrarrespuestas:hover {

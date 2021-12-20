@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     discu() {
-      return this.$store.getters.discuview;
+      return this.$store.getters["foro/discuview"];
     },
   },
   components: {

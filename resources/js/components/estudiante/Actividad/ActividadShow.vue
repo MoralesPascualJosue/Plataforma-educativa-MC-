@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     actividad() {
-      return this.$store.getters.actividadview;
+      return this.$store.getters["activities/actividadview"];
     },
   },
   components: {
@@ -47,7 +47,7 @@ export default {
     axios
       .get(url + this.actividad.activitie.id)
       .then((res) => {
-        this.$store.commit("changeactividad", res.data);
+        this.$store.commit("activities/changeactividad", res.data);
       })
       .catch((error) => {
         if (error.response.status === 401) {

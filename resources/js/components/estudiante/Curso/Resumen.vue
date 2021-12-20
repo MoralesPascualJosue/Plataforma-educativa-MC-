@@ -47,7 +47,7 @@
 export default {
   computed: {
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
   },
   data() {

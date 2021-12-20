@@ -557,7 +557,7 @@ export default {
       return this.propsPage.widthPage;
     },
     actividad() {
-      return this.$store.getters.actividadview;
+      return this.$store.getters["activities/actividadview"];
     },
   },
   methods: {

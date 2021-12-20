@@ -332,7 +332,7 @@ export default {
       return this.$store.getters.loginview;
     },
     curso() {
-      return this.$store.getters.cursoview;
+      return this.$store.getters["cursos/cursoview"];
     },
     messages() {
       if (this.activetab == "send") {

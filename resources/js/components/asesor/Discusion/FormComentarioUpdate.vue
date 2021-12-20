@@ -50,10 +50,10 @@ export default {
   },
   computed: {
     discu() {
-      return this.$store.getters.discuview;
+      return this.$store.getters["foro/discuview"];
     },
     comentario() {
-      return this.$store.getters.comentarioview;
+      return this.$store.getters["foro/comentarioview"];
     },
   },
   created() {
