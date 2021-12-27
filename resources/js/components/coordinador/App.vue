@@ -149,7 +149,7 @@ p {
 }
 
 #app {
-  background-color: #fdc770;
+  background-color: #f0f0f0;
 }
 
 .app-container {
@@ -162,6 +162,9 @@ p {
 
 .app-navegationmenu {
   padding: 1rem;
+  margin: 1rem;
+  background-color: #fdc770;
+  border-radius: 20px;
 }
 
 .navegationmenu-user {

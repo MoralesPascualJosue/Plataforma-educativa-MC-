@@ -5,11 +5,12 @@
       <p @click="statusShow = !statusShow">
         <span v-if="statusShow">start</span><span v-else>stop</span>
       </p>
-      <p>
-        <span @click="beforeAnuncio">Anterior</span> {{ numberAnuncio }} de
+      <span>
+        <p @click="beforeAnuncio">Anterior</p>
+        {{ numberAnuncio }} de
         {{ anunciosSize }}
-        <span @click="nextAnuncio">Siguiente</span>
-      </p>
+        <p @click="nextAnuncio">Siguiente</p>
+      </span>
       <p @click="addAnuncio">Agregar anuncio</p>
       <p @click="deleteAnuncio(anuncio, indexshow)">Eliminar anuncio</p>
     </div>
@@ -45,7 +46,7 @@ export default {
       anuncios: [],
       anuncio: { updated_at: "--Hoy", anuncioblock: {}, anuncio: "" },
       indexshow: -1,
-      statusShow: false,
+      statusShow: true,
       changesdefault: 0,
     };
   },
@@ -72,9 +73,9 @@ export default {
         }
       });
   },
-  mounted() {
-    this.changeAnuncio();
-  },
+  // mounted() {
+  //   this.changeAnuncio();
+  // },
   methods: {
     changesAnuncio(operacion) {
       if (!operacion) {
@@ -83,20 +84,20 @@ export default {
         this.changesdefault++;
       }
     },
-    changeAnuncio: function () {
-      var v = this;
-      setTimeout(function () {
-        if (!v.statusShow && v.anunciosSize > 0) {
-          v.indexshow++;
-          if (v.indexshow == v.anunciosSize) {
-            v.indexshow = 0;
-          }
-          v.anuncio = v.anuncios[v.indexshow];
-          v.changesdefault = 0;
-        }
-        v.changeAnuncio();
-      }, 6000);
-    },
+    // changeAnuncio: function () {
+    //   var v = this;
+    //   setTimeout(function () {
+    //     if (!v.statusShow && v.anunciosSize > 0) {
+    //       v.indexshow++;
+    //       if (v.indexshow == v.anunciosSize) {
+    //         v.indexshow = 0;
+    //       }
+    //       v.anuncio = v.anuncios[v.indexshow];
+    //       v.changesdefault = 0;
+    //     }
+    //     v.changeAnuncio();
+    //   }, 6000);
+    // },
     nextAnuncio() {
       this.indexshow++;
       if (this.indexshow == this.anunciosSize) {
@@ -192,15 +193,17 @@ export default {
   display: inline-block;
 }
 .anuncios-toolbar p {
+  font-weight: bold;
+  font-size: larger;
   display: inline-block;
-  background-color: #fcb036;
+  background-color: #fdc770;
   border-radius: 30px;
   padding: 0.5rem;
   cursor: pointer;
   box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 .anuncios-toolbar p:hover {
-  background-color: white;
+  background-color: #fcb036;
 }
 .anuncios-list {
   overflow-y: auto;
@@ -220,7 +223,7 @@ export default {
   cursor: pointer;
   height: 2rem;
   width: 2rem;
-  background-color: #f0f0f0;
+  background-color: #fff;
   margin-top: 1rem;
   border-radius: 4px;
   text-align: center;
@@ -229,7 +232,7 @@ export default {
   box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
 }
 .anuncios-list p:hover {
-  background-color: #266fae;
+  background-color: #fdc770;
 }
 .anuncios-list .selected {
   background-color: #fcb036;
@@ -237,7 +240,7 @@ export default {
 .anuncios-container {
   height: 92%;
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: #fff;
   margin-top: 0.5rem;
   border-radius: 30px;
   padding: 1rem;

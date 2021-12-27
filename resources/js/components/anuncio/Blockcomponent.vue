@@ -26,6 +26,9 @@
         <div v-if="block.type == 'image'">
           <Imagecomponent :block="block" />
         </div>
+        <div v-else-if="block.type == 'listlinks'">
+          <Listlinks :block="block" />
+        </div>
         <div v-else>
           <Descriptioncomponent :block="block" />
         </div>
@@ -37,6 +40,7 @@
 <script>
 import Imagecomponent from "./Imagecomponent";
 import Descriptioncomponent from "./Descriptioncomponent";
+import Listlinks from "./ListLinks.vue";
 export default {
   props: {
     anuncio: {
@@ -53,6 +57,7 @@ export default {
   components: {
     Imagecomponent,
     Descriptioncomponent,
+    Listlinks,
   },
   data() {
     return {

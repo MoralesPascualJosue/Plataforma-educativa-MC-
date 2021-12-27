@@ -7,7 +7,11 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "start-serve": "php artisan serve & TASKA_PIDS=$!",
+        "start-wsserve": "php artisan websockets:serve & TASKA_PIDWS=$!",
+        "start-jserve": "php artisan queue:work & TASKA_PIDJ=$!",
+        "start-servers": "npm-run-all -p start-serve start-wsserve start-jserve"
     },
     "devDependencies": {
         "axios": "^0.19",
@@ -26,6 +30,7 @@
     "dependencies": {
         "chart.js": "^2.9.3",
         "laravel-echo": "^1.8.1",
+        "npm-run-all": "^4.1.5",
         "pusher-js": "^7.0.0",
         "serialize-javascript": "^4.0.0",
         "vue-chartjs": "^3.5.1",

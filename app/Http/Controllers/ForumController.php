@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Repositories\cursoRepository;
 use App\Repositories\fdiscusionRepository;
 use App\Repositories\fcategoriaRepository;
 use App\Repositories\fpostRepository;
@@ -13,6 +14,8 @@ use App\Models\fdiscusion;
 use App\Models\fcategoria;
 use App\Models\fpost;
 
+use App\Events\CommentEvent;
+
 class ForumController extends Controller
 {    
 
@@ -20,8 +23,9 @@ class ForumController extends Controller
     private $fcategoriaRepository;
     private $fpostRepository;
 
-    public function __construct(fdiscusionRepository $fdiscusionRepo,fcategoriaRepository $fcategoriaRepo,fpostRepository $fpostRepos)
+    public function __construct(cursoRepository $cursoRepo,fdiscusionRepository $fdiscusionRepo,fcategoriaRepository $fcategoriaRepo,fpostRepository $fpostRepos)
     {
+        $this->cursoRepository = $cursoRepo;
         $this->fdiscusionRepository = $fdiscusionRepo;
         $this->fcategoriaRepository = $fcategoriaRepo;
         $this->fpostRepository = $fpostRepos;
@@ -113,7 +117,7 @@ class ForumController extends Controller
 
         foreach($fposts as $post){
             $post["propiedad"] =  $post->hasPropiedad($user);
-	    $post["childrens"] = $post->childrens()->withUser()->withImage()->get();
+	        $post["childrens"] = $post->childrens()->withUser()->withImage()->get();
         }
 
         $categorias= $this->fcategoriaRepository->all();        
@@ -121,7 +125,7 @@ class ForumController extends Controller
         if($request->ajax()){
             $data["fpost"] = $fposts;            
             $data["discuss"] = $discuss["propiedad"];
-	    $data["permisos"] = $user;
+	        $data["permisos"] = $user;
             return $data;
         }
         
@@ -130,9 +134,9 @@ class ForumController extends Controller
     }
 
      public function comentar($id,Request $request)
-    {
-
+    {        
         $input = $request->all();
+        $user = Auth::user()->id;
 
         if ($input["body"] == "") {
             abort(404,"Comentario vacio");
@@ -147,6 +151,7 @@ class ForumController extends Controller
         $fdiscusion = $this->fdiscusionRepository->find($id);
         $inputd["answered"] = $fdiscusion["answered"]+1;
         $this->fdiscusionRepository->update($inputd, $id);
+        $curso = $this->cursoRepository->find($fdiscusion->curso_id);
 
         $fcomentario = fpost::query()->withDiscuss($id)
         ->withUser()
@@ -156,7 +161,8 @@ class ForumController extends Controller
 
         if($request->ajax()){
             $fcomentario["propiedad"] = 1;
-	    $fcomentario["childrens"] = [];
+	        $fcomentario["childrens"] = [];
+            event(new CommentEvent($fdiscusion,$curso,$curso->estudiantes()->get(),$user));
             return $fcomentario;
         }
 

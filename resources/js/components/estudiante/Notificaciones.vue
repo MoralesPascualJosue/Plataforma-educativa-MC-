@@ -13,10 +13,36 @@
           v-for="notificacion in notificaciones.notificaciones"
           :key="notificacion.id"
         >
+          <div class="notificacion-detalles-head">
+            {{ notificacion.data.cursoname }}
+            <span
+              v-if="notificacion.data.type == 'comment'"
+              class="
+                notificacion-detalles-head-right
+                badge badge-light
+                float-right
+              "
+              >Nueva replica</span
+            >
+            <span
+              v-else
+              class="
+                notificacion-detalles-head-right
+                badge badge-light
+                float-right
+              "
+              >Limite: {{ notificacion.data.fecha_final }}</span
+            >
+          </div>
           <div class="notificaciones-icon">
             <img
               v-if="notificacion.data.type == 'actividad'"
               src="resources/icons/home-work-c.svg"
+              :alt="notificacion.data.type"
+            />
+            <img
+              v-else-if="notificacion.data.type == 'comment'"
+              src="resources/icons/comment-icon.png"
               :alt="notificacion.data.type"
             />
             <img
@@ -26,13 +52,6 @@
             />
           </div>
           <div class="notificaciones-detalles">
-            <div class="notificacion-detalles-head">
-              {{ notificacion.data.cursoname }}
-              <span
-                class="notificacion-detalles-head-right badge badge-light float-right"
-                >Limite: {{ notificacion.data.fecha_final }}</span
-              >
-            </div>
             <div class="notificacion-detalles-contenido">
               {{ notificacion.data.title }}
             </div>

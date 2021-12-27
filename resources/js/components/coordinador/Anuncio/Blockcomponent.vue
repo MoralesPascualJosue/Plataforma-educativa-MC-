@@ -13,6 +13,7 @@
       <p v-if="statustoolbar" class="blockcomponent-options-toolbar-options">
         <span @click="addComponent('image')">imagen</span>
         <span @click="addComponent('description')">descripcion</span>
+        <span @click="addComponent('listlinks')">Lista enlaces</span>
       </p>
       <p
         v-if="changesdefault > 0"
@@ -50,10 +51,28 @@
         }"
       >
         <div v-if="block.type == 'image'">
-          <Imagecomponent :block="block" @onchange="addchangen" />
+          <Imagecomponent
+            :block="block"
+            @onchange="addchangen"
+            @remove="removeComponent"
+            :indexb="indexblock"
+          />
+        </div>
+        <div v-else-if="block.type == 'listlinks'">
+          <Listlinks
+            :block="block"
+            @onchange="addchangen"
+            @remove="removeComponent"
+            :indexb="indexblock"
+          />
         </div>
         <div v-else>
-          <Descriptioncomponent :block="block" @onchange="addchangen" />
+          <Descriptioncomponent
+            :block="block"
+            @onchange="addchangen"
+            @remove="removeComponent"
+            :indexb="indexblock"
+          />
         </div>
       </div>
     </div>
@@ -63,6 +82,7 @@
 <script>
 import Imagecomponent from "./Imagecomponent";
 import Descriptioncomponent from "./Descriptioncomponent";
+import Listlinks from "./ListLinks.vue";
 export default {
   props: {
     anuncio: {
@@ -83,6 +103,7 @@ export default {
   components: {
     Imagecomponent,
     Descriptioncomponent,
+    Listlinks,
   },
   data() {
     return {
@@ -123,7 +144,13 @@ export default {
       this.$emit("changesn", true);
     },
     deleteColumn() {
-      if (this.anuncio.widthblock > 1) {
+      let valor = 1;
+      this.anuncio.anuncioblock.forEach((element) => {
+        if (element.width > valor) {
+          valor = element.width;
+        }
+      });
+      if (this.anuncio.widthblock > 1 && this.anuncio.widthblock > valor) {
         this.anuncio.widthblock--;
         this.$emit("changesn", true);
       } else {
@@ -135,11 +162,21 @@ export default {
       this.$emit("changesn", true);
     },
     deleteRow() {
-      if (this.anuncio.heigthblock > 1) {
+      if (
+        this.anuncio.heigthblock > 1 &&
+        this.anuncio.anuncioblock.length < this.anuncio.heigthblock
+      ) {
         this.anuncio.heigthblock--;
         this.$emit("changesn", true);
       } else {
         flash("limite alcanzado", "warning");
+      }
+    },
+    removeComponent(indexb) {
+      const consult = confirm(`Eliminar bloque`);
+      if (consult) {
+        this.$emit("changesn", true);
+        this.anuncio.anuncioblock.splice(indexb, 1);
       }
     },
     addComponent(value) {
@@ -148,6 +185,13 @@ export default {
         this.anuncio.anuncioblock[nextblock] = {
           type: "image",
           source: "resources/logo/Logo%20comp%20orange.svg",
+          heigth: 1,
+          width: 1,
+        };
+      } else if (value == "listlinks") {
+        this.anuncio.anuncioblock[nextblock] = {
+          type: "listlinks",
+          source: [],
           heigth: 1,
           width: 1,
         };

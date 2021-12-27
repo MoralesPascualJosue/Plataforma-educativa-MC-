@@ -45,16 +45,26 @@
             ></p>
           </span>
         </div>
+        <div>
+          Ancho
+          <span>
+            <p @click="deleteColumnComponent(block)">-</p>
+            <p @click="addColumnComponent(block)">+</p>
+          </span>
+        </div>
+        <div>
+          Largo
+          <span>
+            <p @click="deleteRowComponent(block)">-</p>
+            <p @click="addRowComponent(block)">+</p>
+          </span>
+        </div>
+        <div>
+          Eliminar <span> <p @click="$emit('remove', indexb)">D</p></span>
+        </div>
       </div>
     </div>
-    <div v-if="statustoolbar" class="blockcomponentd-layout-grid-block-width">
-      <div @click="deleteColumnComponent(block)">-</div>
-      <div @click="addColumnComponent(block)">+</div>
-    </div>
-    <div v-if="statustoolbar" class="blockcomponentd-layout-grid-block-heigth">
-      <div @click="deleteRowComponent(block)">-</div>
-      <div @click="addRowComponent(block)">+</div>
-    </div>
+
     <div
       class="descriptioncomponent-body"
       :style="{ fontSize: `${block.size}`, textAlign: `${block.align}` }"
@@ -68,6 +78,7 @@
 <script>
 export default {
   props: {
+    indexb: Number,
     block: {
       type: Object,
       default: function () {
@@ -134,10 +145,13 @@ export default {
 .descriptioncomponent-layout {
   height: 100%;
   width: 100%;
+  position: relative;
 }
 .descriptioncomponent-toolbar {
   display: inline-block;
   position: absolute;
+  right: 0;
+  background-color: #fdc770;
 }
 .descriptioncomponent-toolbar-buttom {
   float: left;
@@ -153,12 +167,10 @@ export default {
 .descriptioncomponent-toolbar-options {
   position: relative;
   float: left;
-  top: -0.5rem;
 }
 .descriptioncomponent-toolbar-options div {
   display: inline-block;
   cursor: pointer;
-  background-color: white;
   padding-left: 0.5rem;
   color: #266fae;
   font-size: 12px;
@@ -171,11 +183,12 @@ export default {
   text-align: center;
 }
 .descriptioncomponent-toolbar-options div span p {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   display: inline-block;
   border-radius: 50%;
   background-size: cover;
+  color: #000;
 }
 .descriptioncomponent-toolbar-options div span p:hover {
   background-color: #266fae;
@@ -200,18 +213,8 @@ export default {
 .blockcomponentd-layout-grid-block-width div:hover {
   background-color: #266fae;
 }
-.blockcomponentd-layout-grid-block-heigth {
-  cursor: pointer;
-  float: right;
-  padding: 0.5rem;
-  margin: 4rem -3rem;
-  background-color: #fcb036;
-  text-align: center;
-}
+
 .blockcomponentd-layout-grid-block-width div {
   display: inline-block;
-}
-.blockcomponentd-layout-grid-block-heigth div:hover {
-  background-color: #266fae;
 }
 </style>

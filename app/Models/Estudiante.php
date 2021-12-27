@@ -61,6 +61,16 @@ class Estudiante extends Model
         'telephone' => 'numeric'
     ];
 
+        /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'Estudiante.'.$this->user_id;
+    }
+
     public function cursos(){
         return $this->belongsToMany('App\Models\Curso','matriculados','estudiante_id','curso_id')->withPivot('updated_at');
     }

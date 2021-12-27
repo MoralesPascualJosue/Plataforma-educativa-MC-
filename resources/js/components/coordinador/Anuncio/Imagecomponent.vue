@@ -22,6 +22,7 @@
           >
         </div>
         <div @click="onDeleteFileUpload">eliminar</div>
+        <div @click="$emit('remove', indexb)">Remover</div>
       </div>
     </transition>
     <div v-if="status" class="blockcomponent-layout-grid-block-heigth">
@@ -34,6 +35,7 @@
 <script>
 export default {
   props: {
+    indexb: Number,
     block: {
       type: Object,
       default: function () {

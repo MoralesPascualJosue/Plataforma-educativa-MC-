@@ -10,6 +10,8 @@ use App\Events\ActivitieEvent;
 use App\Listeners\ActivitieListener;
 use App\Events\TestEvent;
 use App\Listeners\TestListener;
+use App\Events\CommentEvent;
+use App\Listeners\CommentListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,10 @@ class EventServiceProvider extends ServiceProvider
 
         TestEvent::class =>[
             TestListener::class,
+        ],
+
+        CommentEvent::class =>[
+            CommentListener::class,
         ],
     ];
 

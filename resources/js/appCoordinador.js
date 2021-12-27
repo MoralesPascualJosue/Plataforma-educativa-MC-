@@ -42,7 +42,8 @@ const router = new VueRouter({
             path: "/avisos",
             name: "Avisos",
             component: Anuncios
-        }
+        },
+        { path: "*", redirect: { name: "Inicio" } }
     ]
 });
 
