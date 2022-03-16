@@ -76,7 +76,8 @@ class UploadController extends Controller
             $ruta = request()->fileToUpload->storeAs('archivos/'.$id,$fileName,'public');            
 
             return response()->json([
-                'filelink' => asset($ruta),         
+                'filelink' => asset($ruta),    
+                'path' => $ruta,     
                 'type' => request()->fileToUpload->getClientOriginalExtension(),
                 'name' => request()->fileToUpload->getClientOriginalName(),
                 'icon' => "../resources/icons/work.svg",

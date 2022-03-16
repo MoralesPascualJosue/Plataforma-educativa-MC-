@@ -1,6 +1,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    {{--
+    <base target="_blank"> --}}
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="../resources/logo/Logo minmin white.svg" type="image/svg+xml">
     <!-- CSRF Token -->

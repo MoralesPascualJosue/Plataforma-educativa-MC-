@@ -261,18 +261,20 @@
           </div>
         </div>
         <div v-else key="viewmensaje" class="mensaje-layout-content">
-          <div @click="regresaralista" class="backtolist">Regresar</div>
+          <div @click="regresaralista" class="backtolist-est">Regresar</div>
           <hr />
-          <div class="listamensajes-layout-listamensajes">
-            <div class="listamensajes-detalles">
-              <a href="javascript:void(0)" class="h4 d-block">Detalles:</a>
-              Enviado:
-              <p>{{ mensaje.created_at }}</p>
-              <a href="javascript:void(0)" @click="eliminarmensaje(mensaje.id)"
-                >Eliminar</a
-              >
-            </div>
-            <div class="listamensajes-body">
+          <div class="listamensajes-body">
+            <div class="listamensajes-layout-listamensajes">
+              <div class="listamensajes-detalles">
+                <a href="javascript:void(0)" class="h4 d-block">Detalles:</a>
+                Enviado:
+                <p>{{ mensaje.created_at }}</p>
+                <a
+                  href="javascript:void(0)"
+                  @click="eliminarmensaje(mensaje.id)"
+                  >Eliminar</a
+                >
+              </div>
               <div class="text-left">
                 <img :src="mensaje.user.image" class="avatar" />
                 De:
@@ -288,14 +290,14 @@
                   >
                 </p>
               </div>
-              <h3>{{ mensaje.asunto }}</h3>
-              <hr />
-              <div class="container">
-                <div
-                  class="listamensajes-mensaje-body"
-                  v-html="mensaje.body"
-                ></div>
-              </div>
+            </div>
+            <h3>{{ mensaje.asunto }}</h3>
+            <hr />
+            <div class="container">
+              <div
+                class="listamensajes-mensaje-body trix-content"
+                v-html="mensaje.body"
+              ></div>
             </div>
           </div>
         </div>
@@ -698,8 +700,7 @@ export default {
   padding: 0.5rem;
 }
 .listamensajes-mensaje-body {
-  padding: 1rem;
-  background-color: #fdc770;
+  padding: 0.5rem;
 }
 @media only screen and (max-width: 1050px) {
   .listamensajes-layout-listamensajes {
@@ -716,6 +717,7 @@ export default {
   float: left;
   display: block;
   width: 3.5rem;
+  height: 3.5rem;
   margin-right: 1rem;
   border-radius: 50%;
 }
@@ -728,6 +730,17 @@ export default {
   border-radius: 1rem;
   display: inline-block;
 }
+.backtolist-est {
+  background-color: #fdc770;
+  min-width: 85px;
+  position: absolute;
+  right: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.backtolist-est:hover {
+  background-color: #fcb036;
+}
 
 @media only screen and (max-width: 1050px) {
   .mensaje-layout-container-paneltool-item {
@@ -738,3 +751,4 @@ export default {
   }
 }
 </style>
+

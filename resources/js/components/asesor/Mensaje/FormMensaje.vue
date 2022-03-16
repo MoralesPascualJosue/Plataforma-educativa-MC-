@@ -36,11 +36,14 @@
         </div>
         <div class="formmensaje-form-group form-content-msg">
           <label for="contenidomensaje">Contenido</label>
-          <vue-editor
+          <VueTrix
             class="form-control block-d contentmsg"
-            id="contenidomensaje"
-            v-model="contenido"
-          ></vue-editor>
+            inputId="editor1"
+            v-model="editorContent"
+            placeholder="enter your content..."
+            @trix-attachment-add="handleAttachmentChanges"
+            @trix-attachment-remove="handleAttachmentRemove"
+          />
         </div>
         <button
           id="dLabelms"
@@ -65,7 +68,7 @@
 </template>
 
 <script>
-import { VueEditor } from "vue2-editor";
+import VueTrix from "vue-trix";
 
 export default {
   props: {
@@ -91,12 +94,76 @@ export default {
       destino: [],
       customToolbar: [[]],
       markall: false,
+      editorContent: "<h1>Editor contents</h1>",
     };
   },
   components: {
-    VueEditor,
+    VueTrix,
   },
   methods: {
+    handleAttachmentRemove(event) {
+      // 1. get file object
+      let file = event.attachment;
+      let path = file.attachment.attributes.array[11];
+
+      // 2. remove file to remote server with FormData
+      let formData = new FormData();
+      formData.append("path", path);
+      axios
+        .post(`/remove/file`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          flash("Archivo eliminado", "success");
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+          flash("Error al eliminar", "error");
+        });
+    },
+    handleAttachmentChanges(event) {
+      // 1. get file object
+      let file = event.attachment.file;
+
+      // 2. upload file to remote server with FormData
+      let formData = new FormData();
+      formData.append("fileToUpload", file);
+
+      axios
+        .post("/uploadfile", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          let attributes = {
+            url: response.data.path,
+            href: response.data.path,
+            patchs: response.data.path,
+          };
+          event.attachment.setAttributes(attributes);
+          event.attachment.setUploadProgress(100);
+          flash("Archivo subido", "success");
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.location.href = "login";
+          }
+          flash("Error a subir archivo", "error");
+        });
+
+      // 3. if upload success, set back the attachment's URL attribute
+      // @param object data from remote server response data after upload.
+      this.updateEditorContent("update");
+    },
+    updateEditorContent(value) {
+      // Update new content into the database via state mutations.
+      this.contenido = document.querySelector("trix-editor").innerHTML;
+    },
     close: function () {
       this.$emit("crear-mensaje", { mensaje: [], cerrar: false });
     },
@@ -104,6 +171,7 @@ export default {
       e.preventDefault();
 
       let sendContacts;
+      this.updateEditorContent("save");
       if (this.asunto == "" || this.contenido == "") {
         flash("Campos vacios", "warning");
         return "fail";
@@ -143,6 +211,11 @@ export default {
           this.loading = false;
           this.$emit("crear-mensaje", { mensaje: this.mensaje, cerrar: false });
         });
+    },
+  },
+  watch: {
+    editorContent: {
+      handler: "updateEditorContent",
     },
   },
 };
@@ -222,14 +295,22 @@ export default {
 }
 .contentmsg {
   background-color: white;
+  overflow-y: auto;
+  height: 93% !important;
+}
+.trix-content {
+  min-height: 93% !important;
+}
+.trix-button-row {
+  flex-wrap: wrap !important;
 }
 .contentmsg p {
   font-size: inherit;
   color: inherit;
 }
 .form-content-msg {
-  padding-bottom: 7.5rem;
-  height: 69%;
+  height: 68%;
+  overflow-y: auto;
 }
 
 @media (max-width: 1050px) {
